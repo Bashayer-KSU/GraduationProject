@@ -10,23 +10,23 @@
 <body>
     <!---->
 
-            <div ng-controller="UploadController">
-                <form>
-                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc">
-                    <!--  <input type="file" ng-file-select="onFileSelect($files)" multiple> -->
-                </form>
+    <div ng-controller="UploadController">
+        <form>
+            <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc">
+            <!--  <input type="file" ng-file-select="onFileSelect($files)" multiple> -->
+        </form>
+        displayColors
+        <img style="width:200px; height:200px;" ng-src="{{imageSrc}}" />
 
-                <img style="width:200px; height:200px;" ng-src="{{imageSrc}}" />
-               
-                
-                <div ng-controller="displayColors">
-                    <p style="background-color:{{colors.color1}}">{{colors.color1}} first color</p><br />
-                    <p style="background-color:{{colors.color2}}">{{colors.color2}} second</p><br />
-                    <p style="background-color:{{colors.color3}}">{{colors.color3}} thired</p><br />
-                    <p style="background-color:{{colors.color4}}">{{colors.color4}} forth</p><br />
-                </div>
 
-            </div>
+        <div ng-controller="displayColors">
+            <p style="background-color:{{colors.color1}}">{{colors.color1}} first color</p><br />
+            <p style="background-color:{{colors.color2}}">{{colors.color2}} second</p><br />
+            <p style="background-color:{{colors.color3}}">{{colors.color3}} thired</p><br />
+            <p style="background-color:{{colors.color4}}">{{colors.color4}} forth</p><br />
+        </div>
+
+    </div>
 
 
     
