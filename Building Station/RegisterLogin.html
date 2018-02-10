@@ -1,17 +1,17 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="RegisterLogin.css">
+    <link rel="stylesheet" type="text/css" href="RegisterLogin.asmx">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="RegisterLogin.js"></script>
 
 </head>
-<body ng-controller="RegisterCtrl" ng-app="myApp">
+<body ng-controller="Register" ng-app="myApp">
     <div class="container">
         <div class="form">
 
@@ -21,7 +21,7 @@
                 <li><a data-toggle="tab" href="#login">Log In</a></li>
             </ul>
 
-            <div class="tab-content">
+            <div class="tab-content" ng-controller="RegisterCtrl">
                 <!-- -->
                 <div id="signup" class="tab-pane fade in active">
                     <div class="screen">
@@ -29,7 +29,7 @@
                             <h1>Sign up</h1>
                             <div class="divider"></div>
                         </div>
-                        <form class="form-register" method="post" name="register" novalidate>
+                        <form class="form-register" name="register" novalidate>
                             <div class="input-field col s6">
                                 <input id="Rname" type="text" ng-model="user.name" class="validate" required>
                                 <label for="Rname">Name</label>
@@ -45,12 +45,14 @@
                             </div>
                             <p class="alert alert-danger" ng-show="form-register.Rpassword.$error.maxlength || form-register.Rpassword.$error.minlength || form.Rpassword.$invalid">Your password must be between 8 to 20 characters.</p>
                             <div class="space-top text-center">
-                                <button ng-disabled="form-register.$invalid" ng-click="loginCheck()" class="waves-effect waves-light btn done">
+                                <button ng-disabled="form-register.$invalid" ng-click="RegisterCheck()" class="waves-effect waves-light btn done">
                                     <i class="material-icons left">done</i> Done
                                 </button>
+
                                 <button type="button" class="waves-effect waves-light btn cancel">
                                     <i class="material-icons left">clear</i>Cancel
                                 </button>
+
                             </div>
                         </form>
                     </div> <!-- -->
@@ -61,7 +63,7 @@
                             <h1>Login</h1>
                             <div class="divider"></div>
                         </div>
-                        <form id="form-login" method="post" name="login" novalidate>
+                        <form id="form-login" name="login" novalidate>
                             <div class="input-field col s6">
                                 <input id="Lname" type="text" ng-model="username" class="validate" required>
                                 <label for="Lname">Name</label>
@@ -78,17 +80,12 @@
                                     <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
                                 </div>
                             </div>
-
-                            <div class="text-center">
-                                <a href="" tabindex="5" class="forgot-password">Forgot Password?</a>
-                            </div>
                         </form>
                     </div><!-- -->
                 </div>
             </div>
         </div>
     </div>
-    <script src="RegisterLogin.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

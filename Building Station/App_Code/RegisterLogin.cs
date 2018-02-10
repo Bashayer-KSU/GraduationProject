@@ -33,6 +33,7 @@ public class RegisterLogin : System.Web.Services.WebService
     [WebMethod]
     public Boolean Register(String name, String email, String password)
     {
+        /*
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -41,10 +42,8 @@ public class RegisterLogin : System.Web.Services.WebService
             cmd.ExecuteNonQuery();
             con.Close();
         }
-        //\insert selected colors to database
-
-        //JavaScriptSerializer js = new JavaScriptSerializer();
-        //Context.Response.Write(js.Serialize(selectedColors));
+        */
+        
         return true;
     }
 
