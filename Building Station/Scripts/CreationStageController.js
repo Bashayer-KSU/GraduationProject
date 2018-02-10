@@ -23,11 +23,6 @@ var app = angular.module("Demo", ["ngRoute"])
     .controller("0Controller", function ($scope) {
     })
     .controller("1Controller", function ($scope) {
-        $scope.header = "What's your store name ?";
-        $scope.previous = "CreationStage.html";
     })
     .controller("2Controller", function ($scope) {
-        $scope.header = "What kind of online store do you want ?",
-            $scope.previous = "/1";
-
     });
