@@ -1,27 +1,31 @@
-﻿<!DOCTYPE html>
-<html lang="en" ng-app="CraetionStageEnglishDemo">
+﻿<!doctype html>
+<html lang="en" ng-app="CraetionStageArabicDemo">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Creation Stage - Building Station</title>
-    
+
     <script src="Scripts/angular.min.js"></script>
     <script src="Scripts/angular-route.min.js"></script>
     <!-- <script> src ="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular-route.min.js"</script>-->
-    <script src="Scripts/CreationStageController.js"></script>
+    <script src="Scripts/CreationStageArabicController.js"></script>
     <!-- Main CSS -->
     <link href="CreationStageStyleSheet.css" rel="stylesheet" />
     <!-- Font Awesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <base href="/"/>
+    <base href="/" />
 </head>
-<body>
+
+
+<!-- To place profile image on the left, simply add class 'left' to the body. No other changes to CSS / HTML required -->
+<body class="left">
     <div class="wrapper">
 
         <div class="container">
-      <ng-view></ng-view>
+           <ng-view></ng-view>
+        </div>
     </div>
-   </div>
+
 </body>
 </html>

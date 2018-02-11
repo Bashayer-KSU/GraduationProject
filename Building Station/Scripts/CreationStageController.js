@@ -1,6 +1,6 @@
 ﻿
 
-var app = angular.module("Demo", ["ngRoute"])
+var app = angular.module("CraetionStageEnglishDemo", ["ngRoute"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/0", {
