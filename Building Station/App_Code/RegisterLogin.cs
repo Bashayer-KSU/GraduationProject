@@ -43,10 +43,13 @@ public class RegisterLogin : System.Web.Services.WebService
             cmd.ExecuteNonQuery();
             con.Close();
         }
-
+        ShopOwner shopOwner = new ShopOwner();
+        shopOwner.name = name;
+        shopOwner.email = email;
+        shopOwner.password = password;
 
         JavaScriptSerializer js = new JavaScriptSerializer();
-        Context.Response.Write(js.Serialize(true));
+        Context.Response.Write(js.Serialize(shopOwner));
     }
 
 }
