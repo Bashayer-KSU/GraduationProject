@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.Services;
 
 /// <summary>
@@ -31,9 +32,9 @@ public class RegisterLogin : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public Boolean Register(String name, String email, String password)
+    public void Register(String name, String email, String password)
     {
-        /*
+        
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -42,9 +43,10 @@ public class RegisterLogin : System.Web.Services.WebService
             cmd.ExecuteNonQuery();
             con.Close();
         }
-        */
-        
-        return true;
+
+
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        Context.Response.Write(js.Serialize(true));
     }
 
 }
