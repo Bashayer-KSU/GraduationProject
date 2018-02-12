@@ -25,7 +25,7 @@ public class RegisterLogin : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM shopowner WHERE name='" + name + "' OR email='" + email + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM ShopOwner WHERE Name='" + name + "' OR Email='" + email + "'", con);
             SqlDataReader dr = cmd.ExecuteReader();
 
             if (dr.HasRows == true)
@@ -36,7 +36,7 @@ public class RegisterLogin : System.Web.Services.WebService
             else
             {
 
-                cmd = new SqlCommand("insert into shopowner (name, email, password, phone) values " +
+                cmd = new SqlCommand("insert into ShopOwner (Name, Email, Password, Phone) values " +
                    "('" + name + "','" + email + "','" + password + "','" + phone + "')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
@@ -61,7 +61,7 @@ public class RegisterLogin : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM shopowner WHERE name='" + name + "' AND password='" + password + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM ShopOwner WHERE Name='" + name + "' AND Password='" + password + "'", con);
             SqlDataReader dr = cmd.ExecuteReader();
 
             if (dr.HasRows == true)
