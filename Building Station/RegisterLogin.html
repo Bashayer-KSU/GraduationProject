@@ -20,7 +20,7 @@
                 <li><a data-toggle="tab" href="#login">Log In</a></li>
             </ul>
 
-            <div class="tab-content" ng-controller="RegisterCtrl">
+            <div class="tab-content" ng-controller="RegisterLoginCtrl">
                 <!-- -->
                 <div id="signup" class="tab-pane fade in active">
                     <div class="screen">
@@ -43,8 +43,13 @@
                                 <label for="Rpassword">Password</label>
                             </div>
                             <p class="alert alert-danger" ng-show="form-register.Rpassword.$error.maxlength || form-register.Rpassword.$error.minlength || form.Rpassword.$invalid">Your password must be between 8 to 20 characters.</p>
+                            <div class="input-field col s6">
+                                <input id="phone" type="number" name="phone" ng-model="phone" ng-minlength='8' ng-maxlength='15' class="validate" required>
+                                <label for="phone">Phone number</label>
+                                <p class="alert alert-danger" ng-show="form-register.phone.$error.maxlength || form-register.phone.$error.minlength || form.phone.$invalid">Your should write your phone number</p>
+                            </div>
                             <div class="space-top text-center">
-                                <button ng-disabled="form-register.$invalid" ng-click="RegisterCheck()" class="waves-effect waves-light btn done">
+                                <button ng-disabled="form-register.$invalid" ng-click="SendData('reg')" class="waves-effect waves-light btn done">
                                     <i class="material-icons left">done</i> Done
                                 </button>
 
@@ -74,15 +79,14 @@
                             </div>
                             <p class="alert alert-danger" ng-show="form-login.Lpassword.$error.maxlength || form-login.Lpassword.$error.minlength || form.Lpassword.$invalid">Your password must be between 8 to 20 characters.</p>
 
-                            <div class="row">
-                                <div class="col-sm-6 col-sm-offset-3">
-                                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
-                                </div>
-                            </div>
+                            <button ng-disabled="form-login.$invalid" ng-click="SendData('log')" class="waves-effect waves-light btn done">
+                                <i class="material-icons left">done</i> Done
+                            </button>
                         </form>
                     </div><!-- -->
                 </div>
-                <p>welcome {{result.name}} to our website</p>
+                <p>welcome {{ result.name?result.name:"your name or email already exist"}} to our website</p>
+                <p>{{result}}</p> <!--Invalid username or password-->
             </div>
         </div>
     </div>
