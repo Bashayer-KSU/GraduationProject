@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 
@@ -18,38 +15,65 @@ public class RegisterLogin : System.Web.Services.WebService
 {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
 
-    public RegisterLogin()
-    {
-
-        //Uncomment the following line if using designed components 
-        //InitializeComponent(); 
-    }
 
     [WebMethod]
-    public string HelloWorld()
+    public void Register(String name, String email, String password, String phone)
     {
-        return "Hello World";
-    }
+        JavaScriptSerializer js = new JavaScriptSerializer();
 
-    [WebMethod]
-    public void Register(String name, String email, String password)
-    {
-        
+
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("insert into shopowner (name, email, password) values " +
-                "('" + name + "','" + email + "','" + password + "')", con);
-            cmd.ExecuteNonQuery();
-            con.Close();
+            SqlCommand cmd = new SqlCommand("SELECT * FROM shopowner WHERE name='" + name + "' OR email='" + email + "'", con);
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            if (dr.HasRows == true)
+            {
+                con.Close();
+                Context.Response.Write(js.Serialize(false));
+            }
+            else
+            {
+
+                cmd = new SqlCommand("insert into shopowner (name, email, password, phone) values " +
+                   "('" + name + "','" + email + "','" + password + "','" + phone + "')", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                ShopOwner shopOwner = new ShopOwner();
+                shopOwner.name = name;
+                shopOwner.email = email;
+                shopOwner.password = password;
+                shopOwner.phone = phone;
+
+                Context.Response.Write(js.Serialize(shopOwner));
+
+            }
         }
-        ShopOwner shopOwner = new ShopOwner();
-        shopOwner.name = name;
-        shopOwner.email = email;
-        shopOwner.password = password;
-
-        JavaScriptSerializer js = new JavaScriptSerializer();
-        Context.Response.Write(js.Serialize(shopOwner));
     }
+    [WebMethod]
+    public void Login(String name, String password)
+    {
+        JavaScriptSerializer js = new JavaScriptSerializer();
 
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("SELECT * FROM shopowner WHERE name='" + name + "' AND password='" + password + "'", con);
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            if (dr.HasRows == true)
+            {
+                con.Close();
+                Context.Response.Write(js.Serialize(true));
+
+            }
+            else
+            {
+                Context.Response.Write(js.Serialize(false));
+            }
+        }
+    }
 }
