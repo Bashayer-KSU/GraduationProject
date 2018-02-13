@@ -28,31 +28,23 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 controller: "4.1aController"
             })
             .when("/4.2a", {
-                templateUrl: "CreationStagePages/4.2a.html",
+                templateUrl: "CreationStagePages/ارفع_الشعار.html",
                 controller: "4.2aController"
             })
-            .when("/5a", {
-                templateUrl: "CreationStagePages/5a.html",
-                controller: "5aController"
-            })
-            .when("/6a", {
-                templateUrl: "CreationStagePages/6a.html",
-                controller: "6aController"
-            })
             .when("/7a", {
-                templateUrl: "CreationStagePages/7a.html",
+                templateUrl: "CreationStagePages/عرض_الحساب.html",
                 controller: "7aController"
             })
             .when("/8a", {
-                templateUrl: "CreationStagePages/8a.html",
+                templateUrl: "CreationStagePages/الألوان.html",
                 controller: "8aController"
             })
             .when("/9a", {
-                templateUrl: "CreationStagePages/9a.html",
+                templateUrl: "CreationStagePages/تصميم_المتجر.html",
                 controller: "9aController"
             })
             .when("/10a", {
-                templateUrl: "CreationStagePages/10a.html",
+                templateUrl: "CreationStagePages/جاري-تحميل_المنصة.html",
                 controller: "10aController"
             })
             .otherwise({
@@ -73,10 +65,6 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     .controller("4.1aController", function ($scope) {
     })
     .controller("4.2aController", function ($scope) {
-    })
-    .controller("5aController", function ($scope) {
-    })
-    .controller("6aController", function ($scope) {
     })
     .controller("7aController", function ($scope) {
     })
