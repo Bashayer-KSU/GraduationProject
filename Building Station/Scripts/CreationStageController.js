@@ -84,7 +84,17 @@ var app = angular.module("CraetionStageEnglishDemo", ["ngRoute"])
     })
     .controller("7Controller", function ($scope) {
     })
-    .controller("8Controller", function ($scope) {
+    .controller("8Controller", function ($scope, $http) {
+        $http({
+            url: "manageWebsiteColors.asmx/getWebsiteColors",
+            method: "get",
+            params: { path: filePath }
+        })
+            .then(function (response) {
+                $scope.colors = response.data;
+            }, function (error) {
+                $scope.error = error.data;
+            });
     })
     .controller("9Controller", function ($scope) {
     })
