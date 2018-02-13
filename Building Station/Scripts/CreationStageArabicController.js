@@ -31,9 +31,17 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 templateUrl: "CreationStagePages/ارفع_الشعار.html",
                 controller: "4.2aController"
             })
+            .when("/5a", {
+                templateUrl: "CreationStagePages/جمع_المعلومات.html",
+                controller: "5aController"
+            })
+            .when("/6a", {
+                templateUrl: "CreationStagePages/اختيار_الحساب.html",
+                    controller: "6aController"
+            })
             .when("/7a", {
                 templateUrl: "CreationStagePages/عرض_الحساب.html",
-                controller: "7aController"
+                    controller: "7aController"
             })
             .when("/8a", {
                 templateUrl: "CreationStagePages/الألوان.html",
@@ -65,6 +73,10 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     .controller("4.1aController", function ($scope) {
     })
     .controller("4.2aController", function ($scope) {
+    })
+    .controller("5aController", function ($scope) {
+    })
+    .controller("6aController", function ($scope) {
     })
     .controller("7aController", function ($scope) {
     })
