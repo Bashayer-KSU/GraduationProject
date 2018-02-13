@@ -4,27 +4,27 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/0a", {
-                templateUrl: "CreationStagePages/0a.html",
+                templateUrl: "CreationStagePages/مرحبا.html",
                 controller: "0aController"
             })
             .when("/1a", {
-                templateUrl: "CreationStagePages/1a.html",
+                templateUrl: "CreationStagePages/اسم_المتجر.html",
                 controller: "1aController"
             })
             .when("/2a", {
-                templateUrl: "CreationStagePages/2a.html",
+                templateUrl: "CreationStagePages/نوع_المتجر.html",
                 controller: "2aController"
             })
             .when("/3.1a", {
-                templateUrl: "CreationStagePages/3.1a.html",
+                templateUrl: "CreationStagePages/اسم_الحساب_على_انستقرام.html",
                 controller: "3.1aController"
             })
             .when("/3.2a", {
-                templateUrl: "CreationStagePages/3.2a.html",
+                templateUrl: "CreationStagePages/معلومات_المتجر.html",
                 controller: "3.2aController"
             })
             .when("/4.1a", {
-                templateUrl: "CreationStagePages/4.1a.html",
+                templateUrl: "CreationStagePages/موقع_الحساب.html",
                 controller: "4.1aController"
             })
             .when("/4.2a", {

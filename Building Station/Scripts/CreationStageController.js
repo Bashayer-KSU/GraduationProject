@@ -20,11 +20,11 @@ var app = angular.module("CraetionStageEnglishDemo", ["ngRoute"])
                 controller: "3.1Controller"
             })
             .when("/3.2", {
-                templateUrl: "CreationStagePages/account_location.html",
+                templateUrl: "CreationStagePages/enter_store_info.html",
                 controller: "3.2Controller"
             })
             .when("/4.1", {
-                templateUrl: "CreationStagePages/enter_store_info.html",
+                templateUrl: "CreationStagePages/account_location.html",
                 controller: "4.1Controller"
             })
             .when("/4.2", {
