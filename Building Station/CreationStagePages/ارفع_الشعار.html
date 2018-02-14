@@ -5,8 +5,14 @@
 
 <!-- Main content area -->
 <main>
-    <img>                        <br>
-    <br>
+    <form>
+        <!-- this form for a logo to upload -->
+        <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc">
+    </form>
+    <!-- to display logo -->
+    <img style="width:150px; height:150px;" ng-src="{{imageSrc}}" />
+    <p>image path :: {{imageSrc}}</p>
+
 </main>
 
 <div style="display:inline; overflow: auto;
