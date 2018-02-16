@@ -7,7 +7,6 @@ using System.Web.Services;
 using System.Configuration;
 using System.Data.SqlClient;
 
-namespace Demo {
     /// <summary>
     /// Summary description for CreationStage
     /// </summary>
@@ -53,5 +52,44 @@ namespace Demo {
             Context.Response.Write(js.Serialize(store));
         }
 
+    [WebMethod]
+    public void StoreType(string type)
+    {
+
+        string[] Type1 = { "sweet", "dessert", "sugar", "cake", "cupcake", "confection", "pie", "pastry", "pudding", "tart", "" };
+
+        string[] Type2 = { "craft", "decoupage", "" };
+
+        string[] Type3 = { "cloths", "dresses", "fashion", "" };
+
+        string[] Type4 = { "makeup", "beauty" };
+
+        string[] Type5 = { "skin care", "mask", "hair care", "" };
+
+        string[] Type6 = { "crochet", "yarn", "knitwear", "" };
+
+        string[] Type7 = { "accessories", "necklace", "bracelet", "earing", "Gemstones", "" };
+
+        string[] Type8 = { "electronics", "headphones", "" };
+
+        string[] Type9 = { "cooking", "food", "" };
+
+        string[] Type10 = { "handmade" };
+
+        string[][] Types = { Type1, Type2, Type3, Type4, Type5 , Type6, Type7, Type8, Type9, Type10 };
+
+        foreach (string[] j in Types) {
+
+            foreach (string i in j) {
+
+                if (type.Equals(i)) {
+
+                }
+
+            }
+        }
+
+
     }
+
 }
