@@ -82,7 +82,11 @@ var app = angular.module("CraetionStageEnglishDemo", ["ngRoute"])
     })
     .controller("6Controller", function ($scope) {
     })
-    .controller("7Controller", function ($scope) {
+    .controller("7Controller", function ($scope, $http) {
+        $http.get('CreationStage.asmx/StoreInfo')
+            .then(function (response) {
+                $scope.store = response.data;
+            });
     })
     .controller("8Controller", function ($scope, $http) {
         $http({
