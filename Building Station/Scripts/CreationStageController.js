@@ -1,6 +1,6 @@
 ﻿
 
-var app = angular.module("CraetionStageEnglishDemo", ["ngRoute"])
+var app = angular.module("CraetionStageApp", ["ngRoute"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/0", {
@@ -9,7 +9,7 @@ var app = angular.module("CraetionStageEnglishDemo", ["ngRoute"])
             })
             .when("/1", {
                 templateUrl: "CreationStagePages/store_name.html",
-                controller: "1Controller"
+                controller: "Controller1"
             })
             .when("/2", {
                 templateUrl: "CreationStagePages/store_type.html",
@@ -62,7 +62,7 @@ var app = angular.module("CraetionStageEnglishDemo", ["ngRoute"])
     })
     .controller("0Controller", function ($scope) {
     })
-    .controller("1Controller", function ($scope) {
+    .controller("Controller1", function ($scope) {
     })
     .controller("2Controller", function ($scope) {
     })
