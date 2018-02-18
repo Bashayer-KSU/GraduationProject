@@ -1,58 +1,58 @@
 ﻿
 
-var app = angular.module("CraetionStageApp", ["ngRoute"])
+var app = angular.module("CraetionStageEnglishDemo", ["ngRoute"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/0", {
-                templateUrl: "CreationStagePages/welcome.html",
+                templateUrl: "CreationStagePages/0.html",
                 controller: "0Controller"
             })
             .when("/1", {
-                templateUrl: "CreationStagePages/store_name.html",
-                controller: "Controller1"
+                templateUrl: "CreationStagePages/1.html",
+                controller: "1Controller"
             })
             .when("/2", {
-                templateUrl: "CreationStagePages/store_type.html",
+                templateUrl: "CreationStagePages/2.html",
                 controller: "2Controller"
             })
             .when("/3.1", {
-                templateUrl: "CreationStagePages/account_name_on_instagram.html",
+                templateUrl: "CreationStagePages/3.1.html",
                 controller: "3.1Controller"
             })
             .when("/3.2", {
-                templateUrl: "CreationStagePages/enter_store_info.html",
+                templateUrl: "CreationStagePages/3.2.html",
                 controller: "3.2Controller"
             })
             .when("/4.1", {
-                templateUrl: "CreationStagePages/account_location.html",
+                templateUrl: "CreationStagePages/4.1.html",
                 controller: "4.1Controller"
             })
             .when("/4.2", {
-                templateUrl: "CreationStagePages/upload_logo.html",
+                templateUrl: "CreationStagePages/4.2.html",
                 controller: "4.2Controller"
             })
             .when("/5", {
-                templateUrl: "CreationStagePages/gather_info.html",
+                templateUrl: "CreationStagePages/5.html",
                 controller: "5Controller"
             })
             .when("/6", {
-                templateUrl: "CreationStagePages/select_your_account.html",
+                templateUrl: "CreationStagePages/6.html",
                 controller: "6Controller"
             })
             .when("/7", {
-                templateUrl: "CreationStagePages/display_account.html",
+                templateUrl: "CreationStagePages/7.html",
                 controller: "7Controller"
             })
             .when("/8", {
-                templateUrl: "CreationStagePages/display_picked_colors.html",
+                templateUrl: "CreationStagePages/8.html",
                 controller: "8Controller"
             })
             .when("/9", {
-                templateUrl: "CreationStagePages/template_layout.html",
+                templateUrl: "CreationStagePages/9.html",
                 controller: "9Controller"
             })
             .when("/10", {
-                templateUrl: "CreationStagePages/loading_template.html",
+                templateUrl: "CreationStagePages/10.html",
                 controller: "10Controller"
             })
             .otherwise({
@@ -62,7 +62,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
     })
     .controller("0Controller", function ($scope) {
     })
-    .controller("Controller1", function ($scope) {
+    .controller("1Controller", function ($scope) {
     })
     .controller("2Controller", function ($scope) {
     })
@@ -82,23 +82,9 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
     })
     .controller("6Controller", function ($scope) {
     })
-    .controller("7Controller", function ($scope, $http) {
-        $http.get('CreationStage.asmx/StoreInfo')
-            .then(function (response) {
-                $scope.store = response.data;
-            });
+    .controller("7Controller", function ($scope) {
     })
-    .controller("8Controller", function ($scope, $http) {
-        $http({
-            url: "manageWebsiteColors.asmx/getWebsiteColors",
-            method: "get",
-            params: { path: filePath }
-        })
-            .then(function (response) {
-                $scope.colors = response.data;
-            }, function (error) {
-                $scope.error = error.data;
-            });
+    .controller("8Controller", function ($scope) {
     })
     .controller("9Controller", function ($scope) {
     })
