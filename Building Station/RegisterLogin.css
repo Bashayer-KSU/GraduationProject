@@ -1,15 +1,6 @@
-﻿@font-face {
-    font-family: "NeoSansArabic";
-    src: url('NeoSansArabic.ttf'); /* IE9 */
-}
-
-
-body {
+﻿body {
     min-height: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width:100%;
-    background-image: url("images/background.png");
+    background-color: #263238;
 }
 
 .text-center {
@@ -38,94 +29,44 @@ h1 {
 /* Sign Up */
 
 .container {
-    max-width: 5000px;
-    max-height: 500px;
-    margin-top: 40px;
-    margin-left:90px;
-    position:center;
-    width:1200px;
+    max-width: 400px;
+    max-height: 100px;
+    margin-top: 10px;
 }
-
 
 .alert-danger {
     text-align: center;
 }
 
 .screen {
-    position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 1200px;
-    height: 500px;
-    background-size: 1200px 500px;
-    background-repeat: no-repeat;
-    background-image: url("images/center_en_signup.png");
+    padding: 20px;
+    padding-bottom: 40px;
+    border-radius: 5px;
+    background-color: #2c3940;
     box-shadow: 0 1px 6px rgba(0,0,0,.3);
-    display: flex;
+    color: white;
 }
-
-.screen2 {
-    position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 1200px;
-    height: 500px;
-    background-size: 1200px 500px;
-    background-repeat: no-repeat;
-    background-image: url("images/center_en_signin.png");
-    box-shadow: 0 1px 6px rgba(0,0,0,.3);
-    display: flex;
-}
-
-.screen_ar {
-    position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 1200px;
-    height: 500px;
-    background-size: 1200px 500px;
-    background-repeat: no-repeat;
-    background-image: url("images/center_ar_signin.png");
-    box-shadow: 0 1px 6px rgba(0,0,0,.3);
-    display: flex;
-}
-
-.screen2_ar {
-    position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 1200px;
-    height: 500px;
-    background-size: 1200px 500px;
-    background-repeat: no-repeat;
-    background-image: url("images/center_ar_signup.png");
-    box-shadow: 0 1px 6px rgba(0,0,0,.3);
-    display: flex;
-}
-
 
 .btn {
     border-radius: 2px;
 }
 
-/*
 .cancel {
     background-color: #df405a;
 }
-*/
 
 .done {
-    background-color: #c6ba57;
+    background-color: #5CAB7D;
 }
 
     .done:hover {
-        background-color: #d3ca7d;
+        background-color: #6dc793;
     }
 
     .done:focus {
-        background-color: #d3ca7d;
+        background-color: #6dc793;
     }
-/*
+
 .cancel:hover {
     background-color: #f0435f;
 }
@@ -133,7 +74,7 @@ h1 {
 .cancel:focus {
     background-color: #f0435f;
 }
-*/
+
 .input-group {
     width: 100%;
 }
@@ -146,8 +87,8 @@ h1 {
 /* Error Box */
 
 .alert {
-    padding: 10px;
-    margin-bottom: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 2px;
     border-color: #e85a71;
@@ -179,71 +120,12 @@ label {
     font-size: 22px;
 }
 
-
-label.active {
-    transform: translateY(50px);
-    left: 2px;
-    font-size: 14px;
-}
+    label.active {
+        transform: translateY(50px);
+        left: 2px;
+        font-size: 14px;
+    }
 
 .highlight {
     color: white;
-}
-.form-register{
-    width:350px;
-    margin-top:130px;
-    margin-left:180px;
-}
-
-.form-register_ar {
-    width: 350px;
-    margin-top: 130px;
-    margin-left: 130px;
-}
-
-#form-login_ar {
-    width: 350px;
-    margin-top: 200px;
-    margin-left: 130px;
-}
-
-
-#form-login {
-    width: 350px;
-    margin-left: 200px;
-    margin-top: 200px;
-}
-.convertPage {
-    margin-top: 390px;
-    position: center;
-}
-.label2 {
-    transform: translateY(6px);
-    font-size: 30px;
-    margin-right: 10px;
-    display: inline-block;
-    font-family: "Century Gothic";
-}
-#pos {
-    margin-left:460px;
-}
-#pos_ar {
-    margin-left: 215px;
-    font-family: "NeoSansArabic";
-}
-#pos2 {
-    margin-left: 425px;
-}
-#pos2_ar {
-    margin-left: 250px;
-    font-family: "NeoSansArabic";
-}
-li {
-    display: inline;
-    font-size: 18px;
-    font-family: "Century Gothic";
-}
-
-.language {
-    float: left;
 }
