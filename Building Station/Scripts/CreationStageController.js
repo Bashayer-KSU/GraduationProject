@@ -63,6 +63,7 @@ var app = angular.module("CraetionStageEnglishDemo", ["ngRoute"])
     .controller("0Controller", function ($scope) {
     })
 <<<<<<< HEAD
+<<<<<<< HEAD
     .controller("Controller1", function ($scope, $http) {
         var sName = $scope.storeName;
         $http({
@@ -72,6 +73,9 @@ var app = angular.module("CraetionStageEnglishDemo", ["ngRoute"])
         }).then( function (error) {
             $scope.error = error.data;
 });
+=======
+    .controller("1Controller", function ($scope) {
+>>>>>>> b28ef28b322b4df2695f0df552ce3f87b5a763b7
 =======
     .controller("1Controller", function ($scope) {
 >>>>>>> b28ef28b322b4df2695f0df552ce3f87b5a763b7
