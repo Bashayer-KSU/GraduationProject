@@ -92,11 +92,4 @@ using System.Data.SqlClient;
 
     }
 
-    public void AddStoreNametoDatabase(string StoreName) {
-
-
-
-
-    }
-
 }
