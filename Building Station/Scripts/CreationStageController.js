@@ -62,7 +62,22 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
     })
     .controller("0Controller", function ($scope) {
     })
-    .controller("Controller1", function ($scope) {
+    .controller("Controller1", function ($scope, $http) {
+    
+        $scope.sendName = function() {
+            var url;
+            var data;
+                url = "CreationStage.asmx/AddStoreName";
+                data = $.params({ name: $scope.storeName });
+          
+            var config = {
+                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
+
+            $http.post(url, data, config)
+                .then(function (response) {$scope.result = response.data;
+                },
+                function (error) { $scope.error = error.data; });
+        }
     })
     .controller("2Controller", function ($scope) {
     })
