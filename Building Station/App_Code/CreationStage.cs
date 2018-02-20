@@ -96,7 +96,7 @@ public class CreationStage : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void AddStoreName(String name)
+    public void AddStoreName(string name)
     {
         JavaScriptSerializer js = new JavaScriptSerializer();
 
