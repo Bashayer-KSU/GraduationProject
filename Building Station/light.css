@@ -1,0 +1,143 @@
+@font-face {
+    font-family: "NeoSansArabic";
+    src: url('NeoSansArabic.ttf'); /* IE9 */
+}
+header.en {
+    background-image: url(images/header.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+body {
+    background-image: url(images/background.png);
+    background-repeat: repeat;
+}
+
+.tab_menu {
+    margin-top: 15px;
+    position: center;
+    width: inherit;
+}
+.lightmenu {
+
+    width: inherit;
+    height: 62px;
+    background: transparent;
+    background-image: url(images/t.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+
+
+.lightBlue {
+
+    position: relative;
+    height: 300px;
+    width: 1200px;
+    overflow: hidden;
+    float: left;
+
+}
+    .lightBlue li {
+
+        width: 200px;
+        height: 52px;
+        background-image: url(images/sep.png);
+        background-position: right;
+        background-repeat: no-repeat;
+        position: relative;
+        top: 9px;
+    }
+        .lightBlue li.back {
+    
+            background-image: url(images/blue.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 45px;
+            margin-left: -3px;
+            height: 20px;
+            z-index: 8;
+            top: 0px;
+            position: absolute;
+        }
+
+    .lightBlue li a {
+       
+        color: #575757;
+        outline: none;
+        text-align: center;
+        letter-spacing: 0;
+        z-index: 10;
+        display: block;
+        top: 19px;
+        height: 30px;
+        position: relative;
+        overflow: hidden;
+
+    }
+
+.lightBlue li a:hover {
+	color:#2c2c2c;
+}
+/* RESET */
+
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal
+}
+
+caption, th {
+    text-align: left
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal
+}
+
+q:before, q:after {
+    content: ''
+}
+/* Global reset-RESET */
+
+/* The below restores some sensible defaults */
+
+strong {
+    font-weight: bold
+}
+
+em {
+    font-style: italic
+}
+
+/* Gets rid of IE's blue borders */
+
+.language{
+    margin-left:100px;
+
+}
+.my_account {
+    margin-top: 6px;
+    margin-left:10px;
+}
+.tab-group{
+    display:inline-block;
+}
+ol, ul, li {
+    list-style: none;
+    display: inline-block;
+}
+.dropdown:hover ul {
+    display:block;
+    height:300px;
+        
+}
