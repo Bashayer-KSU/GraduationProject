@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN""http://www.w3.org/TR/html4/strict.dtd">
+<html> 
+<head>
+<title>BS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="../Scripts/angular.min.js"></script>
+    <script src="../Scripts/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="../Controllers/BS-Menu.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+
+<link rel="stylesheet" href="light.css" type="text/css" media="screen" />
+<script type="text/javascript" src="js/jquery-1.4.min.js"></script>
+<script type="text/javascript" src="js/jquery.easing.min.js"></script>
+<script type="text/javascript" src="js/jquery.lavalamp.min.js"></script>
+<!--<script type="text/javascript" src="js/cufon.yui.js"></script>-->
+<script type="text/javascript" src="js/myriad.js"></script>
+<script type="text/javascript">
+		$(function() {
+			 $("#one,#two,#three,#four,#five,#six,#seven,#eight").lavaLamp({
+				fx: "backout", 
+				speed: 700
+			 });
+		});
+</script>
+<!--<script type="text/javascript">
+
+		Cufon.replace('li a', {hover: true});
+
+</script>-->
+
+</head>
+
+<body ng-app="BS">
+    <!--1-->
+    <header class="en">
+        <div class="head">
+
+            <div class="language" style="float:left;">
+                <ul class="tab-group">
+                    <li>  <img src="/images/language.png" alt="" style="width:35px; height:35px;" /></li>
+                    <li class="=active"><a data-toggle="tab" href="#en_menu">English</a></li>
+                    <li>  |  </li>
+                    <li><a lang="ar" data-toggle="tab" href="#ar_menu" style="font-family:NeoSansArabic;">عربي</a></li>
+                    <li>  |  </li>
+                </ul>
+            </div>
+
+            <div class="my_account" style="float:left;"><a href="#">My account</a></div>
+        </div>
+
+
+        <!--2-->
+        <div class="logo"><img src="images/logo.png" style="height:170px; width:170px; margin-top:25px; margin-left:300px;" /></div>
+    </header>
+    <!--3-->
+    <header>
+        <div class="tab_menu" id="en_menu">
+            <div class="lightmenu">
+                <ul class="lightBlue" id="one">
+                    <li class="current"><a href="/BS-MenuTabs/DevelopmentEnvironment">Development Environment</a></li>
+                    <li><a href="/Template">Template</a></li>
+                    <li><a href="/Products">Products</a></li>
+                    <li><a href="/ManageStore">Manage Store</a></li>
+                    <!--<li class="dropdown"><a>Preview Website</a>
+                        <ul class="dropdown-menu"  role="menu">
+                            <li><a href="#">Desktop view</a></li>
+                            <li><a href="#">Mobile view</a></li>
+                        </ul>
+                    </li>
+-->
+
+
+                    <li>
+                        <div class="dropdown">
+                            <a href="#">Preview Website</a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Desktop view</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Mobile view</a></li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+
+
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    </body>
+</html>
