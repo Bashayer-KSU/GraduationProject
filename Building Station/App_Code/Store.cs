@@ -25,7 +25,7 @@ public class Store
     public int Color3 { get; set; }
     public int Color4 { get; set; }
     public List<string> SocialMedialinks { get; set; }
-
+    public string Password { get; set; }
 
 
 

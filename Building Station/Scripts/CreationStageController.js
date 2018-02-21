@@ -9,7 +9,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             })
             .when("/1", {
                 templateUrl: "CreationStagePages/store_name.html",
-                controller: "Controller1"
+                controller: "NameController"
             })
             .when("/2", {
                 templateUrl: "CreationStagePages/store_type.html",
@@ -62,7 +62,46 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
     })
     .controller("0Controller", function ($scope) {
     })
-    .controller("Controller1", function ($scope) {
+    .controller("NameController", function ($scope, $http) {
+        $scope.sendName = function () {
+            var post = $http({
+            method: "POST",
+            url: "CreationStage.asmx/AddStoreName",
+            dataType: 'json',
+            data: { name: $scope.storeName },
+            headers: { "Content-Type": "application/json" }
+        });
+        post.success(function (data, status) {
+            $window.alert("Hello: " + data.storeName + " ");
+        });
+
+        post.error(function (data, status) {
+            $window.alert(data.Message);
+        });
+    }
+      /*  $http({
+            url: "CreationStage.asmx/AddStoreName",
+            params: { name: $scope.storeName },
+            method: "get"
+        })
+            .then(function(error) {
+                $scope.error = error.data;
+            });*/
+        /*
+       $scope.sendName = function() {
+            var url;
+            var data;
+                url = "CreationStage.asmx/AddStoreName";
+                data = $.params({ name: $scope.storeName });
+          
+            var config = {
+                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
+
+            $http.get(url, data, config)
+                .then(function (response) {$scope.result = response.data;
+                },
+                function (error) { $scope.error = error.data; });
+        }*/
     })
     .controller("2Controller", function ($scope) {
     })

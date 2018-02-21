@@ -25,7 +25,7 @@ public class RegisterLogin : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM ShopOwner WHERE Name='" + name + "' OR Email='" + email + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Store WHERE Email='" + email + "'", con);
             SqlDataReader dr = cmd.ExecuteReader();
 
             if (dr.HasRows == true)
@@ -36,18 +36,18 @@ public class RegisterLogin : System.Web.Services.WebService
             else
             {
 
-                cmd = new SqlCommand("insert into ShopOwner (Name, Email, Password, Phone) values " +
+                cmd = new SqlCommand("insert into Store (ShopOwnerName, Email, Password, Phone) values " +
                    "('" + name + "','" + email + "','" + password + "','" + phone + "')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 
-                ShopOwner shopOwner = new ShopOwner();
-                shopOwner.name = name;
-                shopOwner.email = email;
-                shopOwner.password = password;
-                shopOwner.phone = phone;
+                Store store = new Store();
+                store.ShopOwner = name;
+                store.Email = email;
+                store.Password = password;
+                store.Phone = phone;
 
-                Context.Response.Write(js.Serialize(shopOwner));
+                Context.Response.Write(js.Serialize(store));
 
             }
         }
@@ -61,7 +61,7 @@ public class RegisterLogin : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM ShopOwner WHERE Name='" + name + "' AND Password='" + password + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Store WHERE Name='" + name + "' AND Password='" + password + "'", con);
             SqlDataReader dr = cmd.ExecuteReader();
 
             if (dr.HasRows == true)
