@@ -116,4 +116,31 @@ public class CreationStage : System.Web.Services.WebService
             Context.Response.Write(js.Serialize(store));
         }
     }
+
+    [WebMethod]
+    public void AddStoreType(string type)
+    {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+
+            //  SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreName ='" + n +"' Where ID = 2", con);
+            //  SqlCommand cmd = new SqlCommand("insert into Store (ShopOwnerName, Email, Password, StoreName) values " +
+            //  "('try','try@msn.com','12345678','" + n + "')", con);
+
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreType ='" + type + "' Where ID = 2 AND StoreType is null", con);
+
+            cmd.ExecuteNonQuery();
+            con.Close();
+            store.Type = type;
+            Context.Response.Write(js.Serialize(store));
+        }
+    }
+
+    [WebMethod]
+    public void connectInstagram(string link, string logo, string descripton)
+    {
+    }
 }

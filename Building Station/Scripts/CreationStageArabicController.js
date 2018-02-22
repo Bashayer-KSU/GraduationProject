@@ -8,12 +8,12 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 controller: "0aController"
             })
             .when("/1a", {
-                templateUrl: "CreationStagePages/اسم_المتجر.html",
-                controller: "1aController"
+                templateUrl: "CreationStagePages/store_name_arabic.html",
+                controller: "Name_Controller"
             })
             .when("/2a", {
-                templateUrl: "CreationStagePages/نوع_المتجر.html",
-                controller: "2aController"
+                templateUrl: "CreationStagePages/store_type_arabic.html",
+                controller: "Type_Controller"
             })
             .when("/3.1a", {
                 templateUrl: "CreationStagePages/اسم_الحساب_على_انستقرام.html",
@@ -62,9 +62,58 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("0aController", function ($scope) {
     })
-    .controller("1aController", function ($scope) {
+    .controller("Name_Controller", function ($scope, $http) {
+
+        $scope.sendName = function () {
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/AddStoreName",
+                dataType: 'json',
+                data: { name: $scope.storeName },
+                headers: { "Content-Type": "application/json" }
+            });
+            post.success(function (data, status) {
+                $window.alert("store name is : " + data.storeName + " ");
+            });
+
+            post.error(function (data, status) {
+                $window.alert(data.Message);
+            });
+        }
+
     })
-    .controller("2aController", function ($scope) {
+    .controller("Type_Controller", function ($scope) {
+        $scope.sendType = function () {
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/AddStoreType",
+                dataType: 'json',
+                data: { type: $scope.Type },
+                headers: { "Content-Type": "application/json" }
+            });
+            post.success(function (data, status) {
+                $window.alert("store type is : " + data.Type + " ");
+            });
+
+            post.error(function (data, status) {
+                $window.alert(data.Message);
+            });
+        }
+        $scope.Types = ["Beauty & skin care", "أعمال يدوية", "اكسسوارات", "حلويات", "موضة وملابس", "مخبز", "طبخ منزلي", "اكسسوارات جوال ولابتوب"];
+        $scope.complete = function (string) {
+            var output = [];
+            angular.forEach($scope.Types, function (Type) {
+                if (Type.toLowerCase().indexOf(string.toLowerCase()) >= 0) {
+                    output.push(Type);
+                }
+            });
+            $scope.filterType = output;
+        }
+        $scope.fillTextbox = function (string) {
+            $scope.Type = string;
+            $scope.hidethis = true;
+        }  
+
     })
     .controller("3.1aController", function ($scope) {
     })

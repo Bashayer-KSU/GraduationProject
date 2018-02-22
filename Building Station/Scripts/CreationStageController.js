@@ -13,7 +13,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             })
             .when("/2", {
                 templateUrl: "CreationStagePages/store_type.html",
-                controller: "2Controller"
+                controller: "TypeController"
             })
             .when("/3.1", {
                 templateUrl: "CreationStagePages/account_name_on_instagram.html",
@@ -72,13 +72,13 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             headers: { "Content-Type": "application/json" }
         });
         post.success(function (data, status) {
-            $window.alert("Hello: " + data.storeName + " ");
+            $window.alert("store name is: " + data.storeName + " ");
         });
 
         post.error(function (data, status) {
             $window.alert(data.Message);
         });
-    }
+        }
       /*  $http({
             url: "CreationStage.asmx/AddStoreName",
             params: { name: $scope.storeName },
@@ -103,7 +103,38 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
                 function (error) { $scope.error = error.data; });
         }*/
     })
-    .controller("2Controller", function ($scope) {
+    .controller("TypeController", function ($scope) {
+        $scope.sendType = function () {
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/AddStoreType",
+                dataType: 'json',
+                data: { type: $scope.Type },
+                headers: { "Content-Type": "application/json" }
+            });
+            post.success(function (data, status) {
+                $window.alert("store type is : " + data.Type + " ");
+            });
+
+            post.error(function (data, status) {
+                $window.alert(data.Message);
+            });
+        }
+        $scope.Types = ["Beauty & skin care", "Handmade", "Accessories", "Sweets", "fashion", "Bakery", "Home cook", "Phone & laptop accessories"];
+        $scope.complete = function (string) {
+            var output = [];
+            angular.forEach($scope.Types, function (Type) {
+                if (Type.toLowerCase().indexOf(string.toLowerCase()) >= 0) {
+                    output.push(Type);
+                }
+            });
+            $scope.filterType = output; 
+        }
+        $scope.fillTextbox = function (string) {
+            $scope.Type = string;
+            $scope.hidethis = true;
+        }  
+
     })
     .controller("3.1Controller", function ($scope) {
     })
