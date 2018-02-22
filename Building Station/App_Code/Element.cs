@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.Services;
 
 /// <summary>
 /// Summary description for Colors
@@ -31,7 +35,7 @@ public class Element
 
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("select * from Element Where ID='" + e.ID + "', con);
+            SqlCommand cmd = new SqlCommand("select * from Element Where ID='" + e.ID + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
