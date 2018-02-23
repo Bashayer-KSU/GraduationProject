@@ -12,18 +12,18 @@ public class Store
     public string Name { get; set; }
     public string Type { get; set; }
     public string Logo { get; set; }
-    public List<string> TextSet { get; set; }
-    public List<string> ImageSet { get; set; }
+    public string StoreText { get; set; }
+    public string SliderImage{ get; set; }
     public string Address { get; set; }
     public string Email { get; set; }
     public string Phone { get; set; }
     public bool Published { get; set; }
     public string Domain { get; set; }
     public string ShopOwner { get; set; }
-    public int Color1 { get; set; }
-    public int Color2 { get; set; }
-    public int Color3 { get; set; }
-    public int Color4 { get; set; }
+    public string Color1 { get; set; }
+    public string Color2 { get; set; }
+    public string Color3 { get; set; }
+    public string Color4 { get; set; }
     public List<string> SocialMedialinks { get; set; }
     public string Password { get; set; }
 

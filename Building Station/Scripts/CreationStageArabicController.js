@@ -82,13 +82,13 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         }
 
     })
-    .controller("Type_Controller", function ($scope) {
+    .controller("Type_Controller", function ($scope, $http) {
         $scope.sendType = function () {
             var post = $http({
                 method: "POST",
                 url: "CreationStage.asmx/AddStoreType",
                 dataType: 'json',
-                data: { type: $scope.Type },
+                data: { type: $scope.Type, language: 'Arabic' },
                 headers: { "Content-Type": "application/json" }
             });
             post.success(function (data, status) {
@@ -99,7 +99,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 $window.alert(data.Message);
             });
         }
-        $scope.Types = ["مكياج وعناية", "أعمال يدوية", "اكسسوارات", "حلويات", "موضة وملابس", "مخبز", "طبخ منزلي", "اكسسوارات جوال ولابتوب"];
+        $scope.Types = ["مكياج وعناية", "أشغال يدوية", "اكسسوارات", "حلويات", "موضة وملابس", "مخبز", "طبخ منزلي", "اكسسوارات جوال ولابتوب"];
         $scope.complete = function (string) {
             var output = [];
             angular.forEach($scope.Types, function (Type) {

@@ -37,7 +37,7 @@ public class RegisterLogin : System.Web.Services.WebService
             {
 
                 cmd = new SqlCommand("insert into Store (ShopOwnerName, Email, Password, Phone) values " +
-                   "('" + name + "','" + email + "','" + password + "','" + phone + "')", con);
+                   "(N'" + name + "','" + email + "','" + password + "','" + phone + "')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 

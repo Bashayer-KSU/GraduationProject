@@ -103,13 +103,13 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
                 function (error) { $scope.error = error.data; });
         }*/
     })
-    .controller("TypeController", function ($scope) {
+    .controller("TypeController", function ($scope, $http) {
         $scope.sendType = function () {
             var post = $http({
                 method: "POST",
                 url: "CreationStage.asmx/AddStoreType",
                 dataType: 'json',
-                data: { type: $scope.Type },
+                data: { type: $scope.Type, language: 'Engkish' },
                 headers: { "Content-Type": "application/json" }
             });
             post.success(function (data, status) {
