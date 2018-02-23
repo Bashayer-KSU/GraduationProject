@@ -44,15 +44,15 @@ public class Element
                 e.Name = reader["Name"].ToString();
                 e.Type = reader["Type"].ToString();
                 e.Value = reader["Value"].ToString();
-                e.Hidden = reader["Hidden"].ToString();
+             //   e.Hidden = reader["Hidden"].ToString();
                 e.Image = reader["Image"].ToString();
                 e.Store_ID = reader["Store_ID"].ToString();
 
             }
         }
 
-        Context.Response.Write(js.Serialize(e));
-        if(e.Hidden==0)
+     //   Context.Response.Write(js.Serialize(e));
+        //if(e.Hidden==0)
         {
 
 

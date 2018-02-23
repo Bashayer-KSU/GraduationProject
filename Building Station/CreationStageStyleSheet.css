@@ -539,7 +539,7 @@ a {
 }
 
     a:hover, a:focus, a:active {
-        color: #1f6b8b;
+        color: #555354;
     }
 
 fieldset {
@@ -575,13 +575,13 @@ p {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #cccccc;
+    color: #CCCCCC;
     font-weight: bold;
     margin: 0 0 30px;
 }
 
 h3 {
-    color: #2d9bca;
+    color: #555354;
 }
 
 .text-center {

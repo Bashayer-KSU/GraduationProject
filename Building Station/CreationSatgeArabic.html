@@ -16,6 +16,10 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <style>
+        img {
+            position:absolute;
+            z-index: 50;
+        }
         ul {
             position: absolute;
             z-index: 1000;
@@ -48,12 +52,17 @@
 
 <!-- To place profile image on the left, simply add class 'left' to the body. No other changes to CSS / HTML required -->
 <body class="left">
-    <h1 style="z-index:1000;" class="button button-large">English |العربية</h1>
+    <div style="z-index:50; margin: 1px 1px 1px 10px ; position:relative; display:inline-block;">
+        <h3 style="text-align:left;float:left;"><a href="CreationStage.html">English</a> | </h3>
+        <h3 style="text-align:left;float:left;"><a href="CreationSatgeArabic.html">العربية</a></h3>
+    </div>
     <div class="wrapper">
-        <h1 style="z-index:1;" class="button button-large">English |العربية</h1>
         <div class="container">
             <ng-view dir="rtl"></ng-view>
         </div>
     </div>
+    <div style="margin-top:20vw; margin-bottom:1vw;">
+    <img src="images/bulding-logoo.png"  style="width: 20vw; height:auto; float:left;"/>
+        </div>
 </body>
 </html>

@@ -99,7 +99,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 $window.alert(data.Message);
             });
         }
-        $scope.Types = ["Beauty & skin care", "أعمال يدوية", "اكسسوارات", "حلويات", "موضة وملابس", "مخبز", "طبخ منزلي", "اكسسوارات جوال ولابتوب"];
+        $scope.Types = ["مكياج وعناية", "أعمال يدوية", "اكسسوارات", "حلويات", "موضة وملابس", "مخبز", "طبخ منزلي", "اكسسوارات جوال ولابتوب"];
         $scope.complete = function (string) {
             var output = [];
             angular.forEach($scope.Types, function (Type) {
