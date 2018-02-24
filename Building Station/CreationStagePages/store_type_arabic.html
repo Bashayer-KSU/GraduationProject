@@ -4,7 +4,7 @@
 </header>
 <!-- Main content area -->
 <main>
-    <input id="Type" type="text" name="Type" ng-model="Type" ng-keyup="complete(Type)" style="width:100%;">
+    <input id="Type" type="text" name="Type" ng-model="Type" ng-keyup="complete(Type)" style="width:100%;" required>
     <ul style="list-style: none;" ng-model="hidethis" ng-hide="hidethis">
         <li class="list-group-item" ng-repeat="Typedata in filterType" ng-click="fillTextbox(Typedata)">{{Typedata}}</li>
     </ul>    <br /> <br />
