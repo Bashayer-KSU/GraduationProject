@@ -12,7 +12,7 @@
 
 
 </head>
-<body ng-controller="Register" ng-app="myApp">
+<body ng-app="myApp" ng-controller="RegisterLoginCtrl" >
 
 
     <div class="container">
@@ -29,7 +29,7 @@
 
         <div class="form">
 
-            <div class="tab-content" ng-controller="RegisterLoginCtrl">
+            <div class="tab-content">
                 <!-- -->
                 <div id="signup" class="tab-pane fade in active">
 
@@ -37,8 +37,8 @@
 
 
                         <div class="convertPage">
-                            <a data-toggle="tab" href="#login">
-                                <button class="waves-effect waves-light btn done" id="pos">LOG IN</button>
+                            <a data-toggle="tab" href="#login" class="waves-effect waves-light btn done" id="pos" role="button">
+                                LOG IN
                             </a>
                         </div>
 
@@ -125,8 +125,8 @@
                         </div>
 
                         <div class="convertPage">
-                            <a data-toggle="tab" href="#login_ar">
-                                <button class="waves-effect waves-light btn done" id="pos_ar">تسجيل الدخول</button>
+                            <a data-toggle="tab" href="#login_ar" role="button" class="waves-effect waves-light btn done" id="pos_ar">
+                                تسجيل الدخول 
                             </a>
                         </div>
 
@@ -142,8 +142,8 @@
 
                         <div class="convertPage">
                             <!--<p class="label2">New to building station?</p>-->
-                            <a data-toggle="tab" href="#signup">
-                                <button class="waves-effect waves-light btn done" id="pos2">REGISTER</button>
+                            <a data-toggle="tab" href="#signup" role="button" class="waves-effect waves-light btn done" id="pos2">
+                                REGISTER
                             </a>
                         </div>
                         <div class="signInForm">
@@ -203,8 +203,8 @@
                         </div><!-- -->
                         <div class="convertPage">
                             <!--<p class="label2">New to building station?</p>-->
-                            <a data-toggle="tab" href="#signup_ar">
-                                <button class="waves-effect waves-light btn done" id="pos2_ar">تسجيل</button>
+                            <a data-toggle="tab" href="#signup_ar" role="button" class="waves-effect waves-light btn done" id="pos2_ar">
+                             تسجيل
                             </a>
                         </div>
                     </div>

@@ -69,7 +69,7 @@ h1 {
     background-size: cover;
     background-repeat: no-repeat;
     width: 1200px;
-    height: 500px;
+    # height: 500px;
     background-size: 1200px 500px;
     background-repeat: no-repeat;
     background-image: url("images/center_en_signin.png");
