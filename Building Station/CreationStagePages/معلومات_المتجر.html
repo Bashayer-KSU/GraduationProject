@@ -5,14 +5,23 @@
 
 <!-- Main content area -->
 <main>
-    <img>                        <br>
-    <br>
+     أين يقع مشروعك<br />
+    <input type="text" ng-model="Address" style="width:100%;" required />
+    صف متجرك للزوار <br />
+    <input type="text" ng-model="Description" style="width:100%;" />
+    <div style="width:100%; display:inline; overflow: auto;white-space: nowrap; padding: 0px 0px;">
+        ضع رابطا لمتجرك على مواقع التواصل الاجتماعي <br />
+        <input type="text" ng-model="Link.name" name="" style="width:90%;" />
+        <a style="font-size:50px;  padding: 0.15cm 0.3cm 0.3cm 0.3cm; border-radius: 50%;" ng-click="addNewLink()" class="button button-large">&#43;</a>
+        <div id="choicesDisplay">
+            {{ Links }}
+        </div>
+    </div>
 </main>
-
-<div style="display:inline; overflow: auto;
-                white-space: nowrap; padding: 0px 0px;">
-    <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="4.2a" class="button button-large">&#8249;</a>
-    <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="2a" class="button button-large">&#8250;</a>
+<br/>
+<div style="display:inline; overflow: auto;white-space: nowrap; padding: 0px 0px;">
+    <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="4.2a" class="button button-large">&#8250;</a>
+    <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="2a" class="button button-large">&#8249;</a>
 </div>
 <br>
 <!-- Footer -->

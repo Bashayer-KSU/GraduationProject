@@ -21,7 +21,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             })
             .when("/3.2a", {
                 templateUrl: "CreationStagePages/معلومات_المتجر.html",
-                controller: "3.2aController"
+                controller: "InfoController"
             })
             .when("/4.1a", {
                 templateUrl: "CreationStagePages/موقع_الحساب.html",
@@ -117,7 +117,13 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("3.1aController", function ($scope) {
     })
-    .controller("3.2aController", function ($scope) {
+    .controller("InfoController", function ($scope) {
+
+        $scope.Links = [{ id: 'Link1' }, { id: 'Link2' }];
+        $scope.addNewLink = function () {
+            var newItemNo = $scope.Links.length + 1;
+            $scope.Links.push({ 'id': 'Link' + newItemNo });
+        };
     })
     .controller("4.1aController", function ($scope) {
     })

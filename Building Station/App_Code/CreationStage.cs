@@ -63,19 +63,8 @@ public class CreationStage : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void StoreType_Arabic(string type)
-    {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
-          
-
-
-    }
-
-    [WebMethod]
     public void StoreType(string type)
     {
-
         string[] Type1 = { "sweets", "dessert", "sugar", "cake" };
 
         string[] Type2 = { "handmade", "craft", "crochet", "yarn", "knitwear" };
@@ -96,19 +85,14 @@ public class CreationStage : System.Web.Services.WebService
 
         foreach (string[] j in Types)
         {
-
             foreach (string i in j)
             {
-
                 if (type.Equals(i))
                 {
 
                 }
-
             }
         }
-
-
     }
 
     [WebMethod]
@@ -150,7 +134,7 @@ public class CreationStage : System.Web.Services.WebService
             else if ((type.Contains("حلويات")) || (type.Contains("كيك")))
             {
                 store.SliderImage = Slider2;
-                store.Description = "";
+                store.Description = "حلويات صنعت بكل حب وشغف 🎂💓";
             }
 
             else if ((type.Contains("مخبز")) || (type.Contains("معجنات")) || (type.Contains("مخبوزات")))
@@ -163,36 +147,36 @@ public class CreationStage : System.Web.Services.WebService
             else if ((type.Contains("ساعات")) || (type.Contains("اكسسوار")) || (type.Contains("اكسسوارات")))
             {
                 store.SliderImage = Slider4;
-                store.Description = "";
+                store.Description = "نتميز بجودة عالية وخيارات متعددة 💎";
             }
 
             else if ((type.Contains("موضة")) || (type.Contains("موضة وملابس")) || (type.Contains("ملابس")) || (type.Contains("فساتين")))
             {
                 store.SliderImage = Slider5;
-                store.Description = "";
+                store.Description = "قطع منتقاة بعناية لتناسب ذوقك الراقي 🎀🛍";
             }
 
             else if ((type.Contains("أغطية جوال")) || (type.Contains("اكسسوارات جوال ولابتوب")) || (type.Contains("حقائب لابتوب")))
             {
                 store.SliderImage = Slider6;
-                store.Description = "";
+                store.Description = "كل ما هو جديد في عالم إكسسوارات الإلكترونيات 📱🖥";
             }
 
             else if ((type.Contains("طبخ")) || (type.Contains("طبخ منزلي")) || (type.Contains("ورق عنب")) || (type.Contains("محاشي")) || (type.Contains("أطعمة شرقية")) || (type.Contains("طعام")))
             {
                 store.SliderImage = Slider7;
-                store.Description = "";
+                store.Description = "طبخات لذيذة ودافئة لإرضاء ذائقتكم 🥘😋";
             }
 
             else if ((type.Contains("جمال")) || (type.Contains("عناية")) || (type.Contains("مكياج")) || (type.Contains("بشرة")) || (type.Contains("تجميل")) || (type.Contains("كريم")))
             {
                 store.SliderImage = Slider8;
-                store.Description = "";
+                store.Description = "المكان المناسب لتدللي نفسك 💁🏻‍♀️";
             }
             else
             {
                 store.SliderImage = Slider_other;
-                store.Description = "";
+                store.Description = "أسعار منافسة، ومنتجات رائعة ✨";
             }
 
         }
