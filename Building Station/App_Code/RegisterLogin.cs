@@ -47,7 +47,7 @@ public class RegisterLogin : System.Web.Services.WebService
                 store.Password = password;
                 store.Phone = phone;
 
-                Context.Response.Write(js.Serialize(store));
+                Context.Response.Write(js.Serialize(true));
 
             }
         }
