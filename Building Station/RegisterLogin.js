@@ -1,6 +1,7 @@
 ﻿var myApp = angular.module("myApp", []);
 
-var Register = myApp.controller("RegisterLoginCtrl", function ($scope, $http) {
+var Register = myApp.controller("RegisterLoginCtrl", function ($scope, $http, $window) {
+
 
     $scope.SendData = function (e) {
         // use $.param jQuery function to serialize data from JSON 
@@ -29,11 +30,11 @@ var Register = myApp.controller("RegisterLoginCtrl", function ($scope, $http) {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
             }
         };
-
+        
         $http.post(url, data, config)
             .then(function (response) {
-                if (response.data === true)
-                    window.location.href = "/CreationStage.html";
+                $scope.result = response.data;
+                $window.location.href = response.data;
             }, function (error) {
                 $scope.error = error.data;
             });
