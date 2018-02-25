@@ -49,7 +49,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             })
             .when("/9a", {
                 templateUrl: "CreationStagePages/تصميم_المتجر.html",
-                controller: "9aController"
+                controller: "TemplateController"
             })
             .when("/10a", {
                 templateUrl: "CreationStagePages/جاري-تحميل_المنصة.html",
@@ -141,7 +141,40 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("8aController", function ($scope) {
     })
-    .controller("9aController", function ($scope) {
+    .controller("TemplateController", function ($scope, $http) {
+
+        var TemplateID;
+
+        $scope.firstTemplate = function () {
+
+            TemplateID = 1; 
+        }
+
+        $scope.secondTemplate = function () {
+
+            TemplateID = 2;
+        }
+        $scope.thirdTemplate = function () {
+
+            TemplateID = 3;
+        }
+            $scope.sendTemplateID = function () {
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/AddTemplate",
+                dataType: 'json',
+                data: { id: $scope.TemplateID },
+                headers: { "Content-Type": "application/json" }
+            });
+            post.success(function (data, status) {
+                $window.alert("Template ID is : " + data.TemplateID + " ");
+            });
+
+            post.error(function (data, status) {
+                $window.alert(data.Message);
+            });
+        }
+
     })
     .controller("10aController", function ($scope) {
     });

@@ -203,4 +203,22 @@ public class CreationStage : System.Web.Services.WebService
     public void ConnectInstagram(string link, string logo, string descripton)
     {
     }
+
+
+    [WebMethod]
+    public void AddTemplate(int id)
+    {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreType = " + id + " Where Email = 'asmaa.alrubia@gmail.com'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            store.TemplateID = id;
+            Context.Response.Write(js.Serialize(store));
+        }
+    }
 }
