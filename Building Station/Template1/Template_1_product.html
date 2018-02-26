@@ -1,23 +1,30 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <!--
 	Dopetrope by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html>
-	<head>
-		<title>Arabic</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	  
-	</head>
-	<body class="right-sidebar">
-		<div id="page-wrapper">
+<html lang="en" ng-app="Tempalat1Arabic">
+<head>
+    <title>Arabic</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src="../Scripts/angular.min.js"></script>
+    <script src="../Scripts/angular.js"></script>
+    <!--<script src="../Scripts/angular-route.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular-route.min.js"></script>
+    <script src="../Scripts/CreationStageArabicController.js"></script>
+
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+	<body class="right-sidebar" ng-controller="template1_arabic">
+		<div id="page-wrapper" >
 
 			<!-- Header -->
 			<section class="box" style=" padding:0px 0px 0px 0px; margin:0px 0px 0px 0px;">
@@ -27,10 +34,10 @@
 	
 							<!-- Logo -->
 							<div style=" float:left; width:33%;">
-									<img src="images/shopping-cart.png" style="width:5vw; height:5vw;" href="">
+									<img src="../images/shopping-cart.png" style="width:5vw; height:5vw;" href="">
 								</div>	
 							<div style=" position: absolute; left: 7em; right: 0em; margin: 0px 0px 0px 0px; width:auto;" >
-								<h1 style="font-size:3vw; margin: 15px 0px 0px 0px; "> اسم المتجر</h1>
+								<h1 style="font-size:3vw; margin: 15px 0px 0px 0px; "> اسم المتجر{{Store.Name}}</h1>
 							</div>
 							<div style=" float:right;  margin:0px 0px 0px 0px; width:33%;">
 									<img src="pic01.jpg"   style="width: 10vw; height: 10vw; border-radius: 50%;" alt="Cinque Terre"> 
@@ -97,8 +104,8 @@
 									<ul class="social">
 										<li><a class="icon fa-facebook" href="#"><span class="label">Facebook</span></a></li>
 										<li><a class="icon fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-										<a herf="#"><img style="padding-bottom:13px;width:12.5%;" alt="Snapchat" src="images/snapchat.png"></a>
-										<li></li><a herf="#"><img style="padding-bottom:13px;width:14%;" alt="Instagram" src="images/instagram.png"></a>
+										<a herf="#"><img style="padding-bottom:13px;width:12.5%;" alt="Snapchat" src="../images/snapchat.png"></a>
+										<li></li><a herf=""><img style="padding-bottom:13px;width:14%;" alt="Instagram" src="../images/instagram.png"></a>
 
 									</ul>
 									<ul class="contact">
@@ -146,6 +153,6 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-
+</div>
 	</body>
 </html>

@@ -17,4 +17,5 @@ public class Product
     public string Category_ID { get; set; }
     public int Amount { get; set; }
     public string Store_ID { get; set; }
+    public string StoreEmail { get; set; }
 }

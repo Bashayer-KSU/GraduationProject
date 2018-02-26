@@ -45,7 +45,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             })
             .when("/8a", {
                 templateUrl: "CreationStagePages/الألوان.html",
-                controller: "8aController"
+                controller: "ColorsController"
             })
             .when("/9a", {
                 templateUrl: "CreationStagePages/تصميم_المتجر.html",
@@ -144,7 +144,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $scope.Store = response.data;
         });
     })
-    .controller("8aController", function ($scope) {
+    .controller("ColorsController", function ($scope, $http) {
+
     })
     .controller("TemplateController", function ($scope, $http) {
 
