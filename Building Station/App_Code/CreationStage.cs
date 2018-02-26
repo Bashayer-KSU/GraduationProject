@@ -44,21 +44,19 @@ public class CreationStage : System.Web.Services.WebService
 
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("select * from Store Where Email ", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Phone, logo, SocialMediaLinks, Location FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-
-                store.Logo = reader["Logo"].ToString();
-                store.Name = reader["Name"].ToString();
-                store.Address = reader["Address"].ToString();
                 store.Email = reader["Email"].ToString();
+                store.Name = reader["StoreName"].ToString();
                 store.Phone = reader["Phone"].ToString();
-                // store.SocialMedialinks = reader["Social Media Links"].ToString();
+                store.Logo = reader["logo"].ToString();
+                store.SocialMedialinks = (reader["SocialMediaLinks"].ToString()).Split(null);
+                store.Address = reader["Location"].ToString();
             }
         }
-
         Context.Response.Write(js.Serialize(store));
     }
 

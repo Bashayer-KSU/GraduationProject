@@ -41,7 +41,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             })
             .when("/7a", {
                 templateUrl: "CreationStagePages/عرض_الحساب.html",
-                    controller: "7aController"
+                    controller: "DisplayAccountController"
             })
             .when("/8a", {
                 templateUrl: "CreationStagePages/الألوان.html",
@@ -137,7 +137,12 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("6aController", function ($scope) {
     })
-    .controller("7aController", function ($scope) {
+    .controller("DisplayAccountController", function ($scope, $http) {
+
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+
+            $scope.Store = response.data;
+        });
     })
     .controller("8aController", function ($scope) {
     })
