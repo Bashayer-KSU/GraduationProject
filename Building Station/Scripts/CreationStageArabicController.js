@@ -37,11 +37,11 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             })
             .when("/6a", {
                 templateUrl: "CreationStagePages/اختيار_الحساب.html",
-                    controller: "6aController"
+                controller: "6aController"
             })
             .when("/7a", {
                 templateUrl: "CreationStagePages/عرض_الحساب.html",
-                    controller: "DisplayAccountController"
+                controller: "DisplayAccountController"
             })
             .when("/8a", {
                 templateUrl: "CreationStagePages/الألوان.html",
@@ -72,13 +72,6 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 data: { name: $scope.storeName },
                 headers: { "Content-Type": "application/json" }
             });
-            post.success(function (data, status) {
-                $window.alert("store name is : " + data.storeName + " ");
-            });
-
-            post.error(function (data, status) {
-                $window.alert(data.Message);
-            });
         }
 
     })
@@ -90,13 +83,6 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 dataType: 'json',
                 data: { type: $scope.Type, language: 'Arabic' },
                 headers: { "Content-Type": "application/json" }
-            });
-            post.success(function (data, status) {
-                $window.alert("store type is : " + data.Type + " ");
-            });
-
-            post.error(function (data, status) {
-                $window.alert(data.Message);
             });
         }
         $scope.Types = ["مكياج وعناية", "أشغال يدوية", "اكسسوارات", "حلويات", "موضة وملابس", "مخبز", "طبخ منزلي", "اكسسوارات جوال ولابتوب"];
@@ -112,7 +98,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $scope.fillTextbox = function (string) {
             $scope.Type = string;
             $scope.hidethis = true;
-        }  
+        }
 
     })
     .controller("3.1aController", function ($scope) {
@@ -158,7 +144,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
 
         $scope.firstTemplate = function () {
 
-            TemplateID = 1; 
+            TemplateID = 1;
         }
 
         $scope.secondTemplate = function () {
@@ -170,13 +156,13 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             TemplateID = 3;
         }
 
-        $scope.goToTemplate = functiion() {
+        $scope.goToTemplate = function () {
 
             $window.location.href = '/Template_1_product.html';
 
         }
 
-            $scope.sendTemplateID = function () {
+        $scope.sendTemplateID = function () {
             var post = $http({
                 method: "POST",
                 url: "CreationStage.asmx/AddTemplate",
@@ -184,16 +170,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 data: { id: $scope.TemplateID },
                 headers: { "Content-Type": "application/json" }
             });
-            post.success(function (data, status) {
-                $window.alert("Template ID is : " + data.TemplateID + " ");
-            });
-
-            post.error(function (data, status) {
-                $window.alert(data.Message);
-            });
         }
-
-    })
+        })
     .controller("LoadController", function ($scope) {
 
 
