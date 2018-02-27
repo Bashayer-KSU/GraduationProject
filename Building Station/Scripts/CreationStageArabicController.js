@@ -136,7 +136,16 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
 
             $scope.Colors = response.data;
         });
+        $scope.UpdateColors = function () {
 
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/UpdateColors",
+                dataType: 'json',
+                data: { color1: $scope.Colors.Color1, color2: $scope.Colors.Color2, color3: $scope.Colors.Color3, color4: $scope.Colors.Color4 },
+                headers: { "Content-Type": "application/json" }
+            });
+        }
     })
     .controller("TemplateController", function ($scope, $http) {
 

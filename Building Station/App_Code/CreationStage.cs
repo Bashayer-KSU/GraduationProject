@@ -240,4 +240,25 @@ public class CreationStage : System.Web.Services.WebService
         }
         Context.Response.Write(js.Serialize(store));
     }
+    [WebMethod]
+    public void UpdateColors(string color1, string color2, string color3, string color4)
+    {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET Color1 = '" + color1 + "', Color2 = '"+ color2 +"', Color3 = '"+ color3 +"', Color4 = '"+ color4 +"' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            store.Color1 = color1;
+            store.Color2 = color2;
+            store.Color3 = color3;
+            store.Color4 = color4;
+            Context.Response.Write(js.Serialize(store));
+        }
+
+
+    }
 }
