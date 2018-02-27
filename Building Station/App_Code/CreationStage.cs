@@ -219,4 +219,25 @@ public class CreationStage : System.Web.Services.WebService
             Context.Response.Write(js.Serialize(store));
         }
     }
+
+    [WebMethod]
+    public void getColors()
+    {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("SELECT Color1, Color2, Color3, Color4 FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.Color1 = reader["Color1"].ToString();
+                store.Color2 = reader["Color2"].ToString();
+                store.Color3 = reader["Color3"].ToString();
+                store.Color4 = reader["Color4"].ToString();
+            }
+        }
+        Context.Response.Write(js.Serialize(store));
+    }
 }

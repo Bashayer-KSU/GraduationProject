@@ -53,7 +53,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             })
             .when("/10a", {
                 templateUrl: "CreationStagePages/جاري-تحميل_المنصة.html",
-                controller: "10aController"
+                controller: "LoadController"
             })
             .otherwise({
                 redirectTo: "/0a"
@@ -146,6 +146,11 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("ColorsController", function ($scope, $http) {
 
+        $http.get('CreationStage.asmx/getColors').then(function (response) {
+
+            $scope.Colors = response.data;
+        });
+
     })
     .controller("TemplateController", function ($scope, $http) {
 
@@ -182,7 +187,9 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         }
 
     })
-    .controller("10aController", function ($scope) {
+    .controller("LoadController", function ($scope) {
+
+
     });
 
 //to upload image
