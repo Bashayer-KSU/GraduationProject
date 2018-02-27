@@ -169,6 +169,13 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
 
             TemplateID = 3;
         }
+
+        $scope.goToTemplate = functiion() {
+
+            $window.location.href = '/Template_1_product.html';
+
+        }
+
             $scope.sendTemplateID = function () {
             var post = $http({
                 method: "POST",
