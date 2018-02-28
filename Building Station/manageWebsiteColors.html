@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html ng-app="BS">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+
+    <script src="manageWebsiteColors.js"></script>
+</head>
+<body>
+    <div ng-controller="UploadController">
+        <form>
+            <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc">
+            <!--  <input type="file" ng-file-select="onFileSelect($files)" multiple> -->
+        </form>
+
+        <img style="width:200px; height:200px;" ng-src="{{imageSrc}}" />
+        <a href="{{imageSrc}}">dd</a>
+    </div>
+
+    <div ng-controller="displayColors">
+        <p style="background-color:{{colors.color1}}">{{colors.color1}} first color</p><br />
+        <p style="background-color:{{colors.color2}}">{{colors.color2}} second</p><br />
+        <p style="background-color:{{colors.color3}}">{{colors.color3}} thired</p><br />
+        <p style="background-color:{{colors.color4}}">{{colors.color4}} forth</p><br />
+    </div>
+
+</body>
+</html>
