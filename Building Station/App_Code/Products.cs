@@ -16,7 +16,7 @@ using System.Web.Services;
 [System.Web.Script.Services.ScriptService]
 public class Products : System.Web.Services.WebService {
 
-    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
     string ShopEmail = "lamia@gmail.com";
 
     [WebMethod]
@@ -94,7 +94,7 @@ public class Products : System.Web.Services.WebService {
                         pro.Discount = Convert.ToInt32(reader["Discount"]);
                         pro.Category_ID = reader["Category_ID"].ToString();
                         pro.Amount = Convert.ToInt32(reader["Amount"]);
-                        pro.ShopEmail = reader["ShopEmail"].ToString();
+                        pro.StoreEmail = reader["ShopEmail"].ToString();
                         ProductsList.Add(pro);
                     }
                 }
@@ -133,7 +133,7 @@ public class Products : System.Web.Services.WebService {
                         product.Discount = pro.Discount;
                         product.Category_ID = pro.Category_ID;
                         product.Amount = pro.Amount;
-                        product.ShopEmail = ShopEmail;
+                        product.StoreEmail = ShopEmail;
                     }
                 }
             }

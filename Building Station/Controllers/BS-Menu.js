@@ -80,13 +80,13 @@ var app = angular.module("BS", ["ngRoute"])
     .controller("DevelopmentEnvironmentController", function ($scope) {
         $scope.tabHeader = "Development Environment";
     })
-    .controller("PreviewWebsiteController", function ($scope) {
+    .controller("PreviewWebsiteController", function ($scope, $http) {
         $scope.tabHeader = "Previe wWebsite";
     })
-    .controller("TemplateController", function ($scope) {
+    .controller("TemplateController", function ($scope, $http) {
         $scope.tabHeader = "Template";
     })
-    .controller("ProductsController", function ($scope) {
+    .controller("ProductsController", function ($scope, $http) {
         $scope.tabHeader = "Products";
         //to retrieve all categories
         $scope.getCat = function () {
@@ -102,7 +102,7 @@ var app = angular.module("BS", ["ngRoute"])
         //\to retrieve all categories
 
         // to add category 
-        $scope.addNewCategory = function (newCategury) {
+        $scope.addNewCategory = function (newCategury, $http) {
             $http({
                 url: "Products.asmx/AddNewCategory",
                 method: "get",
