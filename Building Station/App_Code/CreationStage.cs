@@ -100,10 +100,6 @@ public class CreationStage : System.Web.Services.WebService
         {
             con.Open();
 
-           //  SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreName ='" + n +"' Where ID = 2", con);
-            //  SqlCommand cmd = new SqlCommand("insert into Store (ShopOwnerName, Email, Password, StoreName) values " +
-            //  "('try','try@msn.com','12345678','" + n + "')", con);
-
             SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreName = N'" + name + "' Where Email = 'asmaa.alrubia@gmail.com'", con);
 
             cmd.ExecuteNonQuery();
@@ -158,7 +154,7 @@ public class CreationStage : System.Web.Services.WebService
                 store.Description = "كل ما هو جديد في عالم إكسسوارات الإلكترونيات 📱🖥";
             }
 
-            else if ((type.Contains("طبخ")) || (type.Contains("طبخ منزلي")) || (type.Contains("ورق عنب")) || (type.Contains("محاشي")) || (type.Contains("أطعمة شرقية")) || (type.Contains("طعام")))
+            else if ((type.Contains("طبخ")) || (type.Contains("طبخ منزلي")) || (type.Contains("ورق عنب")) || (type.Contains("محاشي")) || (type.Contains("أطعمة شرقية")) || (type.Contains("طعام")) || (type.Contains("غذاء")))
             {
                 store.SliderImage = Slider7;
                 store.Description = "طبخات لذيذة ودافئة لإرضاء ذائقتكم 🥘😋";
@@ -219,7 +215,7 @@ public class CreationStage : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void getColors()
+    public void GetColors()
     {
         JavaScriptSerializer js = new JavaScriptSerializer();
 
@@ -238,6 +234,7 @@ public class CreationStage : System.Web.Services.WebService
         }
         Context.Response.Write(js.Serialize(store));
     }
+
     [WebMethod]
     public void UpdateColors(string color1, string color2, string color3, string color4)
     {
@@ -256,7 +253,24 @@ public class CreationStage : System.Web.Services.WebService
             store.Color4 = color4;
             Context.Response.Write(js.Serialize(store));
         }
+    }
 
+    [WebMethod]
+    public void UpdateData(string address, string links)
+    {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET SocialMediaLinks = '" + links + "', Location = N'" + address + "' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            store.Address = address;
+            store.SocialMedialinks = links.Split(null);
+            Context.Response.Write(js.Serialize(store));
+        }
 
     }
 }

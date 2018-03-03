@@ -72,7 +72,7 @@ public class TemplateData : System.Web.Services.WebService
                 product.Description = reader["Description"].ToString();
                 product.Discount = Convert.ToInt32(reader["Discount"]);
                 product.Category_ID = reader["Category_ID"].ToString();
-                product.StoreEmail = reader["ShopEmail"].ToString();
+                product.ShopEmail = reader["ShopEmail"].ToString();
                 product.Image = reader["Image"].ToString();
 
             }
