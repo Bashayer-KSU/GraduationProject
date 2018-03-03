@@ -4,55 +4,55 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/0a", {
-                templateUrl: "CreationStagePages/مرحبا.html",
+                templateUrl: "مرحبا.html",
                 controller: "0aController"
             })
             .when("/1a", {
-                templateUrl: "CreationStagePages/store_name_arabic.html",
+                templateUrl: "store_name_arabic.html",
                 controller: "Name_Controller"
             })
             .when("/2a", {
-                templateUrl: "CreationStagePages/store_type_arabic.html",
+                templateUrl: "store_type_arabic.html",
                 controller: "Type_Controller"
             })
             .when("/3.1a", {
-                templateUrl: "CreationStagePages/اسم_الحساب_على_انستقرام.html",
+                templateUrl: "اسم_الحساب_على_انستقرام.html",
                 controller: "3.1aController"
             })
             .when("/3.2a", {
-                templateUrl: "CreationStagePages/معلومات_المتجر.html",
+                templateUrl: "معلومات_المتجر.html",
                 controller: "InfoController"
             })
             .when("/4.1a", {
-                templateUrl: "CreationStagePages/موقع_الحساب.html",
+                templateUrl: "موقع_الحساب.html",
                 controller: "4.1aController"
             })
             .when("/4.2a", {
-                templateUrl: "CreationStagePages/ارفع_الشعار.html",
+                templateUrl: "ارفع_الشعار.html",
                 controller: "4.2aController"
             })
             .when("/5a", {
-                templateUrl: "CreationStagePages/جمع_المعلومات.html",
+                templateUrl: "جمع_المعلومات.html",
                 controller: "5aController"
             })
             .when("/6a", {
-                templateUrl: "CreationStagePages/اختيار_الحساب.html",
+                templateUrl: "اختيار_الحساب.html",
                 controller: "6aController"
             })
             .when("/7a", {
-                templateUrl: "CreationStagePages/عرض_الحساب.html",
+                templateUrl: "عرض_الحساب.html",
                 controller: "DisplayAccountController"
             })
             .when("/8a", {
-                templateUrl: "CreationStagePages/الألوان.html",
+                templateUrl: "الألوان.html",
                 controller: "ColorsController"
             })
             .when("/9a", {
-                templateUrl: "CreationStagePages/تصميم_المتجر.html",
+                templateUrl: "تصميم_المتجر.html",
                 controller: "TemplateController"
             })
             .when("/10a", {
-                templateUrl: "CreationStagePages/جاري-تحميل_المنصة.html",
+                templateUrl: "جاري-تحميل_المنصة.html",
                 controller: "LoadController"
             })
             .otherwise({
@@ -67,7 +67,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $scope.sendName = function () {
             var post = $http({
                 method: "POST",
-                url: "CreationStage.asmx/AddStoreName",
+                url: "../CreationStage.asmx/AddStoreName",
                 dataType: 'json',
                 data: { name: $scope.storeName },
                 headers: { "Content-Type": "application/json" }
@@ -79,7 +79,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $scope.sendType = function () {
             var post = $http({
                 method: "POST",
-                url: "CreationStage.asmx/AddStoreType",
+                url: "../CreationStage.asmx/AddStoreType",
                 dataType: 'json',
                 data: { type: $scope.Type, language: 'Arabic' },
                 headers: { "Content-Type": "application/json" }
@@ -125,14 +125,14 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("DisplayAccountController", function ($scope, $http) {
 
-        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+        $http.get('../CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
         });
     })
     .controller("ColorsController", function ($scope, $http) {
 
-        $http.get('CreationStage.asmx/getColors').then(function (response) {
+        $http.get('../CreationStage.asmx/getColors').then(function (response) {
 
             $scope.Colors = response.data;
         });
@@ -140,7 +140,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
 
             var post = $http({
                 method: "POST",
-                url: "CreationStage.asmx/UpdateColors",
+                url: "../CreationStage.asmx/UpdateColors",
                 dataType: 'json',
                 data: { color1: $scope.Colors.Color1, color2: $scope.Colors.Color2, color3: $scope.Colors.Color3, color4: $scope.Colors.Color4 },
                 headers: { "Content-Type": "application/json" }
@@ -174,7 +174,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $scope.sendTemplateID = function () {
             var post = $http({
                 method: "POST",
-                url: "CreationStage.asmx/AddTemplate",
+                url: "../CreationStage.asmx/AddTemplate",
                 dataType: 'json',
                 data: { id: $scope.TemplateID },
                 headers: { "Content-Type": "application/json" }

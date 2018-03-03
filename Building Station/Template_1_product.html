@@ -1,20 +1,20 @@
-﻿<!DOCTYPE HTML>
+﻿<!DOCTYPE html>
 <!--
 	Dopetrope by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html lang="en" ng-app="Tempalat1Arabic">
+<html lang="en" ng-app="Tempalat1Arabic" ng-controller="template1_arabic">
 <head>
-    <title>Arabic</title>
+    <title>{{Store.Name}}/{{Product.Name}}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <script src="../Scripts/angular.min.js"></script>
-    <script src="../Scripts/angular.js"></script>
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/Template1Controller.js"></script>
+    <!--<script src="../Scripts/angular.js"></script>-->
     <!--<script src="../Scripts/angular-route.min.js"></script>-->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular-route.min.js"></script>
-    <script src="Template1Controller.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular-route.min.js"></script>-->
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
     <link rel="stylesheet" href="../assets/css/main.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -22,43 +22,43 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-	<body class="right-sidebar" ng-controller="template1_arabic">
-		<div id="page-wrapper" >
+	<body ng-style="{'color':Store.Color1}" class="right-sidebar" >
+		<div id="page-wrapper">
 
 			<!-- Header -->
 			<section class="box" style=" padding:0px 0px 0px 0px; margin:0px 0px 0px 0px;">
 
-					<div id="header-wrapper"  style=" padding:20px 0px 10px 0px;">
+					<div ng-style="{'background': Store.Color3}" id="header-wrapper"  style=" padding:20px 0px 10px 0px;">
 						<div id="header" style="position: relative;	margin:0 auto; overflow: hidden;">
 	
 							<!-- Logo -->
 							<div style=" float:left; width:33%;">
-									<img src="../images/shopping-cart.png" style="width:5vw; height:5vw;" href="">
+									<img src="images/shopping-cart.png" style="width:5vw; height:5vw;" href="">
 								</div>	
 							<div style=" position: absolute; left: 7em; right: 0em; margin: 0px 0px 0px 0px; width:auto;" >
-                                <h1 style="font-size:3vw; margin: 15px 0px 0px 0px; ">{{Store.Name}}</h1>
+                                <h1 ng-style="{'color': Store.Color1}" style="font-size:3vw; margin: 15px 0px 0px 0px; ">{{Store.Name}}</h1>
 							</div>
 							<div style=" float:right;  margin:0px 0px 0px 0px; width:33%;">
-									<img src="pic01.jpg"   style="width: 10vw; height: 10vw; border-radius: 50%;" alt="Cinque Terre"> 
+									<img ng-src="{{Store.Logo}}" style="width: 10vw; height: 10vw; border-radius: 50%;" alt="Cinque Terre"> 
 								</div>
 	</div>
 	</div>		
-	</section>
+	        </section>
 			<!-- Main -->
-				<div id="main-wrapper">
+				<div  ng-style="{'background': Store.Color2}" id="main-wrapper">
 					<div class="container">
 						<div class="row">
 							<div class="8u 12u(mobile)">
 
 								<!-- Content -->
-									<article dir="rtl" class="box post">
-										<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
+									<article ng-style="{'background': Store.Color3}" dir="rtl" class="box post">
+										<a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="" /></a>
 										<header>
-											<h2>اسم المنتج</h2>
-											<p> وصف المنتج</p>
+                                            <h2>{{Product.Name}}</h2>
+                                            <p>{{Product.Description}}</p>
 										</header>
 										<footer>
-											<a href="#" class="button alt">اضف إلى العربة</a>
+											<p ng-style="{'color':Store.Color1}"><a class="button alt" style="background: {{Store.Color2}}" ng-click="" ></a>اضف إلى العربة</p>
 										</footer>
 									</article>
 
@@ -67,17 +67,17 @@
 
 								<!-- Sidebar -->
 
-									<section class="box">
+									<section ng-style="{'background': Store.Color3}" class="box">
 										<header>
 											<h3  dir="rtl"> القوائم</h3>
 										</header>
 <!-- Nav -->
 <nav id="menu">
 	<ul dir="rtl">
-		<li><a style="text-decoration:none;" href="index.html">الرئيسية</a></li>
-		<li><a style="text-decoration:none;" href="left-sidebar.html">Left Sidebar</a></li>
-		<li class="current"><a style="text-decoration:none;"  href="right-sidebar.html">Right Sidebar</a></li>
-		<li><a style="text-decoration:none;" href="no-sidebar.html">No Sidebar</a></li>
+		<li><a style="color:{{Store.Color1}}; text-decoration:none;" href="index.html">الرئيسية</a></li>
+		<li><a style="color:{{Store.Color1}}; text-decoration:none;" href="left-sidebar.html">تصنيف</a></li>
+		<li class="current"><a style="color:{{Store.Color1}}; text-decoration:none;"  href="right-sidebar.html">معجنات</a></li>
+		<li><a style=" color:{{Store.Color1}}; text-decoration:none;" href="no-sidebar.html">مخبوزات</a></li>
 	</ul>
 </nav>
 									</section>
@@ -96,33 +96,29 @@
 							<div class="4u 12u(mobile)">
 							</div>
 							<div class="4u 12u(mobile)">
-								<section dir="rtl">
+								<section style="color: {{Store.Color1}}" dir="rtl">
 									<header>
-										<h2>للتواصل</h2>
+										<h2 ng-style="{'color': Store.Color1}">للتواصل</h2>
 									</header>
 									<ul class="social">
 										<li><a class="icon fa-facebook" href="#"><span class="label">Facebook</span></a></li>
 										<li><a class="icon fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-										<a herf="#"><img style="padding-bottom:13px;width:12.5%;" alt="Snapchat" src="../images/snapchat.png"></a>
-										<li></li><a herf=""><img style="padding-bottom:13px;width:14%;" alt="Instagram" src="../images/instagram.png"></a>
+										<a herf="#"><img style="padding-bottom:13px;width:12.5%;" alt="Snapchat" src="images/snapchat.png"/></a>
+										<li></li><a herf=""><img style="padding-bottom:13px;width:14%;" alt="Instagram" src="images/instagram.png"></a>
 
 									</ul>
 									<ul class="contact">
 										<li>
-											<h3>الموقع</h3>
-											<p>
-												Untitled Incorporated<br />
-												1234 Somewhere Road Suite<br />
-												Nashville, TN 00000-0000
-											</p>
+											<h3 ng-style="{'color': Store.Color1}">الموقع</h3>
+											<p>{{Store.Address}}</p>
 										</li>
 										<li>
-											<h3>البريد</h3>
-											<p><a href="#">someone@untitled.tld</a></p>
+											<h3 ng-style="{'color': Store.Color1}">البريد</h3>
+											<p>{{Store.Email}}</p>
 										</li>
 										<li>
-											<h3>الهاتف</h3>
-											<p>(800) 000-0000</p>
+											<h3 ng-style="{'color': Store.Color1}">الهاتف</h3>
+											<p>{{Store.Phone}}</p>
 										</li>
 									</ul>
 								</section>

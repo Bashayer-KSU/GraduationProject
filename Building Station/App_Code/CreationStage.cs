@@ -31,8 +31,6 @@ public class CreationStage : System.Web.Services.WebService
 
     public CreationStage()
     {
-
-
         //Uncomment the following line if using designed components 
         //InitializeComponent(); 
     }

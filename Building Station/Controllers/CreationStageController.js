@@ -4,55 +4,55 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/0", {
-                templateUrl: "CreationStagePages/welcome.html",
+                templateUrl: "CreationStage/welcome.html",
                 controller: "0Controller"
             })
             .when("/1", {
-                templateUrl: "CreationStagePages/store_name.html",
+                templateUrl: "CreationStage/store_name.html",
                 controller: "NameController"
             })
             .when("/2", {
-                templateUrl: "CreationStagePages/store_type.html",
+                templateUrl: "CreationStage/store_type.html",
                 controller: "TypeController"
             })
             .when("/3.1", {
-                templateUrl: "CreationStagePages/account_name_on_instagram.html",
+                templateUrl: "CreationStage/account_name_on_instagram.html",
                 controller: "3.1Controller"
             })
             .when("/3.2", {
-                templateUrl: "CreationStagePages/enter_store_info.html",
+                templateUrl: "CreationStage/enter_store_info.html",
                 controller: "3.2Controller"
             })
             .when("/4.1", {
-                templateUrl: "CreationStagePages/account_location.html",
+                templateUrl: "CreationStage/account_location.html",
                 controller: "4.1Controller"
             })
             .when("/4.2", {
-                templateUrl: "CreationStagePages/upload_logo.html",
+                templateUrl: "CreationStage/upload_logo.html",
                 controller: "4.2Controller"
             })
             .when("/5", {
-                templateUrl: "CreationStagePages/gather_info.html",
+                templateUrl: "CreationStage/gather_info.html",
                 controller: "5Controller"
             })
             .when("/6", {
-                templateUrl: "CreationStagePages/select_your_account.html",
+                templateUrl: "CreationStage/select_your_account.html",
                 controller: "6Controller"
             })
             .when("/7", {
-                templateUrl: "CreationStagePages/display_account.html",
+                templateUrl: "CreationStage/display_account.html",
                 controller: "7Controller"
             })
             .when("/8", {
-                templateUrl: "CreationStagePages/display_picked_colors.html",
+                templateUrl: "CreationStage/display_picked_colors.html",
                 controller: "8Controller"
             })
             .when("/9", {
-                templateUrl: "CreationStagePages/template_layout.html",
+                templateUrl: "CreationStage/template_layout.html",
                 controller: "9Controller"
             })
             .when("/10", {
-                templateUrl: "CreationStagePages/loading_template.html",
+                templateUrl: "CreationStage/loading_template.html",
                 controller: "10Controller"
             })
             .otherwise({

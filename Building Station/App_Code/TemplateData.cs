@@ -34,13 +34,17 @@ public class TemplateData : System.Web.Services.WebService
 
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Phone, logo, SocialMediaLinks, Location FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, SocialMediaLinks, Location FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
                 store.Email = reader["Email"].ToString();
                 store.Name = reader["StoreName"].ToString();
+                store.Color1 = reader["Color1"].ToString();
+                store.Color2 = reader["Color2"].ToString();
+                store.Color3 = reader["Color3"].ToString();
+                store.Color4 = reader["Color4"].ToString();
                 store.Phone = reader["Phone"].ToString();
                 store.Logo = reader["logo"].ToString();
                 store.SocialMedialinks = (reader["SocialMediaLinks"].ToString()).Split(null);
