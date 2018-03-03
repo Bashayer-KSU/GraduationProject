@@ -17,7 +17,9 @@ using System.Data.SqlClient;
 public class TemplateData : System.Web.Services.WebService
 {
 
-    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
+
     public Store store = new Store();
     public Product product = new Product();
     public TemplateData()

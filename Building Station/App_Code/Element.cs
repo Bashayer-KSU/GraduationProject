@@ -21,7 +21,9 @@ public class Element
     public Boolean Hidden { get; set; }
     public String Image { get; set; }
     public String Store_ID { get; set; }
-    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
+
     public Element e = new Element();
 
 /// <summary>
