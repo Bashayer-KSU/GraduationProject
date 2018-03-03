@@ -103,13 +103,13 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("3.1aController", function ($scope) {
     })
-    .controller("InfoController", function ($scope) {
+    .controller("InfoController", function ($scope, $http) {
         $scope.sendData = function () {
             var post = $http({
                 method: "POST",
                 url: "CreationStage.asmx/UpdateData",
                 dataType: 'json',
-                data: { address: $scope.Address, links: $scope. },
+                data: { address: $scope.Address, links: $scope.Links },
                 headers: { "Content-Type": "application/json" }
             });
         }
