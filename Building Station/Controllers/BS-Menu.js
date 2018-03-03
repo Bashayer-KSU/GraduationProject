@@ -88,13 +88,12 @@ var app = angular.module("BS", ["ngRoute"])
     })
     .controller("ProductsController", function ($scope) {
         $scope.tabHeader = "Products";
-        $scope.selectedCategory = "1";
         //to retrieve all categories
         $scope.getCat = function () {
             $http({
                 url: "Products.asmx/GetAllCategories",
-                method: "get",
-                params: { storeID: '1' }
+                method: "get"/*,
+                params: { ShopEmail: 'lamia@gmail.com' }*/
             })
                 .then(function (response) {
                     $scope.categories = response.data;
@@ -107,7 +106,7 @@ var app = angular.module("BS", ["ngRoute"])
             $http({
                 url: "Products.asmx/AddNewCategory",
                 method: "get",
-                params: { cat: newCategury, storID: 1 }
+                params: { cat: newCategury/*, ShopEmail: 'lamia@gmail.com'*/ }
             })
                 .then(function (response) {
                     $scope.result = response.data;
@@ -191,7 +190,6 @@ var app = angular.module("BS", ["ngRoute"])
             Product1.amount = product.Amount;
             Product1.discount = product.Discount;
             Product1.Category_ID = product.Category_ID;
-            Product1.Store_ID = product.Store_ID;
             $http({
                 url: "Products.asmx/AddNewProduct",
                 dataType: 'json',
@@ -211,13 +209,13 @@ var app = angular.module("BS", ["ngRoute"])
                 product.Discount = '';
             }, function (error) {
                 ///////////////////////////
-                $scope.products.push({ 'image': product.Image, 'name': product.Name, 'description': product.Description, 'price': product.Price, 'amount': product.Amount, 'discount': product.Discount });
                 product.Image = '';
                 product.Name = '';
                 product.Description = '';
                 product.Price = '';
                 product.Amount = '';
                 product.Discount = '';
+                $scope.selectedCategoryChanged();
                 //////////////////////////
                 alert(error);
                 alert("add function");
