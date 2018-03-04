@@ -17,7 +17,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             })
             .when("/3.1a", {
                 templateUrl: "CreationStagePages/اسم_الحساب_على_انستقرام.html",
-                controller: "3.1aController"
+                controller: "InstaNameController"
             })
             .when("/3.2a", {
                 templateUrl: "CreationStagePages/معلومات_المتجر.html",
@@ -25,7 +25,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             })
             .when("/4.1a", {
                 templateUrl: "CreationStagePages/موقع_الحساب.html",
-                controller: "4.1aController"
+                controller: "InstaLocationController"
             })
             .when("/4.2a", {
                 templateUrl: "CreationStagePages/ارفع_الشعار.html",
@@ -62,20 +62,51 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("0aController", function ($scope) {
     })
-    .controller("Name_Controller", function ($scope, $http) {
+    .controller("Name_Controller", function ($scope, $http, $location) {
+
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+
+            $scope.Store = response.data;
+            if ($scope.Store.Name === ' No StoreName ') { }
+            else {
+                $scope.nameValue = $scope.Store.Name;
+            }
+        });
 
         $scope.sendName = function () {
-            var post = $http({
-                method: "POST",
-                url: "CreationStage.asmx/AddStoreName",
-                dataType: 'json',
-                data: { name: $scope.storeName },
-                headers: { "Content-Type": "application/json" }
+           
+                var post = $http({
+                    method: "POST",
+                    url: "CreationStage.asmx/AddStoreName",
+                    dataType: 'json',
+                    data: { name: $scope.storeName },
+                    headers: { "Content-Type": "application/json" }
             });
-        }
+                $location.path('/2a');        }
 
+      /*   if ($scope.Name.length !== 0 || typeof $scope.Name !== 'undefined') {
+            $scope.$invalid = false;
+        }
+       else {
+           $scope.usable = true;
+}
+        $scope.checkEmpty = function () {
+            if ($scope.Name.length === 0 || typeof $scope.Name === 'undefined') {
+                $scope.usable = false;
+            } else {
+                $scope.usable = true;
+            }
+        } */
     })
     .controller("Type_Controller", function ($scope, $http) {
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+
+            $scope.Store = response.data;
+            if ($scope.Store.Type === 'No StoreType ') { }
+            else {
+                $scope.typeValue = $scope.Store.Type;
+            }
+        });
         $scope.sendType = function () {
             var post = $http({
                 method: "POST",
@@ -99,11 +130,27 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $scope.Type = string;
             $scope.hidethis = true;
         }
-
+        $scope.checkContent = function () {
+            if ($scope.Type.length === 0 || typeof $scope.Type === 'undefined') {
+                $scope.hidethis = true;
+            } else {
+                $scope.hidethis = false;
+            }
+        } 
     })
-    .controller("3.1aController", function ($scope) {
+    .controller("InstaNameController", function ($scope) {
     })
     .controller("InfoController", function ($scope, $http) {
+
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+
+            $scope.Store = response.data;
+            if ($scope.Store.Address === 'No  Location ') { }
+            else {
+                $scope.addressValue = $scope.Store.Address;
+            }
+        });
+
         $scope.sendData = function () {
             var post = $http({
                 method: "POST",
@@ -119,7 +166,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $scope.Links.push({ 'id': 'Link' + newItemNo });
         };
     })
-    .controller("4.1aController", function ($scope) {
+    .controller("InstaLocationController", function ($scope) {
     })
     .controller("4.2aController", function ($scope, fileReader) {
         filePath = $scope.imageSrc;
