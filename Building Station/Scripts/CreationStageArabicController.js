@@ -202,7 +202,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             });
         }
     })
-    .controller("TemplateController", function ($scope, $http) {
+    .controller("TemplateController", function ($scope, $http, $window) {
 
         var TemplateID;
 
