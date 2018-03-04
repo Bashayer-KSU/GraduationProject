@@ -77,7 +77,7 @@ var app = angular.module("BS", ["ngRoute"])
                 });
         };
     })
-    .controller("DevelopmentEnvironmentController", function ($scope) {
+    .controller("DevelopmentEnvironmentController", function ($scope, $http) {
         $scope.tabHeader = "Development Environment";
     })
     .controller("PreviewWebsiteController", function ($scope, $http) {
@@ -102,7 +102,7 @@ var app = angular.module("BS", ["ngRoute"])
         //\to retrieve all categories
 
         // to add category 
-        $scope.addNewCategory = function (newCategury, $http) {
+        $scope.addNewCategory = function (newCategury) {
             $http({
                 url: "Products.asmx/AddNewCategory",
                 method: "get",
@@ -136,6 +136,7 @@ var app = angular.module("BS", ["ngRoute"])
                 { image: 'pic.png', name: 'buthainah', description: 'mjhk', price: 80, amount: true, discount: 0, edit: false },
                 { image: 'pic.png', name: 'khalid', description: ',ihgjc', price: 90, amount: false, discount: 0, edit: false }
             ];*/
+            
             $http({
                 url: "Products.asmx/GetAllProducts",
                 method: "get",
