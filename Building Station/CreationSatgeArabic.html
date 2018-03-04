@@ -36,11 +36,11 @@
         body {
             font-family:'NeoSansArabic';
         }
-        img {
+   /*     img {
             position: absolute;
             z-index: 50;
         }
-
+       */
         ul {
             position: absolute;
             z-index: 1000;
@@ -62,7 +62,6 @@
             cursor: pointer;
             list-style-position: inside;
             border: 0.5px solid gray;
-            padding: 3px 20px;
         }
 
             li:hover {
@@ -74,7 +73,34 @@
       top: 50%;
       transform: translate(-50%, -50%);
             }*/
+        input::placeholder {
+            font-style: italic;
+            opacity: 0.4; /* Firefox */
+        }
+        .asterisk_input:after {
+            content: " *";
+            color: #e32;
+            position: absolute;
+            margin: 0px 0px 0px -20px;
+            font-size: x-large;
+            padding: 0 5px 0 0;
+        }
+      /*a.adisabled {
+            cursor: not-allowed;
+            opacity: .65;
+        }
 
+            a.adisabled:hover {
+                text-decoration: none;
+            }
+
+            a.adisabled:focus {
+                text-decoration: none;
+            }
+
+            a.adisabled:active {
+                text-decoration: none;
+            }*/
     </style>
 </head>
 
@@ -97,6 +123,10 @@
             <ng-view dir="rtl"></ng-view>
         </div>
     </div>
-    
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>  
 </body>
 </html>

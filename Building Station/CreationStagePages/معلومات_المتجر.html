@@ -4,23 +4,26 @@
 </header>
 
 <!-- Main content area -->
-<main>
-     أين يقع مشروعك<br />
-    <input type="text" ng-model="Address" style="width:100%;" required />
-    <div style="width:100%; display:inline; overflow: auto;white-space: nowrap; padding: 0px 0px;">
-        ضع رابطا لمتجرك على مواقع التواصل الاجتماعي <br />
-        <input type="text" ng-model="Link.name" name="" style="width:90%;" />
-        <a style="font-size:50px;  padding: 0.3cm 0.3cm 0.3cm 0.3cm; border-radius: 50%;" ng-click="addNewLink()" class="button button-large">&#43;</a>
-        <div id="choicesDisplay">
-            {{ Links }}
+<form>
+    <main>
+        أين يقع مشروعك<br />
+        <input type="text" ng-model="Address" style="width:95%;" ng-value="addressValue" placeholder="  مثال: الرياض  " required />  <span class="asterisk_input">  </span>
+
+        <div style="width:100%; display:inline; overflow: auto;white-space: nowrap; padding: 0px 0px;">
+            ضع رابطا لمتجرك على مواقع التواصل الاجتماعي <br />
+            <input type="text" ng-model="Link.name" name="" style="width:90%;" />
+            <a style="font-size:50px;  padding: 0.3cm 0.3cm 0.25cm 0.3cm; border-radius: 50%;" ng-click="addNewLink()" class="button button-large" data-placement="left" title="اضف رابط اخر">&#43;</a>
+            <div id="choicesDisplay">
+                {{ Links }}
+            </div>
         </div>
+    </main>
+    <br />
+    <div style="display:inline; overflow: auto;white-space: nowrap; padding: 0px 0px;">
+        <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="4.2a" class="button button-large" ng-click="sendData()" data-toggle="tooltip" data-placement="right" title="التالي">&#8250;</a>
+        <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="2a" class="button button-large" data-toggle="tooltip" data-placement="left" title="السابق">&#8249;</a>
     </div>
-</main>
-<br/>
-<div style="display:inline; overflow: auto;white-space: nowrap; padding: 0px 0px;">
-    <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="4.2a" class="button button-large" ng-click="sendData()" >&#8250;</a>
-    <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="2a" class="button button-large">&#8249;</a>
-</div>
+</form>
 <br>
 <!-- Footer -->
 <footer>
