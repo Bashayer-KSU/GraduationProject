@@ -1,9 +1,16 @@
 ﻿var app = angular.module("BS", []);
 
 var displayColors = app.controller("displayColors", function ($scope, $http) {
-    $http.get('manageWebsiteColors.asmx/getWebsiteColors')
+
+    $http({
+        url: "manageWebsiteColors.asmx/getWebsiteColors",
+        method: "get",
+        params: { path: "C:\Users\lamia\Pictures\Saved Pictures\pic.png" }
+    })
         .then(function (response) {
             $scope.colors = response.data;
+        }, function (error) {
+            $scope.error = error.data;
         });
 });
 

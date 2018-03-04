@@ -62,20 +62,51 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("0aController", function ($scope) {
     })
-    .controller("Name_Controller", function ($scope, $http) {
+    .controller("Name_Controller", function ($scope, $http, $location) {
+
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+
+            $scope.Store = response.data;
+            if ($scope.Store.Name === ' No StoreName ') { }
+            else {
+                $scope.nameValue = $scope.Store.Name;
+            }
+        });
 
         $scope.sendName = function () {
-            var post = $http({
-                method: "POST",
-                url: "CreationStage.asmx/AddStoreName",
-                dataType: 'json',
-                data: { name: $scope.storeName },
-                headers: { "Content-Type": "application/json" }
+           
+                var post = $http({
+                    method: "POST",
+                    url: "CreationStage.asmx/AddStoreName",
+                    dataType: 'json',
+                    data: { name: $scope.storeName },
+                    headers: { "Content-Type": "application/json" }
             });
-        }
+                $location.path('/2a');        }
 
+      /*   if ($scope.Name.length !== 0 || typeof $scope.Name !== 'undefined') {
+            $scope.$invalid = false;
+        }
+       else {
+           $scope.usable = true;
+}
+        $scope.checkEmpty = function () {
+            if ($scope.Name.length === 0 || typeof $scope.Name === 'undefined') {
+                $scope.usable = false;
+            } else {
+                $scope.usable = true;
+            }
+        } */
     })
     .controller("Type_Controller", function ($scope, $http) {
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+
+            $scope.Store = response.data;
+            if ($scope.Store.Type === 'No StoreType ') { }
+            else {
+                $scope.typeValue = $scope.Store.Type;
+            }
+        });
         $scope.sendType = function () {
             var post = $http({
                 method: "POST",
@@ -99,12 +130,36 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $scope.Type = string;
             $scope.hidethis = true;
         }
-
+        $scope.checkContent = function () {
+            if ($scope.Type.length === 0 || typeof $scope.Type === 'undefined') {
+                $scope.hidethis = true;
+            } else {
+                $scope.hidethis = false;
+            }
+        } 
     })
     .controller("InstaNameController", function ($scope) {
     })
-    .controller("InfoController", function ($scope) {
+    .controller("InfoController", function ($scope, $http) {
 
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+
+            $scope.Store = response.data;
+            if ($scope.Store.Address === 'No  Location ') { }
+            else {
+                $scope.addressValue = $scope.Store.Address;
+            }
+        });
+
+        $scope.sendData = function () {
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/UpdateData",
+                dataType: 'json',
+                data: { address: $scope.Address, links: $scope.Links },
+                headers: { "Content-Type": "application/json" }
+            });
+        }
         $scope.Links = [{ id: 'Link1' }, { id: 'Link2' }];
         $scope.addNewLink = function () {
             var newItemNo = $scope.Links.length + 1;
@@ -132,11 +187,20 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("ColorsController", function ($scope, $http) {
 
-        $http.get('CreationStage.asmx/getColors').then(function (response) {
+        $http.get('CreationStage.asmx/GetColors').then(function (response) {
 
             $scope.Colors = response.data;
         });
+        $scope.UpdateColors = function () {
 
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/UpdateColors",
+                dataType: 'json',
+                data: { color1: $scope.Colors.Color1, color2: $scope.Colors.Color2, color3: $scope.Colors.Color3, color4: $scope.Colors.Color4 },
+                headers: { "Content-Type": "application/json" }
+            });
+        }
     })
     .controller("TemplateController", function ($scope, $http) {
 

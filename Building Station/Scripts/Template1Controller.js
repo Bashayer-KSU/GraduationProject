@@ -3,13 +3,12 @@
 
 
     $http.get('TemplateData.asmx/StoreData').then(function (response) {
-
         $scope.Store = response.data;
     });
 
-    $http.get('TemplateData.asmx/ProductData').then(function (response) {
+   $http.get('TemplateData.asmx/ProductData').then(function (response) {
 
-        $scope.Products = response.data;
+       $scope.Product = response.data;
     });
 
 

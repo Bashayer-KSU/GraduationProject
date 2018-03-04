@@ -16,17 +16,18 @@ using System.Web.Services;
 [System.Web.Script.Services.ScriptService]
 public class Products : System.Web.Services.WebService {
 
-    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
+    string ShopEmail = "lamia@gmail.com";
 
     [WebMethod]
-    public void GetAllCategories(string storeID)
+    public void GetAllCategories(/*string ShopEmail*/)
     {
         List<string> categories = new List<string>();
         //insert selected colors to database
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("select Name from Category where Store_ID = '" + storeID + "'", con);
+            SqlCommand cmd = new SqlCommand("select Name from Category where ShopEmail = '" + ShopEmail + "'", con);
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
@@ -42,20 +43,20 @@ public class Products : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public void AddNewCategory(string cat, string storID)
+    public void AddNewCategory(string cat /*, string ShopEmail*/)
     {
         int x;
         string msg = "";
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand check = new SqlCommand("select Name from Category where Name ='" + cat + "' and Store_ID = '" + storID + "'", con);
+            SqlCommand check = new SqlCommand("select Name from Category where Name ='" + cat + "' and ShopEmail = '" + ShopEmail + "'", con);
             SqlDataReader reader = check.ExecuteReader();
             if (!reader.Read())
             {
                 reader.Close();
-                Random R = new Random();
-                using (SqlCommand cmd = new SqlCommand("insert into Category (Store_ID, ID, Name, OrderInMenu) values " + "('" + storID + "','" + R.Next(0, 100) + "','" + cat + "','2')", con))
+                //Random R = new Random();
+                using (SqlCommand cmd = new SqlCommand("insert into Category (ShopEmail, Name, OrderInMenu) values " + "('" + ShopEmail + "','" + cat + "','0')", con))
                 {
                     x = cmd.ExecuteNonQuery();
                     if (x != 0) { msg = cat + " category added successfully"; }
@@ -74,7 +75,7 @@ public class Products : System.Web.Services.WebService {
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("select ID from Category where Name ='" + category + "' and Store_ID = '" + 1 + "'", con);
+            SqlCommand cmd = new SqlCommand("select ID from Category where Name ='" + category + "' and ShopEmail = '" + ShopEmail + "'", con);
             SqlDataReader R = cmd.ExecuteReader();
             if (R.Read())
             {
@@ -93,7 +94,7 @@ public class Products : System.Web.Services.WebService {
                         pro.Discount = Convert.ToInt32(reader["Discount"]);
                         pro.Category_ID = reader["Category_ID"].ToString();
                         pro.Amount = Convert.ToInt32(reader["Amount"]);
-                        pro.Store_ID = reader["Store_ID"].ToString();
+                        pro.StoreEmail = reader["ShopEmail"].ToString();
                         ProductsList.Add(pro);
                     }
                 }
@@ -112,12 +113,12 @@ public class Products : System.Web.Services.WebService {
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand check = new SqlCommand("select ID from Category where Name ='" + pro.Category_ID + "' and Store_ID = '" + pro.Store_ID + "'", con);
+            SqlCommand check = new SqlCommand("select ID from Category where Name ='" + pro.Category_ID + "' and ShopEmail = '" + ShopEmail + "'", con);
             SqlDataReader reader = check.ExecuteReader();
             if (reader.Read())
             {
                 int id = R.Next(0, 100);
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Product (ID, Name, Category_ID, Store_ID, Price, Image, Description, Discount, Amount) values(" + id + ", '" + pro.Name + "', '" + reader["ID"].ToString() + "','1'," + pro.Price + ",'" + pro.Image + "','" + pro.Description + "'," + pro.Discount + "," + pro.Amount + ")", con))
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Category_ID, ShopEmail, Price, Image, Description, Discount, Amount) values('" + pro.Name + "', '" + reader["ID"].ToString() + "','" + ShopEmail + "'," + pro.Price + ",'" + pro.Image + "','" + pro.Description + "'," + pro.Discount + "," + pro.Amount + ")", con))
                 {
                     reader.Close();
                     x = cmd.ExecuteNonQuery();
@@ -132,13 +133,11 @@ public class Products : System.Web.Services.WebService {
                         product.Discount = pro.Discount;
                         product.Category_ID = pro.Category_ID;
                         product.Amount = pro.Amount;
-                        product.Store_ID = "1";
-                        System.Console.WriteLine("added");
+                        product.StoreEmail = ShopEmail;
                     }
                 }
             }
         }
-        System.Console.WriteLine("faild");
         JavaScriptSerializer js = new JavaScriptSerializer();
         Context.Response.Write(js.Serialize(product));
     }

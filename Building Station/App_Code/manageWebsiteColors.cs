@@ -20,7 +20,9 @@ public class manageWebsiteColors : System.Web.Services.WebService
 {
 
     Colors selectedColors = new Colors();
-    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
+
 
     [WebMethod]
     public void getWebsiteColors(string path)
@@ -35,7 +37,7 @@ public class manageWebsiteColors : System.Web.Services.WebService
         // to upload logo
         var uploadParams = new ImageUploadParams()
         {
-            File = new FileDescription(path),//file path
+            File = new FileDescription(@"C:\Users\lamia\Pictures\Saved Pictures\pic.png"),//file path
             Colors = true
         };
         var uploadResult = cloudinary.Upload(uploadParams);
@@ -49,14 +51,14 @@ public class manageWebsiteColors : System.Web.Services.WebService
         selectedColors.color4 = s[3][0];
         //\extract colors
         //insert selected colors to database
-        using (SqlConnection con = new SqlConnection(cs))
+        /*using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
             SqlCommand cmdee = new SqlCommand("insert into color (first, second, third, fourth) values " +
                 "('" + selectedColors.color1 + "','" + selectedColors.color2 + "','" + selectedColors.color3 + "','" + selectedColors.color4 + "')", con);
             cmdee.ExecuteNonQuery();
             con.Close();
-        }
+        }*/
         //\insert selected colors to database
 
         JavaScriptSerializer js = new JavaScriptSerializer();
