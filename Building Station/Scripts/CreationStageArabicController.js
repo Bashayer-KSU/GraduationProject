@@ -62,7 +62,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("0aController", function ($scope) {
     })
-    .controller("Name_Controller", function ($scope, $http) {
+    .controller("Name_Controller", function ($scope, $http, $location) {
 
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
@@ -81,13 +81,13 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                     dataType: 'json',
                     data: { name: $scope.storeName },
                     headers: { "Content-Type": "application/json" }
-                });
-        }
+            });
+                $location.path('/2a');        }
 
-       /*if ($scope.Name.length === 0 || typeof $scope.Name === 'undefined') {
-           $scope.usable = false;
+      /*   if ($scope.Name.length !== 0 || typeof $scope.Name !== 'undefined') {
+            $scope.$invalid = false;
         }
-        else {
+       else {
            $scope.usable = true;
 }
         $scope.checkEmpty = function () {

@@ -4,16 +4,18 @@
 </header>
 
 <!-- Main content area -->
-<form>
+<form name="myform">
     <main>
-        <input id="empty" type="text" ng-model="storeName" ng-value="nameValue" placeholder="  مثال: حلويات زمان  " style="width:95%;" required />
-        <span class="asterisk_input">  </span>
+        <input name="myName" type="text" ng-model="storeName" ng-value="nameValue" placeholder="  مثال: حلويات زمان  " style="width:85%;" required />
+        <span class="asterisk_input">  </span><span></span>
+        <span ng-show="myform.myName.$touched && myform.myName.$invalid"> هذا الحقل مطلوب  </span>
+
         <br>
         <br>
     </main>
 
     <div style="display:inline; overflow: auto; white-space: nowrap; padding: 0px 0px;">
-        <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="2a" class="button button-large" ng-click="sendName()" data-toggle="tooltip" data-placement="right" title="التالي">&#8250;</a>
+        <button ng-disabled="myform.$invalid || myform.$pending" style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.45cm 0.4cm; border-radius: 50%;" href="2a" class="button button-large" ng-click="sendName()" data-toggle="tooltip" data-placement="right" title="التالي">&#8250;</button>
         <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="0a" class="button button-large" data-toggle="tooltip" data-placement="left" title="السابق">&#8249;</a>
     </div>
 </form>

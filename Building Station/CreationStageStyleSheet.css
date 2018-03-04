@@ -262,7 +262,6 @@ svg:not(:root) {
  * 1. Change the font styles in all browsers (opinionated).
  * 2. Remove the margin in Firefox and Safari.
  */
-button,
 input,
 optgroup,
 select,
@@ -281,7 +280,6 @@ textarea {
  * Show the overflow in IE.
  * 1. Show the overflow in Edge.
  */
-button,
 input {
     /* 1 */
     overflow: visible;
@@ -291,7 +289,6 @@ input {
  * Remove the inheritance of text transform in Edge, Firefox, and IE.
  * 1. Remove the inheritance of text transform in Firefox.
  */
-button,
 select {
     /* 1 */
     text-transform: none;
@@ -302,7 +299,6 @@ select {
  *    controls in Android 4.
  * 2. Correct the inability to style clickable types in iOS and Safari.
  */
-button,
 html [type="button"],
 [type="reset"],
 [type="submit"] {
@@ -547,7 +543,7 @@ a {
     font-weight: bold;
 }
 
-    a:hover, a:focus, a:active {
+   button:hover, button:focus, button:active, a:hover, a:focus, a:active {
         color: #555354;
     }
 
@@ -675,7 +671,7 @@ Social Icons
 /** 
 Button
 **/
-a.button {
+a.button, button.button {
     color: #C6ba57;
     font-weight: bold;
     background-color: rgba(198, 187, 87, 0);
@@ -685,12 +681,12 @@ a.button {
     text-decoration: none;
 }
 
-    a.button:hover, a.button:focus, a.button:active {
+    a.button:hover, a.button:focus, a.button:active, button.button:hover, button.button:focus, button.button:active {
         color: #fff;
         background-color: #C6ba57;
     }
 
-    a.button.button-large {
+    a.button.button-large, button.button.button-large {
         font-size: 0.7em;
         line-height: 0.6em;
         padding: 0px 0px;
@@ -744,7 +740,7 @@ Responsive
         padding: 2rem;
     }
 
-    a.button.button-large {
+    a.button.button-large, button.button.button-large{
         padding: 0px 0px;
     }
 }
