@@ -17,7 +17,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             })
             .when("/3.1a", {
                 templateUrl: "CreationStagePages/اسم_الحساب_على_انستقرام.html",
-                controller: "3.1aController"
+                controller: "InstaNameController"
             })
             .when("/3.2a", {
                 templateUrl: "CreationStagePages/معلومات_المتجر.html",
@@ -25,7 +25,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             })
             .when("/4.1a", {
                 templateUrl: "CreationStagePages/موقع_الحساب.html",
-                controller: "4.1aController"
+                controller: "InstaLocationController"
             })
             .when("/4.2a", {
                 templateUrl: "CreationStagePages/ارفع_الشعار.html",
@@ -138,7 +138,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             }
         } 
     })
-    .controller("3.1aController", function ($scope) {
+    .controller("InstaNameController", function ($scope) {
     })
     .controller("InfoController", function ($scope, $http) {
 
@@ -166,7 +166,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $scope.Links.push({ 'id': 'Link' + newItemNo });
         };
     })
-    .controller("4.1aController", function ($scope) {
+    .controller("InstaLocationController", function ($scope) {
     })
     .controller("4.2aController", function ($scope, fileReader) {
         filePath = $scope.imageSrc;
