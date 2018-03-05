@@ -212,7 +212,7 @@ public class CreationStage : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreType = " + id + " Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET TemplateID = " + id + " Where Email = 'asmaa.alrubia@gmail.com'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 

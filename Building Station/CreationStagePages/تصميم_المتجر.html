@@ -6,26 +6,40 @@
 <!-- Main content area -->
 <main style="text-align:center">
     <!-- style="align-items:center; display:inline-block;"-->
-    <img ng-click="firstTemplate()" onclick="myFunction1()" id="T1" src="../images/T1.png" alt="template 1" style=" margin-right: 1%; width: 150px; height:auto;" />
-    <img ng-click="secondTemplate()" onclick="myFunction2()" id="T2" src="../images/T2.png" alt="template 2" style=" margin-right: 1%; width: 150px; height:auto;" />
-    <img ng-click="thirdTemplate()" onclick="myFunction3()" id="T3" src="../images/T2.png" alt="template 2" style=" margin-right: 1%; width: 150px; height:auto;" />
-   <p style="clear: both;">
+    <img ng-click="firstTemplate()" src="../images/T1.png" alt="template 1" style=" margin-right: 1%; width: {{width1}}; height:auto;" />
+    <img ng-click="secondTemplate()" src="../images/T2.png" alt="template 2" style=" margin-right: 1%; width: {{width2}}; height:auto;" />
+    <img ng-click="thirdTemplate()" src="../images/T2.png" alt="template 2" style=" margin-right: 1%; width: {{width3}}; height:auto;" />
+    <p style="clear: both;">
+        <!--
+           onclick="myFunction1()"
+            onclick="myFunction2()"
+    onclick="myFunction3()"
        <script>
-           function myFunction1() {
-               document.getElementById("T1").style.width = "200px";
-               document.getElementById("T2").style.width = "150px";
-               document.getElementById("T3").style.width = "150px";
-           }
+           $(document).ready(function () {
+               $(document.getElementById("T1")).click(function () {
+                   $(document.getElementById("T1")).animate({
+                       width: '200px'
+                   }),
+                   $(document.getElementById("T2")).animate({
+                       width: '150px'
+                   }),
+                   $(document.getElementById("T3")).animate({
+                       width: '150px'
+                   });
+               });
+           });
+
            function myFunction2() {
                document.getElementById("T2").style.width = "200px";
                document.getElementById("T1").style.width = "150px";
                document.getElementById("T3").style.width = "150px";
-           } function myFunction3() {
+           }
+           function myFunction3() {
                document.getElementById("T3").style.width = "200px";
                document.getElementById("T2").style.width = "150px";
                document.getElementById("T1").style.width = "150px";
            }
-       </script>
+       </script>-->
 </main>
 <div style="display:inline; overflow: auto;
                 white-space: nowrap; padding: 0px 0px;">

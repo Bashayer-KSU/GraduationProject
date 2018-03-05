@@ -296,28 +296,32 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     .controller("TemplateController", function ($scope, $http, $window) {
 
         var TemplateID = 0;
+        $scope.width1 = "150px";
+        $scope.width2 = "150px";
+        $scope.width3 = "150px";
 
         $scope.firstTemplate = function () {
+            $scope.width1 = "200px";
+            $scope.width2 = "150px";
+            $scope.width3 = "150px";
 
             TemplateID = 1;
         }
 
         $scope.secondTemplate = function () {
-
+            $scope.width2 = "200px";
+            $scope.width1 = "150px";
+            $scope.width3 = "150px";
             TemplateID = 2;
         }
         $scope.thirdTemplate = function () {
-
+            $scope.width3 = "200px";
+            $scope.width2 = "150px";
+            $scope.width1 = "150px";
             TemplateID = 3;
         }
 
         $scope.goToTemplate = function () {
-
-            $window.location.href = '/Template_1_product.html';
-
-        }
-
-        $scope.sendTemplateID = function () {
             var post = $http({
                 method: "POST",
                 url: "CreationStage.asmx/AddTemplate",
@@ -325,6 +329,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 data: { id: TemplateID },
                 headers: { "Content-Type": "application/json" }
             });
+            $window.location.href = '/Template_1_product.html';
         }
         })
     .controller("LoadController", function ($scope) {
