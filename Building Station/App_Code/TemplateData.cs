@@ -36,7 +36,7 @@ public class TemplateData : System.Web.Services.WebService
 
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, SocialMediaLinks, Location FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -49,8 +49,12 @@ public class TemplateData : System.Web.Services.WebService
                 store.Color4 = reader["Color4"].ToString();
                 store.Phone = reader["Phone"].ToString();
                 store.Logo = reader["logo"].ToString();
-                store.SnapchatLink = reader["SocialMediaLinks"].ToString();
                 store.Address = reader["Location"].ToString();
+                store.SnapchatLink = reader["SnapchatLink"].ToString();
+                store.TwitterLink = reader["TwitterLink"].ToString();
+                store.FacebookLink = reader["FacebookLink"].ToString();
+                store.InstagramLink = reader["InstagramLink"].ToString();
+
             }
         }
         Context.Response.Write(js.Serialize(store));

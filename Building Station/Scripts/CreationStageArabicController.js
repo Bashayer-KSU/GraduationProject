@@ -295,7 +295,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("TemplateController", function ($scope, $http, $window) {
 
-        var TemplateID;
+        var TemplateID = 0;
 
         $scope.firstTemplate = function () {
 
@@ -322,7 +322,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 method: "POST",
                 url: "CreationStage.asmx/AddTemplate",
                 dataType: 'json',
-                data: { id: $scope.TemplateID },
+                data: { id: TemplateID },
                 headers: { "Content-Type": "application/json" }
             });
         }
