@@ -29,7 +29,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             })
             .when("/4.2a", {
                 templateUrl: "CreationStagePages/ارفع_الشعار.html",
-                controller: "4.2aController"
+                controller: "UploadLogoController"
             })
             .when("/5a", {
                 templateUrl: "CreationStagePages/جمع_المعلومات.html",
@@ -168,11 +168,32 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("InstaLocationController", function ($scope) {
     })
-    .controller("4.2aController", function ($scope, fileReader) {
+    .controller("UploadLogoController", function ($scope, fileReader, $http) {
         filePath = $scope.imageSrc;
         $scope.$on("fileProgress", function (e, progress) {
             $scope.progress = progress.loaded / progress.total;
         });
+
+        $http({
+            url: "manageWebsiteColors.asmx/GetWebsiteColors",
+            method: "get",
+            params: { path: filePath }
+        })
+            .then(function (response) {
+                $scope.Colors = response.data;
+            }, function (error) {
+                $scope.error = error.data;
+            });
+        $scope.sendLogo = function () {
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/UploadLogo",
+                dataType: 'json',
+                data: { logo: $scope.imageSrc },
+                headers: { "Content-Type": "application/json" }
+            });
+        }
+        }
     })
     .controller("5aController", function ($scope) {
     })
@@ -190,7 +211,21 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $http.get('CreationStage.asmx/GetColors').then(function (response) {
 
             $scope.Colors = response.data;
+        }, function (error) {
+            $scope.error = error.data;
         });
+
+     /*  $http({
+            url: "manageWebsiteColors.asmx/getWebsiteColors",
+            method: "get",
+            params: { path: filePath }
+        })
+            .then(function (response) {
+                $scope.colors = response.data;
+            }, function (error) {
+                $scope.error = error.data;
+            });*/
+
         $scope.UpdateColors = function () {
 
             var post = $http({

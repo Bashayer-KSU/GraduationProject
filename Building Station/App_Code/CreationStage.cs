@@ -276,4 +276,22 @@ public class CreationStage : System.Web.Services.WebService
         }
 
     }
+
+    [WebMethod]
+    public void UploadLogo(string logo)
+    {
+
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET logo = '" + logo +"' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            store.Logo = logo;
+            Context.Response.Write(js.Serialize(store));
+        }
+    }
 }

@@ -6,10 +6,17 @@
 
 <!-- Main content area -->
 <main style="text-align:center;">
-    <input type="color" ng-model="Colors.Color1">
+ <!--   <input type="color" ng-model="Colors.Color1">
     <input type="color" ng-model="Colors.Color2">
     <input type="color" ng-model="Colors.Color3">
     <input type="color" ng-model="Colors.Color4"><br>
+     -->
+
+    <p style="background-color:{{Colors.color1}}">{{Colors.color1}} first color</p><br />
+    <p style="background-color:{{Colors.color2}}">{{Colors.color2}} second</p><br />
+    <p style="background-color:{{Colors.color3}}">{{Colors.color3}} thired</p><br />
+    <p style="background-color:{{Colors.color4}}">{{Colors.color4}} forth</p><br />
+    <p>error {{error}}</p>
 </main>
 
 <div style="display:inline; overflow: auto;

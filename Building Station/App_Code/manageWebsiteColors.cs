@@ -25,7 +25,7 @@ public class manageWebsiteColors : System.Web.Services.WebService
 
 
     [WebMethod]
-    public void getWebsiteColors(string path)
+    public void GetWebsiteColors(string path)
     {
         // our account in cloudinary 
         CloudinaryDotNet.Account account =
@@ -37,7 +37,10 @@ public class manageWebsiteColors : System.Web.Services.WebService
         // to upload logo
         var uploadParams = new ImageUploadParams()
         {
-            File = new FileDescription(@"C:\Users\lamia\Pictures\Saved Pictures\pic.png"),//file path
+            //  File = new FileDescription(@"C:\Users\lamia\Pictures\Saved Pictures\pic.png"),//file path
+            //  File = new FileDescription(@"C:\Users\star7\OneDrive\Pictures/background-3045402.png"),//file path
+
+            File = new FileDescription(path),//file path
             Colors = true
         };
         var uploadResult = cloudinary.Upload(uploadParams);
