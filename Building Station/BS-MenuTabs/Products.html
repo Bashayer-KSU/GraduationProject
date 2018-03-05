@@ -1,81 +1,128 @@
-﻿<h2>{{tabHeader}}</h2>
+﻿<!--<h2>{{tabHeader}}</h2>-->
 
- <!--to display categories-->
-<div ng-init="getCat()">
-    <select ng-options="option for option in categories"
-            ng-model="selectedCategory"
-            ng-change="selectedCategoryChanged()">
-        <!--<option ng-repeat="category in categories" selected>{{category}}</option>
-        ng-selected="changeCategory(cat)"-->
-    </select>
-</div>
-<!--\to display categories-->
-<!--add new category-->
-<span>
-    <button ng-click="newCat=true">+</button>
-    <input type="text" ng-show="newCat" placeholder="Enter category" ng-model="newCategury">
-    <span ng-show="newCat">
-        <a href="" ng-hide="!newCategury.length" ng-click="addNewCategory(newCategury)">add</a>
-    </span>
-    <span ng-show="result">{{result}}</span><!--success message-->
-</span>
-<!--\add new category-->
-<!--list products-->
-<table ng-init="edit=false">
-    <thead>
-        <tr>
-            <th>Product Image</th>
-            <th>Product</th>
-            <th>Product Description</th>
-            <th>Price</th>
-            <th>Amount</th>
-            <th>Set Discount</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody ng-init="selectedCategoryChanged()">
-        <tr data-ng-repeat="product in products">
-            <td ng-show="!product.edit"><img ng-src="{{product.Image}}" alt="image" width="80" height="80" /></td>
-            <td ng-show="product.edit">
-                <input type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
-                <img style="width:100px; height:100px;" ng-src="{{product.Image}}" />
-            </td>
-            <td ng-show="!product.edit"><label>{{product.Name}}</label></td>
-            <td ng-show="product.edit"><input type="text" ng-model="product.Name" name="" placeholder="Enter product name" required></td>
-            <td ng-show="!product.edit"><label>{{product.Description}}</label></td>
-            <td ng-show="product.edit"><textarea ng-model="product.Description" required>Enter product description</textarea></td>
-            <td ng-show="!product.edit"><label>{{product.Price}}</label></td>
-            <td ng-show="product.edit"><input type="number" ng-model="product.Price" name="" placeholder="Enter product price" required></td>
-            <td ng-show="!product.edit"><label>{{product.Amount}}</label></td>
-            <td ng-show="product.edit"><input type="number" ng-model="product.Amount" name="" placeholder="Enter product amount" required></td>
-            <td ng-show="!product.edit"><label>{{product.Discount}}</label></td>
-            <td ng-show="product.edit"><input type="number" ng-model="product.Discount" name="" placeholder="Enter product discount" required></td>
-            <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
-            <td ng-hide="true">{{product.ID}}</td>
-            <td><button class="addfields" ng-disabled="product.edit" ng-click="product.edit= !product.edit">Edit</button></td>
-            <td><button class="remove" ng-click="removeproduct(product, product.ID)">-</button></td>
-            <td ng-show="product.edit"><button class="addfields" ng-click="editProduct($index,product)">apply change</button></td>
-        </tr>
-    </tbody>
-</table>
-<!--\list products-->
-<!-- this table to add new product-->
-<table>
-    <tr>
-        <td>
-            <input type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
-            <img ng-show="product.Image" style="width:80px; height:80px;" ng-src="{{product.Image}}" />
-            <!--<textarea>{{product.Image}}</textarea>-->
-        </td>
-        <td><input type="text" ng-model="product.Name" name="" placeholder="name" required></td>
-        <td><textarea type="text" ng-model="product.Description" name="" placeholder="description" required></textarea></td>
-        <td><input type="number" ng-model="product.Price" name="" placeholder="price" required></td>
-        <td><input type="number" ng-model="product.Amount" name="" placeholder="amount" required></td>
-        <td><input type="number" ng-model="product.Discount" name="" placeholder="discount" required></td>
-        <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
-        <td ng-hide="true">{{product.ID = 1}}</td>
-    </tr>
-</table>
-<button class="addfields" ng-click="addNewProduct(product)">Add fields</button>
-<!-- \this table to add new product-->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        @media only screen and (max-width:620px) {
+            #table {
+                overflow-x:scroll;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container" style="float:right;">
+
+        <!--add new category-->
+        <span>
+            <h>الأصناف:</h>
+        </span>
+        <div>
+            <span>
+                <span ng-show="newCat">
+                    <a href="" ng-hide="!newCategury.length" ng-click="addNewCategory(newCategury)">إضافة</a>
+                </span>
+                <input type="text" ng-show="newCat" placeholder="أدخل الصنف" ng-model="newCategury" style="text-align:right;">
+                <button ng-click="newCat=true">+</button>
+                <span ng-show="result">{{result}}</span><!--success message-->
+            </span>
+        </div>
+        <!--\add new category-->
+        <!--to display categories-->
+        <div ng-init="getCat()">
+            <select ng-options="option for option in categories"
+                    ng-model="selectedCategory"
+                    ng-change="selectedCategoryChanged()">
+                <!--<option ng-repeat="category in categories" selected>{{category}}</option>
+                ng-selected="changeCategory(cat)"-->
+            </select>
+        </div>
+        <!--\to display categories-->
+        <!--list products-->
+        <div class="table-responsive" id="table">
+
+            <table ng-init="edit=false" class="table">
+                <thead>
+                    <tr>
+                        <th>حذف</th>
+                        <th>تعديل</th>
+                        <th>إضافة خصم</th>
+                        <th>الكمية</th>
+                        <th>السعر</th>
+                        <th>تفاصيل المنتج</th>
+                        <th>اسم المنتج</th>
+                        <th>صورة المنتج</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="selectedCategoryChanged()">
+                    <tr data-ng-repeat="product in products">
+                        <td ng-show="!product.edit"><img ng-src="{{product.Image}}" alt="image" width="80" height="80" /></td>
+                        <td ng-show="product.edit">
+                            <input type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
+                            <img style="width:100px; height:100px;" ng-src="{{product.Image}}" />
+                        </td>
+                        <td ng-show="!product.edit"><label>{{product.Name}}</label></td>
+                        <td ng-show="product.edit"><input type="text" ng-model="product.Name" name="" placeholder="Enter product name" required></td>
+                        <td ng-show="!product.edit"><label>{{product.Description}}</label></td>
+                        <td ng-show="product.edit"><textarea ng-model="product.Description" required>Enter product description</textarea></td>
+                        <td ng-show="!product.edit"><label>{{product.Price}}</label></td>
+                        <td ng-show="product.edit"><input type="number" ng-model="product.Price" name="" placeholder="Enter product price" required></td>
+                        <td ng-show="!product.edit"><label>{{product.Amount}}</label></td>
+                        <td ng-show="product.edit"><input type="number" ng-model="product.Amount" name="" placeholder="Enter product amount" required></td>
+                        <td ng-show="!product.edit"><label>{{product.Discount}}</label></td>
+                        <td ng-show="product.edit"><input type="number" ng-model="product.Discount" name="" placeholder="Enter product discount" required></td>
+                        <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
+                        <td ng-hide="true">{{product.ID}}</td>
+                        <td><button class="addfields" ng-disabled="product.edit" ng-click="product.edit= !product.edit">Edit</button></td>
+                        <td><button class="remove" ng-click="removeproduct(product, product.ID)">-</button></td>
+                        <td ng-show="product.edit"><button class="addfields" ng-click="editProduct($index,product)">apply change</button></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
+                            <img ng-show="product.Image" style="width:80px; height:80px;" ng-src="{{product.Image}}" />
+                            <!--<textarea>{{product.Image}}</textarea>-->
+                        </td>
+                        <td><input type="text" ng-model="product.Name" name="" placeholder="name" required></td>
+                        <td><textarea type="text" ng-model="product.Description" name="" placeholder="description" required></textarea></td>
+                        <td><input type="number" ng-model="product.Price" name="" placeholder="price" required></td>
+                        <td><input type="number" ng-model="product.Amount" name="" placeholder="amount" required></td>
+                        <td><input type="number" ng-model="product.Discount" name="" placeholder="discount" required></td>
+                        <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
+                        <td ng-hide="true">{{product.ID = 1}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <!--\list products-->
+        <!-- this table to add new product-->
+        <!--<table>
+            <tr>
+                <td>
+                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
+                    <img ng-show="product.Image" style="width:80px; height:80px;" ng-src="{{product.Image}}" />
+                    <textarea>{{product.Image}}</textarea>
+                </td>
+                <td><input type="text" ng-model="product.Name" name="" placeholder="name" required></td>
+                <td><textarea type="text" ng-model="product.Description" name="" placeholder="description" required></textarea></td>
+                <td><input type="number" ng-model="product.Price" name="" placeholder="price" required></td>
+                <td><input type="number" ng-model="product.Amount" name="" placeholder="amount" required></td>
+                <td><input type="number" ng-model="product.Discount" name="" placeholder="discount" required></td>
+                <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
+                <td ng-hide="true">{{product.ID = 1}}</td>
+            </tr>
+        </table>-->
+        <button class="addfields" ng-click="addNewProduct(product)">Add fields</button>
+        <!-- \this table to add new product-->
+    </div>
+
+
+</body>
