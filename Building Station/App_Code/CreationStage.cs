@@ -44,7 +44,7 @@ public class CreationStage : System.Web.Services.WebService
 
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, StoreType, Phone, logo, Location, SnapchatLink FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, StoreType, Phone, logo, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -56,6 +56,10 @@ public class CreationStage : System.Web.Services.WebService
                 store.Logo = reader["logo"].ToString();
                 store.Address = reader["Location"].ToString();
                 store.SnapchatLink = reader["SnapchatLink"].ToString();
+                store.TwitterLink = reader["TwitterLink"].ToString();
+                store.FacebookLink = reader["FacebookLink"].ToString();
+                store.InstagramLink = reader["InstagramLink"].ToString();
+
             }
         }
         Context.Response.Write(js.Serialize(store));
@@ -259,19 +263,22 @@ public class CreationStage : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void UpdateData(string address, string link)
+    public void UpdateData(string address, string snapchat_link, string twitter_link, string facebook_link, string instagram_link)
     {
         JavaScriptSerializer js = new JavaScriptSerializer();
 
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET Location = N'" + address + "', SnapchatLink = '" + link + "' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET Location = N'" + address + "', SnapchatLink = '" + snapchat_link + "', TwitterLink = '" + twitter_link + "', FacebookLink = '" + facebook_link + "', InstagramLink = '" + instagram_link + "' Where Email = 'asmaa.alrubia@gmail.com'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
             store.Address = address;
-            store.SnapchatLink = link;
+            store.SnapchatLink = snapchat_link;
+            store.TwitterLink = twitter_link;
+            store.FacebookLink = facebook_link;
+            store.InstagramLink = instagram_link;
             Context.Response.Write(js.Serialize(store));
         }
 
@@ -294,4 +301,23 @@ public class CreationStage : System.Web.Services.WebService
             Context.Response.Write(js.Serialize(store));
         }
     }
+
+    [WebMethod]
+    public void UpdateType(string type, string language)
+    {
+
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreType = N'" + type + "' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            store.Type = type;
+            Context.Response.Write(js.Serialize(store));
+        }
+    }
+
 }

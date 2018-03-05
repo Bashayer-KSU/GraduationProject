@@ -148,13 +148,34 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $scope.addressValue = $scope.Store.Address;
             }
         });
+        var snapchat = "No Link";
+        var twitter = "No Link";
+        var facebook = "No Link";
+        var instagram = "No Link";
+
+        $scope.checkContent_snapchat = function () {
+            if ($scope.snapchatLink !== 0 || typeof $scope.snapchatLink !== 'undefined')
+            snapchat = $scope.snapchatLink;
+        }
+        $scope.checkContent_twitter = function () {
+            if ($scope.twitterLink !== 0 || typeof $scope.twitterLink !== 'undefined')
+                twitter = $scope.twitterLink;
+        }
+        $scope.checkContent_facebook = function () {
+            if ($scope.facebookLink !== 0 || typeof $scope.facebookLink !== 'undefined')
+                facebook = $scope.facebookLink;
+        }
+        $scope.checkContent_instagram = function () {
+            if ($scope.instagramLink !== 0 || typeof $scope.instagramLink !== 'undefined')
+            instagram = $scope.instagramLink;
+        }
 
         $scope.sendData = function () {
             var post = $http({
                 method: "POST",
                 url: "CreationStage.asmx/UpdateData",
                 dataType: 'json',
-                data: { address: $scope.Address, link: $scope.Link },
+                data: { address: $scope.Address, snapchat_link: snapchat, twitter_link: twitter, facebook_link: facebook, instagram_link: instagram },
                 headers: { "Content-Type": "application/json" }
             });
         }
@@ -216,6 +237,29 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
+
+            if ($scope.Store.SnapchatLink === 'No Link') {
+                $scope.Svisible = false;
+            }
+            else { $scope.Svisible = true;}
+
+            if ($scope.Store.TwitterLink === 'No Link') {
+                $scope.Tvisible = false;
+            }
+            else {
+                $scope.Tvisible = true;
+            }
+
+            if ($scope.Store.FacebookLink === 'No Link') {
+                $scope.Fvisible = false;
+            }
+            else { $scope.Fvisible = true;}
+
+            if ($scope.Store.InstagramLink === 'No Link') {
+                $scope.Ivisible = false;
+            }
+            else { $scope.Ivisible = true; }
+
         });
     })
     .controller("ColorsController", function ($scope, $http) {
