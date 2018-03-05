@@ -24,7 +24,10 @@ public class Store
     public string Color2 { get; set; }
     public string Color3 { get; set; }
     public string Color4 { get; set; }
-    public string[] SocialMedialinks { get; set; }
+    public string SnapchatLink { get; set; }
+    public string TwitterLink { get; set; }
+    public string FacebookLink { get; set; }
+    public string InstagramLink { get; set; }
     public int TemplateID { get; set; }
     public bool PayPal { get; set; }
     public bool Cach { get; set; }

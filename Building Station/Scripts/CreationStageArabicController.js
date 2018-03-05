@@ -144,7 +144,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
-            if ($scope.Store.Address === 'No  Location ') {
+            if ($scope.Store.Address !== 'No  Location ') {
             $scope.addressValue = $scope.Store.Address;
             }
         });
@@ -154,15 +154,15 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 method: "POST",
                 url: "CreationStage.asmx/UpdateData",
                 dataType: 'json',
-                data: { address: $scope.Address, links: $scope.Links },
+                data: { address: $scope.Address, link: $scope.Link },
                 headers: { "Content-Type": "application/json" }
             });
         }
-        $scope.Links = [{ id: 'Link1' }, { id: 'Link2' }];
+     /*   $scope.Links = [{ id: 'Link1' }, { id: 'Link2' }];
         $scope.addNewLink = function () {
             var newItemNo = $scope.Links.length + 1;
             $scope.Links.push({ 'id': 'Link' + newItemNo });
-        };
+        };*/
     })
     .controller("InstaLocationController", function ($scope) {
     })

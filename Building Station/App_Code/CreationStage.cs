@@ -44,7 +44,7 @@ public class CreationStage : System.Web.Services.WebService
 
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, StoreType, Phone, logo, SocialMediaLinks, Location FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, StoreType, Phone, logo, Location, SnapchatLink FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -54,8 +54,8 @@ public class CreationStage : System.Web.Services.WebService
                 store.Type = reader["StoreType"].ToString();
                 store.Phone = reader["Phone"].ToString();
                 store.Logo = reader["logo"].ToString();
-                store.SocialMedialinks = (reader["SocialMediaLinks"].ToString()).Split(null);
                 store.Address = reader["Location"].ToString();
+                store.SnapchatLink = reader["SnapchatLink"].ToString();
             }
         }
         Context.Response.Write(js.Serialize(store));
@@ -259,19 +259,19 @@ public class CreationStage : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void UpdateData(string address, string links)
+    public void UpdateData(string address, string link)
     {
         JavaScriptSerializer js = new JavaScriptSerializer();
 
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET SocialMediaLinks = '" + links + "', Location = N'" + address + "' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET Location = N'" + address + "', SnapchatLink = '" + link + "' Where Email = 'asmaa.alrubia@gmail.com'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
             store.Address = address;
-            store.SocialMedialinks = links.Split(null);
+            store.SnapchatLink = link;
             Context.Response.Write(js.Serialize(store));
         }
 
