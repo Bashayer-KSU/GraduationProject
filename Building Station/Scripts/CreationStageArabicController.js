@@ -67,10 +67,10 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
-            if ($scope.Store.Name === ' No StoreName ') { }
-            else {
-                $scope.nameValue = $scope.Store.Name;
-            }
+            if ($scope.Store.Name !== ' No StoreName ') {
+            $scope.nameValue = $scope.Store.Name;
+}
+            
         });
 
         $scope.sendName = function () {
@@ -102,9 +102,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
-            if ($scope.Store.Type === 'No StoreType ') { }
-            else {
-                $scope.typeValue = $scope.Store.Type;
+            if ($scope.Store.Type !== 'No StoreType ') {
+            $scope.typeValue = $scope.Store.Type;
             }
         });
         $scope.sendType = function () {
@@ -145,9 +144,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
-            if ($scope.Store.Address === 'No  Location ') { }
-            else {
-                $scope.addressValue = $scope.Store.Address;
+            if ($scope.Store.Address === 'No  Location ') {
+            $scope.addressValue = $scope.Store.Address;
             }
         });
 
@@ -169,21 +167,36 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     .controller("InstaLocationController", function ($scope) {
     })
     .controller("UploadLogoController", function ($scope, fileReader, $http) {
+        
         filePath = $scope.imageSrc;
         $scope.$on("fileProgress", function (e, progress) {
             $scope.progress = progress.loaded / progress.total;
         });
-
+        $scope.showColors = function () {
+            var File_Path = $scope.imageSrc;
+            var post = $http({
+                method: "POST",
+                url: "manageWebsiteColors.asmx/GetWebsiteColors",
+                dataType: 'json',
+                data: { path: File_Path },
+                headers: { "Content-Type": "application/json" }
+            })
+        .then(function (response) {
+                $scope.Colors = response.data;
+            }, function (error) {
+                $scope.error = error.data;
+            });
+        }
+/*
         $http({
             url: "manageWebsiteColors.asmx/GetWebsiteColors",
-            method: "get",
-            params: { path: filePath }
+            method: "get"
         })
             .then(function (response) {
                 $scope.Colors = response.data;
             }, function (error) {
                 $scope.error = error.data;
-            });
+            });*/
         $scope.sendLogo = function () {
             var post = $http({
                 method: "POST",
@@ -192,7 +205,6 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 data: { logo: $scope.imageSrc },
                 headers: { "Content-Type": "application/json" }
             });
-        }
         }
     })
     .controller("5aController", function ($scope) {
