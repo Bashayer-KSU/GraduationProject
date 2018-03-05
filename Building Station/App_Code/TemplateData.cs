@@ -49,7 +49,7 @@ public class TemplateData : System.Web.Services.WebService
                 store.Color4 = reader["Color4"].ToString();
                 store.Phone = reader["Phone"].ToString();
                 store.Logo = reader["logo"].ToString();
-                store.SocialMedialinks = (reader["SocialMediaLinks"].ToString()).Split(null);
+                store.SnapchatLink = reader["SocialMediaLinks"].ToString();
                 store.Address = reader["Location"].ToString();
             }
         }
@@ -76,7 +76,6 @@ public class TemplateData : System.Web.Services.WebService
                 product.Category_ID = reader["Category_ID"].ToString();
                 product.StoreEmail = reader["ShopEmail"].ToString();
                 product.Image = reader["Image"].ToString();
-
             }
         }
         Context.Response.Write(js.Serialize(product));
