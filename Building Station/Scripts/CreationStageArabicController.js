@@ -68,7 +68,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
 
             $scope.Store = response.data;
             if ($scope.Store.Name !== ' No StoreName ') {
-            $scope.nameValue = $scope.Store.Name;
+                $scope.storeName = $scope.Store.Name;
 }
             
         });
@@ -82,6 +82,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                     data: { name: $scope.storeName },
                     headers: { "Content-Type": "application/json" }
             });
+                post.then(function (response) { }, function (error) { });
                 $location.path('/2a');        }
 
       /*   if ($scope.Name.length !== 0 || typeof $scope.Name !== 'undefined') {
@@ -103,7 +104,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
 
             $scope.Store = response.data;
             if ($scope.Store.Type !== 'No StoreType ') {
-            $scope.typeValue = $scope.Store.Type;
+                $scope.Type = $scope.Store.Type;
             }
         });
         $scope.sendType = function () {
@@ -114,6 +115,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 data: { type: $scope.Type, language: 'Arabic' },
                 headers: { "Content-Type": "application/json" }
             });
+            post.then(function (response) { }, function (error) { $scope.R = error.data; });
         }
         $scope.Types = ["مكياج وعناية", "أشغال يدوية", "اكسسوارات", "حلويات", "موضة وملابس", "مخبز", "طبخ منزلي", "اكسسوارات جوال ولابتوب"];
         $scope.complete = function (string) {
@@ -139,13 +141,13 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("InstaNameController", function ($scope) {
     })
-    .controller("InfoController", function ($scope, $http) {
+    .controller("InfoController", function ($scope, $http, $location) {
 
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
             if ($scope.Store.Address !== 'No  Location ') {
-            $scope.addressValue = $scope.Store.Address;
+                $scope.Address = $scope.Store.Address;
             }
         });
         var snapchat = "No Link";
@@ -178,6 +180,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 data: { address: $scope.Address, snapchat_link: snapchat, twitter_link: twitter, facebook_link: facebook, instagram_link: instagram },
                 headers: { "Content-Type": "application/json" }
             });
+            post.then(function (response) { }, function (error) { });
+            $location.path('/4.2a');
         }
      /*   $scope.Links = [{ id: 'Link1' }, { id: 'Link2' }];
         $scope.addNewLink = function () {
