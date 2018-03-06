@@ -27,6 +27,7 @@ public class manageWebsiteColors : System.Web.Services.WebService
     [WebMethod]
     public void GetWebsiteColors(string path)
     {
+        
         // our account in cloudinary 
         CloudinaryDotNet.Account account =
                             new CloudinaryDotNet.Account("dkejtwcc6", "799652649934124", "N6eQmnp7-66vxt3IMIpC-z0ijDw");

@@ -15,14 +15,10 @@
     </label><br />
 </form>
 
-<form class="check-element animate-show-hide" ng-show="checkboxPayment.bankTransfer">
-    <div class="form-group">
-        <label for="AccountName">Bank Account Name</label>
-        <input type="text" class="form-control" id="AccountName" placeholder="Enter Account Name" required>
-    </div>
+<form class="check-element animate-show-hide" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()">
     <div class="form-group">
         <label for="IBAN">IBAN</label>
-        <input type="text" class="form-control" id="IBAN" placeholder="Enter IBAN" required>
+        <input type="text" class="form-control" ng-model="bankInfo.IBAN" id="IBAN" placeholder="Enter IBAN" required>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" ng-click="UpdateBankInfo()" class="btn btn-primary">Update</button>
 </form>
