@@ -3,49 +3,52 @@
 /* Padding below the footer and lighter body text */
 
 body {
-  padding-top: 3rem;
-  color: #5a5a5a;
+    padding-top: 3rem;
+    color: #5a5a5a;
 }
 
-
+#header #footer {
+    background-color: #383838;
+}
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
-
 /* Carousel base class */
 .carousel {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 /* Since positioning the image, we need to help out the caption */
 
 
 /* Declare heights because of positioning of img element */
 .carousel-item {
-  height: 42rem;
-  background-color: #777;
+    height: 42rem;
+    background-color: #777;
+}
 
-}
-.carousel-item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: 42rem;
-}
+    .carousel-item > img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        height: 42rem;
+    }
 
 /* MARKETING CONTENT
 -------------------------------------------------- */
 
 /* Center align the text within the three columns below the carousel */
 .marketing .col-lg-4 {
-  margin-bottom: 1.5rem;
-  text-align: center;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
+
 .marketing h2 {
-  font-weight: 400;
+    font-weight: 400;
 }
+
 .marketing .col-lg-4 p {
-  margin-right: .75rem;
-  margin-left: .75rem;
+    margin-right: .75rem;
+    margin-left: .75rem;
 }
 
 
@@ -53,21 +56,20 @@ body {
 ------------------------- */
 
 .featurette-divider {
-  margin: 5rem 0; /* Space out the Bootstrap <hr> more */
+    margin: 5rem 0; /* Space out the Bootstrap <hr> more */
 }
 
 /* Thin out the marketing headings */
 .featurette-heading {
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -.05rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -.05rem;
     margin-bottom: 1rem;
-
 }
 
 .tab-content {
-  padding-top: 35px;
-  padding-bottom:  35px;
+    padding-top: 35px;
+    padding-bottom: 35px;
 }
 
 /*[ tabs ]
@@ -82,121 +84,115 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
+    /* background-color: #fff;*/
     border-bottom: none;
     margin-right: -15px;
     margin-left: -15px;
 }
 
-.tabs .nav-tabs .nav-item {
-  padding: 8px 16px;
-}
+    .tabs .nav-tabs .nav-item {
+        padding: 8px 16px;
+    }
 
 .tabs .nav-link {
-  padding: 0;
-  border-radius: 0;
-  border: none;
-  border-bottom: 1px solid transparent;
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -.05rem;
-  font-size: 15px;
-  color: #888888;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid transparent;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -.05rem;
+    font-size: 15px;
+    color: #888888;
 }
 
-.tabs .nav-link.active {
-    color: #333333;
-    border-bottom: 1px solid #6a6a6a;
-}
+    .tabs .nav-link.active {
+        color: #333333;
+        border-bottom: 1px solid #6a6a6a;
+    }
 
-.tabs .nav-link:hover {
-    color: #333333;
-    border-bottom: 1px solid #6a6a6a;
-}
+    .tabs .nav-link:hover {
+        color: #333333;
+        border-bottom: 1px solid #6a6a6a;
+    }
 
 
 
 .ToTop {
-   position: fixed;
-   right: 30px;
-   bottom: 0;
-   width: 100%;
+    position: fixed;
+    right: 30px;
+    bottom: 0;
+    width: 100%;
 }
 
 #yourcart {
-
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .hidden-xs {
-  display: inline !important;
+    display: inline !important;
 }
 
 footer {
-  padding-top: 30px;
-  background-color: #292c2f;
-  color: #bbb;
+    padding-top: 30px;
+    background-color: #292c2f;
+    color: #bbb;
 }
 
-footer a {
-  color: #999;
-  text-decoration:none;
-}
+    footer a {
+        color: #999;
+        text-decoration: none;
+    }
 
-footer a:hover, footer a:focus {
-  color: #aaa;
-  text-decoration:none;
-  border-bottom:1px dotted #999;
-}
+        footer a:hover, footer a:focus {
+            color: #aaa;
+            text-decoration: none;
+            border-bottom: 1px dotted #999;
+        }
 
-.col-item
-{
+.col-item {
     border: 1px solid #E1E1E1;
     border-radius: 5px;
     background: #FFF;
 }
-.col-item .photo img
-{
-    margin: 0 auto;
-    width: 100%;
-}
 
-.col-item .info
-{
-    padding: 10px;
-    border-radius: 0 0 5px 5px;
-    margin-top: 1px;
-}
+    .col-item .photo img {
+        margin: 0 auto;
+        width: 100%;
+    }
 
-.col-item:hover .info {
-    background-color: #F5F5DC;
-}
-.col-item .price
-{
-    /*width: 50%;*/
-    float: left;
-    margin-top: 5px;
-}
+    .col-item .info {
+        padding: 10px;
+        border-radius: 0 0 5px 5px;
+        margin-top: 1px;
+    }
 
-.col-item .price h5
-{
-    line-height: 20px;
-    margin: 0;
-}
+    .col-item:hover .info {
+        background-color: #F5F5DC;
+    }
 
-.price-text-color
-{
+    .col-item .price {
+        /*width: 50%;*/
+        float: left;
+        margin-top: 5px;
+    }
+
+        .col-item .price h5 {
+            line-height: 20px;
+            margin: 0;
+        }
+
+.price-text-color {
     color: #219FD1;
 }
 
-.col-item .info .rating
-{
+.col-item .info .rating {
     color: #777;
 }
 
-.col-item .rating
-{
+.col-item .rating {
     /*width: 50%;*/
     float: left;
     font-size: 17px;
@@ -206,51 +202,45 @@ footer a:hover, footer a:focus {
     height: 52px;
 }
 
-.col-item .separator
-{
+.col-item .separator {
     border-top: 1px solid #E1E1E1;
 }
 
-.clear-left
-{
+.clear-left {
     clear: left;
 }
 
-.col-item .separator p
-{
+.col-item .separator p {
     line-height: 20px;
     margin-bottom: 0;
     margin-top: 10px;
     text-align: center;
 }
 
-.col-item .separator p i
-{
-    margin-right: 5px;
-}
-.col-item .btn-add
-{
+    .col-item .separator p i {
+        margin-right: 5px;
+    }
+
+.col-item .btn-add {
     width: 50%;
     float: left;
 }
 
-.col-item .btn-add
-{
+.col-item .btn-add {
     border-right: 1px solid #E1E1E1;
 }
 
-.col-item .btn-details
-{
+.col-item .btn-details {
     width: 50%;
     float: left;
     padding-left: 10px;
 }
-.controls
-{
+
+.controls {
     margin-top: 20px;
 }
-[data-slide="prev"]
-{
+
+[data-slide="prev"] {
     margin-right: 10px;
 }
 
@@ -260,91 +250,80 @@ footer a:hover, footer a:focus {
 -------------------------------------------------- */
 
 @media (min-width: 40em) {
-  /* Bump up size of carousel content */
-  .carousel-caption p {
-    margin-bottom: 1.25rem;
-    font-size: 1.25rem;
-    line-height: 1.4;
-  }
+    /* Bump up size of carousel content */
+    .carousel-caption p {
+        margin-bottom: 1.25rem;
+        font-size: 1.25rem;
+        line-height: 1.4;
+    }
 
-  .featurette-heading {
-    font-size: 50px;
-  }
-
-
+    .featurette-heading {
+        font-size: 50px;
+    }
 }
 
 @media (min-width: 62em) {
-  .featurette-heading {
-    margin-top: 7rem;
-  }
+    .featurette-heading {
+        margin-top: 7rem;
+    }
 }
 
 @media (max-width: 480px) {
-  .tabs .nav-tabs .nav-item {
-    padding: 8px 6px;
-  }
+    .tabs .nav-tabs .nav-item {
+        padding: 8px 6px;
+    }
 
-  .tabs .nav-tabs {
-    margin-right: -6px;
-    margin-left: -6px;
-  }
-
-
+    .tabs .nav-tabs {
+        margin-right: -6px;
+        margin-left: -6px;
+    }
 }
 
 
 @media screen and (min-width:768px) and (max-width: 1024px) {
 
-  .carousel-item {
-  height: 32em;
-  background-color: #777;
+    .carousel-item {
+        height: 32em;
+        background-color: #777;
+    }
 
-}
-.carousel-item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: 32rem;
+        .carousel-item > img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            height: 32rem;
+        }
 }
 
-
-}
 @media(max-width: 768px) {
 
-  .carousel-item {
-  height: 22em;
-  background-color: #777;
+    .carousel-item {
+        height: 22em;
+        background-color: #777;
+    }
 
-}
-.carousel-item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: 22rem;
+        .carousel-item > img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            height: 22rem;
+        }
 }
 
-
-}
 @media screen and (max-width: 480px) {
 
-  .carousel-item {
-  height: 18em;
-  background-color: #777;
+    .carousel-item {
+        height: 18em;
+        background-color: #777;
+    }
 
+        .carousel-item > img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            height: 18rem;
+        }
 }
-.carousel-item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: 18rem;
-}
-
-
-}
-
-
-

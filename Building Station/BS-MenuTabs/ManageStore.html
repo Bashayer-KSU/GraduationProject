@@ -1,9 +1,9 @@
 ﻿<h2>{{tabHeader}}</h2>
 
-<form name="myForm"  ng-model="checkboxPayment" ng-init="checkedPayment()" >
+<form name="myForm" ng-model="checkboxPayment" ng-init="checkedPayment()">
     <label>
         Cash:
-        <input type="checkbox" ng-model="checkboxPayment.cash" ng-change="acceptPayment()" >
+        <input type="checkbox" ng-model="checkboxPayment.cash" ng-change="acceptPayment()">
     </label><br />
     <label>
         PayPal:
@@ -11,10 +11,18 @@
     </label><br />
     <label>
         Bank Transfer:
-        <input type="checkbox" ng-model="checkboxPayment.bankTransfer" ng-change="acceptPayment()">
+        <input type="checkbox" ng-model="checkboxPayment.bankTransfer" aria-label="Toggle ngShow" ng-change="acceptPayment()">
     </label><br />
-    <tt>cash = {{checkboxPayment.cash}}</tt><br />
-    <tt>paypal = {{checkboxPayment.paypal}}</tt><br />
-    <tt>bankTransfer = {{checkboxPayment.bankTransfer}}</tt><br />
+</form>
 
+<form class="check-element animate-show-hide" ng-show="checkboxPayment.bankTransfer">
+    <div class="form-group">
+        <label for="AccountName">Bank Account Name</label>
+        <input type="text" class="form-control" id="AccountName" placeholder="Enter Account Name" required>
+    </div>
+    <div class="form-group">
+        <label for="IBAN">IBAN</label>
+        <input type="text" class="form-control" id="IBAN" placeholder="Enter IBAN" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>

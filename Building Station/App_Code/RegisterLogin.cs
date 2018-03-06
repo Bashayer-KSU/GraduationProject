@@ -16,11 +16,10 @@ public class RegisterLogin : System.Web.Services.WebService
 {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
-
-    [WebMethod(EnableSession =true)]
+        JavaScriptSerializer js = new JavaScriptSerializer();
+    [WebMethod(EnableSession = true)]
     public void Register(String name, String email, String password, String phone)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
 
 
         using (SqlConnection con = new SqlConnection(cs))
@@ -32,7 +31,8 @@ public class RegisterLogin : System.Web.Services.WebService
             if (dr.HasRows == true)
             {
                 con.Close();
-                Context.Response.Write(js.Serialize(false));
+                //Context.Response.Write(js.Serialize(false));
+                Context.Response.Write(js.Serialize("/RegisterLogin.html"));
             }
             else
             {
@@ -47,10 +47,9 @@ public class RegisterLogin : System.Web.Services.WebService
                 store.Email = email;
                 store.Password = password;
                 store.Phone = phone;
-                //Session["name"] = name;
-                //Context.Session.Add("name",false);
                 Session["user"] = name;
-                Context.Response.Write(js.Serialize(Session["user"].ToString()));
+                //Context.Response.Write(js.Serialize(Session["user"].ToString()));
+                Context.Response.Write(js.Serialize("/CreationStage.html"));
 
             }
         }
@@ -58,8 +57,6 @@ public class RegisterLogin : System.Web.Services.WebService
     [WebMethod]
     public void Login(String name, String password)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
 
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -70,13 +67,27 @@ public class RegisterLogin : System.Web.Services.WebService
             if (dr.HasRows == true)
             {
                 con.Close();
-                Context.Response.Write(js.Serialize(true));
+                // Context.Response.Write(js.Serialize(true));
+                Context.Response.Write(js.Serialize("/CreationStage.html"));
 
             }
             else
             {
-                Context.Response.Write(js.Serialize(false));
+                // Context.Response.Write(js.Serialize(false));
+                Context.Response.Write(js.Serialize("/RegisterLogin.html"));
             }
         }
+    }
+
+
+
+
+    [WebMethod(EnableSession = true)]
+    public void SignOut()
+    {
+        // Session.Clear();
+        Session.Abandon();
+        Context.Response.Write(js.Serialize("/RegisterLogin.html"));
+
     }
 }

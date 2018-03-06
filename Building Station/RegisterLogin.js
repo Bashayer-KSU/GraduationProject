@@ -34,7 +34,8 @@ var Register = myApp.controller("RegisterLoginCtrl", function ($scope, $http, $w
         $http.post(url, data, config)
             .then(function (response) {
                 $scope.result = response.data;
-                $window.location.href = response.data;
+                //$window.location.href = response.data;
+                location.href = $scope.result.substr(1, $scope.result.length - 2);
             }, function (error) {
                 $scope.error = error.data;
             });
