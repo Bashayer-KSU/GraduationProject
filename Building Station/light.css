@@ -1,0 +1,136 @@
+@font-face {
+    font-family: "NeoSansArabic";
+    src: url('NeoSansArabic.ttf'); /* IE9 */
+}
+header.en {
+    background-image: url(images/header.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+body {
+    background-image: url(images/background.png);
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+.tab_menu {
+    margin-top: 15px;
+    position: center;
+    width: inherit;
+}
+.lightmenu {
+    width: inherit;
+    height: 62px;
+    background: transparent;
+    background-image: url(images/menu.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin-top:30px;
+}
+
+.lightBlue {
+    position: relative;
+    width: inherit;
+    overflow:visible;
+    float: left;
+    height:auto;
+}
+    .lightBlue li {
+        width: 200px;
+        height: 62px;
+        background-image: url(images/sep.png);
+        background-position: right;
+        background-repeat: no-repeat;
+        position: relative;
+        top: 0px;
+        font-family: "Century Gothic";
+    }
+
+
+
+        .lightBlue li.back {
+            background-image: url(images/blue.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 45px;
+            margin-left: -3px;
+            height: 20px;
+            z-index: 8;
+            top: 0px;
+            position: absolute;
+        }
+
+    .lightBlue li a {
+       
+        color: #575757;
+        outline: none;
+        text-align: center;
+        letter-spacing: 0;
+        z-index: 10;
+        display: block;
+        top: 19px;
+        height: 45px;
+        position: relative;
+        overflow: hidden;
+
+    }
+
+.lightBlue li a:hover {
+	color:#2c2c2c;
+}
+.tab-group{
+    display:inline-block;
+}
+ol, ul, li {
+    list-style:none;
+    display: inline-block;
+}
+.dropdown:hover ul {
+    display: block;
+}
+.dropdown li a{
+
+    top:1px;
+}
+
+.dropdown-menu li {
+    width: 190px;
+    height: 62px;
+    background-image: url(images/sep.png);
+    background-position: right;
+    background-repeat: no-repeat;
+    position: relative;
+    top: 0px;
+    font-family: "Century Gothic";
+}
+
+    .dropdown-menu li.back {
+        background-image: url(images/blue.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 45px;
+        margin-left: -3px;
+        height: 20px;
+        z-index: 8;
+        top: 0px;
+        position: absolute;
+    }
+
+    .dropdown-menu li a {
+        color: #575757;
+        outline: none;
+        text-align: center;
+        letter-spacing: 0;
+        z-index: 10;
+        display: block;
+        top: 19px;
+        height: 45px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .dropdown-menu li a:hover {
+            color: #2c2c2c;
+        }

@@ -1,0 +1,33 @@
+﻿  <!-- Header -->
+<header style="padding-bottom:0%;">
+    <h2 style="text-align: center; line-height: 0; font-size:35px;"><strong>قم برفع شعار متجرك </strong></h2>
+</header>
+
+<!-- Main content area -->
+<main style="text-align:center;">
+    <form>
+        <!-- this form for a logo to upload -->
+        <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc">
+    </form>
+    <!-- to display logo -->
+    <img style="width:150px; height:150px;" ng-src="{{imageSrc}}" />
+    <button ng-click="showColors()">show colors</button>
+
+    <p style="background-color:{{Colors.color1}}">{{Colors.color1}} first color</p><br />
+    <p style="background-color:{{Colors.color2}}">{{Colors.color2}} second</p><br />
+    <p style="background-color:{{Colors.color3}}">{{Colors.color3}} thired</p><br />
+    <p style="background-color:{{Colors.color4}}">{{Colors.color4}} forth</p><br />
+    <p>error {{error}}</p>
+
+</main>
+
+    <div style="display:inline; overflow: auto;
+                    white-space: nowrap; padding: 0px 0px;">
+        <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="7a" class="button button-large" data-toggle="tooltip" data-placement="right" title="التالي" ng-click="sendLogo()">&#8250;</a>
+        <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="3.2a" class="button button-large" data-toggle="tooltip" data-placement="left" title="السابق">&#8249;</a>
+    </div>
+    <br>
+    <!-- Footer -->
+    <footer>
+        <br>
+    </footer>

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="CraetionStageApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Creation Stage - Building Station</title>
+    <base href="/" />
+
+    <script src="Scripts/angular.min.js"></script>
+    <!--<script src="Scripts/angular-route.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular-route.min.js"></script></script>
+    <script src="Scripts/CreationStageController.js"></script>
+    <!-- Main CSS -->
+    <link href="CreationStageStyleSheet.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />-->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <style>
+        ul {
+            position: absolute;
+            z-index: 1000;
+            cursor: default;
+            padding: 0;
+            margin-top: 2px;
+            list-style: none;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        li {
+            cursor: pointer;
+            list-style-position: inside;
+            border: 0.5px solid gray;
+            padding: 3px 20px;
+        }
+        li:hover {
+                background-color: #f9f9f9;
+            }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h1 style="z-index:1;" class="button button-large">English |العربية</h1>
+        <div class="container">
+            <ng-view></ng-view>
+        </div>
+    </div>
+    <!--هذا رابط للسوشال ميديا
+    http://www.shanidkv.com/blog/angularjs-adding-form-fields-dynamically    
+    -->
+</body>
+</html>

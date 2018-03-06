@@ -1,0 +1,111 @@
+﻿<!--<h2>{{tabHeader}}</h2>-->
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        @media only screen and (max-width:620px) {
+            #table {
+                overflow-x:scroll;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container" style="float:right;">
+        <div dir="rtl">
+            <!--add new category-->
+            <span>
+                <h>الأصناف:</h>
+            </span>
+            <!--to display categories-->
+            <div ng-init="getCat()">
+                <select ng-options="option for option in categories"
+                        ng-model="selectedCategory"
+                        ng-change="selectedCategoryChanged()">
+                    <!--<option ng-repeat="category in categories" selected>{{category}}</option>
+                ng-selected="changeCategory(cat)"-->
+                </select>
+            </div>
+            <!--\to display categories-->
+
+            <button ng-click="newCat=true">+</button>
+            <input type="text" ng-show="newCat" placeholder="أدخل الصنف" ng-model="newCategury" style="text-align:right;">
+            <span ng-show="newCat">
+                <a href="" ng-hide="!newCategury.length" ng-click="addNewCategory(newCategury)">إضافة</a>
+            </span>
+            <span ng-show="result">{{result}}</span><!--success message-->
+        </div>
+        <!--\add new category-->
+        
+        <!--list products-->
+        <div class="table-responsive" id="table">
+
+            <table ng-init="edit=false" class="table">
+                <thead>
+                    <tr>
+                        <th>حذف</th>
+                        <th>تعديل</th>
+                        <th>إضافة خصم</th>
+                        <th>الكمية</th>
+                        <th>السعر</th>
+                        <th>تفاصيل المنتج</th>
+                        <th>اسم المنتج</th>
+                        <th>صورة المنتج</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="selectedCategoryChanged()">
+                    <tr data-ng-repeat="product in products">
+                        <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
+                        <td ng-hide="true">{{product.ID}}</td>
+                        <td><button class="remove" ng-click="removeproduct(product, product.ID)">-</button></td>
+                        <td>
+                            <button ng-show="!product.edit" ng-click="product.edit= !product.edit">Edit</button>
+                            <button ng-show="product.edit" ng-click="editProduct($index,product)">apply change</button>
+                        </td>
+                        <td ng-show="!product.edit"><label>{{product.Discount}}</label></td>
+                        <td ng-show="product.edit"><input type="number" ng-model="product.Discount" name="" placeholder="Enter product discount" required></td>
+                        <td ng-show="!product.edit"><label>{{product.Amount}}</label></td>
+                        <td ng-show="product.edit"><input type="number" ng-model="product.Amount" name="" placeholder="Enter product amount" required></td>
+                        <td ng-show="!product.edit"><label>{{product.Price}}</label></td>
+                        <td ng-show="product.edit"><input type="number" ng-model="product.Price" name="" placeholder="Enter product price" required></td>
+                        <td ng-show="!product.edit"><label>{{product.Description}}</label></td>
+                        <td ng-show="product.edit"><textarea ng-model="product.Description" required>Enter product description</textarea></td>
+                        <td ng-show="!product.edit"><label>{{product.Name}}</label></td>
+                        <td ng-show="product.edit"><input type="text" ng-model="product.Name" name="" placeholder="Enter product name" required></td>
+                        <td ng-show="!product.edit"><img ng-src="{{product.Image}}" alt="image" width="80" height="80" /></td>
+                        <td ng-show="product.edit">
+                            <input type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
+                            <img style="width:100px; height:100px;" ng-src="{{product.Image}}" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
+                        <td ng-hide="true">{{product.ID = 1}}</td>
+                        <td><input type="number" ng-model="product.Discount" name="" placeholder="discount" required></td>
+                        <td><input type="number" ng-model="product.Amount" name="" placeholder="amount" required></td>
+                        <td><input type="number" ng-model="product.Price" name="" placeholder="price" required></td>
+                        <td><textarea type="text" ng-model="product.Description" name="" placeholder="description" required></textarea></td>
+                        <td><input type="text" ng-model="product.Name" name="" placeholder="name" required></td>
+                        <td>
+                            <input type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
+                            <img ng-show="product.Image" style="width:80px; height:80px;" ng-src="{{product.Image}}" />
+                            <!--<textarea>{{product.Image}}</textarea>-->
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <button class="addfields" ng-click="addNewProduct(product)">Add fields</button>
+        </div>
+        <!--\list products-->
+    </div>
+
+
+</body>

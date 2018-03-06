@@ -1,0 +1,257 @@
+﻿@font-face {
+    font-family: "NeoSansArabic";
+    src: url('NeoSansArabic.ttf'); /* IE9 */
+}
+
+
+body {
+    min-height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    background-image: url("images/background.png");
+}
+
+.text-center {
+    text-align: center;
+}
+
+.space-bot {
+    margin-bottom: 35px;
+}
+
+.space-top {
+    margin-top: 35px;
+}
+
+/* Title */
+
+h1 {
+    color: white;
+    font-family: 'Roboto';
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 25px;
+    text-align: center;
+}
+
+/* Sign Up */
+
+.container {
+    max-width: 5000px;
+    max-height: 500px;
+    margin-top: 40px;
+    margin-left: 90px;
+    position: center;
+    width: 1200px;
+}
+
+
+.alert-danger {
+    text-align: center;
+}
+
+.screen {
+    position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 1200px;
+    height: 500px;
+    background-size: 1200px 500px;
+    background-repeat: no-repeat;
+    background-image: url("images/center_en_signup.png");
+    box-shadow: 0 1px 6px rgba(0,0,0,.3);
+    display: flex;
+}
+
+.screen2 {
+    position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 1200px;
+    # height: 500px;
+    background-size: 1200px 500px;
+    background-repeat: no-repeat;
+    background-image: url("images/center_en_signin.png");
+    box-shadow: 0 1px 6px rgba(0,0,0,.3);
+    display: flex;
+}
+
+.screen_ar {
+    position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 1200px;
+    height: 500px;
+    background-size: 1200px 500px;
+    background-repeat: no-repeat;
+    background-image: url("images/center_ar_signin.png");
+    box-shadow: 0 1px 6px rgba(0,0,0,.3);
+    display: flex;
+}
+
+.screen2_ar {
+    position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 1200px;
+    height: 500px;
+    background-size: 1200px 500px;
+    background-repeat: no-repeat;
+    background-image: url("images/center_ar_signup.png");
+    box-shadow: 0 1px 6px rgba(0,0,0,.3);
+    display: flex;
+}
+
+
+.btn {
+    border-radius: 2px;
+}
+
+/*
+.cancel {
+    background-color: #df405a;
+}
+*/
+
+.done {
+    background-color: #c6ba57;
+}
+
+    .done:hover {
+        background-color: #d3ca7d;
+    }
+
+    .done:focus {
+        background-color: #d3ca7d;
+    }
+/*
+.cancel:hover {
+    background-color: #f0435f;
+}
+
+.cancel:focus {
+    background-color: #f0435f;
+}
+*/
+.input-group {
+    width: 100%;
+}
+
+    .input-group .ng-invalid {
+        border: 2px solid #e74c3c;
+        border-radius: 3px;
+    }
+
+/* Error Box */
+
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    border-color: #e85a71;
+    background-color: #e85a71;
+    color: white;
+}
+
+.help-block {
+    font-size: 12px;
+    color: white
+}
+
+
+
+
+.active a {
+    color: white;
+}
+
+
+
+label {
+    position: absolute;
+    transform: translateY(6px);
+    left: 13px;
+    transition: all 0.25s ease;
+    -webkit-backface-visibility: hidden;
+    pointer-events: none;
+    font-size: 22px;
+}
+
+
+    label.active {
+        transform: translateY(50px);
+        left: 2px;
+        font-size: 14px;
+    }
+
+.highlight {
+    color: white;
+}
+
+.form-register {
+    width: 350px;
+    margin-top: 130px;
+    margin-left: 180px;
+}
+
+.form-register_ar {
+    width: 350px;
+    margin-top: 130px;
+    margin-left: 130px;
+}
+
+#form-login_ar {
+    width: 350px;
+    margin-top: 200px;
+    margin-left: 130px;
+}
+
+
+#form-login {
+    width: 350px;
+    margin-left: 200px;
+    margin-top: 200px;
+}
+
+.convertPage {
+    margin-top: 390px;
+    position: center;
+}
+
+.label2 {
+    transform: translateY(6px);
+    font-size: 30px;
+    margin-right: 10px;
+    display: inline-block;
+    font-family: "Century Gothic";
+}
+
+#pos {
+    margin-left: 460px;
+}
+
+#pos_ar {
+    margin-left: 215px;
+    font-family: "NeoSansArabic";
+}
+
+#pos2 {
+    margin-left: 425px;
+}
+
+#pos2_ar {
+    margin-left: 250px;
+    font-family: "NeoSansArabic";
+}
+
+li {
+    display: inline;
+    font-size: 18px;
+    font-family: "Century Gothic";
+}
+
+.language {
+    float: left;
+}

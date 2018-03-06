@@ -1,0 +1,38 @@
+﻿<!-- Header -->
+<header style="padding-bottom:0%;">
+    <h2 style="text-align: center; line-height: 0; font-size:35px;"><strong>الحساب</strong></h2>
+</header>
+
+<!-- Main content area -->
+<main style=" text-align: center;">
+    <img style="width:10vw; height:auto;" ng-src="{{Store.Logo}}">
+    <p> {{Store.Name}} , {{Store.Address}}</p>
+    <p> {{Store.Email }} , {{Store.Phone}} </p>
+    <div style="text-align:center" ng-show="Svisible">
+        <img src="../images/snapchat (2).png" style="width: 40px; height:auto;" />
+        <p>{{Store.SnapchatLink}}</p>
+    </div>
+    <div style="text-align:center" ng-show="Tvisible">
+        <img src="../images/twitter (2).png" style="width: 40px; height:auto;" />
+        <p>{{Store.TwitterLink}}</p>
+    </div>
+    <div style="text-align:center" ng-show="Fvisible">
+        <img src="../images/facebook (2).png" style="width: 40px; height:auto;" />
+        <p>{{Store.FacebookLink}}</p>
+    </div>
+    <div style="text-align:center" ng-show="Ivisible">
+        <img src="../images/insta.png" style="width: 40px; height:auto;" />
+        <p>{{Store.InstagramLink}}</p>
+    </div>
+</main>
+
+<div style="display:inline; overflow: auto;
+                white-space: nowrap; padding: 0px 0px;">
+    <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="8a" class="button button-large" data-toggle="tooltip" data-placement="right" title="التالي">&#8250;</a>
+    <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="6a" class="button button-large" data-toggle="tooltip" data-placement="left" title="السابق">&#8249;</a>
+</div>
+
+<!-- Footer -->
+<footer>
+    <!-- F   <p>Free Web Template from <a href="https://zypopwebtemplates.com/">ZyPop</a>.</p>-->
+</footer>
