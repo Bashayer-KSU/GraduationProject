@@ -45,11 +45,11 @@ var app = angular.module("BS", ["ngRoute"])
             })
                 .then(function (response) {
                     $scope.result = response.data;
-                    if (response.data.paypal == true)
+                    if (response.data.paypal === true)
                         alert("paypal " + response.data.paypal);
-                    if (response.data.bankTransfer == true)
+                    if (response.data.bankTransfer === true)
                         alert("bankTransfer " + response.data.bankTransfer);
-                    if (response.data.cash == true)
+                    if (response.data.cash === true)
                         alert("cash " + response.data.cash);
                 }, function (error) {
                     $scope.error = error.data;
@@ -71,6 +71,63 @@ var app = angular.module("BS", ["ngRoute"])
                     $scope.checkboxPayment.paypal = response.data.Paypal;
                     $scope.checkboxPayment.cash = response.data.Cash;
                     $scope.checkboxPayment.bankTransfer = response.data.BankTransfer;
+
+                }, function (error) {
+                    $scope.error = error.data;
+                });
+        };
+
+        $scope.UpdateBankInfo = function () {
+            var IBAN = $scope.bankInfo.IBAN;
+            /*
+            $http({
+                url: "PaymentMethods.asmx/UpdateBankInfo",
+                dataType: 'json',
+                method: 'POST',
+                data: { IBAN: IBAN },
+                headers: { "Content-Type": "application/json; charset=utf-8" }
+            }).then(function (response) {
+                $scope.IBAN = response.data;
+                }, function (error) {
+                    $scope.error = error;
+            });*/
+            $http({
+                url: "PaymentMethods.asmx/UbdateBankInfo",
+                method: "get",
+                params: { IBAN: IBAN}
+            })
+                .then(function (response) {
+                    $scope.bankInfo.IBAN = response.data;
+
+                }, function (error) {
+                    $scope.error = error.data;
+                });
+        };
+
+        $scope.bankInfo = {
+            IBAN: ""
+        };
+
+        $scope.GetBankInfo = function () {
+            /*
+            $http({
+                url: "PaymentMethods.asmx/GetBankInfo",
+                dataType: 'json',
+                method: 'POST',
+                data: {},
+                headers: { "Content-Type": "application/json; charset=utf-8" }
+            }).then(function (response) {
+                $scope.bankInfo.IBAN = response.data;
+            }, function (error) {
+                alert(error);
+            });*/
+            $http({
+                url: "PaymentMethods.asmx/GetBankInfo",
+                method: "get",
+                params: {}
+            })
+                .then(function (response) {
+                    $scope.bankInfo.IBAN = response.data;
 
                 }, function (error) {
                     $scope.error = error.data;

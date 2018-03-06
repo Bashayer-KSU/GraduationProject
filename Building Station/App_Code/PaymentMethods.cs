@@ -17,8 +17,8 @@ using System.Web.Services;
 
 public class PaymentMethods : System.Web.Services.WebService
 {
-    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
+    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
 
     JavaScriptSerializer js = new JavaScriptSerializer();
 
@@ -72,6 +72,44 @@ public class PaymentMethods : System.Web.Services.WebService
         }
         
     }
-    
-        
+
+
+    [WebMethod]
+    public void UbdateBankInfo(String IBAN)
+    {
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET ShopOwnerBank = '" + IBAN + "' Where Email = 'asmaa.alrubia@gmail.com'", con);
+
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            Context.Response.Write(js.Serialize(IBAN));
+
+        }
+
+    }
+
+    [WebMethod]
+    public void GetBankInfo()
+    {
+        var IBAN= "";
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("SELECT ShopOwnerBank FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                reader.Read();
+                 IBAN = Convert.ToString(reader["ShopOwnerBank"]);
+
+            }
+            con.Close();
+
+            Context.Response.Write(js.Serialize(IBAN));
+
+        }
+
+    }
 }

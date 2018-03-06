@@ -259,3 +259,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+Building Station/App_Code/PaymentMethods.cs
+Building Station/Controllers/BS-Menu.js
+Building Station/Controllers/BS-Menu.js

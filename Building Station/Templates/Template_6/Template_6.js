@@ -15,7 +15,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http) {
 
         }, function (error) {
             $scope.error = error;
-        })
+        });
 
     };
     init();
