@@ -4,13 +4,16 @@
 </header>
 <!-- Main content area -->
 <main>
-    <input id="Type" type="text" name="Type" ng-model="Type" ng-change="checkContent()" ng-keyup="complete(Type)" ng-value="typeValue" placeholder="  مثال: ملابس  " style="width:100%;">
+    <input id="Type" type="text" name="Type" ng-model="Type" ng-change="checkContent()" ng-keyup="complete(Type)" placeholder="  مثال: ملابس  " style="width:100%;">
     <ul style="list-style: none;" ng-model="hidethis" ng-hide="hidethis">
         <li class="list-group-item" ng-repeat="Typedata in filterType" ng-click="fillTextbox(Typedata)" style="width:100%;">{{Typedata}}</li>
     </ul>    <br /> <br />
+
 </main>
+
 <div style="display:inline; overflow: auto;
                 white-space: nowrap; padding: 0px 0px;">
+    
     <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="3.1a" class="button button-large" ng-click="sendType()" data-toggle="tooltip" data-placement="right" title="التالي">&#8250;</a>
     <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="1a" class="button button-large" data-toggle="tooltip" data-placement="left" title="السابق">&#8249;</a>
 </div>
