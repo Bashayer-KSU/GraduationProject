@@ -3,25 +3,49 @@
 var Register = myApp.controller("RegisterLoginCtrl", function ($scope, $http, $window) {
 
 
-    $scope.SendData = function (e) {
+    $scope.SendData = function (e,lang) {
         // use $.param jQuery function to serialize data from JSON 
         var url;
         var data;
+
         if (e === "reg") {
             url = "RegisterLogin.asmx/Register";
-            data = $.param({
-                name: $scope.user.name,
-                email: $scope.email,
-                password: $scope.user.password,
-                phone: $scope.phone
-            });
+            if (lang === "eng") {
+                data = $.param({
+                    name: $scope.REname,
+                    email: $scope.REemail,
+                    password: $scope.REpassword,
+                    phone: $scope.REphone,
+                    lang: lang
+                });
+            }
+            else {
+                data = $.param({
+                    name: $scope.Rname,
+                    email: $scope.Remail,
+                    password: $scope.Rpassword,
+                    phone: $scope.Rphone,
+                    lang: lang
+                });
+            }
         }
         else if (e === "log") {
             url = "RegisterLogin.asmx/Login";
-            data = $.param({
-                name: $scope.username,
-                password: $scope.userpassword
-            });
+            if (lang === "eng") {
+
+                data = $.param({
+                    email: $scope.LEemail,
+                    password: $scope.LEpassword,
+                    lang : lang
+                });
+            }
+            else {
+                data = $.param({
+                    email: $scope.Lemail,
+                    password: $scope.Lpassword,
+                    lang: lang
+                });
+            }
         }
 
 

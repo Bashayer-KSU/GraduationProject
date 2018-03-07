@@ -275,14 +275,14 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="Name">Buyer Name</label>
-                                        <input type="text" class="form-control" id="Name" placeholder="" value="" required>
+                                        <input type="text" class="form-control" id="Name" placeholder="Enter Your Name" value="" required>
                                         <div class="invalid-feedback">
                                             Valid name is required.
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="Phone">Phone Number</label>
-                                        <input type="text" class="form-control" id="Phone" placeholder="" value="" required>
+                                        <input type="text" class="form-control" id="Phone" placeholder="Enter Your Phone Number" value="" required>
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -303,15 +303,15 @@
                                     <hr class="mb-4">
                                     <h4 class="mb-3">Payment</h4>
                                     <div id="paymentMethod" class="d-block my-3">
-                                        <div class="custom-control custom-radio">
+                                        <div  ng-show="cash" class="custom-control custom-radio">
                                             <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" checked required>
                                             <label class="custom-control-label" for="cash">Cash<img style="max-width:5%;" src="/Templates/Template_6/Images/cash.png" alt="Cash"></label>
                                         </div>
-                                        <div class="custom-control custom-radio">
+                                        <div ng-show="bankTransfer" class="custom-control custom-radio">
                                             <input id="banktransfer" name="paymentMethod" type="radio" class="custom-control-input" required>
                                             <label class="custom-control-label" for="banktransfer">Bank Transfer<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer"></label>
                                         </div>
-                                        <div class="custom-control custom-radio">
+                                        <div ng-show="paypal" class="custom-control custom-radio">
                                             <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
                                             <label class="custom-control-label" for="paypal"><img style="max-width:20%;" src="/Templates/Template_6/Images/paypal.png" alt="paypal"></label>
                                         </div>
@@ -322,7 +322,7 @@
                                 <div id="transfer" class="collapse">
                                     <div class="row">
                                         <h4 class="mb-3 col-md-12">Confirm Bank Transfer</h4>
-                                        <h6 class="mb-3 col-md-12"><small>IBAN:  2345678654334</small></h6>
+                                        <h6 class="mb-3 col-md-12"><small>IBAN:  {{bankAccount}}</small></h6>
                                         <div class="col-md-8 mb-3">
                                             <label for="reqNum">Request Number</label>
                                             <input type="text" class="form-control" id="reqNum" placeholder="" required>
@@ -357,26 +357,30 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-5">
-                        <h5><i class="fa fa-road"></i> {{StoreName}}</h5>
+                        <h5>{{StoreName}}</h5>
                         <div class="row">
                         </div>
                         <ul class="nav">
-                            <li ng-show="FaceLink" class="nav-item"><a href="" class="nav-link pl-0"><i class="fa fa-facebook fa-lg"></i></a></li>
-                            <li class="nav-item"><a href="" class="nav-link"><i class="fa fa-twitter fa-lg"></i></a></li>
-                            <li class="nav-item"><a href="" class="nav-link"><i class="fa fa-github fa-lg"></i></a></li>
-                            <li class="nav-item"><a href="" class="nav-link"><i class="fa fa-instagram fa-lg"></i></a></li>
+                            <li ng-show="Facebook" class="nav-item"><a href="" class="nav-link pl-0" ng-style="{'color':color1}"><i class="fa fa-facebook fa-lg"></i></a></li>
+                            <li ng-show="Twitter" class="nav-item"><a href="" class="nav-link" ng-style="{'color':color1}"><i class="fa fa-twitter fa-lg"></i></a></li>
+                            <li ng-show="Snapchat" class="nav-item"><a href="" class="nav-link" ng-style="{'color':color1}"><i class="fa fa-snapchat fa-lg"></i></a></li>
+                            <li ng-show="Instagram" class="nav-item"><a href="" class="nav-link" ng-style="{'color':color1}"><i class="fa fa-instagram fa-lg"></i></a></li>
                         </ul>
                         <br>
                     </div>
                     <div class="col-md-2">
                         <h5 class="text-md-right">Contact Us</h5>
                         <hr>
-                        <h6>info@gmail.com</h6>
+                        <h6>{{Email}}</h6>
+                        <h6>{{address}}</h6>
+                        <h6>{{Phone}}</h6>
+
                     </div>
                 </div>
                 <div class="row">
-                    <p>&copy; 2018  &middot; <a href="#"> Desined By Building Station</a> </p>
+                    <p>&copy; 2018  &middot; <a ng-style="{'color':color1}" href="/RegisterLogin.html"> Desined By Building Station</a> </p>
                 </div>
+                <br /><br />
             </div>
         </footer>
     </main>

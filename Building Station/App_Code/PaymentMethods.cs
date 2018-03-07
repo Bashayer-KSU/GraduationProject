@@ -30,14 +30,14 @@ public class PaymentMethods : System.Web.Services.WebService
          payments = new Payments();
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void AcceptPaymentMethods(Boolean paypal, Boolean bankTransfer, Boolean cash )
     {
 
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET PayPal = '" + paypal + "', BankTransfer = '"+ bankTransfer + "', Cash = '" + cash + "' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET PayPal = '" + paypal + "', BankTransfer = '"+ bankTransfer + "', Cash = '" + cash + "' Where Email = '"+Session["user"]+"'", con);
 
             cmd.ExecuteNonQuery();
             con.Close();
@@ -50,13 +50,13 @@ public class PaymentMethods : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void GetPaymentMethods()
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT PayPal,BankTransfer,Cash FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("SELECT PayPal,BankTransfer,Cash FROM Store Where Email = '" + Session["user"] + "'", con);
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
                 reader.Read();
@@ -74,13 +74,13 @@ public class PaymentMethods : System.Web.Services.WebService
     }
 
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void UbdateBankInfo(String IBAN)
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET ShopOwnerBank = '" + IBAN + "' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET ShopOwnerBank = '" + IBAN + "' Where Email = '" + Session["user"] + "'", con);
 
             cmd.ExecuteNonQuery();
             con.Close();
@@ -91,14 +91,14 @@ public class PaymentMethods : System.Web.Services.WebService
 
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void GetBankInfo()
     {
         var IBAN= "";
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT ShopOwnerBank FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("SELECT ShopOwnerBank FROM Store Where Email = '" + Session["user"] + "'", con);
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
                 reader.Read();

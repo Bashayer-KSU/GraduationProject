@@ -7,7 +7,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http) {
 
         $http.get('/TemplateData.asmx/StoreData').then(function (response) {
             $scope.resultset = response.data;
-
+            console.log($scope.resultset);
             //Store Info
             $scope.logo = $scope.resultset.Logo;
             $scope.StoreName = $scope.resultset.Name;
@@ -31,9 +31,10 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http) {
             $scope.cash = $scope.resultset.Cash;
 
             //Social Media Link
-            $scope.FaceLink = $scope.resultset.FacebookLink;
-            $scope.InstLink = $scope.resultset.InstagramLink;
-            $scope.SnapLink = $scope.resultset.SnapchatLink;
+            $scope.Facebook = $scope.resultset.FacebookLink.includes("https");
+            $scope.Instagram = $scope.resultset.InstagramLink.includes("No");
+            $scope.Snapchat = $scope.resultset.SnapchatLink.includes("https");
+            $scope.Twitter = $scope.resultset.TwitterLink.includes("No");
 
             //Menu
             $scope.MenuTitle = $scope.resultset.MenuTitle;
