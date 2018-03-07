@@ -57,7 +57,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             })
             .otherwise({
                 redirectTo: "/0a"
-            })
+            });
         $locationProvider.html5Mode(true);
     })
     .controller("0aController", function ($scope) {
@@ -74,16 +74,17 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         });
 
         $scope.sendName = function () {
-           
-                var post = $http({
-                    method: "POST",
-                    url: "CreationStage.asmx/AddStoreName",
-                    dataType: 'json',
-                    data: { name: $scope.storeName },
-                    headers: { "Content-Type": "application/json" }
+
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/AddStoreName",
+                dataType: 'json',
+                data: { name: $scope.storeName },
+                headers: { "Content-Type": "application/json" }
             });
-                post.then(function (response) { }, function (error) { });
-                $location.path('/2a');        }
+            post.then(function (response) { }, function (error) { });
+            $location.path('/2a');
+        };
 
       /*   if ($scope.Name.length !== 0 || typeof $scope.Name !== 'undefined') {
             $scope.$invalid = false;
@@ -116,7 +117,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 headers: { "Content-Type": "application/json" }
             });
             post.then(function (response) { }, function (error) { $scope.R = error.data; });
-        }
+        };
         $scope.Types = ["مكياج وعناية", "أشغال يدوية", "اكسسوارات", "حلويات", "موضة وملابس", "مخبز", "طبخ منزلي", "اكسسوارات جوال ولابتوب"];
         $scope.complete = function (string) {
             var output = [];
@@ -126,18 +127,18 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 }
             });
             $scope.filterType = output;
-        }
+        };
         $scope.fillTextbox = function (string) {
             $scope.Type = string;
             $scope.hidethis = true;
-        }
+        };
         $scope.checkContent = function () {
             if ($scope.Type.length === 0 || typeof $scope.Type === 'undefined') {
                 $scope.hidethis = true;
             } else {
                 $scope.hidethis = false;
             }
-        } 
+        };
     })
     .controller("InstaNameController", function ($scope) {
     })
@@ -157,20 +158,20 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
 
         $scope.checkContent_snapchat = function () {
             if ($scope.snapchatLink !== 0 || typeof $scope.snapchatLink !== 'undefined')
-            snapchat = $scope.snapchatLink;
-        }
+                snapchat = $scope.snapchatLink;
+        };
         $scope.checkContent_twitter = function () {
             if ($scope.twitterLink !== 0 || typeof $scope.twitterLink !== 'undefined')
                 twitter = $scope.twitterLink;
-        }
+        };
         $scope.checkContent_facebook = function () {
             if ($scope.facebookLink !== 0 || typeof $scope.facebookLink !== 'undefined')
                 facebook = $scope.facebookLink;
-        }
+        };
         $scope.checkContent_instagram = function () {
             if ($scope.instagramLink !== 0 || typeof $scope.instagramLink !== 'undefined')
-            instagram = $scope.instagramLink;
-        }
+                instagram = $scope.instagramLink;
+        };
 
         $scope.sendData = function () {
             var post = $http({
@@ -182,7 +183,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             });
             post.then(function (response) { }, function (error) { });
             $location.path('/4.2a');
-        }
+        };
      /*   $scope.Links = [{ id: 'Link1' }, { id: 'Link2' }];
         $scope.addNewLink = function () {
             var newItemNo = $scope.Links.length + 1;
@@ -198,30 +199,31 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $scope.progress = progress.loaded / progress.total;
         });
         $scope.showColors = function () {
-            var File_Path = $scope.imageSrc;
-            var post = $http({
-                method: "POST",
+            //var File_Path = $scope.imageSrc;
+            alert($scope.imageSrc);
+            $http({
                 url: "manageWebsiteColors.asmx/GetWebsiteColors",
                 dataType: 'json',
-                data: { path: File_Path },
-                headers: { "Content-Type": "application/json" }
+                method: "POST",
+                data: { path: $scope.imageSrc },
+                headers: { "Content-Type": "application/json; charset=utf-8" }
             })
-        .then(function (response) {
-                $scope.Colors = response.data;
-            }, function (error) {
-                $scope.error = error.data;
-            });
-        }
-/*
-        $http({
-            url: "manageWebsiteColors.asmx/GetWebsiteColors",
-            method: "get"
-        })
-            .then(function (response) {
-                $scope.Colors = response.data;
-            }, function (error) {
-                $scope.error = error.data;
-            });*/
+                .then(function (response) {
+                    alert("success");
+                    $scope.Colors = response.data;
+                }, function (error) {
+                    alert("failed");
+                    //$scope.R = error.data;
+                    $http({
+                        url: "manageWebsiteColors.asmx/chooseColors",
+                        method: "get"
+                    })
+                        .then(function (response) {
+                            $scope.Colors = response.data;
+                        });
+                });
+        };
+
         $scope.sendLogo = function () {
             var post = $http({
                 method: "POST",
@@ -229,8 +231,9 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 dataType: 'json',
                 data: { logo: $scope.imageSrc },
                 headers: { "Content-Type": "application/json" }
-            });
-        }
+            })
+                .then(function (response) { }, function (error) { });
+        };
     })
     .controller("5aController", function ($scope) {
     })
@@ -268,7 +271,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("ColorsController", function ($scope, $http) {
 
-        $http.get('CreationStage.asmx/GetColors').then(function (response) {
+        $http.get('manageWebsiteColors.asmx/chooseColors').then(function (response) {
 
             $scope.Colors = response.data;
         }, function (error) {
@@ -295,7 +298,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 data: { color1: $scope.Colors.Color1, color2: $scope.Colors.Color2, color3: $scope.Colors.Color3, color4: $scope.Colors.Color4 },
                 headers: { "Content-Type": "application/json" }
             });
-        }
+        };
     })
     .controller("TemplateController", function ($scope, $http, $window) {
 
@@ -310,20 +313,20 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $scope.width3 = "150px";
 
             TemplateID = 1;
-        }
+        };
 
         $scope.secondTemplate = function () {
             $scope.width2 = "200px";
             $scope.width1 = "150px";
             $scope.width3 = "150px";
             TemplateID = 2;
-        }
+        };
         $scope.thirdTemplate = function () {
             $scope.width3 = "200px";
             $scope.width2 = "150px";
             $scope.width1 = "150px";
             TemplateID = 3;
-        }
+        };
 
         $scope.goToTemplate = function () {
             var post = $http({
@@ -334,7 +337,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 headers: { "Content-Type": "application/json" }
             });
             $window.location.href = '/Template_1_product.html';
-        }
+        };
         })
     .controller("LoadController", function ($scope) {
 
