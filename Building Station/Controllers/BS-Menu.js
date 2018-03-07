@@ -142,6 +142,10 @@ var app = angular.module("BS", ["ngRoute"])
     })
     .controller("TemplateController", function ($scope, $http) {
         $scope.tabHeader = "Template";
+        $scope.getImageUrl = function (index) {
+            return "/images/T" + (index+1)+".png";
+        };
+       
     })
     .controller("ProductsController", function ($scope, $http) {
         $scope.tabHeader = "Products";
@@ -373,3 +377,12 @@ app.factory("fileReader", function ($q, $log) {
     };
 });
 //\costom servece
+
+app.filter('range', function () {
+    return function (input, total) {
+        total = parseInt(total);
+        for (var i = 0; i < total; i++)
+            input.push(i);
+        return input;
+    };
+});
