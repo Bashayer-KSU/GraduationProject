@@ -17,8 +17,8 @@ using System.Data.SqlClient;
 public class TemplateData : System.Web.Services.WebService
 {
 
-   // string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
+    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
 
     public Store store = new Store();
     public Product product = new Product();
@@ -36,7 +36,7 @@ public class TemplateData : System.Web.Services.WebService
 
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, SilderImage, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -49,12 +49,14 @@ public class TemplateData : System.Web.Services.WebService
                 store.Color4 = reader["Color4"].ToString();
                 store.Phone = reader["Phone"].ToString();
                 store.Logo = reader["logo"].ToString();
+                store.menuTitle= reader["MenuTitle"].ToString();
+                store.Description = reader["StoreDescription"].ToString();
+                store.SliderImage = reader["SilderImage"].ToString();
                 store.Address = reader["Location"].ToString();
                 store.SnapchatLink = reader["SnapchatLink"].ToString();
                 store.TwitterLink = reader["TwitterLink"].ToString();
                 store.FacebookLink = reader["FacebookLink"].ToString();
                 store.InstagramLink = reader["InstagramLink"].ToString();
-
             }
         }
         Context.Response.Write(js.Serialize(store));

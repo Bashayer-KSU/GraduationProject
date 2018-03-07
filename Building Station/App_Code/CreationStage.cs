@@ -6,6 +6,7 @@ using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Text;
 
 /// <summary>
 /// Summary description for CreationStage
@@ -25,6 +26,7 @@ public class CreationStage : System.Web.Services.WebService
     string Slider7 = "";
     string Slider8 = "";
     string Slider_other = "";
+
 
     //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
@@ -119,8 +121,8 @@ public class CreationStage : System.Web.Services.WebService
     [WebMethod]
     public void AddStoreType(string type, string language)
     {
-        string Slider_Image = "";
-        string Description_Text = ""; 
+        string Slider_Image = " ";
+        string Description_Text = " "; 
 
         if (language.Equals("Arabic"))
         {
@@ -132,50 +134,50 @@ public class CreationStage : System.Web.Services.WebService
 
             else if ((type.Contains("حلويات")) || (type.Contains("كيك")))
             {
-                store.SliderImage = Slider2;
-                store.Description = "حلويات صنعت بكل حب وشغف 🎂💓";
+                Slider_Image = Slider2;
+                Description_Text = "حلويات صنعت بكل حب وشغف 🎂💓";
             }
 
             else if ((type.Contains("مخبز")) || (type.Contains("معجنات")) || (type.Contains("مخبوزات")))
             {
-                    store.SliderImage = Slider3;
-                    store.Description = "مخبوزات ومعجنات لحفلات الشاي ☕️🥐";
+                Slider_Image = Slider3;
+                Description_Text = "مخبوزات ومعجنات لحفلات الشاي ☕️🥐";
             }
 
 
             else if ((type.Contains("ساعات")) || (type.Contains("اكسسوار")) || (type.Contains("اكسسوارات")))
             {
-                store.SliderImage = Slider4;
-                store.Description = "نتميز بجودة عالية وخيارات متعددة 💎";
+                Slider_Image = Slider4;
+                Description_Text = "نتميز بجودة عالية وخيارات متعددة 💎";
             }
 
             else if ((type.Contains("موضة")) || (type.Contains("موضة وملابس")) || (type.Contains("ملابس")) || (type.Contains("فساتين")))
             {
-                store.SliderImage = Slider5;
-                store.Description = "قطع منتقاة بعناية لتناسب ذوقك الراقي 🎀🛍";
+                Slider_Image = Slider5;
+                Description_Text = "قطع منتقاة بعناية لتناسب ذوقك الراقي 🎀🛍";
             }
 
             else if ((type.Contains("أغطية جوال")) || (type.Contains("اكسسوارات جوال ولابتوب")) || (type.Contains("حقائب لابتوب")))
             {
-                store.SliderImage = Slider6;
-                store.Description = "كل ما هو جديد في عالم إكسسوارات الإلكترونيات 📱🖥";
+                Slider_Image = Slider6;
+                Description_Text = "كل ما هو جديد في عالم إكسسوارات الإلكترونيات 📱🖥";
             }
 
             else if ((type.Contains("طبخ")) || (type.Contains("طبخ منزلي")) || (type.Contains("ورق عنب")) || (type.Contains("محاشي")) || (type.Contains("أطعمة شرقية")) || (type.Contains("طعام")) || (type.Contains("غذاء")))
             {
-                store.SliderImage = Slider7;
-                store.Description = "طبخات لذيذة ودافئة لإرضاء ذائقتكم 🥘😋";
+                Slider_Image = Slider7;
+                Description_Text = "طبخات لذيذة ودافئة لإرضاء ذائقتكم 🥘😋";
             }
 
             else if ((type.Contains("جمال")) || (type.Contains("عناية")) || (type.Contains("مكياج")) || (type.Contains("بشرة")) || (type.Contains("تجميل")) || (type.Contains("كريم")))
             {
-                store.SliderImage = Slider8;
-                store.Description = "المكان المناسب لتدللي نفسك 💁🏻‍♀️";
+                Slider_Image = Slider8;
+                Description_Text = "المكان المناسب لتدللي نفسك 💁🏻‍♀️";
             }
             else
             {
-                store.SliderImage = Slider_other;
-                store.Description = "أسعار منافسة، ومنتجات رائعة ✨";
+                Slider_Image = Slider_other;
+                Description_Text = "أسعار منافسة، ومنتجات رائعة ✨";
             }
 
         }
@@ -187,7 +189,7 @@ public class CreationStage : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreType = N'" + type + "', SilderImage = N'" + Slider_Image + "', StoreDescription = N'"+ Description_Text +"' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreType = N'" + type + "', SilderImage = '" + Slider_Image + "', StoreDescription = N'"+ Description_Text +"' Where Email = 'asmaa.alrubia@gmail.com'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
@@ -320,4 +322,61 @@ public class CreationStage : System.Web.Services.WebService
         }
     }
 
+
+
+
+    [WebMethod]
+    public void Test1 (Store image)
+    {
+       // string tryMe = "test2";
+       //string Temp_image = image.SliderImage;
+   //    string Temp_image = "this is over ";
+
+        //byte[] theBytes = System.Text.Encoding.ASCII.GetBytes(Temp_image);
+    //   byte[] theBytes = Encoding.UTF8.GetBytes(Temp_image);
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            //  SqlCommand cmd = new SqlCommand("UPDATE type_images SET type1_slider = '" + theBytes + "' Where id = '1'", con);
+            //  SqlCommand cmd = new SqlCommand("UPDATE Store SET SilderImage =  CONVERT(varbinary,'" + image.SliderImage + "') Where Email = 'asmaa.alrubia@gmail.com'", con);
+            // SqlCommand cmd = new SqlCommand("UPDATE Store SET logo = '" + tryMe + "', SilderImage = "+ theBytes + " Where Email = 'asmaa@mail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE type_images SET type9_slider = '" + image.SliderImage + "' Where id = '1'", con);
+
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+    }
+
+    [WebMethod]
+    public void Test2()
+    {
+       // byte[] theBytes;
+      //  string theString = " nothing " ;
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            // SqlCommand cmd = new SqlCommand("SELECT type1_slider FROM type_images Where id = '1'", con);
+            //   SqlCommand cmd = new SqlCommand("SELECT CONVERT(varchar(max), SilderImage, 2) FROM Store Where Email = 'asmaa.alrubia@gmail.com'", con);
+            //  SqlCommand cmd = new SqlCommand("SELECT cast(SilderImage as varchar(max)) FROM Store Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("SELECT type9_slider FROM type_images Where id = '1'", con);
+
+
+            SqlDataReader reader = cmd.ExecuteReader();
+           // theBytes = (byte[])reader.GetValue(0);
+            while (reader.Read())
+            {
+                //  theBytes = (byte[]) reader["SilderImage"];
+              //   theString = Encoding.UTF8.GetString(theBytes);
+            store.Logo = reader["type9_slider"].ToString();
+
+          //  store.SliderImage = theString;
+
+           }
+            con.Close();
+
+            Context.Response.Write(js.Serialize(store));
+        }
+    }
 }
