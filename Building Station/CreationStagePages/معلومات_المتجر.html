@@ -7,8 +7,9 @@
 <form name="myform">
     <main>
         أين يقع مشروعك<br />
-        <input type="text" name="myAddress" ng-model="Address" style="width:85%;" ng-value="addressValue" placeholder="  مثال: الرياض  " required />
+        <input type="text" name="myAddress" ng-model="Address" style="width:85%;" placeholder="  مثال: الرياض  " required />
         <span class="asterisk_input"></span>
+        <span ng-show="myform.myAddress.$invalid"> هذا الحقل مطلوب  </span>
         <br />
         <!--   <div style="width:100%; display:inline; overflow: auto;white-space: nowrap; padding: 0px 0px;">-->
         ضع رابطا لمتجرك على مواقع التواصل الاجتماعي <br />
@@ -36,8 +37,8 @@
     </main>
     <br />
     <div style="display:inline; overflow: auto;white-space: nowrap; padding: 0px 0px;">
-        <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="4.2a" class="button button-large" ng-click="sendData()" data-toggle="tooltip" data-placement="right" title="التالي">&#8250;</a>
-        <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="2a" class="button button-large" data-toggle="tooltip" data-placement="left" title="السابق">&#8249;</a>
+        <button ng-disabled="myform.myAddress.$invalid" style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" class="button button-large" ng-click="sendData()" data-toggle="tooltip" data-placement="right" title="التالي">&#8250;</button>
+        <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="3.1a" class="button button-large" data-toggle="tooltip" data-placement="left" title="السابق">&#8249;</a>
     </div>
 </form>
 <br>

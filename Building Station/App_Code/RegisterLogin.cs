@@ -16,11 +16,10 @@ public class RegisterLogin : System.Web.Services.WebService
 {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
-
-    [WebMethod(EnableSession =true)]
-    public void Register(String name, String email, String password, String phone)
-    {
         JavaScriptSerializer js = new JavaScriptSerializer();
+    [WebMethod(EnableSession = true)]
+    public void Register(String name, String email, String password, String phone, String lang)
+    {
 
 
         using (SqlConnection con = new SqlConnection(cs))
@@ -32,7 +31,8 @@ public class RegisterLogin : System.Web.Services.WebService
             if (dr.HasRows == true)
             {
                 con.Close();
-                Context.Response.Write(js.Serialize(false));
+                //Context.Response.Write(js.Serialize(false));
+                Context.Response.Write(js.Serialize("/RegisterLogin.html"));
             }
             else
             {
@@ -47,36 +47,81 @@ public class RegisterLogin : System.Web.Services.WebService
                 store.Email = email;
                 store.Password = password;
                 store.Phone = phone;
-                //Session["name"] = name;
-                //Context.Session.Add("name",false);
-                Session["user"] = name;
-                Context.Response.Write(js.Serialize(Session["user"].ToString()));
+                Session["user"] = email;
+                //Context.Response.Write(js.Serialize(Session["user"].ToString()));
+                if(lang.Equals("eng"))
+                {
+                    Context.Response.Write(js.Serialize("/CreationStage.html"));
+                }
+                else if(lang.Equals("ar"))
+                {
+                    Context.Response.Write(js.Serialize("/CreationSatgeArabic.html"));
+
+                }
 
             }
         }
     }
-    [WebMethod]
-    public void Login(String name, String password)
+    [WebMethod(EnableSession = true)]
+    public void Login(String email, String password, String lang)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
 
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Store WHERE Name='" + name + "' AND Password='" + password + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Store WHERE Email='" + email + "' AND Password='" + password + "'", con);
             SqlDataReader dr = cmd.ExecuteReader();
 
             if (dr.HasRows == true)
             {
-                con.Close();
-                Context.Response.Write(js.Serialize(true));
+                Session["user"] = email;
+                dr.Read();
+                if (Convert.ToInt32(dr["TemplateID"]) == 0) //If user not start building template yet
+                {
+                    con.Close();
+
+                    if (lang.Equals("eng"))
+                    {
+                        Context.Response.Write(js.Serialize("/CreationStage.html"));
+                    }
+                    else
+                    {
+                        Context.Response.Write(js.Serialize("/CreationSatgeArabic.html"));
+                    }
+                }
+                else //If user already has template 
+                {
+                    if (lang.Equals("eng"))
+                    {
+                        Context.Response.Write(js.Serialize("/DevelopmentEnvironment.html"));
+                    }
+                    else
+                    {
+                        Context.Response.Write(js.Serialize("/DevelopmentEnvironment#ar_menu"));
+                    }
+                }
 
             }
+
+
+            //Invalid login
             else
             {
-                Context.Response.Write(js.Serialize(false));
+                Context.Response.Write(js.Serialize("/RegisterLogin.html"));
             }
+
         }
+    }
+
+
+
+
+    [WebMethod(EnableSession = true)]
+    public void SignOut()
+    {
+        // Session.Clear();
+        Session.Abandon();
+        Context.Response.Write(js.Serialize("/RegisterLogin.html"));
+
     }
 }
