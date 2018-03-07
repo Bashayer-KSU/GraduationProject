@@ -236,8 +236,6 @@ var app = angular.module("BS", ["ngRoute"])
                 $scope.products[index] = product;
                 product.edit = false;
                 /////////////////////
-                alert(error);
-                alert("edit function");
             });
         };
         //\apply edit the product
@@ -279,8 +277,6 @@ var app = angular.module("BS", ["ngRoute"])
                 product.Discount = '';
                 $scope.selectedCategoryChanged();
                 //////////////////////////
-                alert(error);
-                alert("add function");
             });
         };
         //\to add new row
@@ -296,9 +292,7 @@ var app = angular.module("BS", ["ngRoute"])
                     $scope.result = response.data;
                     var remove = $scope.products.indexOf(product);
                     $scope.products.splice(remove, 1);
-                }, function (error) {
-                    alert(error);
-                });
+                }, function (error) { });
         };
         //\to remove row
     });
