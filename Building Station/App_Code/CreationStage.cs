@@ -17,19 +17,9 @@ using System.Text;
 [System.Web.Script.Services.ScriptService]
 public class CreationStage : System.Web.Services.WebService
 {
-    string Slider1 = "";
-    string Slider2 = "";
-    string Slider3 = "";
-    string Slider4 = "";
-    string Slider5 = "";
-    string Slider6 = "";
-    string Slider7 = "";
-    string Slider8 = "";
-    string Slider_other = "";
 
-
-    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
+   string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+   // string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
 
     public Store store = new Store();
 
@@ -68,39 +58,6 @@ public class CreationStage : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void StoreType(string type)
-    {
-        string[] Type1 = { "sweets", "dessert", "sugar", "cake" };
-
-        string[] Type2 = { "handmade", "craft", "crochet", "yarn", "knitwear" };
-
-        string[] Type3 = { "cloths", "dresses", "fashion", "" };
-
-        string[] Type4 = { "makeup", "beauty", "Beauty & skin care", "skin care" };
-
-        string[] Type5 = { "Baking", "Bakery", "", "" };
-
-        string[] Type6 = { "cooking", "food", "Home cook" };
-
-        string[] Type7 = { "accessories", "", "", "", "", "" };
-
-        string[] Type8 = { "Phone & laptop accessories", "", "" };
-
-        string[][] Types = { Type1, Type2, Type3, Type4, Type5, Type6, Type7, Type8 };
-
-        foreach (string[] j in Types)
-        {
-            foreach (string i in j)
-            {
-                if (type.Equals(i))
-                {
-
-                }
-            }
-        }
-    }
-
-    [WebMethod]
     public void AddStoreName(string name)
     {
         JavaScriptSerializer js = new JavaScriptSerializer();
@@ -122,69 +79,301 @@ public class CreationStage : System.Web.Services.WebService
     public void AddStoreType(string type, string language)
     {
         string Slider_Image = " ";
-        string Description_Text = " "; 
+        string Description_Text = " ";
+        JavaScriptSerializer js = new JavaScriptSerializer();
 
         if (language.Equals("Arabic"))
         {
             if ((type.Contains("أشغال يدوية")) || (type.Contains("أعمال يدوية")) || (type.Contains("كروشيه")) || (type.Contains("صوف")) || (type.Contains("تريكو")) || (type.Contains("حياكة")))
             {
-                    Slider_Image = Slider1;
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type1_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type1_slider"].ToString();
+                    }
+                    con.Close();
+                }
                     Description_Text = "صناعة يدوية عالية الجودة بتصاميم مميزة 🎁";
             }
 
             else if ((type.Contains("حلويات")) || (type.Contains("كيك")))
             {
-                Slider_Image = Slider2;
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type2_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type2_slider"].ToString();
+                    }
+                    con.Close();
+                }
                 Description_Text = "حلويات صنعت بكل حب وشغف 🎂💓";
             }
 
             else if ((type.Contains("مخبز")) || (type.Contains("معجنات")) || (type.Contains("مخبوزات")))
             {
-                Slider_Image = Slider3;
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type3_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type3_slider"].ToString();
+                    }
+                    con.Close();
+                }
                 Description_Text = "مخبوزات ومعجنات لحفلات الشاي ☕️🥐";
             }
 
 
             else if ((type.Contains("ساعات")) || (type.Contains("اكسسوار")) || (type.Contains("اكسسوارات")))
             {
-                Slider_Image = Slider4;
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type4_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type4_slider"].ToString();
+                    }
+                    con.Close();
+                }
                 Description_Text = "نتميز بجودة عالية وخيارات متعددة 💎";
             }
 
             else if ((type.Contains("موضة")) || (type.Contains("موضة وملابس")) || (type.Contains("ملابس")) || (type.Contains("فساتين")))
             {
-                Slider_Image = Slider5;
-                Description_Text = "قطع منتقاة بعناية لتناسب ذوقك الراقي 🎀🛍";
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type5_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type5_slider"].ToString();
+                    }
+                    con.Close();
+                }
+                Description_Text = "قطع منتقاة بعناية لتتناسب مع ذوقك الراقي 🎀🛍";
             }
 
             else if ((type.Contains("أغطية جوال")) || (type.Contains("اكسسوارات جوال ولابتوب")) || (type.Contains("حقائب لابتوب")))
             {
-                Slider_Image = Slider6;
-                Description_Text = "كل ما هو جديد في عالم إكسسوارات الإلكترونيات 📱🖥";
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type6_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type6_slider"].ToString();
+                    }
+                    con.Close();
+                }
+                Description_Text = "كل ما هو جديد في عالم الإكسسوارات الإلكترونيات 📱🖥";
             }
 
             else if ((type.Contains("طبخ")) || (type.Contains("طبخ منزلي")) || (type.Contains("ورق عنب")) || (type.Contains("محاشي")) || (type.Contains("أطعمة شرقية")) || (type.Contains("طعام")) || (type.Contains("غذاء")))
             {
-                Slider_Image = Slider7;
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type7_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type7_slider"].ToString();
+                    }
+                    con.Close();
+                }
                 Description_Text = "طبخات لذيذة ودافئة لإرضاء ذائقتكم 🥘😋";
             }
 
             else if ((type.Contains("جمال")) || (type.Contains("عناية")) || (type.Contains("مكياج")) || (type.Contains("بشرة")) || (type.Contains("تجميل")) || (type.Contains("كريم")))
             {
-                Slider_Image = Slider8;
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type8_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type8_slider"].ToString();
+                    }
+                    con.Close();
+                }
                 Description_Text = "المكان المناسب لتدللي نفسك 💁🏻‍♀️";
             }
             else
             {
-                Slider_Image = Slider_other;
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type9_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type9_slider"].ToString();
+                    }
+                    con.Close();
+                }
                 Description_Text = "أسعار منافسة، ومنتجات رائعة ✨";
             }
 
         }
         else if (language.Equals("English"))
-        { }
+        {
+            if ((type.Contains("handmade")) || (type.Contains("crochet")) || (type.Contains("knitwear")) || (type.Contains("yarn")) || (type.Contains("wool")))
+            {
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type1_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type1_slider"].ToString();
+                    }
+                    con.Close();
+                }
+                Description_Text = "High quality handmade with special designs 🎁";
+            }
 
-        JavaScriptSerializer js = new JavaScriptSerializer();
+            else if ((type.Contains("sweets")) || (type.Contains("dessert")) || (type.Contains("sugar")) || (type.Contains("cake")))
+            {
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type2_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type2_slider"].ToString();
+                    }
+                    con.Close();
+                }
+                Description_Text = "Sweets made with love and passion 🎂💓";
+            }
+
+            else if ((type.Contains("Bakery")) || (type.Contains("Pastries")) || (type.Contains("Pastry")) || (type.Contains("Baking")))
+            {
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type3_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type3_slider"].ToString();
+                    }
+                    con.Close();
+                }
+                Description_Text = "Bakery and pastry for tea parties ☕️🥐";
+            }
+
+            else if ((type.Contains("Watches")) || (type.Contains("Jewelery")) || (type.Contains("accessories")))
+            {
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type4_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type4_slider"].ToString();
+                    }
+                    con.Close();
+                }
+                Description_Text = "High quality and multiple options 💎";
+            }
+
+            else if ((type.Contains("fashion")) || (type.Contains("cloths")) || (type.Contains("dresses")))
+            {
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type5_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type5_slider"].ToString();
+                    }
+                    con.Close();
+                }
+                Description_Text = "Carefully selected pieces to suit your taste 🎀🛍";
+            }
+
+            else if ((type.Contains("Mobile Covers")) || (type.Contains("Phone & laptop accessories")) || (type.Contains("Laptop Bags")) || (type.Contains("cases")) || (type.Contains("sleeve")))
+            {
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type6_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type6_slider"].ToString();
+                    }
+                    con.Close();
+                }
+                Description_Text = "Everything new in the world of electronics' accessories 📱🖥";
+            }
+
+            else if ((type.Contains("cooking")) || (type.Contains("Home cook")) || (type.Contains("Grape leaves")) || (type.Contains("Mahashi")) || (type.Contains("eastern food")) || (type.Contains("food")))
+            {
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type7_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type7_slider"].ToString();
+                    }
+                    con.Close();
+                }
+                Description_Text = "Delicious and warm dishes to satisfy your taste 🥘😋";
+            }
+
+            else if ((type.Contains("beauty")) || (type.Contains("skin care")) || (type.Contains("makeup")) || (type.Contains("skin")) || (type.Contains("Beauty & skin care")) || (type.Contains("lotion")) || (type.Contains("cream")))
+            {
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type8_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type8_slider"].ToString();
+                    }
+                    con.Close();
+                }
+                Description_Text = "♀️ The right place to take care of your skin 💁🏻";
+            }
+            else
+            {
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT type9_slider FROM type_images WHERE id = '1'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Slider_Image = reader["type9_slider"].ToString();
+                    }
+                    con.Close();
+                }
+                Description_Text = "Competitive prices, great products ✨";
+            }
+        }
 
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -321,7 +510,6 @@ public class CreationStage : System.Web.Services.WebService
             Context.Response.Write(js.Serialize(store));
         }
     }
-
 
 
 

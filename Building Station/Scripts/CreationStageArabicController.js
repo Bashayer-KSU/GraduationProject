@@ -69,8 +69,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $scope.Store = response.data;
             if ($scope.Store.Name !== ' No StoreName ') {
                 $scope.storeName = $scope.Store.Name;
-}
-            
+            }
         });
 
         $scope.sendName = function () {
