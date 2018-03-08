@@ -413,6 +413,23 @@ public class CreationStage : System.Web.Services.WebService
     }
 
     [WebMethod]
+    public void GetTemplateID()
+    {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("SELECT TemplateID FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.TemplateID = Convert.ToInt32(reader["TemplateID"]);
+            }
+        }
+        Context.Response.Write(js.Serialize(store));
+    }
+    [WebMethod]
     public void GetColors()
     {
         JavaScriptSerializer js = new JavaScriptSerializer();

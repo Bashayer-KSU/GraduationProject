@@ -136,6 +136,32 @@ var app = angular.module("BS", ["ngRoute"])
     })
     .controller("DevelopmentEnvironmentController", function ($scope, $http) {
         $scope.tabHeader = "Development Environment";
+
+        $http.get('../CreationStage.asmx/GetTemplateID').then(function (response) {
+
+            $scope.storeID = response.data;
+            if ($scope.storeID.TemplateID == 1) {
+                $scope.template = "/Templates/Template_1/Template_1.html";
+            }
+            else if ($scope.storeID.TemplateID == 2) {
+                $scope.template = "/Templates/Template_2/Template_2.html";
+            }
+            else if ($scope.storeID.TemplateID == 3) {
+                $scope.template = "/Templates/Template_3/Template_3.html";
+            }
+            else if ($scope.storeID.TemplateID == 4) {
+                $scope.template = "/Templates/Template_4/Template_4.html";
+            }
+            else if ($scope.storeID.TemplateID == 5) {
+                $scope.template = "/Templates/Template_5/Template_5.html";
+            }
+            else if ($scope.storeID.TemplateID == 6) {
+                $scope.template = "/Templates/Template_6/Template_6.html";
+            }
+        }, function (error) {
+            $scope.error = error.data;
+        });
+
     })
     .controller("PreviewWebsiteController", function ($scope, $http) {
         $scope.tabHeader = "Previe wWebsite";

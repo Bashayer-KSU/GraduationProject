@@ -143,18 +143,43 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("InfoController", function ($scope, $http, $location) {
 
+        var snapchat;
+        var twitter;
+        var facebook;
+        var instagram;
+
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
             if ($scope.Store.Address !== 'No  Location ') {
                 $scope.Address = $scope.Store.Address;
             }
-        });
-        var snapchat = "No Link";
-        var twitter = "No Link";
-        var facebook = "No Link";
-        var instagram = "No Link";
 
+            if ($scope.Store.SnapchatLink !== 'No Link') {
+                $scope.snapchatLink = $scope.Store.SnapchatLink;
+                snapchat = $scope.Store.SnapchatLink;
+            }
+            else { snapchat = "No Link"; }
+
+            if ($scope.Store.TwitterLink !== 'No Link') {
+                $scope.twitterLink = $scope.Store.TwitterLink;
+                twitter = $scope.Store.TwitterLink;
+            }
+            else { twitter = "No Link"; }
+
+            if ($scope.Store.FacebookLink !== 'No Link') {
+                $scope.facebookLink = $scope.Store.FacebookLink;
+                facebook = $scope.Store.FacebookLink;
+            }
+            else { facebook = "No Link"; }
+
+            if ($scope.Store.InstagramLink !== 'No Link') {
+                $scope.instagramLink = $scope.Store.InstagramLink;
+                instagram = $scope.Store.InstagramLink;
+            }
+            else { instagram = "No Link"; }
+        });
+         
         $scope.checkContent_snapchat = function () {
             if ($scope.snapchatLink !== 0 || typeof $scope.snapchatLink !== 'undefined')
                 snapchat = $scope.snapchatLink;
@@ -213,13 +238,13 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 }, function (error) {
                     alert("failed");
                     //$scope.R = error.data;
-                    $http({
+                  /*  $http({
                         url: "manageWebsiteColors.asmx/chooseColors",
                         method: "get"
                     })
                         .then(function (response) {
                             $scope.Colors = response.data;
-                        });
+                        });*/
                 });
         };
 
@@ -270,14 +295,14 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("ColorsController", function ($scope, $http) {
 
-        $http.get('manageWebsiteColors.asmx/chooseColors').then(function (response) {
+      /*   $http.get('manageWebsiteColors.asmx/chooseColors').then(function (response) {
 
             $scope.Colors = response.data;
         }, function (error) {
             $scope.error = error.data;
         });
 
-     /*  $http({
+      $http({
             url: "manageWebsiteColors.asmx/getWebsiteColors",
             method: "get",
             params: { path: filePath }
@@ -287,6 +312,12 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             }, function (error) {
                 $scope.error = error.data;
             });*/
+        $http.get('CreationStage.asmx/GetColors').then(function (response) {
+
+            $scope.Colors = response.data;
+        }, function (error) {
+            $scope.error = error.data;
+        });
 
         $scope.UpdateColors = function () {
 
@@ -324,7 +355,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $scope.width3 = "200px";
             $scope.width2 = "150px";
             $scope.width1 = "150px";
-            TemplateID = 3;
+            TemplateID = 6;
         };
 
         $scope.goToTemplate = function () {
@@ -335,7 +366,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 data: { id: TemplateID },
                 headers: { "Content-Type": "application/json" }
             });
-            $window.location.href = '/Template_1_product.html';
+            $window.location.href = '/index.html';
         };
         })
     .controller("LoadController", function ($scope) {
