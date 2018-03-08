@@ -168,8 +168,10 @@ var app = angular.module("BS", ["ngRoute"])
     })
     .controller("DevelopmentEnvironmentController", function ($scope, $http) {
         $scope.tabHeader = "Development Environment";
-
-        
+        $scope.tab = {};
+        $scope.refreshIframe = function () {
+            $scope.tab.refresh = true;
+        }
 
         $http.get('../CreationStage.asmx/GetTemplateID').then(function (response) {
 
@@ -450,3 +452,24 @@ app.factory('loginService', function ($http) {
     };
     return { login: login };
 });
+
+app.directive('refreshable', [function () {
+    return {
+        restrict: 'A',
+        scope: {
+            refresh: "=refreshable"
+        },
+        link: function (scope, element, attr) {
+            var refreshMe = function () {
+                element.attr('src', element.attr('src'));
+            };
+
+            scope.$watch('refresh', function (newVal, oldVal) {
+                if (scope.refresh) {
+                    scope.refresh = false;
+                    refreshMe();
+                }
+            });
+        }
+    };
+}]);

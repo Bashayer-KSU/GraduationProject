@@ -31,10 +31,15 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http) {
             $scope.cash = $scope.resultset.Cash;
 
             //Social Media Link
-            $scope.Facebook = $scope.resultset.FacebookLink.includes("https");
-            $scope.Instagram = $scope.resultset.InstagramLink.includes("No");
-            $scope.Snapchat = $scope.resultset.SnapchatLink.includes("https");
-            $scope.Twitter = $scope.resultset.TwitterLink.includes("No");
+            $scope.Facebook = $scope.resultset.FacebookLink.toLowerCase().includes("facebook");
+            $scope.FacebookLink = $scope.resultset.FacebookLink;
+            $scope.Instagram = $scope.resultset.InstagramLink.toLowerCase().includes("instagram");
+            $scope.InstagramLink = $scope.resultset.InstagramLink;
+            $scope.Snapchat = $scope.resultset.SnapchatLink.toLowerCase().includes("snapchat");
+            $scope.SnapchatLink = $scope.resultset.SnapchatLink;
+            $scope.Twitter = $scope.resultset.TwitterLink.toLowerCase().includes("twitter");
+            $scope.TwitterLink = $scope.resultset.TwitterLink;
+
 
             //Menu
             $scope.MenuTitle = $scope.resultset.MenuTitle;
