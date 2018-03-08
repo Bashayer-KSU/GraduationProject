@@ -53,24 +53,26 @@ public class PaymentMethods : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void GetPaymentMethods()
     {
-        using (SqlConnection con = new SqlConnection(cs))
+        if (Session["user"] != null)
         {
-            con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT PayPal,BankTransfer,Cash FROM Store Where Email = '" + Session["user"] + "'", con);
-            using (SqlDataReader reader = cmd.ExecuteReader())
+            using (SqlConnection con = new SqlConnection(cs))
             {
-                reader.Read();
-                payments.Paypal = Convert.ToBoolean(reader["PayPal"].ToString());
-                payments.BankTransfer = Convert.ToBoolean(reader["BankTransfer"].ToString());
-                payments.Cash = Convert.ToBoolean(reader["Cash"].ToString());
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SELECT PayPal,BankTransfer,Cash FROM Store Where Email = '" + Session["user"] + "'", con);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    reader.Read();
+                    payments.Paypal = Convert.ToBoolean(reader["PayPal"].ToString());
+                    payments.BankTransfer = Convert.ToBoolean(reader["BankTransfer"].ToString());
+                    payments.Cash = Convert.ToBoolean(reader["Cash"].ToString());
+
+                }
+                con.Close();
+
+                Context.Response.Write(js.Serialize(payments));
 
             }
-            con.Close();
-
-            Context.Response.Write(js.Serialize(payments));
-
         }
-        
     }
 
 
@@ -94,22 +96,24 @@ public class PaymentMethods : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void GetBankInfo()
     {
-        var IBAN= "";
-        using (SqlConnection con = new SqlConnection(cs))
+        if (Session["user"] != null)
         {
-            con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT ShopOwnerBank FROM Store Where Email = '" + Session["user"] + "'", con);
-            using (SqlDataReader reader = cmd.ExecuteReader())
+            var IBAN = "";
+            using (SqlConnection con = new SqlConnection(cs))
             {
-                reader.Read();
-                 IBAN = Convert.ToString(reader["ShopOwnerBank"]);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SELECT ShopOwnerBank FROM Store Where Email = '" + Session["user"] + "'", con);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    reader.Read();
+                    IBAN = Convert.ToString(reader["ShopOwnerBank"]);
+
+                }
+                con.Close();
+
+                Context.Response.Write(js.Serialize(IBAN));
 
             }
-            con.Close();
-
-            Context.Response.Write(js.Serialize(IBAN));
-
         }
-
     }
 }
