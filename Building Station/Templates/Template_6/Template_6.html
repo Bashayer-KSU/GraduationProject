@@ -36,14 +36,14 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item nav-link">
+                    <li class="nav-item">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                            <label class="form-check-label" for="inlineRadio1">English</label>
+                            <label class="form-check-label nav-link" for="inlineRadio1">English</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                            <label class="form-check-label" for="inlineRadio2">Arabic</label>
+                            <label class="form-check-label nav-link" for="inlineRadio2">Arabic</label>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -363,7 +363,7 @@
         <div class="ToTop" id="back-to-top">
             <p class="float-right rounded "><a class="btn btn-info btn-md" role="button" ng-style="{'background-color':color1, 'border':color1}" href="#"><i class="fa fa-angle-double-up" aria-hidden="true"></i></a></p>
         </div>
-        <footer id="contact footer" class="footer" ng-style="{'background-color':color3,'color': color1}">
+        <footer id="contact footer" class="footer" ng-style="{'background-color':color3,'color': color4}">
             <div class="container">
                 <div class="row">
                     <div class="col-md-5">
@@ -371,10 +371,10 @@
                         <div class="row">
                         </div>
                         <ul class="nav">
-                            <li ng-show="Facebook" class="nav-item"><a href="" class="nav-link pl-0" ng-style="{'color':color1}"><i class="fa fa-facebook fa-lg"></i></a></li>
-                            <li ng-show="Twitter" class="nav-item"><a href="" class="nav-link" ng-style="{'color':color1}"><i class="fa fa-twitter fa-lg"></i></a></li>
-                            <li ng-show="Snapchat" class="nav-item"><a href="" class="nav-link" ng-style="{'color':color1}"><i class="fa fa-snapchat fa-lg"></i></a></li>
-                            <li ng-show="Instagram" class="nav-item"><a href="" class="nav-link" ng-style="{'color':color1}"><i class="fa fa-instagram fa-lg"></i></a></li>
+                            <li ng-show="Facebook" class="nav-item"><a ng-href="{FacebookLink}" class="nav-link pl-0" ng-style="{'color':color1}"><i class="fa fa-facebook fa-lg"></i></a></li>
+                            <li ng-show="Twitter" class="nav-item"><a ng-href="{TwitterLink}"  class="nav-link" ng-style="{'color':color1}"><i class="fa fa-twitter fa-lg"></i></a></li>
+                            <li ng-show="Snapchat" class="nav-item"><a ng-href="{SnapchatLink}"  class="nav-link" ng-style="{'color':color1}"><i class="fa fa-snapchat fa-lg"></i></a></li>
+                            <li ng-show="Instagram" class="nav-item"><a ng-href="{InstagramLink}"  class="nav-link" ng-style="{'color':color1}"><i class="fa fa-instagram fa-lg"></i></a></li>
                         </ul>
                         <br>
                     </div>
@@ -388,7 +388,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <p>&copy; 2018  &middot; <a ng-style="{'color':color1}" href="/RegisterLogin.html"> Desined By Building Station</a> </p>
+                    <p>&copy; 2018  &middot; <a ng-style="{'color':color4}" href="/RegisterLogin.html"> Desined By Building Station</a> </p>
                 </div>
                 <br /><br />
             </div>

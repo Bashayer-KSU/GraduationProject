@@ -6,14 +6,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md-2">
-
+            <button ng-click="refreshIframe()">Click here</button>
         </div>
         <div class="col-md-10">
             <div class="embed-responsive embed-responsive-4by3">
-                <iframe class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
+                <iframe refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
                 <!--style="overflow: hidden; height: 200%; width: 100%;"-->
             </div>
         </div>
     </div>
+    
 
 </div>

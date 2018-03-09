@@ -29,14 +29,14 @@ public class CreationStage : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void StoreInfo()
     {
         JavaScriptSerializer js = new JavaScriptSerializer();
 
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, StoreType, Phone, logo, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, StoreType, Phone, logo, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink FROM Store WHERE Email='" + Session["user"] + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -57,7 +57,7 @@ public class CreationStage : System.Web.Services.WebService
         Context.Response.Write(js.Serialize(store));
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void AddStoreName(string name)
     {
         JavaScriptSerializer js = new JavaScriptSerializer();
@@ -66,7 +66,7 @@ public class CreationStage : System.Web.Services.WebService
         {
             con.Open();
 
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreName = N'" + name + "' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreName = N'" + name + "' WHERE Email='" + Session["user"] + "'", con);
 
             cmd.ExecuteNonQuery();
             con.Close();
@@ -75,7 +75,7 @@ public class CreationStage : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void AddStoreType(string type, string language)
     {
         string Slider_Image = " ";
@@ -378,7 +378,7 @@ public class CreationStage : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreType = N'" + type + "', SilderImage = '" + Slider_Image + "', StoreDescription = N'"+ Description_Text +"' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreType = N'" + type + "', SilderImage = '" + Slider_Image + "', StoreDescription = N'"+ Description_Text +"' WHERE Email='" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
@@ -395,7 +395,7 @@ public class CreationStage : System.Web.Services.WebService
     }
 
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void AddTemplate(int id)
     {
         JavaScriptSerializer js = new JavaScriptSerializer();
@@ -403,7 +403,7 @@ public class CreationStage : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET TemplateID = " + id + " Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET TemplateID = " + id + " WHERE Email='" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
@@ -412,7 +412,7 @@ public class CreationStage : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void GetTemplateID()
     {
         JavaScriptSerializer js = new JavaScriptSerializer();
@@ -420,7 +420,7 @@ public class CreationStage : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT TemplateID FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("SELECT TemplateID FROM Store WHERE Email='" + Session["user"] + "'", con);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -429,7 +429,7 @@ public class CreationStage : System.Web.Services.WebService
         }
         Context.Response.Write(js.Serialize(store));
     }
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void GetColors()
     {
         JavaScriptSerializer js = new JavaScriptSerializer();
@@ -437,7 +437,7 @@ public class CreationStage : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Color1, Color2, Color3, Color4 FROM Store WHERE Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Color1, Color2, Color3, Color4 FROM Store WHERE Email='" + Session["user"] + "'", con);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -450,7 +450,7 @@ public class CreationStage : System.Web.Services.WebService
         Context.Response.Write(js.Serialize(store));
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void UpdateColors(string color1, string color2, string color3, string color4)
     {
         JavaScriptSerializer js = new JavaScriptSerializer();
@@ -458,7 +458,7 @@ public class CreationStage : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET Color1 = '" + color1 + "', Color2 = '"+ color2 +"', Color3 = '"+ color3 +"', Color4 = '"+ color4 +"' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET Color1 = '" + color1 + "', Color2 = '"+ color2 +"', Color3 = '"+ color3 +"', Color4 = '"+ color4 +"' WHERE Email='" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
@@ -470,7 +470,7 @@ public class CreationStage : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void UpdateData(string address, string snapchat_link, string twitter_link, string facebook_link, string instagram_link)
     {
         JavaScriptSerializer js = new JavaScriptSerializer();
@@ -478,7 +478,7 @@ public class CreationStage : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET Location = N'" + address + "', SnapchatLink = '" + snapchat_link + "', TwitterLink = '" + twitter_link + "', FacebookLink = '" + facebook_link + "', InstagramLink = '" + instagram_link + "' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET Location = N'" + address + "', SnapchatLink = '" + snapchat_link + "', TwitterLink = '" + twitter_link + "', FacebookLink = '" + facebook_link + "', InstagramLink = '" + instagram_link + "' WHERE Email='" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
@@ -492,7 +492,7 @@ public class CreationStage : System.Web.Services.WebService
 
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void UploadLogo(string logo)
     {
 
@@ -501,7 +501,7 @@ public class CreationStage : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET logo = '" + logo +"' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET logo = '" + logo +"' WHERE Email='" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
@@ -510,7 +510,7 @@ public class CreationStage : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void UpdateType(string type, string language)
     {
 
@@ -519,7 +519,7 @@ public class CreationStage : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreType = N'" + type + "' Where Email = 'asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreType = N'" + type + "' WHERE Email='" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 

@@ -31,7 +31,6 @@ public class RegisterLogin : System.Web.Services.WebService
             if (dr.HasRows == true)
             {
                 con.Close();
-                //Context.Response.Write(js.Serialize(false));
                 Context.Response.Write(js.Serialize("/RegisterLogin.html"));
             }
             else
@@ -113,7 +112,18 @@ public class RegisterLogin : System.Web.Services.WebService
         }
     }
 
-
+    [WebMethod(EnableSession = true)]
+    public void CheckUser()
+    {
+        if (Session["user"] == null)
+        {
+            Context.Response.Write(js.Serialize(false));
+        }
+        else
+        {
+            Context.Response.Write(js.Serialize(true));
+        }
+    }
 
 
     [WebMethod(EnableSession = true)]

@@ -29,9 +29,38 @@ var app = angular.module("BS", ["ngRoute"])
             enabled: true,
             requireBase: false
         });
+    }).run(function ($rootScope, $location, loginService) {
+
+        // register listener to watch route changes
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+           
+            $rootScope.loggin = function () {
+              return  loginService.login();
+            };
+            loginService.login().then(function (response) {
+                $rootScope.login = response;
+                console.log("in then " + $rootScope.login);
+                if (response === "false") {
+                    //redirect to login page
+                    location.href = "/RegisterLogin.html";
+                }
+            });
+        });
     })
-    .controller("ManageStoreController", function ($scope, $http) {
+    .controller("ManageStoreController", function ($scope, $http, loginService) {
         $scope.tabHeader = "Manage Store";
+        $scope.templatew = "";
+        
+        /*
+        loginService.login().then(function (response) {
+            $scope.login = response;
+            console.log("in then " + $scope.login);
+            if (response === "false") {
+                //redirect to login page
+                location.href = "/RegisterLogin.html";
+            }
+        });*/
+
         $scope.acceptPayment = function () {
             var Paypal = $scope.checkboxPayment.paypal;
             var BankTransfer = $scope.checkboxPayment.bankTransfer;
@@ -98,6 +127,7 @@ var app = angular.module("BS", ["ngRoute"])
             })
                 .then(function (response) {
                     $scope.bankInfo.IBAN = response.data;
+                    $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
 
                 }, function (error) {
                     $scope.error = error.data;
@@ -128,6 +158,8 @@ var app = angular.module("BS", ["ngRoute"])
             })
                 .then(function (response) {
                     $scope.bankInfo.IBAN = response.data;
+                    $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
+
 
                 }, function (error) {
                     $scope.error = error.data;
@@ -136,26 +168,30 @@ var app = angular.module("BS", ["ngRoute"])
     })
     .controller("DevelopmentEnvironmentController", function ($scope, $http) {
         $scope.tabHeader = "Development Environment";
+        $scope.tab = {};
+        $scope.refreshIframe = function () {
+            $scope.tab.refresh = true;
+        }
 
         $http.get('../CreationStage.asmx/GetTemplateID').then(function (response) {
 
             $scope.storeID = response.data;
-            if ($scope.storeID.TemplateID == 1) {
+            if ($scope.storeID.TemplateID === 1) {
                 $scope.template = "/Templates/Template_1/Template_1.html";
             }
-            else if ($scope.storeID.TemplateID == 2) {
+            else if ($scope.storeID.TemplateID === 2) {
                 $scope.template = "/Templates/Template_2/Template_2.html";
             }
-            else if ($scope.storeID.TemplateID == 3) {
+            else if ($scope.storeID.TemplateID === 3) {
                 $scope.template = "/Templates/Template_3/Template_3.html";
             }
-            else if ($scope.storeID.TemplateID == 4) {
+            else if ($scope.storeID.TemplateID === 4) {
                 $scope.template = "/Templates/Template_4/Template_4.html";
             }
-            else if ($scope.storeID.TemplateID == 5) {
+            else if ($scope.storeID.TemplateID === 5) {
                 $scope.template = "/Templates/Template_5/Template_5.html";
             }
-            else if ($scope.storeID.TemplateID == 6) {
+            else if ($scope.storeID.TemplateID === 6) {
                 $scope.template = "/Templates/Template_6/Template_6.html";
             }
         }, function (error) {
@@ -406,3 +442,34 @@ app.filter('range', function () {
         return input;
     };
 });
+
+app.factory('loginService', function ($http) {
+    var login = function () {
+        return $http.post('/RegisterLogin.asmx/CheckUser').then(function (msg) {
+            console.log(msg.data);
+            return msg.data;
+        });
+    };
+    return { login: login };
+});
+
+app.directive('refreshable', [function () {
+    return {
+        restrict: 'A',
+        scope: {
+            refresh: "=refreshable"
+        },
+        link: function (scope, element, attr) {
+            var refreshMe = function () {
+                element.attr('src', element.attr('src'));
+            };
+
+            scope.$watch('refresh', function (newVal, oldVal) {
+                if (scope.refresh) {
+                    scope.refresh = false;
+                    refreshMe();
+                }
+            });
+        }
+    };
+}]);
