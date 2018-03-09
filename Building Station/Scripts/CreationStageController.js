@@ -4,81 +4,93 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/0", {
-                templateUrl: "CreationStage/welcome.html",
+                templateUrl: "CreationStagePages/welcome.html",
                 controller: "0Controller"
             })
             .when("/1", {
-                templateUrl: "CreationStage/store_name.html",
+                templateUrl: "CreationStagePages/store_name.html",
                 controller: "NameController"
             })
             .when("/2", {
-                templateUrl: "CreationStage/store_type.html",
+                templateUrl: "CreationStagePages/store_type.html",
                 controller: "TypeController"
             })
             .when("/3.1", {
-                templateUrl: "CreationStage/account_name_on_instagram.html",
+                templateUrl: "CreationStagePages/account_name_on_instagram.html",
                 controller: "3.1Controller"
             })
             .when("/3.2", {
-                templateUrl: "CreationStage/enter_store_info.html",
-                controller: "3.2Controller"
+                templateUrl: "CreationStagePages/enter_store_info.html",
+                controller: "InfoController"
             })
             .when("/4.1", {
-                templateUrl: "CreationStage/account_location.html",
+                templateUrl: "CreationStagePages/account_location.html",
                 controller: "4.1Controller"
             })
             .when("/4.2", {
-                templateUrl: "CreationStage/upload_logo.html",
-                controller: "4.2Controller"
+                templateUrl: "CreationStagePages/upload_logo.html",
+                controller: "UploadLogoController"
             })
             .when("/5", {
-                templateUrl: "CreationStage/gather_info.html",
+                templateUrl: "CreationStagePages/gather_info.html",
                 controller: "5Controller"
             })
             .when("/6", {
-                templateUrl: "CreationStage/select_your_account.html",
+                templateUrl: "CreationStagePages/select_your_account.html",
                 controller: "6Controller"
             })
             .when("/7", {
-                templateUrl: "CreationStage/display_account.html",
-                controller: "7Controller"
+                templateUrl: "CreationStagePages/display_account.html",
+                controller: "DisplayAccountController"
             })
             .when("/8", {
-                templateUrl: "CreationStage/display_picked_colors.html",
-                controller: "8Controller"
+                templateUrl: "CreationStagePages/display_picked_colors.html",
+                controller: "ColorsController"
             })
             .when("/9", {
-                templateUrl: "CreationStage/template_layout.html",
-                controller: "9Controller"
+                templateUrl: "CreationStagePages/template_layout.html",
+                controller: "TemplateController"
             })
             .when("/10", {
-                templateUrl: "CreationStage/loading_template.html",
+                templateUrl: "CreationStagePages/loading_template.html",
                 controller: "10Controller"
             })
             .otherwise({
                 redirectTo: "/0"
-            })
+            });
         $locationProvider.html5Mode(true);
     })
-    .controller("0Controller", function ($scope) {
+    .controller("0Controller", function ($scope, $rootScope, $window) {
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationStageArabic.html';
+        };
     })
-    .controller("NameController", function ($scope, $http) {
-        $scope.sendName = function () {
-            var post = $http({
-            method: "POST",
-            url: "CreationStage.asmx/AddStoreName",
-            dataType: 'json',
-            data: { name: $scope.storeName },
-            headers: { "Content-Type": "application/json" }
-        });
-        post.success(function (data, status) {
-            $window.alert("store name is: " + data.storeName + " ");
-        });
+    .controller("NameController", function ($scope, $rootScope, $http, $location, $window) {
 
-        post.error(function (data, status) {
-            $window.alert(data.Message);
-        });
-        }
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationSatgeArabic.html';
+        };
+
+$http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+
+    $scope.Store = response.data;
+    if ($scope.Store.Name !== ' No StoreName ') {
+        $scope.storeName = $scope.Store.Name;
+    }
+});
+
+$scope.sendName = function () {
+
+    var post = $http({
+        method: "POST",
+        url: "CreationStage.asmx/AddStoreName",
+        dataType: 'json',
+        data: { name: $scope.storeName },
+        headers: { "Content-Type": "application/json" }
+    });
+    post.then(function (response) { }, function (error) { });
+    $location.path('/2');
+};
       /*  $http({
             url: "CreationStage.asmx/AddStoreName",
             params: { name: $scope.storeName },
@@ -103,23 +115,27 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
                 function (error) { $scope.error = error.data; });
         }*/
     })
-    .controller("TypeController", function ($scope, $http) {
+    .controller("TypeController", function ($scope, $rootScope, $http, $window) {
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationStageArabic.html';
+        };
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+
+            $scope.Store = response.data;
+            if ($scope.Store.Type !== 'No StoreType ') {
+                $scope.Type = $scope.Store.Type;
+            }
+        });
         $scope.sendType = function () {
             var post = $http({
                 method: "POST",
                 url: "CreationStage.asmx/AddStoreType",
                 dataType: 'json',
-                data: { type: $scope.Type, language: 'Engkish' },
+                data: { type: $scope.Type, language: 'English' },
                 headers: { "Content-Type": "application/json" }
             });
-            post.success(function (data, status) {
-                $window.alert("store type is : " + data.Type + " ");
-            });
-
-            post.error(function (data, status) {
-                $window.alert(data.Message);
-            });
-        }
+            post.then(function (response) { }, function (error) { $scope.R = error.data; });
+        };
         $scope.Types = ["Beauty & skin care", "Handmade", "Accessories", "Sweets", "fashion", "Bakery", "Home cook", "Phone & laptop accessories"];
         $scope.complete = function (string) {
             var output = [];
@@ -128,51 +144,275 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
                     output.push(Type);
                 }
             });
-            $scope.filterType = output; 
-        }
+            $scope.filterType = output;
+        };
         $scope.fillTextbox = function (string) {
             $scope.Type = string;
             $scope.hidethis = true;
-        }  
+        };
+        $scope.checkContent = function () {
+            if ($scope.Type.length === 0 || typeof $scope.Type === 'undefined') {
+                $scope.hidethis = true;
+            } else {
+                $scope.hidethis = false;
+            }
+        };
+    })
+    .controller("3.1Controller", function ($scope, $rootScope, $window) {
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationStageArabic.html';
+        };
+    })
+    .controller("InfoController", function ($scope, $http, $location, $rootScope, $window) {
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationStageArabic.html';
+        };
 
+        var snapchat;
+        var twitter;
+        var facebook;
+        var instagram;
+
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+
+            $scope.Store = response.data;
+            if ($scope.Store.Address !== 'No  Location ') {
+                $scope.Address = $scope.Store.Address;
+            }
+
+            if ($scope.Store.SnapchatLink !== 'No Link') {
+                $scope.snapchatLink = $scope.Store.SnapchatLink;
+                snapchat = $scope.Store.SnapchatLink;
+            }
+            else { snapchat = "No Link"; }
+
+            if ($scope.Store.TwitterLink !== 'No Link') {
+                $scope.twitterLink = $scope.Store.TwitterLink;
+                twitter = $scope.Store.TwitterLink;
+            }
+            else { twitter = "No Link"; }
+
+            if ($scope.Store.FacebookLink !== 'No Link') {
+                $scope.facebookLink = $scope.Store.FacebookLink;
+                facebook = $scope.Store.FacebookLink;
+            }
+            else { facebook = "No Link"; }
+
+            if ($scope.Store.InstagramLink !== 'No Link') {
+                $scope.instagramLink = $scope.Store.InstagramLink;
+                instagram = $scope.Store.InstagramLink;
+            }
+            else { instagram = "No Link"; }
+        });
+
+        $scope.checkContent_snapchat = function () {
+            if ($scope.snapchatLink !== 0 || typeof $scope.snapchatLink !== 'undefined')
+                snapchat = $scope.snapchatLink;
+        };
+        $scope.checkContent_twitter = function () {
+            if ($scope.twitterLink !== 0 || typeof $scope.twitterLink !== 'undefined')
+                twitter = $scope.twitterLink;
+        };
+        $scope.checkContent_facebook = function () {
+            if ($scope.facebookLink !== 0 || typeof $scope.facebookLink !== 'undefined')
+                facebook = $scope.facebookLink;
+        };
+        $scope.checkContent_instagram = function () {
+            if ($scope.instagramLink !== 0 || typeof $scope.instagramLink !== 'undefined')
+                instagram = $scope.instagramLink;
+        };
+
+        $scope.sendData = function () {
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/UpdateData",
+                dataType: 'json',
+                data: { address: $scope.Address, snapchat_link: snapchat, twitter_link: twitter, facebook_link: facebook, instagram_link: instagram },
+                headers: { "Content-Type": "application/json" }
+            });
+            post.then(function (response) { }, function (error) { });
+            $location.path('/4.2');
+        };
     })
-    .controller("3.1Controller", function ($scope) {
+    .controller("4.1Controller", function ($scope, $rootScope, $window) {
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationStageArabic.html';
+        };
     })
-    .controller("3.2Controller", function ($scope) {
-    })
-    .controller("4.1Controller", function ($scope) {
-    })
-    .controller("4.2Controller", function ($scope, fileReader) {
+    .controller("UploadLogoController", function ($scope, fileReader, $http, $rootScope, $window) {
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationStageArabic.html';
+        };
+
         filePath = $scope.imageSrc;
         $scope.$on("fileProgress", function (e, progress) {
             $scope.progress = progress.loaded / progress.total;
         });
+        $scope.getColors = function () {
+            //var File_Path = $scope.imageSrc;
+            //    alert($scope.imageSrc);
+            $http({
+                url: "manageWebsiteColors.asmx/GetWebsiteColors",
+                dataType: 'json',
+                method: "POST",
+                data: { path: $scope.imageSrc },
+                headers: { "Content-Type": "application/json; charset=utf-8" }
+            })
+                .then(function (response) {
+                    //       alert("success");
+                    $scope.Colors = response.data;
+                }, function (error) {
+                    //      alert("failed");
+                    $scope.R = error.data;
+                    /*  $http({
+                          url: "manageWebsiteColors.asmx/chooseColors",
+                          method: "get"
+                      })
+                          .then(function (response) {
+                              $scope.Colors = response.data;
+                          });*/
+                });
+        };
+
+        $scope.sendLogo = function () {
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/UploadLogo",
+                dataType: 'json',
+                data: { logo: $scope.imageSrc },
+                headers: { "Content-Type": "application/json" }
+            })
+                .then(function (response) { }, function (error) { });
+        };
     })
-    .controller("5Controller", function ($scope) {
+    .controller("5Controller", function ($scope, $rootScope, $window) {
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationStageArabic.html';
+        };
     })
-    .controller("6Controller", function ($scope) {
+    .controller("6Controller", function ($scope, $rootScope, $window) {
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationStageArabic.html';
+        };
     })
-    .controller("7Controller", function ($scope, $http) {
-        $http.get('CreationStage.asmx/StoreInfo')
-            .then(function (response) {
-                $scope.store = response.data;
+    .controller("DisplayAccountController", function ($scope, $http, $rootScope, $window) {
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationStageArabic.html';
+        };
+
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+
+            $scope.Store = response.data;
+
+            if ($scope.Store.SnapchatLink === 'No Link') {
+                $scope.Svisible = false;
+            }
+            else { $scope.Svisible = true; }
+
+            if ($scope.Store.TwitterLink === 'No Link') {
+                $scope.Tvisible = false;
+            }
+            else {
+                $scope.Tvisible = true;
+            }
+
+            if ($scope.Store.FacebookLink === 'No Link') {
+                $scope.Fvisible = false;
+            }
+            else { $scope.Fvisible = true; }
+
+            if ($scope.Store.InstagramLink === 'No Link') {
+                $scope.Ivisible = false;
+            }
+            else { $scope.Ivisible = true; }
+
+        });
+    })
+    .controller("ColorsController", function ($scope, $http, $rootScope, $window) {
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationStageArabic.html';
+        };
+        $http.get('CreationStage.asmx/GetColors').then(function (response) {
+
+            $scope.Colors = response.data;
+        }, function (error) {
+            $scope.error = error.data;
+        });
+
+        $scope.UpdateColors = function () {
+
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/UpdateColors",
+                dataType: 'json',
+                data: { color1: $scope.Colors.Color1, color2: $scope.Colors.Color2, color3: $scope.Colors.Color3, color4: $scope.Colors.Color4 },
+                headers: { "Content-Type": "application/json" }
             });
+        };
     })
-    .controller("8Controller", function ($scope, $http) {
-        $http({
-            url: "manageWebsiteColors.asmx/getWebsiteColors",
-            method: "get",
-            params: { path: filePath }
-        })
-            .then(function (response) {
-                $scope.colors = response.data;
-            }, function (error) {
-                $scope.error = error.data;
-            });
+    .controller("TemplateController", function ($scope, $http, $rootScope, $window) {
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationStageArabic.html';
+        };
+        var TemplateID = 0;
+        $scope.width1 = "15vw";
+        $scope.width2 = "15vw";
+        $scope.width3 = "15vw ";
+        $scope.height1 = "26vw";
+        $scope.height2 = "26vw";
+        $scope.height3 = "26vw";
+
+
+        $scope.firstTemplate = function () {
+            $scope.width1 = "20vw";
+            $scope.width2 = "15vw";
+            $scope.width3 = "15vw ";
+            $scope.height1 = "35vw";
+            $scope.height2 = "26vw";
+            $scope.height3 = "26vw";
+            TemplateID = 4;
+        };
+
+        $scope.secondTemplate = function () {
+            $scope.width2 = "20vw";
+            $scope.width1 = "15vw";
+            $scope.width3 = "15vw ";
+            $scope.height2 = "35vw";
+            $scope.height1 = "26vw";
+            $scope.height3 = "26vw";
+            TemplateID = 5;
+        };
+        $scope.thirdTemplate = function () {
+            $scope.width3 = "20vw";
+            $scope.width2 = "15vw";
+            $scope.width1 = "15vw ";
+            $scope.height3 = "35vw";
+            $scope.height2 = "26vw";
+            $scope.height1 = "26vw";
+            TemplateID = 6;
+        };
+
+        $scope.goToTemplate = function () {
+            if (TemplateID === 0) {
+                alert("You have to select a layout");
+            }
+            else {
+                var post = $http({
+                    method: "POST",
+                    url: "CreationStage.asmx/AddTemplate",
+                    dataType: 'json',
+                    data: { id: TemplateID },
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                $window.location.href = '/index.html';
+            }
+        };
     })
-    .controller("9Controller", function ($scope) {
-    })
-    .controller("10Controller", function ($scope) {
+    .controller("10Controller", function ($scope, $rootScope, $window) {
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationStageArabic.html';
+        };
     });
 
 //to upload image

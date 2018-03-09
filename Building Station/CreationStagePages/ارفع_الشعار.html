@@ -11,7 +11,11 @@
     </form>
     <!-- to display logo -->
     <img style="width:150px; height:auto;" ng-src="{{imageSrc}}" />
-    <button ng-click="showColors()">save colors</button>
+
+    <div
+         ng-if="imageSrc"
+         ng-init="getColors()">
+    </div>
 </main>
 
     <div style="display:inline; overflow: auto;

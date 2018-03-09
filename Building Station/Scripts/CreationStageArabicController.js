@@ -60,9 +60,17 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             });
         $locationProvider.html5Mode(true);
     })
-    .controller("0aController", function ($scope) {
+    .controller("0aController", function ($scope, $rootScope, $window) {
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
+
     })
-    .controller("Name_Controller", function ($scope, $http, $location) {
+    .controller("Name_Controller", function ($scope, $rootScope, $http, $location, $window) {
+
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
 
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
@@ -99,7 +107,12 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             }
         } */
     })
-    .controller("Type_Controller", function ($scope, $http) {
+    .controller("Type_Controller", function ($scope, $rootScope, $http, $window) {
+
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
+
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
@@ -139,10 +152,15 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             }
         };
     })
-    .controller("InstaNameController", function ($scope) {
+    .controller("InstaNameController", function ($scope, $rootScope, $window) {
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
     })
-    .controller("InfoController", function ($scope, $http, $location) {
-
+    .controller("InfoController", function ($scope, $http, $location, $rootScope, $window) {
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
         var snapchat;
         var twitter;
         var facebook;
@@ -214,38 +232,43 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $scope.Links.push({ 'id': 'Link' + newItemNo });
         };*/
     })
-    .controller("InstaLocationController", function ($scope) {
+    .controller("InstaLocationController", function ($scope, $rootScope, $window) {
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
     })
-    .controller("UploadLogoController", function ($scope, fileReader, $http) {
-        
+    .controller("UploadLogoController", function ($scope, fileReader, $http, $rootScope, $window) {
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
         filePath = $scope.imageSrc;
         $scope.$on("fileProgress", function (e, progress) {
             $scope.progress = progress.loaded / progress.total;
         });
-        $scope.showColors = function () {
+        $scope.getColors = function () {
             //var File_Path = $scope.imageSrc;
-            alert($scope.imageSrc);
-            $http({
-                url: "manageWebsiteColors.asmx/GetWebsiteColors",
-                dataType: 'json',
-                method: "POST",
-                data: { path: $scope.imageSrc },
-                headers: { "Content-Type": "application/json; charset=utf-8" }
-            })
-                .then(function (response) {
-                    alert("success");
-                    $scope.Colors = response.data;
-                }, function (error) {
-                    alert("failed");
-                    //$scope.R = error.data;
-                  /*  $http({
-                        url: "manageWebsiteColors.asmx/chooseColors",
-                        method: "get"
-                    })
-                        .then(function (response) {
-                            $scope.Colors = response.data;
-                        });*/
-                });
+      //    alert($scope.imageSrc);
+                $http({
+                    url: "manageWebsiteColors.asmx/GetWebsiteColors",
+                    dataType: 'json',
+                    method: "POST",
+                    data: { path: $scope.imageSrc },
+                    headers: { "Content-Type": "application/json; charset=utf-8" }
+                })
+                    .then(function (response) {
+                 //       alert("success");
+                        $scope.Colors = response.data;
+                    }, function (error) {
+                  //      alert("failed");
+                        $scope.R = error.data;
+                        /*  $http({
+                              url: "manageWebsiteColors.asmx/chooseColors",
+                              method: "get"
+                          })
+                              .then(function (response) {
+                                  $scope.Colors = response.data;
+                              });*/
+                    });
         };
 
         $scope.sendLogo = function () {
@@ -259,12 +282,20 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 .then(function (response) { }, function (error) { });
         };
     })
-    .controller("5aController", function ($scope) {
+    .controller("5aController", function ($scope, $rootScope, $window) {
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
     })
-    .controller("6aController", function ($scope) {
+    .controller("6aController", function ($scope, $rootScope, $window) {
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
     })
-    .controller("DisplayAccountController", function ($scope, $http) {
-
+    .controller("DisplayAccountController", function ($scope, $http, $rootScope, $window) {
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
@@ -293,8 +324,10 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
 
         });
     })
-    .controller("ColorsController", function ($scope, $http) {
-
+    .controller("ColorsController", function ($scope, $http, $rootScope, $window) {
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
       /*   $http.get('manageWebsiteColors.asmx/chooseColors').then(function (response) {
 
             $scope.Colors = response.data;
@@ -330,35 +363,53 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             });
         };
     })
-    .controller("TemplateController", function ($scope, $http, $window) {
-
+    .controller("TemplateController", function ($scope, $http, $rootScope, $window) {
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
         var TemplateID = 0;
-        $scope.width1 = "150px";
-        $scope.width2 = "150px";
-        $scope.width3 = "150px";
+        $scope.width1 = "15vw";
+        $scope.width2 = "15vw";
+        $scope.width3 = "15vw ";
+        $scope.height1 = "26vw";
+        $scope.height2 = "26vw";
+        $scope.height3 = "26vw";
+
 
         $scope.firstTemplate = function () {
-            $scope.width1 = "200px";
-            $scope.width2 = "150px";
-            $scope.width3 = "150px";
-
+            $scope.width1 = "20vw";
+            $scope.width2 = "15vw";
+            $scope.width3 = "15vw ";
+            $scope.height1 = "35vw";
+            $scope.height2 = "26vw";
+            $scope.height3 = "26vw";
             TemplateID = 1;
         };
 
         $scope.secondTemplate = function () {
-            $scope.width2 = "200px";
-            $scope.width1 = "150px";
-            $scope.width3 = "150px";
+            $scope.width2 = "20vw";
+            $scope.width1 = "15vw";
+            $scope.width3 = "15vw ";
+            $scope.height2 = "35vw";
+            $scope.height1 = "26vw";
+            $scope.height3 = "26vw";
             TemplateID = 2;
         };
         $scope.thirdTemplate = function () {
-            $scope.width3 = "200px";
-            $scope.width2 = "150px";
-            $scope.width1 = "150px";
+            $scope.width3 = "20vw";
+            $scope.width2 = "15vw";
+            $scope.width1 = "15vw ";
+            $scope.height3 = "35vw";
+            $scope.height2 = "26vw";
+            $scope.height1 = "26vw";
             TemplateID = 6;
         };
 
         $scope.goToTemplate = function () {
+            if (TemplateID === 0) {
+                alert("يجب أن تختار قالبا لمتجرك");
+            }
+            else {
             var post = $http({
                 method: "POST",
                 url: "CreationStage.asmx/AddTemplate",
@@ -366,12 +417,15 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 data: { id: TemplateID },
                 headers: { "Content-Type": "application/json" }
             });
-            $window.location.href = '/index.html';
+            
+                $window.location.href = '/index.html';
+            }
         };
         })
-    .controller("LoadController", function ($scope) {
-
-
+    .controller("LoadController", function ($scope, $rootScope, $window) {
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
     });
 
 //to upload image

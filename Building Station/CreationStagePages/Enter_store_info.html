@@ -2,20 +2,39 @@
 <header style="padding-bottom:0%;">
     <h2 style="text-align: center; line-height: 0; font-size:35px;"><strong>Fill your store information</strong></h2>
 </header>
-
 <!-- Main content area -->
-<main>
-    <img>                        <br>
-    <br>
-</main>
-
-<div style="display:inline; overflow: auto;
-                white-space: nowrap; padding: 0px 0px;">
-    <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="2" class="button button-large">&#8249;</a>
-    <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="4.2" class="button button-large">&#8250;</a>
-</div>
-<br>
+<form name="myform">
+    <main>
+        Where is your business located ? <br />
+        <input type="text" name="myAddress" ng-model="Address" style="width:85%;" placeholder="Example: riyadh, saudi arabia " required />
+        <span class="asterisk_input"></span>
+        <span ng-show="myform.myAddress.$invalid">  this field is required  </span>
+        <br /> <br/>
+        <!--   <div style="width:100%; display:inline; overflow: auto;white-space: nowrap; padding: 0px 0px;">-->
+        Enter a social media link for your store <br />
+        <div style="text-align:left">
+            <img src="../images/snapchat (2).png" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; width: 35px; height:auto;  text-align: center;" />
+            <input type="text" ng-change="checkContent_snapchat()" ng-model="snapchatLink" style="margin-bottom:1vw; width:85%;" />
+        </div>
+        <div style="text-align:left">
+            <img src="../images/twitter (2).png" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; width: 35px; height:auto;  text-align: center;" />
+            <input type="text" ng-change="checkContent_twitter()" ng-model="twitterLink" style="margin-bottom:1vw; width:85%;" />
+        </div>
+        <div style="text-align:left">
+            <img src="../images/facebook (2).png" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; width: 35px; height:auto;  text-align: center;" />
+            <input type="text" ng-change="checkContent_facebook()" ng-model="facebookLink" style="margin-bottom:1vw; width:85%;" />
+        </div>
+        <div style="text-align:left">
+            <img src="../images/insta.png" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; width: 35px; height:auto;  text-align: center;" />
+            <input type="text" ng-change="checkContent_instagram()" ng-model="instagramLink" style="margin-bottom:1vw; width:85%;" />
+        </div>
+    </main>
+    <br/>
+    <div style="display:inline; overflow: auto; white-space: nowrap; padding: 0px 0px;">
+        <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="2" class="button button-large" data-toggle="tooltip" data-placement="right" title="Previous">&#8249;</a>
+        <button ng-disabled="myform.myAddress.$invalid" ng-click="sendData()" style="float: right; font-size:100px; padding: 0.1cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" class="button button-large" data-toggle="tooltip" data-placement="right" title="Next">&#8250;</button>
+    </div>
+</form>
 <!-- Footer -->
 <footer>
-    <br>
 </footer>

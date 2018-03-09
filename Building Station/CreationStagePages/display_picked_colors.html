@@ -5,19 +5,41 @@
 </header>
 
 <!-- Main content area -->
-<main>
-    <p style="background-color:{{colors.color1}}">{{colors.color1}} first color</p><br />
-    <p style="background-color:{{colors.color2}}">{{colors.color2}} second</p><br />
-    <p style="background-color:{{colors.color3}}">{{colors.color3}} thired</p><br />
-    <p style="background-color:{{colors.color4}}">{{colors.color4}} forth</p><br />
-
-    <p>error {{error}}</p>
+<main style="text-align:center;">
+    <input type="color" class="rounded" ng-model="Colors.Color1" style="
+  padding: 0;
+  border: none;
+  -webkit-border-radius: 50%;
+  width: 4vw;
+  height: 4vw;
+  background-color:transparent;">
+    <input type="color" class="rounded" ng-model="Colors.Color2" style="
+  padding: 0;
+  border: none;
+  -webkit-border-radius: 50%;
+  width: 4vw;
+  height: 4vw;
+  background-color:transparent;">
+    <input type="color" class="rounded" ng-model="Colors.Color3" style="
+  padding: 0;
+  border: none;
+  -webkit-border-radius: 50%;
+  width: 4vw;
+  height: 4vw;
+  background-color:transparent;">
+    <input type="color" class="rounded" ng-model="Colors.Color4" style="
+  padding: 0;
+  border: none;
+  -webkit-border-radius: 50%;
+  width: 4vw;
+  height: 4vw;
+  background-color:transparent;">
 </main>
 
 <div style="display:inline; overflow: auto;
                 white-space: nowrap; padding: 0px 0px;">
-    <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="7" class="button button-large">&#8249;</a>
-    <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="9" class="button button-large">&#8250;</a>
+    <a style="float: right; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="9" class="button button-large" ng-click="UpdateColors()" data-toggle="tooltip" data-placement="right" title="Next">&#8250;</a>
+    <a style="float: left; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="7" class="button button-large" data-toggle="tooltip" data-placement="left" title="Previous">&#8249;</a>
 </div>
 
 <!-- Footer -->
