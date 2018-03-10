@@ -60,6 +60,24 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             });
         $locationProvider.html5Mode(true);
     })
+    .run(function ($rootScope, $location, loginService) {
+
+        // register listener to watch route changes
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+
+            $rootScope.loggin = function () {
+                return loginService.login();
+            };
+            loginService.login().then(function (response) {
+                $rootScope.login = response;
+                console.log("in then " + $rootScope.login);
+                if (response === "false") {
+                    //redirect to login page
+                    location.href = "/RegisterLogin.html";
+                }
+            });
+        });
+    })
     .controller("0aController", function ($scope, $rootScope, $window) {
         $rootScope.English = function () {
             $window.location.href = '../CreationStage.html';
@@ -500,4 +518,13 @@ app.factory("fileReader", function ($q, $log) {
     return {
         readAsDataUrl: readAsDataURL
     };
+});
+app.factory('loginService', function ($http) {
+    var login = function () {
+        return $http.post('/RegisterLogin.asmx/CheckUser').then(function (msg) {
+            console.log(msg.data);
+            return msg.data;
+        });
+    };
+    return { login: login };
 });

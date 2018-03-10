@@ -60,10 +60,30 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             });
         $locationProvider.html5Mode(true);
     })
+    .run(function ($rootScope, $location, loginService) {
+
+        // register listener to watch route changes
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+
+            $rootScope.loggin = function () {
+                return loginService.login();
+            };
+            loginService.login().then(function (response) {
+                $rootScope.login = response;
+                console.log("in then " + $rootScope.login);
+                if (response === "false") {
+                    //redirect to login page
+                    location.href = "/RegisterLogin.html";
+                }
+            });
+        });
+    })
     .controller("0Controller", function ($scope, $rootScope, $window) {
+
         $rootScope.Arabic = function () {
-            $window.location.href = '../CreationStageArabic.html';
+            $window.location.href = '../CreationSatgeArabic.html';
         };
+
     })
     .controller("NameController", function ($scope, $rootScope, $http, $location, $window) {
 
@@ -243,7 +263,6 @@ $scope.sendName = function () {
         $rootScope.Arabic = function () {
             $window.location.href = '../CreationStageArabic.html';
         };
-
         filePath = $scope.imageSrc;
         $scope.$on("fileProgress", function (e, progress) {
             $scope.progress = progress.loaded / progress.total;
@@ -487,4 +506,13 @@ app.factory("fileReader", function ($q, $log) {
     return {
         readAsDataUrl: readAsDataURL
     };
+});
+app.factory('loginService', function ($http) {
+    var login = function () {
+        return $http.post('/RegisterLogin.asmx/CheckUser').then(function (msg) {
+            console.log(msg.data);
+            return msg.data;
+        });
+    };
+    return { login: login };
 });

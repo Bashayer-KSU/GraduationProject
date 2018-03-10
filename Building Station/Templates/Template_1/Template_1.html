@@ -10,7 +10,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
     <script src="../../Scripts/angular.js"></script>
     <script src="../../Scripts/angular.min.js"></script>
     <script src="Template1Controller.js"></script>
@@ -59,7 +59,7 @@
         <div  ng-style="{'background': Store.Color2}" id="main-wrapper">
             <div class="container">
                 <div class="row">
-                    <div class="8u 12u(mobile)">
+                    <div class="9u 12u(mobile)">
                         <!-- Portfolio -->
                         <section dir="rtl">
                             <header class="major">
@@ -83,7 +83,7 @@
                     </div>
 
                     <!-- Sidebar -->
-                    <div class="4u 12u(mobile)">
+                    <div class="3u 12u(mobile)">
 
                         <section class="box">
                             <header>
@@ -145,27 +145,23 @@
                                     <h2>للتواصل</h2>
                                 </header>
                                 <ul class="social">
-                                    <li><a class="icon fa-facebook" href="#"><span class="label">Facebook</span></a></li>
-                                    <li><a class="icon fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-                                    <a herf="#"><img style="padding-bottom:13px;width:14%;" alt="Snapchat" src="../../images/snapchat.png"></a>
-                                    <a herf="#"><img style="padding-bottom:13px;width:14%;" alt="Instagram" src="../../images/insta.png"></a>
+                                    <a herf="{{Store.FacebookLink}}"><img style="padding-bottom:13px;width:14%;" alt="Facebook" src="../../images/Facebook4.png"></a>
+                                    <a herf="{{Store.TwitterLink}}"><img style="padding-bottom:13px;width:14%;" alt="Twitter" src="../../images/twitter.png"></a>
+                                    <a herf="{{Store.SnapchatLink}}"><img style="padding-bottom:13px;width:14%;" alt="Snapchat" src="../../images/snapchat.png"></a>
+                                    <a herf="{{Store.InstagramLink}}"><img style="padding-bottom:13px;width:14%;" alt="Instagram" src="../../images/insta.png"></a>
                                 </ul>
                                 <ul class="contact">
                                     <li>
                                         <h3> أين نحن ؟</h3>
-                                        <p>
-                                            Untitled Incorporated<br />
-                                            1234 Somewhere Road Suite<br />
-                                            Nashville, TN 00000-0000
-                                        </p>
+                                        <p>{{Store.Address}}</p>
                                     </li>
                                     <li>
                                         <h3>البريد</h3>
-                                        <p><a href="#">someone@untitled.tld</a></p>
+                                        <p>{{Store.Email}}</p>
                                     </li>
                                     <li>
                                         <h3>الجوال</h3>
-                                        <p>(800) 000-0000</p>
+                                        <p>{{Store.Phone}}</p>
                                     </li>
                                 </ul>
                             </section>
@@ -173,11 +169,10 @@
                     </div>
                     <div class="row">
                         <div class="12u">
-
                             <!-- Copyright -->
                             <div id="copyright">
                                 <ul class="links">
-                                    <li>&copy; Building Station. جميع الحقوق محفوظة </li>
+                                    <li><a href=""><img style="width:5vw;" src="../../images/logo-arabi.png"/>&copy; Building Station. جميع الحقوق محفوظة </li></a>
                                     <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
                                 </ul>
                             </div>

@@ -22,7 +22,7 @@ public class manageWebsiteColors : System.Web.Services.WebService
     //string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
 
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public void GetWebsiteColors(string path)
     {
         Colors selectedColors = new Colors();
@@ -67,7 +67,7 @@ public class manageWebsiteColors : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmdee = new SqlCommand("UPDATE Store SET Color1='"+selectedColors.color1+"', Color2='"+selectedColors.color2+"', Color3='"+selectedColors.color3+"', Color4='"+selectedColors.color4+"' WHERE Email='asmaa.alrubia@gmail.com'", con);
+            SqlCommand cmdee = new SqlCommand("UPDATE Store SET Color1='"+selectedColors.color1+"', Color2='"+selectedColors.color2+"', Color3='"+selectedColors.color3+"', Color4='"+selectedColors.color4+ "' WHERE Email='" + Session["user"] + "'", con);
             cmdee.ExecuteNonQuery();
             con.Close();
 
