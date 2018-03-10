@@ -172,7 +172,6 @@ var app = angular.module("BS", ["ngRoute"])
         $scope.refreshIframe = function () {
             $scope.tab.refresh = true;
         };
-
         $http.get('/CreationStage.asmx/GetTemplateID').then(function (response) {
 
             $scope.storeID = response.data;
@@ -295,6 +294,51 @@ var app = angular.module("BS", ["ngRoute"])
 
         };
 
+        $scope.UpdateColors = function () {
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/UpdateColors",
+                dataType: 'json',
+                data: { color1: $scope.color1, color2: $scope.color2, color3: $scope.color3, color4: $scope.color4 },
+                headers: { "Content-Type": "application/json" }
+            });
+           $scope.refreshIframe();
+        };
+
+        filePath = $scope.imageSrc;
+        $scope.$on("fileProgress", function (e, progress) {
+            $scope.progress = progress.loaded / progress.total;
+        });
+        $scope.getColors = function () {
+            $http({
+                url: "manageWebsiteColors.asmx/GetWebsiteColors",
+                dataType: 'json',
+                method: "POST",
+                data: { path: $scope.imageSrc },
+                headers: { "Content-Type": "application/json; charset=utf-8" }
+            })
+                .then(function (response) {
+                    $scope.Colors = response.data;
+                }, function (error) {
+                    $scope.R = error.data;
+                });
+        //    $scope.refreshIframe();
+        //    $scope.myColors = true;
+            
+        };
+
+        $scope.UpdateLogo = function () {
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/UploadLogo",
+                dataType: 'json',
+                data: { logo: $scope.imageSrc },
+                headers: { "Content-Type": "application/json" }
+            })
+                .then(function (response) { }, function (error) { });
+
+          //  $scope.refreshIframe();
+        };
     })
     .controller("PreviewWebsiteController", function ($scope, $http) {
         $scope.tabHeader = "Previe wWebsite";

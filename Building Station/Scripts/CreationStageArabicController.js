@@ -519,6 +519,7 @@ app.factory("fileReader", function ($q, $log) {
         readAsDataUrl: readAsDataURL
     };
 });
+
 app.factory('loginService', function ($http) {
     var login = function () {
         return $http.post('/RegisterLogin.asmx/CheckUser').then(function (msg) {
