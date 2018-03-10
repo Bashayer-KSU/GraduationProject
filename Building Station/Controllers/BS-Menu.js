@@ -33,9 +33,9 @@ var app = angular.module("BS", ["ngRoute"])
 
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
-           
+
             $rootScope.loggin = function () {
-              return  loginService.login();
+                return loginService.login();
             };
             loginService.login().then(function (response) {
                 $rootScope.login = response;
@@ -50,7 +50,7 @@ var app = angular.module("BS", ["ngRoute"])
     .controller("ManageStoreController", function ($scope, $http, loginService) {
         $scope.tabHeader = "Manage Store";
         $scope.templatew = "";
-        
+
         /*
         loginService.login().then(function (response) {
             $scope.login = response;
@@ -123,7 +123,7 @@ var app = angular.module("BS", ["ngRoute"])
             $http({
                 url: "PaymentMethods.asmx/UbdateBankInfo",
                 method: "get",
-                params: { IBAN: IBAN}
+                params: { IBAN: IBAN }
             })
                 .then(function (response) {
                     $scope.bankInfo.IBAN = response.data;
@@ -166,14 +166,14 @@ var app = angular.module("BS", ["ngRoute"])
                 });
         };
     })
-    .controller("DevelopmentEnvironmentController", function ($scope, $http) {
+    .controller("DevelopmentEnvironmentController", function ($scope, $http, $filter) {
         $scope.tabHeader = "Development Environment";
         $scope.tab = {};
         $scope.refreshIframe = function () {
             $scope.tab.refresh = true;
         }
 
-        $http.get('../CreationStage.asmx/GetTemplateID').then(function (response) {
+        $http.get('/CreationStage.asmx/GetTemplateID').then(function (response) {
 
             $scope.storeID = response.data;
             if ($scope.storeID.TemplateID === 1) {
@@ -196,7 +196,104 @@ var app = angular.module("BS", ["ngRoute"])
             }
         }, function (error) {
             $scope.error = error.data;
-        });
+            });
+
+        $scope.resulset = [];
+        var StoreData = function () {
+
+            $http.post('/TemplateData.asmx/StoreData').then(function (response) {
+                $scope.resultset = response.data;
+                console.log($scope.resultset);
+
+                //Store Info
+                $scope.logo = $scope.resultset.Logo;
+                $scope.StoreName = $scope.resultset.Name;
+                $scope.desc = $scope.resultset.Description;
+                //$scope.desc = $filter('newlines')($scope.desc);
+               // $scope.desc = $scope.desc.replace(/\n/g, "<br />");
+                //console.log($scope.desc);
+
+                $scope.address = $scope.resultset.Address;
+                $scope.Phone = $scope.resultset.Phone;
+                $scope.Email = $scope.resultset.Email;
+
+                //Store Colors
+                $scope.color1 = $scope.resultset.Color1;//Header
+                $scope.color2 = $scope.resultset.Color2;//Content
+                $scope.color3 = $scope.resultset.Color3;//Footer
+                $scope.color4 = $scope.resultset.Color4;//Text color
+
+                //Slider Images
+                $scope.SliderImage = $scope.resultset.SliderImage;
+          
+                //Social Media Link
+                $scope.Facebook = $scope.resultset.FacebookLink.toLowerCase().includes("facebook");
+                $scope.FacebookLink = $scope.resultset.FacebookLink;
+                $scope.Instagram = $scope.resultset.InstagramLink.toLowerCase().includes("instagram");
+                $scope.InstagramLink = $scope.resultset.InstagramLink;
+                $scope.Snapchat = $scope.resultset.SnapchatLink.toLowerCase().includes("snapchat");
+                $scope.SnapchatLink = $scope.resultset.SnapchatLink;
+                $scope.Twitter = $scope.resultset.TwitterLink.toLowerCase().includes("twitter");
+                $scope.TwitterLink = $scope.resultset.TwitterLink;
+                $scope.TextType = [{ name: "Store Name", value: $scope.StoreName },
+                    { name: "Store Description", value: $scope.desc },
+                    { name: "Email", value: $scope.Email },
+                    { name: "Phone", value: $scope.Phone },
+                    { name: "Address", value: $scope.address }
+                ];
+                $scope.selectedTextType = $scope.TextType[0];
+                $scope.ShopOwnerText = $scope.selectedTextType.value;
+
+
+                //Menu
+                $scope.MenuTitle = $scope.resultset.MenuTitle;
+            }, function (error) {
+                $scope.error = error;
+            });
+        };
+        StoreData();
+
+        $scope.updateText = function () {
+            $scope.ShopOwnerText = $scope.selectedTextType.value;
+        }
+        $scope.UpdateStoreInfo = function () {
+            console.log('hey, myVar has changed!');
+            console.log($scope.selectedTextType.value);
+
+            if (typeof $scope.selectedTextType !== "undefined") {
+                if ($scope.selectedTextType != null || $scope.selectedTextType != "") {
+                    DataType = $scope.selectedTextType.name;                    
+                    NewValue = $scope.ShopOwnerText;
+
+                    console.log(DataType);
+                    console.log(NewValue);
+
+                    
+                    $http({
+                        url: "TemplateData.asmx/UpdatStoreData",
+                        method: "get",
+                        params: {
+                            DataType: DataType,
+                            NewValue: NewValue
+                        }
+                    })
+                        .then(function (response) {
+                            console.log(response);
+                            $scope.selectedTextType.value = response.data.substr(1, response.data.length - 2);
+                            $scope.ShopOwnerText = response.data.substr(1, response.data.length - 2);
+                          //  $scope.ShopOwnerText = $filter('newlines')($scope.ShopOwnerText);
+                           // $scope.selectedTextType.value = $filter('newlines')($scope.ShopOwnerText);
+
+                            $scope.refreshIframe();
+
+                        }, function (error) {
+                    $scope.error = error.data;
+                });
+
+                }
+            }
+
+        };
 
     })
     .controller("PreviewWebsiteController", function ($scope, $http) {
@@ -433,6 +530,13 @@ app.factory("fileReader", function ($q, $log) {
     };
 });
 //\costom servece
+app.filter('newlines', function () {
+    return function (text) {
+        if (text)
+            return text.replace(/\n/g, '<br/>');
+        return '';
+    }
+});
 
 app.filter('range', function () {
     return function (input, total) {

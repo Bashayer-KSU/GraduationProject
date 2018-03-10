@@ -2,10 +2,9 @@
 
 var T6 = myApp.controller("T6Ctrl", function ($scope, $http) {
     $scope.resultset = [];
-    $scope.color1;
     var init = function () {
 
-        $http.get('/TemplateData.asmx/StoreData').then(function (response) {
+        $http.post('/TemplateData.asmx/StoreData').then(function (response) {
             $scope.resultset = response.data;
             console.log($scope.resultset);
             //Store Info

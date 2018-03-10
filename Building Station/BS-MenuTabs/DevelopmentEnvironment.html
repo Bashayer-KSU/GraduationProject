@@ -1,20 +1,61 @@
 ﻿<h2>{{tabHeader}}</h2> 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <div class="container">
     <div class="row">
-        <div class="col-md-2">
-            <button ng-click="refreshIframe()">Click here</button>
+        <div class="col-sm-4 col-md-4">
+            <div class="row">
+                <select id="" class="form-control" ng-model="selectedTextType" ng-change="updateText()" data-live-search="true" ng-options="x.name for x in TextType">
+                    <!--  <option value="" selected>Update Text</option>--disabled-->
+
+                </select>
+                <div class="input-group">
+                    <!--ng-show="selectedTextType.name!='Store Description'" -->
+                    <input type="text" class="form-control" ng-model="ShopOwnerText" placeholder="Write new text ...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="UpdateStoreInfo()" type="submit">Update</button>
+                    </span>
+                </div>
+                <!--
+        <div ng-show="selectedTextType.name==='Store Description'" >
+            <textarea style="resize: vertical;" class="form-control" ng-model="ShopOwnerText" rows="3" ></textarea>
+                <button class="btn btn-default" ng-click="UpdateStoreInfo()" type="submit">Update</button>
+
+        </div>-->
+            </div><br />
+            <div class="row">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon ">
+                        <input ng-model="checkInstagram" type="checkbox" aria-label="">
+                    </span>
+                    <input type="text" ng-disabled="!checkInstagram" class="form-control" placeholder="paste Instagram link here ..." aria-label="...">
+
+                </div><!-- /input-group -->
+
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon">
+                            <input type="checkbox" aria-label="...">
+                        </span>
+                        <input type="text" class="form-control" aria-label="...">
+
+                    </div><!-- /input-group -->
+
+            </div>
+            <!--
+    <div class="col-md-6">
+        <input type="text" name="Storename" ng-model="Store.name" placeholder="Update Store Name" required>
+    </div>
+    <div class="col-md-6">
+        <button ng-click="refreshIframe()">Click here</button>
+    </div>-->
         </div>
-        <div class="col-md-10">
+        <div class="col-sm-8 col-md-8">
             <div class="embed-responsive embed-responsive-4by3">
                 <iframe refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
                 <!--style="overflow: hidden; height: 200%; width: 100%;"-->
             </div>
         </div>
     </div>
-    
-
 </div>
