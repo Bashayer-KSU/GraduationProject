@@ -8,7 +8,7 @@
         <div class="col-sm-4 col-md-4">
             <br />
             <div class="row">
-                <div refreshable="myColors" class="input-group">
+                <div refreshable="tab.myColors" class="input-group">
 
                     <input type="color" class="rounded" ng-model="color1" style="
   margin-right:1vw;
@@ -79,24 +79,43 @@
 
         </div>-->
                        </div><br />
-                       <div class="row">
-                           <div class="input-group input-group-sm">
-                               <span class="input-group-addon ">
-                                   <input ng-model="checkInstagram" type="checkbox" aria-label="">
-                               </span>
-                               <input type="text" ng-disabled="!checkInstagram" class="form-control" placeholder="paste Instagram link here ..." aria-label="...">
+                             <div class="row">
+                                 <div class="input-group input-group-sm">
+                                     <span class="input-group-addon ">
+                                         <!--   <input ng-model="checkInstagram" type="checkbox" aria-label=""> ng-disabled="!checkInstagram"-->
+                                         <img src="../images/instagram.png" style="width:1.5vw;" />
+                                     </span>
+                                     <input type="text" ng-change="checkContent_instagram()" ng-model="myInstagramLink" class="form-control" placeholder="paste Instagram link here ..." aria-label="...">
 
-                           </div><!-- /input-group -->
+                                 </div><!-- /input-group -->
 
-                           <div class="input-group input-group-sm">
-                               <span class="input-group-addon">
-                                   <input type="checkbox" aria-label="...">
-                               </span>
-                               <input type="text" class="form-control" aria-label="...">
+                                 <div class="input-group input-group-sm">
+                                     <span class="input-group-addon">
+                                         <!--<input type="checkbox" aria-label="...">-->
+                                         <img src="../images/twitter (2).png" style="width:1.5vw;" />
 
-                           </div><!-- /input-group -->
+                                     </span>
+                                     <input type="text" ng-change="checkContent_twitter()" ng-model="myTwitterLink" class="form-control" placeholder="paste Twitter link here ..." aria-label="...">
 
-                       </div>
+                                 </div><!-- /input-group -->
+                                 <div class="input-group input-group-sm">
+                                     <span class="input-group-addon">
+                                         <!--   <input type="checkbox" aria-label="..."> ng-disabled="!checkSnapchat" -->
+                                         <img src="../images/snapchat (2).png" style="width:1.5vw;" />
+                                     </span>
+                                     <input type="text" ng-change="checkContent_snapchat()" ng-model="mySnapchatLink" class="form-control" placeholder="paste Snapchat link here ..." aria-label="...">
+                                 </div><!-- /input-group -->
+                                 <div class="input-group input-group-sm">
+                                     <span class="input-group-addon">
+                                         <!--<input type="checkbox" aria-label="..."> ng-disabled="!checkFacebook" -->
+                                         <img src="../images/facebook (3).png" style="width:1.5vw;" />
+                                     </span>
+                                     <input type="text" ng-change="checkContent_facebook()" ng-model="myFacebookLink" class="form-control" placeholder="paste Facebook link here ..." aria-label="...">
+
+                                 </div><!-- /input-group -->
+                                 <button style="float:right;" class="btn btn-default" ng-click="UpdateLinks()" type="submit">Update</button>
+
+                             </div>
                        <!--
     <div class="col-md-6">
         <input type="text" name="Storename" ng-model="Store.name" placeholder="Update Store Name" required>

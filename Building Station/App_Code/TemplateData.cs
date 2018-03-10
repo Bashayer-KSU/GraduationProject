@@ -118,6 +118,26 @@ public class TemplateData : System.Web.Services.WebService
 
         }
     }
+
+    [WebMethod(EnableSession = true)]
+    public void UpdateLinks(string snapchat_link, string twitter_link, string facebook_link, string instagram_link)
+    {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET SnapchatLink = '" + snapchat_link + "', TwitterLink = '" + twitter_link + "', FacebookLink = '" + facebook_link + "', InstagramLink = '" + instagram_link + "' WHERE Email='" + Session["user"] + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+            store.SnapchatLink = snapchat_link;
+            store.TwitterLink = twitter_link;
+            store.FacebookLink = facebook_link;
+            store.InstagramLink = instagram_link;
+            Context.Response.Write(js.Serialize(store));
+        }
+
+    }
 }
 
 

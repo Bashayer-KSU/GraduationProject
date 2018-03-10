@@ -144,24 +144,24 @@
                                 <header>
                                     <h2>للتواصل</h2>
                                 </header>
-                                <ul class="social">
-                                    <a herf="{{Store.FacebookLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Facebook" src="../../images/Facebook4.png"></a>
-                                    <a herf="{{Store.TwitterLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Twitter" src="../../images/twitter.png"></a>
-                                    <a herf="{{Store.SnapchatLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Snapchat" src="../../images/snapchat.png"></a>
-                                    <a herf="{{Store.InstagramLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Instagram" src="../../images/insta.png"></a>
-                                </ul>
+                                <div class="social">
+                                    <a ng-show="Fvisible" herf="{{Store.FacebookLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Facebook" src="../../images/Facebook4.png"></a>
+                                    <a ng-show="Tvisible" herf="{{Store.TwitterLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Twitter" src="../../images/twitter.png"></a>
+                                    <a ng-show="Svisible" herf="{{Store.SnapchatLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Snapchat" src="../../images/snapchat.png"></a>
+                                    <a ng-show="Ivisible" herf="{{Store.InstagramLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Instagram" src="../../images/insta.png"></a>
+                                </div>
                                 <ul class="contact">
                                     <li>
-                                        <h3> أين نحن ؟</h3>
-                                        <p>{{Store.Address}}</p>
+                                        <h3>{{Store.Address}}</h3>
+                                        <p> أين نحن ؟</p>
                                     </li>
                                     <li>
-                                        <h3>البريد</h3>
-                                        <p>{{Store.Email}}</p>
+                                        <p>البريد</p>
+                                        <h3>{{Store.Email}}</h3>
                                     </li>
                                     <li>
-                                        <h3>الجوال</h3>
-                                        <p>{{Store.Phone}}</p>
+                                        <p>الجوال</p>
+                                        <h3>{{Store.Phone}}</h3>
                                     </li>
                                 </ul>
                             </section>
