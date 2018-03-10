@@ -19,6 +19,8 @@ public class TemplateData : System.Web.Services.WebService
 
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
+    JavaScriptSerializer js = new JavaScriptSerializer();
+
 
     public Store store = new Store();
     public Product product = new Product();
@@ -32,8 +34,6 @@ public class TemplateData : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void StoreData()
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, SilderImage, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink FROM Store Where Email = '"+Session["user"]+"'", con);
@@ -66,8 +66,6 @@ public class TemplateData : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void ProductData()
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             SqlCommand cmd = new SqlCommand("SELECT Name, Price, Description, Discount, Category_ID, ShopEmail, Image FROM Product WHERE ShopEmail = '" + Session["user"] + "'", con);
@@ -86,4 +84,42 @@ public class TemplateData : System.Web.Services.WebService
         }
         Context.Response.Write(js.Serialize(product));
     }
+
+    [WebMethod(EnableSession = true)]
+    public void UpdatStoreData(String DataType, String NewValue)
+    {
+        if (DataType.Equals("Store Name"))
+            DataType = "StoreName";
+        else if(DataType.Equals("Store Description"))
+            DataType = "StoreDescription";
+        else if (DataType.Equals("Address"))
+            DataType = "Location";
+
+
+        int x;
+        Boolean result = false;
+
+        if (NewValue!= null) {
+
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("UPDATE Store SET  [" + DataType + "] = N'" + NewValue + "' Where Email = '" + Session["user"] + "'", con))
+                {
+                    x = cmd.ExecuteNonQuery();
+                    if (x != 0)
+                        result = true;
+                }
+            }
+            if(result)
+        Context.Response.Write(js.Serialize(NewValue));
+            else
+                Context.Response.Write(js.Serialize("Error"));
+
+        }
+    }
 }
+
+
+
+
