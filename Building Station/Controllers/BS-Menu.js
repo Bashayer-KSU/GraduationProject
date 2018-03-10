@@ -171,7 +171,7 @@ var app = angular.module("BS", ["ngRoute"])
         $scope.tab = {};
         $scope.refreshIframe = function () {
             $scope.tab.refresh = true;
-        }
+        };
 
         $http.get('/CreationStage.asmx/GetTemplateID').then(function (response) {
 
@@ -255,13 +255,13 @@ var app = angular.module("BS", ["ngRoute"])
 
         $scope.updateText = function () {
             $scope.ShopOwnerText = $scope.selectedTextType.value;
-        }
+        };
         $scope.UpdateStoreInfo = function () {
             console.log('hey, myVar has changed!');
             console.log($scope.selectedTextType.value);
 
             if (typeof $scope.selectedTextType !== "undefined") {
-                if ($scope.selectedTextType != null || $scope.selectedTextType != "") {
+                if ($scope.selectedTextType !== null || $scope.selectedTextType !== "") {
                     DataType = $scope.selectedTextType.name;                    
                     NewValue = $scope.ShopOwnerText;
 
@@ -301,10 +301,21 @@ var app = angular.module("BS", ["ngRoute"])
     })
     .controller("TemplateController", function ($scope, $http) {
         $scope.tabHeader = "Template";
-        $scope.getImageUrl = function (index) {
+    /*    $scope.getImageUrl = function (index) {
             return "/images/T" + (index+1)+".png";
+        };*/
+
+        $scope.Template = function (Tid) {
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/AddTemplate",
+                dataType: 'json',
+                data: { id: Tid },
+                headers: { "Content-Type": "application/json" }
+            });
         };
-       
+
+
     })
     .controller("ProductsController", function ($scope, $http) {
         $scope.tabHeader = "Products";
@@ -535,7 +546,7 @@ app.filter('newlines', function () {
         if (text)
             return text.replace(/\n/g, '<br/>');
         return '';
-    }
+    };
 });
 
 app.filter('range', function () {
