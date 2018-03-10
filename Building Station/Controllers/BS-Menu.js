@@ -367,11 +367,14 @@ var app = angular.module("BS", ["ngRoute"])
         $scope.getCat = function () {
             $http({
                 url: "Products.asmx/GetAllCategories",
-                method: "get"/*,
-                params: { ShopEmail: 'lamia@gmail.com' }*/
+                method: "get"
             })
                 .then(function (response) {
                     $scope.categories = response.data;
+                    if (newCategury == null || newCategury == undefined)
+                        $scope.selectedCategory = $scope.categories[0];
+                    else $scope.selectedCategory = newCategury;
+                    $scope.selectedCategoryChanged();
                 });
         };
         //\to retrieve all categories
@@ -385,7 +388,7 @@ var app = angular.module("BS", ["ngRoute"])
             })
                 .then(function (response) {
                     $scope.result = response.data;
-                    $scope.getCat();
+                    $scope.getCat(newCategury);
                 });
             $scope.newCategury = "";
             $scope.newCat = false;
@@ -449,6 +452,7 @@ var app = angular.module("BS", ["ngRoute"])
                 /////////////////////
                 $scope.products[index] = product;
                 product.edit = false;
+                $scope.selectedCategoryChanged();
                 /////////////////////
             });
         };

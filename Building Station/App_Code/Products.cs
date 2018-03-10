@@ -15,8 +15,8 @@ using System.Web.Services;
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
 [System.Web.Script.Services.ScriptService]
 public class Products : System.Web.Services.WebService {
-    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    //string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
+    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
     string ShopEmail = "lamia@gmail.com";
 
     [WebMethod]
@@ -62,7 +62,7 @@ public class Products : System.Web.Services.WebService {
                     if (x != 0) { msg = cat + " category added successfully"; }
                 }
             }
-            else { msg = cat + " category already exists"; }
+            else { msg = cat + "category already exists"; }
         }
         JavaScriptSerializer js = new JavaScriptSerializer();
         Context.Response.Write(js.Serialize(msg));
@@ -95,6 +95,12 @@ public class Products : System.Web.Services.WebService {
                         pro.Category_ID = reader["Category_ID"].ToString();
                         pro.Amount = Convert.ToInt32(reader["Amount"]);
                         pro.StoreEmail = reader["ShopEmail"].ToString();
+                        if(pro.Discount != 0)
+                        {
+                            double i = pro.Price * pro.Discount / 100;
+                            i = pro.Price - i;
+                            pro.PriceAfterDiscount = i;
+                        }
                         ProductsList.Add(pro);
                     }
                 }
@@ -107,7 +113,6 @@ public class Products : System.Web.Services.WebService {
     [WebMethod]
     public void AddNewProduct(Product pro)
     {
-        int x;
         Product product = new Product();
         Random R = new Random();
         using (SqlConnection con = new SqlConnection(cs))
@@ -117,15 +122,15 @@ public class Products : System.Web.Services.WebService {
             SqlDataReader reader = check.ExecuteReader();
             if (reader.Read())
             {
-                int id = R.Next(0, 100);
                 using (SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Category_ID, ShopEmail, Price, Image, Description, Discount, Amount) values(N'" + pro.Name + "', '" + reader["ID"].ToString() + "','" + ShopEmail + "'," + pro.Price + ",'" + pro.Image + "',N'" + pro.Description + "'," + pro.Discount + "," + pro.Amount + ")", con))
                 {
                     reader.Close();
-                    x = cmd.ExecuteNonQuery();
-                    if (true)
-                    {
+                    int rows = cmd.ExecuteNonQuery();
 
-                        product.ID = id;
+                    using (SqlCommand cmd2 = new SqlCommand("SELECT ID FROM Product WHERE Name=N'" + pro.Name + "AND Category_ID=" + reader["ID"].ToString() + "AND ShopEmail=" + ShopEmail, con))
+                    {
+                        SqlDataReader id = cmd2.ExecuteReader();
+                        product.ID = Convert.ToInt32(id["ID"]);
                         product.Name = pro.Name;
                         product.Price = pro.Price;
                         product.Image = pro.Image;
@@ -134,6 +139,12 @@ public class Products : System.Web.Services.WebService {
                         product.Category_ID = pro.Category_ID;
                         product.Amount = pro.Amount;
                         product.StoreEmail = ShopEmail;
+                        if (product.Discount != 0)
+                        {
+                            double i = product.Price * product.Discount / 100;
+                            i = product.Price - i;
+                            product.PriceAfterDiscount = i;
+                        }
                     }
                 }
             }
@@ -145,15 +156,14 @@ public class Products : System.Web.Services.WebService {
     [WebMethod]
     public void RemoveProduct(int product_ID)
     {
-        int x;
         Boolean result = false;
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
             using (SqlCommand cmd = new SqlCommand("DELETE FROM Product WHERE ID = '" + product_ID + "'; ", con))
             {
-                x = cmd.ExecuteNonQuery();
-                if (x != 0)
+                int rows = cmd.ExecuteNonQuery();
+                if(rows != 0)
                     result = true;
             }
         }
@@ -165,7 +175,6 @@ public class Products : System.Web.Services.WebService {
     public void EditProduct(Product pro)
     {
         int x;
-        Boolean result = false;
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -173,11 +182,18 @@ public class Products : System.Web.Services.WebService {
             {
                 x = cmd.ExecuteNonQuery();
                 if (x != 0)
-                    result = true;
+                {
+                    if(pro.Discount !=0)
+                    {
+                        double i = pro.Price * pro.Discount / 100;
+                        i = pro.Price - i;
+                        pro.PriceAfterDiscount = i;
+                    }
+                }
             }
         }
         JavaScriptSerializer js = new JavaScriptSerializer();
-        Context.Response.Write(js.Serialize(result));
+        Context.Response.Write(js.Serialize(pro));
     }
 
 }
