@@ -469,7 +469,7 @@ public class CreationStage : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreType = N'" + type + "', SilderImage = '" + Slider_Image + "', StoreDescription = N'"+ Description_Text +"' WHERE Email='" + Session["user"] + "'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreType = N'" + type + "', SliderImage = '" + Slider_Image + "', StoreDescription = N'"+ Description_Text +"' WHERE Email='" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
@@ -635,8 +635,8 @@ public class CreationStage : System.Web.Services.WebService
         {
             con.Open();
             //  SqlCommand cmd = new SqlCommand("UPDATE type_images SET type1_slider = '" + theBytes + "' Where id = '1'", con);
-            //  SqlCommand cmd = new SqlCommand("UPDATE Store SET SilderImage =  CONVERT(varbinary,'" + image.SliderImage + "') Where Email = 'asmaa.alrubia@gmail.com'", con);
-            // SqlCommand cmd = new SqlCommand("UPDATE Store SET logo = '" + tryMe + "', SilderImage = "+ theBytes + " Where Email = 'asmaa@mail.com'", con);
+            //  SqlCommand cmd = new SqlCommand("UPDATE Store SET SliderImage =  CONVERT(varbinary,'" + image.SliderImage + "') Where Email = 'asmaa.alrubia@gmail.com'", con);
+            // SqlCommand cmd = new SqlCommand("UPDATE Store SET logo = '" + tryMe + "', SliderImage = "+ theBytes + " Where Email = 'asmaa@mail.com'", con);
             SqlCommand cmd = new SqlCommand("UPDATE type_images SET type9_slider = '" + image.SliderImage + "' Where id = '1'", con);
 
             cmd.ExecuteNonQuery();
@@ -654,8 +654,8 @@ public class CreationStage : System.Web.Services.WebService
         {
             con.Open();
             // SqlCommand cmd = new SqlCommand("SELECT type1_slider FROM type_images Where id = '1'", con);
-            //   SqlCommand cmd = new SqlCommand("SELECT CONVERT(varchar(max), SilderImage, 2) FROM Store Where Email = 'asmaa.alrubia@gmail.com'", con);
-            //  SqlCommand cmd = new SqlCommand("SELECT cast(SilderImage as varchar(max)) FROM Store Where Email = 'asmaa.alrubia@gmail.com'", con);
+            //   SqlCommand cmd = new SqlCommand("SELECT CONVERT(varchar(max), SliderImage, 2) FROM Store Where Email = 'asmaa.alrubia@gmail.com'", con);
+            //  SqlCommand cmd = new SqlCommand("SELECT cast(SliderImage as varchar(max)) FROM Store Where Email = 'asmaa.alrubia@gmail.com'", con);
             SqlCommand cmd = new SqlCommand("SELECT type9_slider FROM type_images Where id = '1'", con);
 
 
@@ -663,7 +663,7 @@ public class CreationStage : System.Web.Services.WebService
            // theBytes = (byte[])reader.GetValue(0);
             while (reader.Read())
             {
-                //  theBytes = (byte[]) reader["SilderImage"];
+                //  theBytes = (byte[]) reader["SliderImage"];
               //   theString = Encoding.UTF8.GetString(theBytes);
             store.Logo = reader["type9_slider"].ToString();
 

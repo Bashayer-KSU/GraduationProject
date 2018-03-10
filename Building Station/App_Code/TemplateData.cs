@@ -36,7 +36,7 @@ public class TemplateData : System.Web.Services.WebService
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, SilderImage, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink FROM Store Where Email = '"+Session["user"]+"'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, SliderImage, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink FROM Store Where Email = '" + Session["user"]+"'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -51,7 +51,7 @@ public class TemplateData : System.Web.Services.WebService
                 store.Logo = reader["logo"].ToString();
                 store.menuTitle= reader["MenuTitle"].ToString();
                 store.Description = reader["StoreDescription"].ToString();
-                store.SliderImage = reader["SilderImage"].ToString();
+                store.SliderImage = reader["SliderImage"].ToString();
                 store.Address = reader["Location"].ToString();
                 store.SnapchatLink = reader["SnapchatLink"].ToString();
                 store.TwitterLink = reader["TwitterLink"].ToString();
@@ -61,7 +61,6 @@ public class TemplateData : System.Web.Services.WebService
         }
         Context.Response.Write(js.Serialize(store));
     }
-
 
     [WebMethod(EnableSession = true)]
     public void ProductData()
@@ -137,6 +136,23 @@ public class TemplateData : System.Web.Services.WebService
             Context.Response.Write(js.Serialize(store));
         }
 
+    }
+
+    [WebMethod(EnableSession = true)]
+    public void UploadSlider(string slider)
+    {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET SliderImage = '" + slider + "' WHERE Email='" + Session["user"] + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            store.SliderImage = slider;
+            Context.Response.Write(js.Serialize(store));
+        }
     }
 }
 

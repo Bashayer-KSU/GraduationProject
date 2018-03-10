@@ -337,6 +337,7 @@ var app = angular.module("BS", ["ngRoute"])
             $scope.refreshIframe();
         };
 
+        sliderPath = $scope.imageSrc_slider;
         filePath = $scope.imageSrc;
         $scope.$on("fileProgress", function (e, progress) {
             $scope.progress = progress.loaded / progress.total;
@@ -369,6 +370,19 @@ var app = angular.module("BS", ["ngRoute"])
 
             $scope.refreshIframe();
             $scope.tab.myColors = true;
+        };
+
+        $scope.UpdateSlider = function () {
+            var post = $http({
+                method: "POST",
+                url: "TemplateData.asmx/UploadSlider",
+                dataType: 'json',
+                data: { slider: $scope.imageSrc_slider },
+                headers: { "Content-Type": "application/json" }
+            })
+                .then(function (response) { }, function (error) { });
+
+            $scope.refreshIframe();
         };
 
         $scope.checkContent_snapchat = function () {
