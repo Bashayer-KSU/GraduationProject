@@ -4,18 +4,21 @@
 </header>
 
 <!-- Main content area -->
-<main>
-    <img>                        <br>
-    <br>
+<main style="text-align:center">
+    <!-- style="align-items:center; display:inline-block;"-->
+    <img ng-click="firstTemplate()" src="../images/T4.jpg" alt="template 1" style=" margin-right: 1%; width: {{width1}}; height:{{height1}};" />
+    <img ng-click="secondTemplate()" src="../images/T5.jpg" alt="template 2" style=" margin-right: 1%; width: {{width2}}; height:{{height2}};" />
+    <img ng-click="thirdTemplate()" src="../images/T6.png" alt="template 3" style=" margin-right: 1%; width: {{width3}}; height:{{height3}};" />
+    <p style="clear: both;">
 </main>
 
 <div style="display:inline; overflow: auto;
                 white-space: nowrap; padding: 0px 0px;">
-    <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="8" class="button button-large">&#8249;</a>
+    <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="8" class="button button-large" data-toggle="tooltip" data-placement="left" title="Previous">&#8249;</a>
 </div>
 <br>
 <!-- Footer -->
 <footer>
     <br>
-    <a style="float: right; font-size:25px; padding: 0.4cm 0.4cm 0.4cm 0.4cm; border-radius: 20%;" href="10" class="button button-large">Finish</a>
+    <a style="float: right; font-size:25px; padding: 0.4cm 0.4cm 0.4cm 0.4cm; border-radius: 20%;" href="" class="button button-large" ng-click="goToTemplate()">Finish</a>
 </footer>

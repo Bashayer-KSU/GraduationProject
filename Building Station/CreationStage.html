@@ -1,22 +1,35 @@
 ﻿<!DOCTYPE html>
 <html lang="en" ng-app="CraetionStageApp">
-<head>
-    <meta charset="utf-8" />
+<head runat="sever">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Creation Stage - Building Station</title>
     <base href="/" />
+    <title>Creation Stage - Building Station</title>
 
     <script src="Scripts/angular.min.js"></script>
     <!--<script src="Scripts/angular-route.min.js"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular-route.min.js"></script>
     <script src="Scripts/CreationStageController.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Main CSS -->
-    <link href="CreationStageStyleSheet.css" rel="stylesheet" />
+
+    <link href="CreationStageStyleSheet.css" rel="stylesheet" type="text/css" media="screen, projection" />
+
+    <!--<asp:ContentPlaceHolder ID="HeadContent" runat="server" />-->
     <!-- Font Awesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />-->
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+
     <style>
+        @font-face {
+            font-family: "NeoSansArabic";
+            src: url('NeoSansArabic.ttf'); /* IE9 */
+        }
+
+        body {
+            font-family: 'NeoSansArabic';
+        }
         ul {
             position: absolute;
             z-index: 1000;
@@ -33,26 +46,64 @@
             -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
+
         li {
             cursor: pointer;
             list-style-position: inside;
             border: 0.5px solid gray;
-            padding: 3px 20px;
         }
-        li:hover {
+
+            li:hover {
                 background-color: #f9f9f9;
             }
+        input::placeholder {
+            font-style: italic;
+            opacity: 0.4; /* Firefox */
+        }
+
+        .asterisk_input:after {
+            content: " *";
+            color: #e32;
+            position: absolute;
+            margin: 0px 0px 0px -20px;
+            font-size: large;
+            padding: 0 5px 0 0;
+        }
+
+        button {
+            border: none;
+        }
+
+        span {
+            padding-top: 0px;
+            margin-top: 0px;
+            font-size: x-small;
+        }
     </style>
 </head>
-<body>
-    <div class="wrapper">
-        <h1 style="z-index:1;" class="button button-large">English |العربية</h1>
-        <div class="container">
+
+<!-- To place profile image on the left, simply add class 'left' to the body. No other changes to CSS / HTML required -->
+<body class="left" style="font-family:'NeoSansArabic';">
+
+    <div style="float:left; display:inline-block; margin-top:10px;"><img ng-src="/images/language.png" alt="" style="width:35px; height:35px;" /></div>
+    <div style="margin-right:10px; margin-top:10px; display:inline-block; float:left;">
+        <a href="">English</a> |
+        <a style="font-family:'NeoSansArabic';" href="" ng-click="Arabic()">العربية</a>
+        <span></span>
+
+    </div>
+    <div class="logo" style="margin-top:10px;">
+        <img src="/images/logo-arabi.png" style="height:15%; width:15%; margin-left:550px; position: relative; box-sizing: border-box;" />
+    </div>
+    <div class="wrapper" style="margin-top:-30px;">
+        <div class="container" style="margin-top:-30px;">
             <ng-view></ng-view>
         </div>
     </div>
-    <!--هذا رابط للسوشال ميديا
-    http://www.shanidkv.com/blog/angularjs-adding-form-fields-dynamically    
-    -->
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 </body>
 </html>

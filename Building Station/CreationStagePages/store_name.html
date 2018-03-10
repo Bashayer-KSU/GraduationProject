@@ -3,16 +3,21 @@
     <h2 style="line-height: 0.9; font-size:40px;"><strong>What's your store name ?</strong></h2>
 </header>
 <!-- Main content area -->
+<form name="myform">
     <main>
-        <input type="text" ng-model="storeName" style="width:100%;" required>
+        <input name="myName" type="text" ng-model="storeName" placeholder=" Example: The warm crochet" style="width:85%;" required />
+        <span class="asterisk_input">  </span>
+        <span ng-show="myform.myName.$invalid"> this field is required  </span>
+
         <br>
         <br>
     </main>
-    <div style="display:inline; overflow: auto;
-                white-space: nowrap; padding: 0px 0px;">
-        <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="0" class="button button-large">&#8249;</a>
-        <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="2" class="button button-large" ng-click="sendName()">&#8250;</a>
+
+    <div style="display:inline; overflow: auto; white-space: nowrap; padding: 0px 0px;">
+        <button ng-disabled="myform.myName.$invalid" style="float: right; font-size:100px;  padding: 0.1cm 0.5cm 0.5cm 0.4cm; border-radius: 50%;" href="2" class="button button-large" ng-click="sendName()" data-toggle="tooltip" data-placement="right" title="Next">&#8250;</button>
+        <a style="float: left; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="0" class="button button-large" data-toggle="tooltip" data-placement="left" title="Previous">&#8249;</a>
     </div>
+</form>
 <!-- Footer -->
 <footer>
     <!-- F   <p>Free Web Template from <a href="https://zypopwebtemplates.com/">ZyPop</a>.</p>-->
