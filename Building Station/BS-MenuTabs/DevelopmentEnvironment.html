@@ -8,7 +8,7 @@
         <div class="col-sm-4 col-md-4">
             <br />
             <div class="row">
-                <div refreshable="tab.myColors" class="input-group">
+                <div class="input-group">
 
                     <input type="color" class="rounded" ng-model="color1" style="
   margin-right:1vw;
@@ -45,6 +45,9 @@
                     <span class="input-group-btn">
                         <button class="btn btn-default" ng-click="UpdateColors()" type="submit">Update</button>
                     </span>
+                    <div ng-if="refreshMyColors"
+                         ng-init="refreshColors()">
+                    </div>
                 </div>
             </div> <br />
             <div class="row">

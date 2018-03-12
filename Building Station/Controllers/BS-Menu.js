@@ -173,7 +173,17 @@ var app = angular.module("BS", ["ngRoute"])
         $scope.refreshIframe = function () {
             $scope.tab.refresh = true;
         };
+        $scope.refreshMyColors = false;
+        $scope.refreshColors = function () {
+            $http.get('/CreationStage.asmx/GetColors').then(function (response) {
 
+                $scope.refreshed = response.data;
+                $scope.color1 = $scope.refreshed.Color1;
+                $scope.color2 = $scope.refreshed.Color2;
+                $scope.color3 = $scope.refreshed.Color3;
+                $scope.color4 = $scope.refreshed.Color4;
+            });
+        };
         var mySnapchat;
         var myTwitter;
         var myFacebook;
@@ -352,6 +362,11 @@ var app = angular.module("BS", ["ngRoute"])
             })
                 .then(function (response) {
                     $scope.Colors = response.data;
+                    $scope.color1 = $scope.Colors.Color1;
+                    $scope.color2 = $scope.Colors.Color2;
+                    $scope.color3 = $scope.Colors.Color3;
+                    $scope.color4 = $scope.Colors.Color4;
+                    $scope.refreshMyColors = true;
                 }, function (error) {
                     $scope.R = error.data;
                 });
@@ -446,7 +461,7 @@ var app = angular.module("BS", ["ngRoute"])
             })
                 .then(function (response) {
                     $scope.categories = response.data;
-                    if (newCategury == null || newCategury == undefined)
+                    if (newCategury === null || newCategury === undefined)
                         $scope.selectedCategory = $scope.categories[0];
                     else $scope.selectedCategory = newCategury;
                     $scope.selectedCategoryChanged();
