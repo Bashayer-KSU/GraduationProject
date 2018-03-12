@@ -175,19 +175,25 @@ public class Products : System.Web.Services.WebService {
     public void EditProduct(Product pro)
     {
         int x;
-        using (SqlConnection con = new SqlConnection(cs))
-        {
-            con.Open();
-            using (SqlCommand cmd = new SqlCommand("UPDATE Product SET Name =N'" + pro.Name + "', Price =" + pro.Price + ", Image = '" + pro.Image + "', Description = N'" + pro.Description + "', Discount = " + pro.Discount + ", Amount = " + pro.Amount + " WHERE ID =" + pro.ID + ";", con))
+            using (SqlConnection con = new SqlConnection(cs))
             {
-                x = cmd.ExecuteNonQuery();
-                if (x != 0)
+                con.Open();
+            SqlCommand check = new SqlCommand("select ID from Category where Name =N'" + pro.Category_ID + "' and ShopEmail = '" + ShopEmail + "'", con);
+            SqlDataReader reader = check.ExecuteReader();
+            if (reader.Read())
+            {
+                using (SqlCommand cmd = new SqlCommand("UPDATE Product SET Name =N'" + pro.Name + "', Price =" + pro.Price + ", Image = '" + pro.Image + "', Description = N'" + pro.Description + "', Discount = " + pro.Discount + ", Amount = " + pro.Amount + ",Category_ID	='" + reader["ID"].ToString() + "' WHERE ID =" + pro.ID + ";", con))
                 {
-                    if(pro.Discount !=0)
+                    reader.Close();
+                    x = cmd.ExecuteNonQuery();
+                    if (x != 0)
                     {
-                        double i = pro.Price * pro.Discount / 100;
-                        i = pro.Price - i;
-                        pro.PriceAfterDiscount = i;
+                        if (pro.Discount != 0)
+                        {
+                            double i = pro.Price * pro.Discount / 100;
+                            i = pro.Price - i;
+                            pro.PriceAfterDiscount = i;
+                        }
                     }
                 }
             }
