@@ -454,7 +454,7 @@ var app = angular.module("BS", ["ngRoute"])
     .controller("ProductsController", function ($scope, $http) {
         $scope.tabHeader = "Products";
         //to retrieve all categories
-        $scope.getCat = function () {
+        $scope.getCat = function (newCategury) {
             $http({
                 url: "Products.asmx/GetAllCategories",
                 method: "get"
@@ -497,14 +497,6 @@ var app = angular.module("BS", ["ngRoute"])
 
         //list all products for specific category
         $scope.selectedCategoryChanged = function () {
-            /*$scope.products = [
-                { image: 'pic.png', name: 'banana', description: 'jsbd', price: 50, amount: true, discount: 0, edit: false },
-                { image: 'pic.png', name: 'lamia', description: 'mjghb', price: 60, amount: false, discount: 0, edit: false },
-                { image: 'pic.png', name: 'nada', description: 'mjbhjm', price: 70, amount: false, discount: 0, edit: false },
-                { image: 'pic.png', name: 'buthainah', description: 'mjhk', price: 80, amount: true, discount: 0, edit: false },
-                { image: 'pic.png', name: 'khalid', description: ',ihgjc', price: 90, amount: false, discount: 0, edit: false }
-            ];*/
-            
             $http({
                 url: "Products.asmx/GetAllProducts",
                 method: "get",
@@ -526,7 +518,7 @@ var app = angular.module("BS", ["ngRoute"])
             Product1.price = product.Price;
             Product1.amount = product.Amount;
             Product1.discount = product.Discount;
-            Product1.Category_ID = product.Category_ID;
+            Product1.Category_ID = $scope.selectedCategory;
             Product1.Store_ID = product.Store_ID;
             $http({
                 url: "Products.asmx/EditProduct",
@@ -537,11 +529,11 @@ var app = angular.module("BS", ["ngRoute"])
             }).then(function (response) {
                 $scope.result = response.data;
                 $scope.products[index] = product;
-                product.edit = false;
+                $scope.edit = false;
             }, function (error) {
                 /////////////////////
                 $scope.products[index] = product;
-                product.edit = false;
+                $scope.edit = false;
                 $scope.selectedCategoryChanged();
                 /////////////////////
             });
