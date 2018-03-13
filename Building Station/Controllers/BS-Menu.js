@@ -468,15 +468,12 @@ var app = angular.module("BS", ["ngRoute"])
             })
                 .then(function (response) {
                     $scope.categories = response.data;
-<<<<<<< HEAD
                     if (newCategury == null)
                     { $scope.selectedCategory = $scope.categories[0]; }
                     else { $scope.selectedCategory = newCategury; }
-=======
                     if (newCategury === null || newCategury === undefined)
                         $scope.selectedCategory = $scope.categories[0];
                     else $scope.selectedCategory = newCategury;
->>>>>>> 99b8842093278dce41f50f5bd7bdc789e1c872b6
                     $scope.selectedCategoryChanged();
                 });
         };

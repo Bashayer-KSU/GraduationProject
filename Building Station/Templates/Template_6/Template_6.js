@@ -8,6 +8,8 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http) {
             $scope.Store = response.data;
             console.log($scope.Store);//Store Info
 
+            document.title = $scope.Store.Name;
+            document.getElementById("icon").href = $scope.Store.Logo;
             //Payment Methods
             if ($scope.Store.BankTransfer) {
                 if ($scope.Store.BankAccount.includes("No"))
