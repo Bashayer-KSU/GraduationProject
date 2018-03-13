@@ -157,7 +157,7 @@
             <!--to display categories-->
             <div  ng-init="getCat()" style="display:inline-block; margin-top:15px;">
                 <h style="font-size:20px;">الفئة:</h>
-                <select ng-show="!edit" class=" styled-select black rounded" 
+                <select class=" styled-select black rounded" 
                         ng-model="selectedCategory"
                         ng-init="selectedCategory = categories[0]"
                         ng-options="option for option in categories"
@@ -189,42 +189,43 @@
                         <th>صورة المنتج</th>
                     </tr>
                 </thead>
-                <tbody ng-init="selectedCategoryChanged()">
+                <tbody>
                     <tr data-ng-repeat="product in products" class="hover">
                         <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
                         <td ng-hide="true">{{product.ID}}</td>
                         <td><button class="remove" ng-click="removeproduct(product, product.ID)" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button></td>
                         <td>
-                            <button ng-show="!edit" ng-click="edit = !edit" style="background-color:transparent; border: none;"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;"/></button>
-                            <button ng-show="edit" ng-click="editProduct($index,product)" style="background-color:transparent; border: none;"><img src="/images/success.png" alt="" style="width:25px; height:25px;"/></button>
+                            <button ng-show="!product.edit" ng-click="product.edit = !product.edit" style="background-color:transparent; border: none;"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;"/></button>
+                            <button ng-show="product.edit" ng-click="editProduct($index,product)" style="background-color:transparent; border: none;"><img src="/images/success.png" alt="" style="width:25px; height:25px;"/></button>
                         </td>
-                        <td class="arb" ng-show="!edit"><label>{{product.Discount}}%</label></td>
-                        <td class="arb" ng-show="edit"><input type="number" ng-model="product.Discount" name="" placeholder="Enter product discount" required></td>
+                        <td class="arb" ng-show="!product.edit"><label>{{product.Discount}}%</label></td>
+                        <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Discount" name="" placeholder="Enter product discount" required></td>
                         
-                        <td class="arb" ng-show="!edit"><label>{{product.Amount}}</label></td>
-                        <td class="arb" ng-show="edit"><input type="number" ng-model="product.Amount" name="" placeholder="Enter product amount" required></td>
-                        <td class="arb" ng-show="!edit">
+                        <td class="arb" ng-show="!product.edit"><label>{{product.Amount}}</label></td>
+                        <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Amount" name="" placeholder="Enter product amount" required></td>
+                        <td class="arb" ng-show="!product.edit">
                             <label ng-show="product.Discount == 0">{{product.Price}}</label>
                             <label><del style="color:#ff0000" ng-show="product.Discount != 0">{{product.Price}}</del></label><br />
                             <label ng-show="product.Discount != 0">{{product.PriceAfterDiscount}}</label>
                         </td>
-                        <td class="arb" ng-show="edit"><input type="number" ng-model="product.Price" name="" placeholder="Enter product price" required></td>
-                        <td class="arb" ng-show="!edit"><label>{{product.Description}}</label></td>
-                        <td class="arb" ng-show="edit"><textarea ng-model="product.Description" required>Enter product description</textarea></td>
-                        <td class="arb" ng-show="!edit"><label>{{product.Name}}</label></td>
-                        <td class="arb" ng-show="edit"><input type="text" ng-model="product.Name" name="" placeholder="Enter product name" required></td>
-                        <td ng-show="!edit"><img ng-src="{{product.Image}}" alt="image" width="80" height="80" /></td>
-                        <td class="arb" ng-show="edit">
+                        <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Price" name="" placeholder="Enter product price" required></td>
+                        <td class="arb" ng-show="!product.edit"><label>{{product.Description}}</label></td>
+                        <td class="arb" ng-show="product.edit"><textarea ng-model="product.Description" required>Enter product description</textarea></td>
+                        <td class="arb" ng-show="!product.edit"><label>{{product.Name}}</label></td>
+                        <td class="arb" ng-show="product.edit"><input type="text" ng-model="product.Name" name="" placeholder="Enter product name" required></td>
+                        <td ng-show="!product.edit"><img ng-src="{{product.Image}}" alt="image" width="80" height="80" /></td>
+                        <td class="arb" ng-show="product.edit">
                             <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
                             <img style="width:100px; height:100px;" ng-src="{{product.Image}}" />
                         </td>
                     </tr>
 
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td colspan="2">
+                            <button class="addfields waves-effect waves-light btn done" ng-click="addNewProduct(product)" style="float:right;">إضافة المنتج</button>
+                        </td>
+                        
                         <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
-                        <td ng-hide="true">{{product.ID = 1}}</td>
                         <td><input class="ar" type="number" ng-model="product.Discount" name="" placeholder="الخصم" required></td>
                         <td><input class="ar"  type="number" ng-model="product.Amount" name="" placeholder="الكمية" required></td>
                         <td><input class="ar" type="number" ng-model="product.Price" name="" placeholder="السعر" required></td>
@@ -241,7 +242,6 @@
             </table>
         </div>
         <!--\list products-->
-        <button class="addfields waves-effect waves-light btn done" ng-click="addNewProduct(product)" style="float:right;">إضافة المنتج</button>
 
     </div>
 

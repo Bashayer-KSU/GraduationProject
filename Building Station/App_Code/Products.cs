@@ -27,12 +27,14 @@ public class Products : System.Web.Services.WebService {
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
+            int i = 0;
             SqlCommand cmd = new SqlCommand("select Name from Category where ShopEmail = '" + ShopEmail + "'", con);
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                while (reader.Read())
+                while (i!=2)
                 {
                     categories.Add(reader["Name"].ToString());
+                    i++;
                 }
             }
         }
@@ -101,6 +103,7 @@ public class Products : System.Web.Services.WebService {
                             i = pro.Price - i;
                             pro.PriceAfterDiscount = i;
                         }
+                        else { pro.PriceAfterDiscount = 0; }
                         ProductsList.Add(pro);
                     }
                 }
@@ -111,7 +114,7 @@ public class Products : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public void AddNewProduct(Product pro)
+    public Product AddNewProduct(Product pro)
     {
         Product product = new Product();
         Random R = new Random();
@@ -120,14 +123,15 @@ public class Products : System.Web.Services.WebService {
             con.Open();
             SqlCommand check = new SqlCommand("select ID from Category where Name =N'" + pro.Category_ID + "' and ShopEmail = '" + ShopEmail + "'", con);
             SqlDataReader reader = check.ExecuteReader();
+            int categoryID = Convert.ToInt32(reader["ID"]);
             if (reader.Read())
             {
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Category_ID, ShopEmail, Price, Image, Description, Discount, Amount) values(N'" + pro.Name + "', '" + reader["ID"].ToString() + "','" + ShopEmail + "'," + pro.Price + ",'" + pro.Image + "',N'" + pro.Description + "'," + pro.Discount + "," + pro.Amount + ")", con))
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Category_ID, ShopEmail, Price, Image, Description, Discount, Amount) values(N'" + pro.Name + "', " + categoryID + ",'" + ShopEmail + "'," + pro.Price + ",'" + pro.Image + "',N'" + pro.Description + "'," + pro.Discount + "," + pro.Amount + ")", con))
                 {
                     reader.Close();
                     int rows = cmd.ExecuteNonQuery();
 
-                    using (SqlCommand cmd2 = new SqlCommand("SELECT ID FROM Product WHERE Name=N'" + pro.Name + "AND Category_ID=" + reader["ID"].ToString() + "AND ShopEmail=" + ShopEmail, con))
+                    using (SqlCommand cmd2 = new SqlCommand("SELECT ID FROM Product WHERE Name=N'" + pro.Name + "AND Category_ID=" + categoryID + "AND ShopEmail=" + ShopEmail, con))
                     {
                         SqlDataReader id = cmd2.ExecuteReader();
                         product.ID = Convert.ToInt32(id["ID"]);
@@ -145,12 +149,12 @@ public class Products : System.Web.Services.WebService {
                             i = product.Price - i;
                             product.PriceAfterDiscount = i;
                         }
+                        else { pro.PriceAfterDiscount = 0; }
                     }
                 }
             }
         }
-        JavaScriptSerializer js = new JavaScriptSerializer();
-        Context.Response.Write(js.Serialize(product));
+        return product;
     }
 
     [WebMethod]
@@ -172,9 +176,10 @@ public class Products : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public void EditProduct(Product pro)
+    public Product EditProduct(Product pro)
     {
         int x;
+        Product product = new Product();
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
@@ -182,24 +187,34 @@ public class Products : System.Web.Services.WebService {
             SqlDataReader reader = check.ExecuteReader();
             if (reader.Read())
             {
-                using (SqlCommand cmd = new SqlCommand("UPDATE Product SET Name =N'" + pro.Name + "', Price =" + pro.Price + ", Image = '" + pro.Image + "', Description = N'" + pro.Description + "', Discount = " + pro.Discount + ", Amount = " + pro.Amount + ",Category_ID	='" + reader["ID"].ToString() + "' WHERE ID =" + pro.ID + ";", con))
+                using (SqlCommand cmd = new SqlCommand("UPDATE Product SET Name =N'" + pro.Name + "', Price =" + pro.Price + ", Image = '" + pro.Image + "', Description = N'" + pro.Description + "', Discount = " + pro.Discount + ", Amount = " + pro.Amount + ",Category_ID	='" + reader["ID"].ToString() + "' WHERE ID =" + pro.ID , con))
                 {
                     reader.Close();
                     x = cmd.ExecuteNonQuery();
                     if (x != 0)
                     {
+                        product.Name = pro.Name;
+                        product.Description = pro.Description;
+                        product.Price = pro.Price;
+                        product.Amount = pro.Amount;
+                        product.Image = pro.Image;
+                        product.ID = pro.ID;
+                        product.Discount = pro.Discount;
+                        product.Category_ID = pro.Category_ID;
+                        product.StoreEmail = ShopEmail;
+
                         if (pro.Discount != 0)
                         {
-                            double i = pro.Price * pro.Discount / 100;
-                            i = pro.Price - i;
-                            pro.PriceAfterDiscount = i;
+                            double k = pro.Price * pro.Discount / 100;
+                            k = pro.Price - k;
+                            product.PriceAfterDiscount = k;
                         }
+                        else { product.PriceAfterDiscount = 0; }
                     }
                 }
             }
         }
-        JavaScriptSerializer js = new JavaScriptSerializer();
-        Context.Response.Write(js.Serialize(pro));
+        return product;
     }
 
 }
