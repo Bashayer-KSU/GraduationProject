@@ -468,15 +468,9 @@ var app = angular.module("BS", ["ngRoute"])
             })
                 .then(function (response) {
                     $scope.categories = response.data;
-<<<<<<< HEAD
                     if (newCategury == null)
                     { $scope.selectedCategory = $scope.categories[0]; }
                     else { $scope.selectedCategory = newCategury; }
-=======
-                    if (newCategury === null || newCategury === undefined)
-                        $scope.selectedCategory = $scope.categories[0];
-                    else $scope.selectedCategory = newCategury;
->>>>>>> 99b8842093278dce41f50f5bd7bdc789e1c872b6
                     $scope.selectedCategoryChanged();
                 });
         };
@@ -522,14 +516,14 @@ var app = angular.module("BS", ["ngRoute"])
         //\list all products for specific category
 
         // apply edit the product
-        $scope.editProduct = function (index, product) {
+        $scope.editProduct = function (index, product, ID, Image, Name, Description, Price, PriceAfterDiscount, Amount,Discount) {
             
             $http({
                 url: "Products.asmx/EditProduct",
                 headers: { "Content-Type": "application/json;charset=utf-8" },
                 dataType: 'json',
                 method: 'post',
-                data: JSON.stringify({ pro: product})
+                data: JSON.stringify({ id: ID, cat: $scope.selectedCategory, image:Image, name:Name, des:Description, price:Price, PAD:PriceAfterDiscount, amount:Amount, discount: Discount })
             }).then(function (response) {
                 $scope.editP = response.data;
                 $scope.products[index] = product;
@@ -545,7 +539,7 @@ var app = angular.module("BS", ["ngRoute"])
         //\apply edit the product
 
         //to add new row
-        $scope.addNewProduct = function (product) {
+        $scope.addNewProduct = function (product, Image, Name, Description, Price, Amount, Discount) {
             var Product1 = new Object();
             Product1.image = product.Image;
             Product1.name = product.Name;
@@ -560,7 +554,7 @@ var app = angular.module("BS", ["ngRoute"])
                 headers: { "Content-Type": "application/json;charset=utf-8" },
                 dataType: 'json',
                 method: 'POST',
-                data: JSON.stringify({ pro: Product1 })
+                data: JSON.stringify({ cat: $scope.selectedCategory, image: Image, name: Name, des: Description, price: Price, amount: Amount, discount: Discount })
             }).then(function (response) {
                 $scope.addProduct = response.data;
                 $scope.products.push({ 'image': addProduct.Image, 'name': addProduct.Name, 'description': addProduct.Description, 'price': addProduct.Price, 'amount': addProduct.Amount, 'discount': addProduct.Discount });
