@@ -1,47 +1,30 @@
 ﻿var myApp = angular.module("T6", []);
 
 var T6 = myApp.controller("T6Ctrl", function ($scope, $http) {
-    $scope.resultset = [];
+    $scope.Store = [];
     var init = function () {
 
         $http.post('/TemplateData.asmx/StoreData').then(function (response) {
-            $scope.resultset = response.data;
-            console.log($scope.resultset);
-            //Store Info
-            $scope.logo = $scope.resultset.Logo;
-            $scope.StoreName = $scope.resultset.Name;
-            $scope.desc = $scope.resultset.Description;
-            $scope.address = $scope.resultset.Address;
-            $scope.Phone = $scope.resultset.Phone;
-            $scope.Email = $scope.resultset.Email;
-            //Store Colors
-            $scope.color1 = $scope.resultset.Color1;//Header
-            $scope.color2 = $scope.resultset.Color2;//Content
-            $scope.color3 = $scope.resultset.Color3;//Footer
-            $scope.color4 = $scope.resultset.Color4;//Text color
+            $scope.Store = response.data;
+            console.log($scope.Store);//Store Info
 
-            //Slider Images
-            $scope.SliderImage = $scope.resultset.SliderImage;
-
+            document.title = $scope.Store.Name;
+            document.getElementById("icon").href = $scope.Store.Logo;
             //Payment Methods
-            $scope.paypal = $scope.resultset.PayPal;
-            $scope.bankTransfer = $scope.resultset.BankTransfer;
-            $scope.bankAccount = $scope.resultset.BankAccount;
-            $scope.cash = $scope.resultset.Cash;
+            if ($scope.Store.BankTransfer) {
+                if ($scope.Store.BankAccount.includes("No"))
+                    $scope.Store.BankTransfer = false;
+                }
 
             //Social Media Link
-            $scope.Facebook = $scope.resultset.FacebookLink.toLowerCase().includes("facebook");
-            $scope.FacebookLink = $scope.resultset.FacebookLink;
-            $scope.Instagram = $scope.resultset.InstagramLink.toLowerCase().includes("instagram");
-            $scope.InstagramLink = $scope.resultset.InstagramLink;
-            $scope.Snapchat = $scope.resultset.SnapchatLink.toLowerCase().includes("snapchat");
-            $scope.SnapchatLink = $scope.resultset.SnapchatLink;
-            $scope.Twitter = $scope.resultset.TwitterLink.toLowerCase().includes("twitter");
-            $scope.TwitterLink = $scope.resultset.TwitterLink;
+            $scope.Facebook = $scope.Store.FacebookLink.toLowerCase().includes("https://www.facebook.com/");
+            $scope.Instagram = $scope.Store.InstagramLink.toLowerCase().includes("https://www.instagram.com/");
+            $scope.Snapchat = $scope.Store.SnapchatLink.toLowerCase().includes("snapchat");
+            $scope.Twitter = $scope.Store.TwitterLink.toLowerCase().includes("https://twitter.com/");
 
 
             //Menu
-            $scope.MenuTitle = $scope.resultset.MenuTitle;
+            $scope.MenuTitle = $scope.Store.MenuTitle;
         }, function (error) {
             $scope.error = error;
         });

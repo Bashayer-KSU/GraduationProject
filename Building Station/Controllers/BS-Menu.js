@@ -471,6 +471,12 @@ var app = angular.module("BS", ["ngRoute"])
                     if (newCategury == null)
                     { $scope.selectedCategory = $scope.categories[0]; }
                     else { $scope.selectedCategory = newCategury; }
+<<<<<<< HEAD
+=======
+                    if (newCategury === null || newCategury === undefined)
+                        $scope.selectedCategory = $scope.categories[0];
+                    else $scope.selectedCategory = newCategury;
+>>>>>>> 305775e0f8b12cba36a86b48eabc260c57d93f15
                     $scope.selectedCategoryChanged();
                 });
         };
