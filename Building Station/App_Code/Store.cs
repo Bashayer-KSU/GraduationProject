@@ -30,7 +30,7 @@ public class Store
     public string InstagramLink { get; set; }
     public int TemplateID { get; set; }
     public bool PayPal { get; set; }
-    public bool Cach { get; set; }
+    public bool Cash { get; set; }
     public bool BankTransfer { get; set; }
     public string BankAccount { get; set; }
     public string menuTitle { get; set; }
