@@ -17,8 +17,8 @@ using System.Text;
 public class CreationStage : System.Web.Services.WebService
 {
 
-   //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-   string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
+  string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+ //  string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
 
     public Store store = new Store();
 
@@ -425,7 +425,7 @@ public class CreationStage : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT ID FROM Category WHERE ShopEmail = '"+ Session["user"] + "' AND Name = 'Category example')", con);
+                SqlCommand cmd = new SqlCommand("SELECT ID FROM Category WHERE ShopEmail = '"+ Session["user"] + "' AND Name = 'Category example'", con);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {

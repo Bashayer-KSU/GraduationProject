@@ -1,4 +1,4 @@
-﻿<h2>{{tabHeader}}</h2> 
+﻿<h2 style="margin-left:2vw;">{{tabHeader}}</h2> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -8,9 +8,10 @@
         <div class="col-sm-4 col-md-4">
             <br />
             <div class="row">
-                <div refreshable="tab.myColors" class="input-group">
+                <div class="input-group">
 
-                    <input type="color" class="rounded" ng-model="color1" style="
+                    <input type="color" class="rounded" ng-model="color1" ng-change="UpdateColors()" style="
+  margin-left:2vw;
   margin-right:1vw;
   padding: 0;
   border: none;
@@ -18,7 +19,7 @@
   width: 4vw;
   height: 4vw;
   background-color:transparent;">
-                    <input type="color" class="rounded" ng-model="color2" style="
+                    <input type="color" class="rounded" ng-model="color2" ng-change="UpdateColors()" style="
       margin-right:1vw;
       padding: 0;
       border: none;
@@ -26,7 +27,7 @@
       width: 4vw;
       height: 4vw;
       background-color:transparent;">
-                    <input type="color" class="rounded" ng-model="color3" style="
+                    <input type="color" class="rounded" ng-model="color3" ng-change="UpdateColors()" style="
     margin-right:1vw;
     padding: 0;
     border: none;
@@ -34,7 +35,7 @@
     width: 4vw;
     height: 4vw;
     background-color:transparent;">
-                    <input type="color" class="rounded" ng-model="color4" style="
+                    <input type="color" class="rounded" ng-model="color4" ng-change="UpdateColors()" style="
     margin-right:1vw;
     padding: 0;
     border: none;
@@ -42,28 +43,27 @@
     width: 4vw;
     height: 4vw;
     background-color:transparent;">
-                    <span class="input-group-btn">
+                    <!--<span class="input-group-btn">
                         <button class="btn btn-default" ng-click="UpdateColors()" type="submit">Update</button>
                     </span>
+                 <div ng-if="refreshMyColors"
+                         ng-init="refreshColors()"></div>-->
                 </div>
             </div> <br />
             <div class="row">
                 <h4>change Logo</h4>
                 <div class="input-group">
-                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc">
+                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc" style="width:100%;"/> <!-- custom-on-change="uploadFile($event)"-->
                     <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="UpdateLogo()" type="submit">Update</button>
+                        <button class="btn btn-default" ng-click="getColors(); UpdateLogo()" type="submit">Update</button>
                     </span>
-                    <div ng-if="imageSrc"
-                         ng-init="getColors()">
-                    </div>
                 </div>
             </div>
             <br />
             <div class="row">
                 <h4>change cover image</h4>
                 <div class="input-group">
-                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_slider">
+                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_slider"  style="width:100%;" />
                     <span class="input-group-btn">
                         <button class="btn btn-default" ng-click="UpdateSlider()" type="submit">Update</button>
                     </span>
@@ -178,9 +178,9 @@
         <button ng-click="refreshIframe()">Click here</button>
     </div>-->
         </div>
-            <div class="col-sm-8 col-md-8">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <iframe refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
+            <div style="padding-left:5px;">
+                <div class="embed-responsive embed-responsive-4by3" style="overflow: hidden; height: 800px; padding-left:3vw;">
+                    <iframe style="padding-left:5px;" refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
                     <!--style="overflow: hidden; height: 200%; width: 100%;"-->
                 </div>
             </div>

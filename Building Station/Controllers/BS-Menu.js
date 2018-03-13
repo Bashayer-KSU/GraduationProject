@@ -174,6 +174,22 @@ var app = angular.module("BS", ["ngRoute"])
             $scope.tab.refresh = true;
         };
 
+        var myservice = {};
+        myservice.refresh = function () {
+            $http.get('/CreationStage.asmx/GetColors').then(function (response) {
+
+                $scope.refreshed = response.data;
+                $scope.color1 = $scope.refreshed.Color1;
+                $scope.color2 = $scope.refreshed.Color2;
+                $scope.color3 = $scope.refreshed.Color3;
+                $scope.color4 = $scope.refreshed.Color4;
+            });
+        };
+
+     /*  $scope.refreshMyColors = false;
+        $scope.refreshColors = function () {
+            myservice.refresh();
+        };*/
         var mySnapchat;
         var myTwitter;
         var myFacebook;
@@ -351,11 +367,15 @@ var app = angular.module("BS", ["ngRoute"])
                 headers: { "Content-Type": "application/json; charset=utf-8" }
             })
                 .then(function (response) {
-                    $scope.Colors = response.data;
+                  /*  $scope.Colors = response.data;
+                    $scope.color1 = $scope.Colors.Color1;
+                    $scope.color2 = $scope.Colors.Color2;
+                    $scope.color3 = $scope.Colors.Color3;
+                    $scope.color4 = $scope.Colors.Color4;*/
+                   // $scope.refreshMyColors = true;
                 }, function (error) {
                     $scope.R = error.data;
                 });
-        //    $scope.refreshIframe();            
         };
 
         $scope.UpdateLogo = function () {
@@ -368,8 +388,10 @@ var app = angular.module("BS", ["ngRoute"])
             })
                 .then(function (response) { }, function (error) { });
 
-            $scope.refreshIframe();
-            $scope.tab.myColors = true;
+        //    $scope.refreshIframe();
+          //  $scope.tab.myColors = true;
+            $scope.refreshIframe();            
+            myservice.refresh();
         };
 
         $scope.UpdateSlider = function () {
@@ -446,9 +468,15 @@ var app = angular.module("BS", ["ngRoute"])
             })
                 .then(function (response) {
                     $scope.categories = response.data;
+<<<<<<< HEAD
                     if (newCategury == null)
                     { $scope.selectedCategory = $scope.categories[0]; }
                     else { $scope.selectedCategory = newCategury; }
+=======
+                    if (newCategury === null || newCategury === undefined)
+                        $scope.selectedCategory = $scope.categories[0];
+                    else $scope.selectedCategory = newCategury;
+>>>>>>> 99b8842093278dce41f50f5bd7bdc789e1c872b6
                     $scope.selectedCategoryChanged();
                 });
         };
@@ -695,3 +723,13 @@ app.directive('refreshable', [function () {
         }
     };
 }]);
+
+app.directive('customOnChange', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var onChangeFunc = scope.$eval(attrs.customOnChange);
+            element.bind('change', onChangeFunc);
+        }
+    };
+});

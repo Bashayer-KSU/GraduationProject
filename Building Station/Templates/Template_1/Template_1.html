@@ -22,7 +22,7 @@
 
 </head>
 <body ng-style="{'color':Store.Color1}" class="homepage">
-    <div id="page-wrapper">
+    <div id="page-wrapper"  ng-style="{'background': Store.Color4}">
 
         <!-- Header -->
         <section class="box" style=" padding:0px 0px 0px 0px; margin:0px 0px 0px 0px;">
@@ -45,7 +45,7 @@
         </section>
         <!-- store welcom -->
         <section  ng-style="{'background': Store.Color2}" style="padding-top:0%; padding-bottom: 0%; " id="banner">
-            <header>
+            <header ng-style="{'background': Store.Color2}">
                 <h2>{{Store.Description}}</h2>
                 <p>{{Store.Address}}</p>
             </header>
@@ -66,15 +66,27 @@
                                 <h2>المنتجات</h2>
                             </header>
                             <div class="row">
-                                <div style="float:right;" class="4u 12u(mobile)">
-                                    <section  ng-style="{'background': Store.Color4}" class="box">
+                                <div style="float:left; width:30%;" class="4u 12u(mobile)">
+                                    <section ng-style="{'background': Store.Color4}" class="box">
                                         <a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="product" /></a>
                                         <header>
                                             <h3>{{Product.Name}}</h3>
                                         </header>
                                         <p>{{Product.Description}}</p>
                                         <footer>
-                                            <a  class="button alt" data-toggle="modal" data-target="#myModal">اضف للعربة</a>
+                                            <a class="button alt" data-toggle="modal" data-target="#myModal">اضف للعربة</a>
+                                        </footer>
+                                    </section>
+                                </div>
+                                <div style="float:left; width:30%;" class="4u 12u(mobile)">
+                                    <section ng-style="{'background': Store.Color4}" class="box">
+                                        <a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="product" /></a>
+                                        <header>
+                                            <h3>{{Product.Name}}</h3>
+                                        </header>
+                                        <p>{{Product.Description}}</p>
+                                        <footer>
+                                            <a class="button alt" data-toggle="modal" data-target="#myModal">اضف للعربة</a>
                                         </footer>
                                     </section>
                                 </div>
@@ -83,7 +95,7 @@
                     </div>
 
                     <!-- Sidebar -->
-                    <div class="3u 12u(mobile)">
+                    <div style=" float:right; width:20%;" class="3u 12u(mobile)">
 
                         <section class="box">
                             <header>
@@ -134,7 +146,7 @@
     <!-- Footer -->
     <div style="background-color:#0d1626;" class="row">
         <div class="12u">
-            <div id="footer-wrapper">
+            <div id="footer-wrapper" ng-style="{'background': Store.Color1}">
                 <section id="footer" class="container">
                     <div class="row">
                         <div class="4u 12u(mobile)">
