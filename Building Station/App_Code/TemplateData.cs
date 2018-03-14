@@ -17,8 +17,8 @@ using System.Data.SqlClient;
 public class TemplateData : System.Web.Services.WebService
 {
 
-    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    //string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
+    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
     JavaScriptSerializer js = new JavaScriptSerializer();
 
 
@@ -36,7 +36,7 @@ public class TemplateData : System.Web.Services.WebService
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, SliderImage, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink FROM Store Where Email = '" + Session["user"]+"'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, SliderImage, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink, PayPal, BankTransfer, Cash, ShopOwnerBank FROM Store Where Email = '" + Session["user"]+"'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -57,6 +57,11 @@ public class TemplateData : System.Web.Services.WebService
                 store.TwitterLink = reader["TwitterLink"].ToString();
                 store.FacebookLink = reader["FacebookLink"].ToString();
                 store.InstagramLink = reader["InstagramLink"].ToString();
+                store.PayPal = Convert.ToBoolean(reader["PayPal"]);
+                store.BankTransfer = Convert.ToBoolean(reader["BankTransfer"]);
+                store.Cash = Convert.ToBoolean(reader["Cash"]);
+                store.BankAccount = reader["ShopOwnerBank"].ToString();
+
             }
         }
         Context.Response.Write(js.Serialize(store));

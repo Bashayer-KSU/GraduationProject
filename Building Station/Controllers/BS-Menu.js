@@ -468,9 +468,9 @@ var app = angular.module("BS", ["ngRoute"])
             })
                 .then(function (response) {
                     $scope.categories = response.data;
-                    if (newCategury === null || newCategury === undefined)
-                        $scope.selectedCategory = $scope.categories[0];
-                    else $scope.selectedCategory = newCategury;
+                    if (newCategury == null)
+                    { $scope.selectedCategory = $scope.categories[0]; }
+                    else { $scope.selectedCategory = newCategury; }
                     $scope.selectedCategoryChanged();
                 });
         };
@@ -481,7 +481,7 @@ var app = angular.module("BS", ["ngRoute"])
             $http({
                 url: "Products.asmx/AddNewCategory",
                 method: "get",
-                params: { cat: newCategury/*, ShopEmail: 'lamia@gmail.com'*/ }
+                params: { cat: newCategury }
             })
                 .then(function (response) {
                     $scope.result = response.data;
@@ -516,39 +516,30 @@ var app = angular.module("BS", ["ngRoute"])
         //\list all products for specific category
 
         // apply edit the product
-        $scope.editProduct = function (index, product) {
-            var Product1 = new Object();
-            Product1.ID = product.ID;
-            Product1.image = product.Image;
-            Product1.name = product.Name;
-            Product1.description = product.Description;
-            Product1.price = product.Price;
-            Product1.amount = product.Amount;
-            Product1.discount = product.Discount;
-            Product1.Category_ID = $scope.selectedCategory;
-            Product1.Store_ID = product.Store_ID;
+        $scope.editProduct = function (index, product, ID, Image, Name, Description, Price, PriceAfterDiscount, Amount,Discount) {
+            
             $http({
                 url: "Products.asmx/EditProduct",
+                headers: { "Content-Type": "application/json;charset=utf-8" },
                 dataType: 'json',
-                method: 'POST',
-                data: { pro: Product1 },
-                headers: { "Content-Type": "application/json; charset=utf-8" }
+                method: 'post',
+                data: JSON.stringify({ id: ID, cat: $scope.selectedCategory, image:Image, name:Name, des:Description, price:Price, PAD:PriceAfterDiscount, amount:Amount, discount: Discount })
             }).then(function (response) {
-                $scope.result = response.data;
+                $scope.editP = response.data;
                 $scope.products[index] = product;
-                $scope.edit = false;
-            }, function (error) {
+                product.edit = false;
+                //$scope.selectedCategoryChanged();
+                }, function (error) {
                 /////////////////////
-                $scope.products[index] = product;
-                $scope.edit = false;
-                $scope.selectedCategoryChanged();
+                alert(error);
+                $scope.R = error;
                 /////////////////////
             });
         };
         //\apply edit the product
 
         //to add new row
-        $scope.addNewProduct = function (product) {
+        $scope.addNewProduct = function (product, Image, Name, Description, Price, Amount, Discount) {
             var Product1 = new Object();
             Product1.image = product.Image;
             Product1.name = product.Name;
@@ -557,14 +548,13 @@ var app = angular.module("BS", ["ngRoute"])
             Product1.amount = product.Amount;
             Product1.discount = product.Discount;
             Product1.Category_ID = product.Category_ID;
+            $scope.Product1 = { Image: product.Image };
             $http({
                 url: "Products.asmx/AddNewProduct",
+                headers: { "Content-Type": "application/json;charset=utf-8" },
                 dataType: 'json',
                 method: 'POST',
-                data: { pro: Product1 },
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8"
-                }
+                data: JSON.stringify({ cat: $scope.selectedCategory, image: Image, name: Name, des: Description, price: Price, amount: Amount, discount: Discount })
             }).then(function (response) {
                 $scope.addProduct = response.data;
                 $scope.products.push({ 'image': addProduct.Image, 'name': addProduct.Name, 'description': addProduct.Description, 'price': addProduct.Price, 'amount': addProduct.Amount, 'discount': addProduct.Discount });
@@ -577,8 +567,6 @@ var app = angular.module("BS", ["ngRoute"])
                 alert("success add");
                 }, function (error) {
                     alert("failed add");
-
-                ///////////////////////////
                 product.Image = '';
                 product.Name = '';
                 product.Description = '';
@@ -586,6 +574,7 @@ var app = angular.module("BS", ["ngRoute"])
                 product.Amount = '';
                 product.Discount = '';
                 $scope.selectedCategoryChanged();
+                alert("failed add");
                 //////////////////////////
             });
         };

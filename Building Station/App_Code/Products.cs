@@ -15,9 +15,10 @@ using System.Web.Services;
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
 [System.Web.Script.Services.ScriptService]
 public class Products : System.Web.Services.WebService {
-    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    //string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
-    string ShopEmail = "bs@mail.com";
+    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
+    string ShopEmail = "lamia@gmail.com";
+      //  string ShopEmail = "bs@mail.com";
 
     [WebMethod]
     public void GetAllCategories(/*string ShopEmail*/)
@@ -55,7 +56,6 @@ public class Products : System.Web.Services.WebService {
             if (!reader.Read())
             {
                 reader.Close();
-                //Random R = new Random();
                 using (SqlCommand cmd = new SqlCommand("insert into Category (ShopEmail, Name, OrderInMenu) values " + "('" + ShopEmail + "',N'" + cat + "','0')", con))
                 {
                     x = cmd.ExecuteNonQuery();
@@ -101,6 +101,7 @@ public class Products : System.Web.Services.WebService {
                             i = pro.Price - i;
                             pro.PriceAfterDiscount = i;
                         }
+                        else { pro.PriceAfterDiscount = 0; }
                         ProductsList.Add(pro);
                     }
                 }
@@ -111,7 +112,7 @@ public class Products : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public void AddNewProduct(Product pro)
+    public void Old_AddNewProduct(Product pro)
     {
         Product product = new Product();
         Random R = new Random();
@@ -156,6 +157,7 @@ public class Products : System.Web.Services.WebService {
         Context.Response.Write(js.Serialize(product));
     }
 
+    
     [WebMethod]
     public void RemoveProduct(int product_ID)
     {
@@ -175,34 +177,45 @@ public class Products : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public void EditProduct(Product pro)
+    public Product EditProduct(int id, string cat, string image, string name, string des, double price, double PAD, int amount, int discount)
     {
         int x;
+        Product product = new Product();
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-            SqlCommand check = new SqlCommand("select ID from Category where Name =N'" + pro.Category_ID + "' and ShopEmail = '" + ShopEmail + "'", con);
+            SqlCommand check = new SqlCommand("select ID from Category where Name =N'" + cat + "' and ShopEmail = '" + ShopEmail + "'", con);
             SqlDataReader reader = check.ExecuteReader();
             if (reader.Read())
             {
-                using (SqlCommand cmd = new SqlCommand("UPDATE Product SET Name =N'" + pro.Name + "', Price =" + pro.Price + ", Image = '" + pro.Image + "', Description = N'" + pro.Description + "', Discount = " + pro.Discount + ", Amount = " + pro.Amount + ",Category_ID	='" + reader["ID"].ToString() + "' WHERE ID =" + pro.ID + ";", con))
+                using (SqlCommand cmd = new SqlCommand("UPDATE Product SET Name =N'" + name + "', Price =" + price + ", Image = '" + image + "', Description = N'" + des + "', Discount = " + discount + ", Amount = " + amount + ",Category_ID	='" + reader["ID"].ToString() + "' WHERE ID =" + id , con))
                 {
                     reader.Close();
                     x = cmd.ExecuteNonQuery();
                     if (x != 0)
                     {
-                        if (pro.Discount != 0)
+                        product.Name = name;
+                        product.Description = des;
+                        product.Price = price;
+                        product.Amount = amount;
+                        product.Image =image;
+                        product.ID = id;
+                        product.Discount = discount;
+                        product.Category_ID = cat;
+                        product.StoreEmail = ShopEmail;
+
+                        if (discount != 0)
                         {
-                            double i = pro.Price * pro.Discount / 100;
-                            i = pro.Price - i;
-                            pro.PriceAfterDiscount = i;
+                            double k = price * discount / 100;
+                            k = price - k;
+                            product.PriceAfterDiscount = k;
                         }
+                        else { product.PriceAfterDiscount = 0; }
                     }
                 }
             }
         }
-        JavaScriptSerializer js = new JavaScriptSerializer();
-        Context.Response.Write(js.Serialize(pro));
+        return product;
     }
 
 }
