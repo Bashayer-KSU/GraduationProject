@@ -451,7 +451,7 @@ public class CreationStage : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT ID FROM Category WHERE ShopEmail = '" + Session["user"] + "' AND Name = 'N'" + "تصنيف مؤقت" + "')", con);
+                SqlCommand cmd = new SqlCommand("SELECT ID FROM Category WHERE ShopEmail = '" + Session["user"] + "' AND Name = N'" + "تصنيف مؤقت" + "'", con);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {

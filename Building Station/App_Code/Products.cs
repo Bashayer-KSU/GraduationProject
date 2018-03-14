@@ -17,7 +17,7 @@ using System.Web.Services;
 public class Products : System.Web.Services.WebService {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
-    string ShopEmail = "star7s@msn.com";
+    string ShopEmail = "bs@mail.com";
 
     [WebMethod]
     public void GetAllCategories(/*string ShopEmail*/)
@@ -118,16 +118,19 @@ public class Products : System.Web.Services.WebService {
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand check = new SqlCommand("select ID from Category where Name =N'" + pro.Category_ID + "' and ShopEmail = '" + ShopEmail + "'", con);
+            SqlCommand check = new SqlCommand("SELECT ID FROM Category WHERE ShopEmail = '" + ShopEmail + "' and  Name = N'" + pro.Category_ID + "'", con);
             SqlDataReader reader = check.ExecuteReader();
+           
             if (reader.Read())
             {
+                int id2 = Convert.ToInt32(reader["ID"]);
+
                 using (SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Category_ID, ShopEmail, Price, Image, Description, Discount, Amount) values(N'" + pro.Name + "', '" + reader["ID"].ToString() + "','" + ShopEmail + "'," + pro.Price + ",'" + pro.Image + "',N'" + pro.Description + "'," + pro.Discount + "," + pro.Amount + ")", con))
                 {
                     reader.Close();
                     int rows = cmd.ExecuteNonQuery();
 
-                    using (SqlCommand cmd2 = new SqlCommand("SELECT ID FROM Product WHERE Name=N'" + pro.Name + "AND Category_ID=" + reader["ID"].ToString() + "AND ShopEmail=" + ShopEmail, con))
+                    using (SqlCommand cmd2 = new SqlCommand("SELECT ID FROM Product WHERE Name= N'" + pro.Name + "' AND Category_ID=" + id2+ "AND ShopEmail=" + ShopEmail, con))
                     {
                         SqlDataReader id = cmd2.ExecuteReader();
                         product.ID = Convert.ToInt32(id["ID"]);

@@ -574,7 +574,10 @@ var app = angular.module("BS", ["ngRoute"])
                 product.Price = '';
                 product.Amount = '';
                 product.Discount = '';
-            }, function (error) {
+                alert("success add");
+                }, function (error) {
+                    alert("failed add");
+
                 ///////////////////////////
                 product.Image = '';
                 product.Name = '';
