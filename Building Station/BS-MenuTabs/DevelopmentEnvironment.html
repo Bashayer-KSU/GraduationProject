@@ -1,12 +1,14 @@
-﻿<h2 style="margin-left:2vw;">{{tabHeader}}</h2> 
+﻿<h2 style="margin-left:2vw;">{{tabHeader}}</h2>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-4 col-md-4">
             <br />
+
             <div class="row">
                 <div class="input-group">
 
@@ -44,16 +46,16 @@
     height: 4vw;
     background-color:transparent;">
                     <!--<span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="UpdateColors()" type="submit">Update</button>
-                    </span>
-                 <div ng-if="refreshMyColors"
-                         ng-init="refreshColors()"></div>-->
+                   <button class="btn btn-default" ng-click="UpdateColors()" type="submit">Update</button>
+               </span>
+            <div ng-if="refreshMyColors"
+                    ng-init="refreshColors()"></div>-->
                 </div>
             </div> <br />
             <div class="row">
                 <h4>change Logo</h4>
                 <div class="input-group">
-                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc" style="width:100%;"/> <!-- custom-on-change="uploadFile($event)"-->
+                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc" style="width:100%;" /> <!-- custom-on-change="uploadFile($event)"-->
                     <span class="input-group-btn">
                         <button class="btn btn-default" ng-click="getColors(); UpdateLogo()" type="submit">Update</button>
                     </span>
@@ -63,7 +65,7 @@
             <div class="row">
                 <h4>change cover image</h4>
                 <div class="input-group">
-                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_slider"  style="width:100%;" />
+                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_slider" style="width:100%;" />
                     <span class="input-group-btn">
                         <button class="btn btn-default" ng-click="UpdateSlider()" type="submit">Update</button>
                     </span>
@@ -88,19 +90,6 @@
                     <span class="input-group-btn">
                         <button class="btn btn-default" ng-click="UpdateStoreInfo()" type="submit">Update</button>
                     </span>
-                </div>
-                <!--
-        <div ng-show="selectedTextType.name==='Store Description'" >
-            <textarea style="resize: vertical;" class="form-control" ng-model="ShopOwnerText" rows="3" ></textarea>
-                <button class="btn btn-default" ng-click="UpdateStoreInfo()" type="submit">Update</button>
-
-        </div>-->
-            </div>
-            <br />
-            <div class="row">
-                <div class="input-group">
-                    <button class="btn btn-default" ng-click="" type="submit">Show Footer Section</button>
-                    <button class="btn btn-default" ng-click="" type="submit">Hide Footer Section</button>
                 </div>
             </div>
             <br />
@@ -143,46 +132,48 @@
             </div>
             <br />
             <div class="row">
-                <div class="input-group">
-                    <button class="btn btn-default" ng-click="" type="submit">Show Instagram Icon</button>
-                    <button class="btn btn-default" ng-click="" type="submit">Hide Instagram Icon</button>
+                <div class="col-sm-6">
+                    <md-switch ng-model="section.slider" class="md-primary" ng-change="ShowHideSection('Slider')" aria-label="SliderSection">
+                        Slider  {{section.slider}}
+                    </md-switch>
+                </div>
+                <div class="col-sm-6">
+                    <md-switch ng-model="section.about" class="md-primary" ng-change="ShowHideSection('About')" aria-label="AboutSection">
+                        About {{section.about}}
+                    </md-switch>
                 </div>
             </div>
-            <br />
             <div class="row">
-                <div class="input-group">
-                    <button class="btn btn-default" ng-click="" type="submit">Show Twitter Icon</button>
-                    <button class="btn btn-default" ng-click="" type="submit">Hide Twitter Icon</button>
+                <div class="col-sm-6">
+                    <md-switch ng-model="icon.snapchat" ng-disabled="disableSnapchat" ng-change="ShowHideIcon('Snapchat')" class="md-primary" aria-label="Snapchat">
+                        Snapchat
+                    </md-switch>
+                </div>
+                <div class="col-sm-6">
+                    <md-switch ng-model="icon.facebook" ng-disabled="disableFacebook" class="md-primary" ng-change="ShowHideIcon('Facebook')" aria-label="Facebook">
+                        Facebook
+                    </md-switch>
                 </div>
             </div>
-            <br />
             <div class="row">
-                <div class="input-group">
-                    <button class="btn btn-default" ng-click="" type="submit">Show Snapchat Icon</button>
-                    <button class="btn btn-default" ng-click="" type="submit">Hide Snapchat Icon</button>
+                <div class="col-sm-6">
+                    <md-switch ng-model="icon.twitter" ng-disabled="disableTwitter" ng-change="ShowHideIcon('Twitter')" class="md-primary" aria-label="Twitter">
+                        Twitter
+                    </md-switch>
+                </div>
+                <div class="col-sm-6">
+                    <md-switch ng-model="icon.instagram" ng-disabled="disableInstagram" ng-change="ShowHideIcon('Instagram')" class="md-primary" aria-label="Instagram">
+                        instagram
+                    </md-switch>
                 </div>
             </div>
             <br />
-            <div class="row">
-                <div class="input-group">
-                    <button class="btn btn-default" ng-click="" type="submit">Show Facebook Icon</button>
-                    <button class="btn btn-default" ng-click="" type="submit">Hide Facebook Icon</button>
-                </div>
+        </div>
+        <div style="padding-left:5px;">
+            <div class="embed-responsive embed-responsive-4by3" style="overflow: hidden; height: 800px; padding-left:3vw;">
+                <iframe style="padding-left:5px;" refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
+                <!--style="overflow: hidden; height: 200%; width: 100%;"-->
             </div>
-            <br />
-            <!--
-    <div class="col-md-6">
-        <input type="text" name="Storename" ng-model="Store.name" placeholder="Update Store Name" required>
+        </div>
     </div>
-    <div class="col-md-6">
-        <button ng-click="refreshIframe()">Click here</button>
-    </div>-->
-        </div>
-            <div style="padding-left:5px;">
-                <div class="embed-responsive embed-responsive-4by3" style="overflow: hidden; height: 800px; padding-left:3vw;">
-                    <iframe style="padding-left:5px;" refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
-                    <!--style="overflow: hidden; height: 200%; width: 100%;"-->
-                </div>
-            </div>
-        </div>
 </div>

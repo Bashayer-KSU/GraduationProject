@@ -55,7 +55,7 @@
     </header>
     <main role="main">
         <!------------  carousel ------------>
-        <section id="home">
+        <section ng-show="section.slider" id="home">
             <div id="myCarousel" class="carousel slide" data-ride="carousel" >
                 <ol class="carousel-indicators">
                     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -138,6 +138,7 @@
                 </div>
             </div>
         </div>
+        <div ng-show="!section.slider"><br /><br /><br /></div>
         <div id="content">
             <!------------  Product ------------>
             <div class="container">
@@ -217,12 +218,12 @@
                 <!---- Products ---->
                 <hr class="featurette-divider">
                 <!------------  About ------------>
-                <section id="about">
+                <section ng-show="section.about" id="about">
                     <br>
                     <div class="row featurette">
                         <div class="col-md-7 order-md-2">
                             <h2 class="featurette-heading">About Us </h2>
-                            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+                            <p class="lead">{{Store.Description}}</p>
                         </div>
                         <div class="col-md-5 order-md-1">
                             <img class="featurette-image img-fluid mx-auto" src="/Templates/Template_6/Images/waffle.jpg" alt="Generic placeholder image">
@@ -388,7 +389,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <p><img ng-src="/images/BuildingStationEn.png" style="width: 5vw; height: 5vw;" alt="Store Logo" />&copy; 2018  &middot; <a ng-style="{'color':Store.Color4}"  href="/RegisterLogin.html"> Desined By Building Station</a> </p>
+                    <p><img ng-src="/images/BuildingStationEn.png" style="width: 5vw; height: 5vw;" alt="BuildingStation Logo" />&copy; 2018  &middot; <a ng-style="{'color':Store.Color4}"  href="/RegisterLogin.html"> Desined By Building Station</a> </p>
                 </div>
                 <br /><br />
             </div>

@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module("BS", ["ngRoute"])
+var app = angular.module("BS", ["ngRoute", "ngMaterial"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/ManageStore", {
@@ -48,7 +48,7 @@ var app = angular.module("BS", ["ngRoute"])
             });
         });
     })
-    .controller("ManageStoreController", function ($scope, $http, loginService) {
+    .controller("ManageStoreController", function ($scope, $http) {
         $scope.tabHeader = "Manage Store";
         $scope.templatew = "";
 
@@ -167,7 +167,20 @@ var app = angular.module("BS", ["ngRoute"])
                 });
         };
     })
-    .controller("DevelopmentEnvironmentController", function ($scope, $http, $filter) {
+    .controller("DevelopmentEnvironmentController", function ($scope, $http, $filter, validLinkService) {
+
+        $scope.icon = {
+            snapchat: false,
+            twitter: false,
+            facebook: false,
+            instagram: false
+        };
+        $scope.section = {
+            slider: false,
+            about: false
+        };
+
+
         $scope.tabHeader = "Development Environment";
         $scope.tab = {};
         $scope.refreshIframe = function () {
@@ -186,10 +199,10 @@ var app = angular.module("BS", ["ngRoute"])
             });
         };
 
-     /*  $scope.refreshMyColors = false;
-        $scope.refreshColors = function () {
-            myservice.refresh();
-        };*/
+        /*  $scope.refreshMyColors = false;
+           $scope.refreshColors = function () {
+               myservice.refresh();
+           };*/
         var mySnapchat;
         var myTwitter;
         var myFacebook;
@@ -218,7 +231,7 @@ var app = angular.module("BS", ["ngRoute"])
             }
         },
             function (error) {
-            $scope.error = error.data;
+                $scope.error = error.data;
             });
 
         $scope.resulset = [];
@@ -233,7 +246,7 @@ var app = angular.module("BS", ["ngRoute"])
                 $scope.StoreName = $scope.resultset.Name;
                 $scope.desc = $scope.resultset.Description;
                 //$scope.desc = $filter('newlines')($scope.desc);
-               // $scope.desc = $scope.desc.replace(/\n/g, "<br />");
+                // $scope.desc = $scope.desc.replace(/\n/g, "<br />");
                 //console.log($scope.desc);
 
                 $scope.address = $scope.resultset.Address;
@@ -248,7 +261,7 @@ var app = angular.module("BS", ["ngRoute"])
 
                 //Slider Images
                 $scope.SliderImage = $scope.resultset.SliderImage;
-          
+
                 //Social Media Link
                 if ($scope.resultset.SnapchatLink.toLowerCase().includes("snapchat")) {
                     $scope.mySnapchatLink = $scope.resultset.SnapchatLink;
@@ -276,17 +289,17 @@ var app = angular.module("BS", ["ngRoute"])
 
                 //$scope.Facebook = $scope.resultset.FacebookLink.toLowerCase().includes("facebook");
                 //$scope.FacebookLink = $scope.resultset.FacebookLink;
-              //  $scope.Instagram = $scope.resultset.InstagramLink.toLowerCase().includes("instagram");
-               // $scope.InstagramLink = $scope.resultset.InstagramLink;
-               // $scope.Snapchat = $scope.resultset.SnapchatLink.toLowerCase().includes("snapchat");
-              //  $scope.SnapchatLink = $scope.resultset.SnapchatLink;
-              //  $scope.Twitter = $scope.resultset.TwitterLink.toLowerCase().includes("twitter");
-               // $scope.TwitterLink = $scope.resultset.TwitterLink;
+                //  $scope.Instagram = $scope.resultset.InstagramLink.toLowerCase().includes("instagram");
+                // $scope.InstagramLink = $scope.resultset.InstagramLink;
+                // $scope.Snapchat = $scope.resultset.SnapchatLink.toLowerCase().includes("snapchat");
+                //  $scope.SnapchatLink = $scope.resultset.SnapchatLink;
+                //  $scope.Twitter = $scope.resultset.TwitterLink.toLowerCase().includes("twitter");
+                // $scope.TwitterLink = $scope.resultset.TwitterLink;
                 $scope.TextType = [{ name: "Store Name", value: $scope.StoreName },
-                    { name: "Store Description", value: $scope.desc },
-                    { name: "Email", value: $scope.Email },
-                    { name: "Phone", value: $scope.Phone },
-                    { name: "Address", value: $scope.address }
+                { name: "Store Description", value: $scope.desc },
+                { name: "Email", value: $scope.Email },
+                { name: "Phone", value: $scope.Phone },
+                { name: "Address", value: $scope.address }
                 ];
                 $scope.selectedTextType = $scope.TextType[0];
                 $scope.ShopOwnerText = $scope.selectedTextType.value;
@@ -300,22 +313,154 @@ var app = angular.module("BS", ["ngRoute"])
         };
         StoreData();
 
+        ////////////Template Elements
+
+        var ElementsData = function () {
+            $http.post('/ShowHideElement.asmx/GetElementsInfo').then(function (response) {
+                $scope.elementInfo = response.data;
+                console.log($scope.elementInfo);
+
+                $scope.disableSnapchat = true;
+                $scope.disableInstagram = true;
+                $scope.disableTwitter = true;
+                $scope.disableFacebook = true;
+
+                for (var i = 0; i < $scope.elementInfo.length; i++) {
+                    if ($scope.elementInfo[i].Name === "Snapchat") {
+                        $scope.icon.snapchat = !$scope.elementInfo[i].Hidden;
+                        validLinkService.valid("Snapchat").then(function (responseSnap) {
+                            if (responseSnap == 'true')
+                                $scope.disableSnapchat = false;
+                            else if (responseSnap == 'false') {
+                                $scope.disableSnapchat = true;
+                                $scope.icon.snapchat = false;
+                            }
+                        });
+                    }
+                    else if ($scope.elementInfo[i].Name === "Facebook") {
+                        $scope.icon.facebook = !$scope.elementInfo[i].Hidden;
+                        validLinkService.valid("Facebook").then(function (response) {
+                            if (response == 'true')
+                                $scope.disableFacebook = false;
+                            else if (response == 'false') {
+                                $scope.disableFacebook = true;
+                                $scope.icon.facebook = false;
+                            }
+                        });
+                    }
+                    else if ($scope.elementInfo[i].Name === "Twitter") {
+                        $scope.icon.twitter = !$scope.elementInfo[i].Hidden;
+                        validLinkService.valid("Twitter").then(function (response) {
+                            if (response == 'true')
+                                $scope.disableTwitter = false;
+                            else if (response == 'false') {
+                                $scope.disableTwitter = true;
+                                $scope.icon.twitter = false;
+                            }
+                        });
+                    }
+                    else if ($scope.elementInfo[i].Name === "Instagram") {
+                        $scope.icon.instagram = !$scope.elementInfo[i].Hidden;
+                        validLinkService.valid("Instagram").then(function (response) {
+                            if (response == 'true')
+                                $scope.disableInstagram = false;
+                            else if (response == 'false') {
+                                $scope.disableInstagram = true;
+                                $scope.icon.instagram = false;
+                            }
+                        });
+                    }
+                    else if ($scope.elementInfo[i].Name === "Slider") {
+                        $scope.section.slider = !$scope.elementInfo[i].Hidden;
+                    }
+                    else if ($scope.elementInfo[i].Name === "About") {
+                        $scope.section.about = !$scope.elementInfo[i].Hidden;
+                    }
+                }
+
+            }, function (error) {
+                $scope.error = error;
+            });
+        };
+        ElementsData();
+
+        $scope.ShowHideSection = function (section) {
+            var action = "";
+            if (section === "Slider") {
+                if ($scope.section.slider)
+                    action = "Show";
+                else action = "Hide";
+            }
+            else if (section === "About") {
+                if ($scope.section.about)
+                    action = "Show";
+                else action = "Hide";
+        }
+            if (section != "" && action != "") {
+                $http({
+                    url: "ShowHideElement.asmx/ShowHideSection",
+                    method: "get",
+                    params: {
+                        section: section,
+                        action: action
+                    }
+                })
+                    .then(function (response) {
+                        $scope.sectionResult = response.data;
+                        $scope.refreshIframe();
+                    });
+            }
+        };
+
+        $scope.ShowHideIcon = function (icon) {
+            var action = "";
+            if (icon === "Snapchat") {
+                if ($scope.icon.snapchat)
+                    action = "Show";
+                else action = "Hide";
+            }
+            else if (icon === "Twitter") {
+                if ($scope.icon.twitter)
+                    action = "Show";
+                else action = "Hide";
+            }
+            else if (icon === "Facebook") {
+                if ($scope.icon.facebook)
+                    action = "Show";
+                else action = "Hide";
+            }
+            else if (icon === "Instagram") {
+                if ($scope.icon.instagram)
+                    action = "Show";
+                else action = "Hide";
+            }
+            if (icon != "" && action != "") {
+                $http({
+                    url: "ShowHideElement.asmx/ShowHideIcon",
+                    method: "get",
+                    params: {
+                        icon: icon,
+                        action: action
+                    }
+                })
+                    .then(function (response) {
+                        $scope.iconResult = response.data;
+                        $scope.refreshIframe();
+
+                    });
+            }
+        };
+
         $scope.updateText = function () {
             $scope.ShopOwnerText = $scope.selectedTextType.value;
         };
         $scope.UpdateStoreInfo = function () {
-            console.log('hey, myVar has changed!');
             console.log($scope.selectedTextType.value);
 
             if (typeof $scope.selectedTextType !== "undefined") {
                 if ($scope.selectedTextType !== null || $scope.selectedTextType !== "") {
                     DataType = $scope.selectedTextType.name;                    
                     NewValue = $scope.ShopOwnerText;
-
-                    console.log(DataType);
-                    console.log(NewValue);
-
-                    
                     $http({
                         url: "TemplateData.asmx/UpdatStoreData",
                         method: "get",
@@ -699,6 +844,23 @@ app.factory('loginService', function ($http) {
     };
     return { login: login };
 });
+app.factory('validLinkService', function ($http) {
+    var valid = function (name) {
+     return   $http({
+            url: "ShowHideElement.asmx/ValidLink",
+            method: "get",
+            params: {
+                name: name
+            }
+        })
+            .then(function (response) {
+                return response.data;
+            });
+        
+    };
+    return { valid: valid };
+});
+
 
 app.directive('refreshable', [function () {
     return {
