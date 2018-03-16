@@ -15,6 +15,13 @@
 </head>
 <body ng-app="T6" ng-controller="T6Ctrl" data-spy="scroll" data-target=".navbar" data-offset="50" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">
     <header>
+<!--
+        <nav id="header" ng-style="{'background-color':color1}" class="navbar navbar-expand-md navbar-dark fixed-top">
+            <a class="navbar-brand" href="#"><img src="" class="">{{StoreName}}</a>
+            <div style=" float:right;  margin:0px 0px 0px 0px; width:33%;">
+                <img ng-src="{{Store.Logo}}" style="width: 10vw; height: 10vw; border-radius: 50%;" alt="Cinque Terre">
+            </div>
+-->
         <nav id="header" ng-style="{'background-color':Store.Color1}" class="navbar navbar-expand-md navbar-dark fixed-top">
             <a class="navbar-brand" href="#"><img ng-src="{{Store.Logo}}" style="width: 5vw; height: 5vw; border-radius: 50%;" alt="Store Logo" class="">{{Store.Name}}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">

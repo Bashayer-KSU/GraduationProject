@@ -15,9 +15,10 @@ using System.Web.Services;
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
 [System.Web.Script.Services.ScriptService]
 public class Products : System.Web.Services.WebService {
-    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    //string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
-    string ShopEmail = "star7s@msn.com";
+    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
+    string ShopEmail = "lamia@gmail.com";
+      //  string ShopEmail = "bs@mail.com";
 
     [WebMethod]
     public void GetAllCategories(/*string ShopEmail*/)
@@ -27,14 +28,12 @@ public class Products : System.Web.Services.WebService {
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            int i = 0;
             SqlCommand cmd = new SqlCommand("select Name from Category where ShopEmail = '" + ShopEmail + "'", con);
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                while (i!=2)
+                while (reader.Read())
                 {
                     categories.Add(reader["Name"].ToString());
-                    i++;
                 }
             }
         }
@@ -57,7 +56,6 @@ public class Products : System.Web.Services.WebService {
             if (!reader.Read())
             {
                 reader.Close();
-                //Random R = new Random();
                 using (SqlCommand cmd = new SqlCommand("insert into Category (ShopEmail, Name, OrderInMenu) values " + "('" + ShopEmail + "',N'" + cat + "','0')", con))
                 {
                     x = cmd.ExecuteNonQuery();
@@ -114,24 +112,26 @@ public class Products : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public Product AddNewProduct(Product pro)
+    public void Old_AddNewProduct(Product pro)
     {
         Product product = new Product();
         Random R = new Random();
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand check = new SqlCommand("select ID from Category where Name =N'" + pro.Category_ID + "' and ShopEmail = '" + ShopEmail + "'", con);
+            SqlCommand check = new SqlCommand("SELECT ID FROM Category WHERE ShopEmail = '" + ShopEmail + "' and  Name = N'" + pro.Category_ID + "'", con);
             SqlDataReader reader = check.ExecuteReader();
-            int categoryID = Convert.ToInt32(reader["ID"]);
+           
             if (reader.Read())
             {
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Category_ID, ShopEmail, Price, Image, Description, Discount, Amount) values(N'" + pro.Name + "', " + categoryID + ",'" + ShopEmail + "'," + pro.Price + ",'" + pro.Image + "',N'" + pro.Description + "'," + pro.Discount + "," + pro.Amount + ")", con))
+                int id2 = Convert.ToInt32(reader["ID"]);
+
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Category_ID, ShopEmail, Price, Image, Description, Discount, Amount) values(N'" + pro.Name + "', '" + reader["ID"].ToString() + "','" + ShopEmail + "'," + pro.Price + ",'" + pro.Image + "',N'" + pro.Description + "'," + pro.Discount + "," + pro.Amount + ")", con))
                 {
                     reader.Close();
                     int rows = cmd.ExecuteNonQuery();
 
-                    using (SqlCommand cmd2 = new SqlCommand("SELECT ID FROM Product WHERE Name=N'" + pro.Name + "AND Category_ID=" + categoryID + "AND ShopEmail=" + ShopEmail, con))
+                    using (SqlCommand cmd2 = new SqlCommand("SELECT ID FROM Product WHERE Name= N'" + pro.Name + "' AND Category_ID=" + id2+ "AND ShopEmail=" + ShopEmail, con))
                     {
                         SqlDataReader id = cmd2.ExecuteReader();
                         product.ID = Convert.ToInt32(id["ID"]);
@@ -149,14 +149,15 @@ public class Products : System.Web.Services.WebService {
                             i = product.Price - i;
                             product.PriceAfterDiscount = i;
                         }
-                        else { pro.PriceAfterDiscount = 0; }
                     }
                 }
             }
         }
-        return product;
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        Context.Response.Write(js.Serialize(product));
     }
 
+    
     [WebMethod]
     public void RemoveProduct(int product_ID)
     {
@@ -176,37 +177,37 @@ public class Products : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public Product EditProduct(Product pro)
+    public Product EditProduct(int id, string cat, string image, string name, string des, double price, double PAD, int amount, int discount)
     {
         int x;
         Product product = new Product();
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-            SqlCommand check = new SqlCommand("select ID from Category where Name =N'" + pro.Category_ID + "' and ShopEmail = '" + ShopEmail + "'", con);
+            SqlCommand check = new SqlCommand("select ID from Category where Name =N'" + cat + "' and ShopEmail = '" + ShopEmail + "'", con);
             SqlDataReader reader = check.ExecuteReader();
             if (reader.Read())
             {
-                using (SqlCommand cmd = new SqlCommand("UPDATE Product SET Name =N'" + pro.Name + "', Price =" + pro.Price + ", Image = '" + pro.Image + "', Description = N'" + pro.Description + "', Discount = " + pro.Discount + ", Amount = " + pro.Amount + ",Category_ID	='" + reader["ID"].ToString() + "' WHERE ID =" + pro.ID , con))
+                using (SqlCommand cmd = new SqlCommand("UPDATE Product SET Name =N'" + name + "', Price =" + price + ", Image = '" + image + "', Description = N'" + des + "', Discount = " + discount + ", Amount = " + amount + ",Category_ID	='" + reader["ID"].ToString() + "' WHERE ID =" + id , con))
                 {
                     reader.Close();
                     x = cmd.ExecuteNonQuery();
                     if (x != 0)
                     {
-                        product.Name = pro.Name;
-                        product.Description = pro.Description;
-                        product.Price = pro.Price;
-                        product.Amount = pro.Amount;
-                        product.Image = pro.Image;
-                        product.ID = pro.ID;
-                        product.Discount = pro.Discount;
-                        product.Category_ID = pro.Category_ID;
+                        product.Name = name;
+                        product.Description = des;
+                        product.Price = price;
+                        product.Amount = amount;
+                        product.Image =image;
+                        product.ID = id;
+                        product.Discount = discount;
+                        product.Category_ID = cat;
                         product.StoreEmail = ShopEmail;
 
-                        if (pro.Discount != 0)
+                        if (discount != 0)
                         {
-                            double k = pro.Price * pro.Discount / 100;
-                            k = pro.Price - k;
+                            double k = price * discount / 100;
+                            k = price - k;
                             product.PriceAfterDiscount = k;
                         }
                         else { product.PriceAfterDiscount = 0; }

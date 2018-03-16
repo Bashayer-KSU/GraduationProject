@@ -196,7 +196,7 @@
                         <td><button class="remove" ng-click="removeproduct(product, product.ID)" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button></td>
                         <td>
                             <button ng-show="!product.edit" ng-click="product.edit = !product.edit" style="background-color:transparent; border: none;"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;"/></button>
-                            <button ng-show="product.edit" ng-click="editProduct($index,product)" style="background-color:transparent; border: none;"><img src="/images/success.png" alt="" style="width:25px; height:25px;"/></button>
+                            <button ng-show="product.edit" ng-click="editProduct($index,product,product.ID,product.Image,product.Name,product.Description,product.Price,product.PriceAfterDiscount,product.Amount,product.Discount)" style="background-color:transparent; border: none;"><img src="/images/success.png" alt="" style="width:25px; height:25px;"/></button>
                         </td>
                         <td class="arb" ng-show="!product.edit"><label>{{product.Discount}}%</label></td>
                         <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Discount" name="" placeholder="Enter product discount" required></td>
@@ -205,7 +205,7 @@
                         <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Amount" name="" placeholder="Enter product amount" required></td>
                         <td class="arb" ng-show="!product.edit">
                             <label ng-show="product.Discount == 0">{{product.Price}}</label>
-                            <label><del style="color:#ff0000" ng-show="product.Discount != 0">{{product.Price}}</del></label><br />
+                            <label><del style="color:#ff0000" ng-show="product.Discount != 0"> {{product.Price}} </del></label><br />
                             <label ng-show="product.Discount != 0">{{product.PriceAfterDiscount}}</label>
                         </td>
                         <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Price" name="" placeholder="Enter product price" required></td>
@@ -222,7 +222,7 @@
 
                     <tr>
                         <td colspan="2">
-                            <button class="addfields waves-effect waves-light btn done" ng-click="addNewProduct(product)" style="float:right;">إضافة المنتج</button>
+                            <button class="addfields waves-effect waves-light btn done" ng-click="addNewProduct(product,product.Image,product.Name,product.Description,product.Price,product.Amount,product.Discount)" style="float:right;">إضافة المنتج</button>
                         </td>
                         
                         <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
@@ -234,7 +234,6 @@
                         <td>
                             <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
                             <img ng-show="product.Image" style="width:80px; height:80px;" ng-src="{{product.Image}}" />
-                            <!--<textarea>{{product.Image}}</textarea>-->
                         </td>
                     </tr>
 
