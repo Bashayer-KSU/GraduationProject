@@ -58,11 +58,24 @@
                                     <label for="REemail">Email</label>
                                 </div>
                                 <p class="alert alert-danger" ng-show="register_eng.REemail.$error.email">Your email is invalid.</p>
+
+                                <div class="input-field col s6">
+                                    <input id="RECemail" type="email" name="RECemail" ng-model="RECemail" match="REemail" class="validate" required>
+                                    <label for="RECemail">Confirm Email</label>
+                                </div>
+                                <p class="alert alert-danger" ng-show="register_eng.RECemail.$error.mismatch">Email and Confirm Email must match.</p>
+
                                 <div class="input-field col s6">
                                     <input id="REpassword" type="password" name="REpassword" ng-model="REpassword" ng-minlength='8' ng-maxlength='20' class="validate" required>
                                     <label for="REpassword">Password</label>
                                 </div>
                                 <p class="alert alert-danger" ng-show="register_eng.REpassword.$error.maxlength || register_eng.REpassword.$error.minlength || form.REpassword.$invalid">Your password must be between 8 to 20 characters.</p>
+                                <div class="input-field col s6">
+                                    <input id="RECpassword" type="password" name="RECpassword" ng-model="RECpassword" matchpass="REpassword"  class="validate" required>
+                                    <label for="RECpassword">Confirm Password</label>
+                                </div>
+                                <p class="alert alert-danger" ng-show="register_eng.RECpassword.$error.mismatchpass">Password and Confirm Password must match.</p>
+
                                 <div class="input-field col s6">
                                     <input id="REphone" type="number" name="REphone" ng-model="REphone" ng-minlength='8' ng-maxlength='15' class="validate" required>
                                     <label for="REphone">Phone number</label>
@@ -100,11 +113,29 @@
                                     <label for="RAemail" style="position: absolute; left:240px; font-family:NeoSansArabic;">البريد الإلكتروني</label>
                                 </div>
                                 <p class="alert alert-danger" ng-show="register_ar.Remail.$error.email">البريد الاإلكتروني خاطئ</p>
+
+                                <div class="input-field col s6">
+                                    <input id="RACemail" type="email" name="RACemail" ng-model="RACemail" match="Remail" class="validate" required>
+                                    <label for="RACemail" style="position: absolute; left:240px; font-family:NeoSansArabic;">تأكيد البريد الإلكتروني</label>
+                                </div>
+                                <p class="alert alert-danger" ng-show="register_ar.RACemail.$error.mismatch">
+                                    البريد الإلكتروني وتأكيد البريد الإلكتروني يجب أن تتطابق.
+                                </p>
+
+
                                 <div class="input-field col s6">
                                     <input id="RApassword" type="password" name="Rpassword" ng-model="Rpassword" ng-minlength='8' ng-maxlength='20' class="validate" required>
                                     <label for="RApassword" style="position: absolute; left:260px; font-family:NeoSansArabic;">الرقم السري</label>
                                 </div>
                                 <p class="alert alert-danger" ng-show="register_ar.Rpassword.$error.maxlength || register_ar.Rpassword.$error.minlength || form.Rpassword.$invalid">كلمة المرور يجب أن تكون ما بين 8 إلى 20 خانة</p>
+
+                                <div class="input-field col s6">
+                                    <input id="RACpassword" type="password" name="RACpassword" ng-model="RACpassword" matchpass="Rpassword" class="validate" required>
+                                    <label for="RACpassword" style="position: absolute; left:260px; font-family:NeoSansArabic;">تأكيد الرقم السري</label>
+                                </div>
+                                <p class="alert alert-danger" ng-show="register_ar.RACpassword.$error.mismatchpass">الرقم السري وتأكيد الرقم السري يجب أن تتطابق.</p>
+
+
                                 <div class="input-field col s6">
                                     <input id="RAphone" type="number" name="Rphone" ng-model="Rphone" ng-minlength='8' ng-maxlength='15' class="validate" required>
                                     <label for="RAphone" style="position: absolute; left:260px;font-family:NeoSansArabic;">رقم الجوال</label>
@@ -112,7 +143,7 @@
                                 </div>
                                 <div class="space-top text-center">
                                     <button style="font-family:NeoSansArabic;" ng-disabled="register_ar.$invalid" ng-click="SendData('reg','ar')" class="waves-effect waves-light btn done">
-                                       تسجيل
+                                        تسجيل
                                     </button>
 
                                 </div>
