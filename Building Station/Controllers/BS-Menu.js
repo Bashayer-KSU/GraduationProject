@@ -121,18 +121,24 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 }, function (error) {
                     $scope.error = error;
             });*/
-            $http({
-                url: "PaymentMethods.asmx/UbdateBankInfo",
-                method: "get",
-                params: { IBAN: IBAN }
-            })
-                .then(function (response) {
-                    $scope.bankInfo.IBAN = response.data;
-                    $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-
-                }, function (error) {
-                    $scope.error = error.data;
-                });
+            if (IBAN != "" && IBAN != null) {
+                $http({
+                    url: "PaymentMethods.asmx/UbdateBankInfo",
+                    method: "get",
+                    params: { IBAN: IBAN }
+                })
+                    .then(function (response) {
+                        if (!response.data.toLowerCase().includes("No")) {
+                            $scope.bankInfo.IBAN = response.data;
+                            $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
+                        }
+                        else {
+                            $scope.bankInfo.IBAN = "";
+                        }
+                    }, function (error) {
+                        $scope.error = error.data;
+                    });
+            }
         };
 
         $scope.bankInfo = {
@@ -158,10 +164,14 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 params: {}
             })
                 .then(function (response) {
-                    $scope.bankInfo.IBAN = response.data;
-                    $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-
-
+                    if (!response.data.toLowerCase().includes("No")) {
+                        $scope.bankInfo.IBAN = response.data;
+                        $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
+                    }
+                    else {
+                        $scope.bankInfo.IBAN = "";
+                    }
+                    
                 }, function (error) {
                     $scope.error = error.data;
                 });

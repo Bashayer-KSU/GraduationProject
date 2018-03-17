@@ -2,6 +2,9 @@
 
 var T6 = myApp.controller("T6Ctrl", function ($scope, $http) {
     $scope.Store = [];
+    $scope.checkout = false;
+    $scope.payment = false;
+    $scope.buyerName = "s ";
     var init = function () {
 
         $http.post('/TemplateData.asmx/StoreData').then(function (response) {
