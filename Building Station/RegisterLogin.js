@@ -2,7 +2,6 @@
 
 var Register = myApp.controller("RegisterLoginCtrl", function ($scope, $http, $window) {
 
-
     $scope.SendData = function (e,lang) {
         // use $.param jQuery function to serialize data from JSON 
         var url;
@@ -65,4 +64,29 @@ var Register = myApp.controller("RegisterLoginCtrl", function ($scope, $http, $w
             });
     };
 
+});
+
+myApp.directive('match', function ($parse) {
+    return {
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ctrl) {
+            scope.$watch(function () {
+                return $parse(attrs.match)(scope) === ctrl.$modelValue;
+            }, function (currentValue) {
+                ctrl.$setValidity('mismatch', currentValue);
+            });
+        }
+    };
+});
+myApp.directive('matchpass', function ($parse) {
+    return {
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ctrl) {
+            scope.$watch(function () {
+                return $parse(attrs.matchpass)(scope) === ctrl.$modelValue;
+            }, function (currentValue) {
+                ctrl.$setValidity('mismatchpass', currentValue);
+            });
+        }
+    };
 });
