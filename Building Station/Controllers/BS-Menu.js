@@ -468,15 +468,9 @@ var app = angular.module("BS", ["ngRoute"])
             })
                 .then(function (response) {
                     $scope.categories = response.data;
-                    if (newCategury == null)
+                    if (newCategury == null || newCategury === 'undefined')
                     { $scope.selectedCategory = $scope.categories[0]; }
                     else { $scope.selectedCategory = newCategury; }
-<<<<<<< HEAD
-=======
-                    if (newCategury === null || newCategury === undefined)
-                        $scope.selectedCategory = $scope.categories[0];
-                    else $scope.selectedCategory = newCategury;
->>>>>>> 305775e0f8b12cba36a86b48eabc260c57d93f15
                     $scope.selectedCategoryChanged();
                 });
         };
@@ -522,22 +516,22 @@ var app = angular.module("BS", ["ngRoute"])
         //\list all products for specific category
 
         // apply edit the product
-        $scope.editProduct = function (index, product, ID, Image, Name, Description, Price, PriceAfterDiscount, Amount,Discount) {
+        $scope.editProduct = function (index, product, ID, Image, Name, Description, Price, Amount,Discount) {
             
             $http({
                 url: "Products.asmx/EditProduct",
                 headers: { "Content-Type": "application/json;charset=utf-8" },
                 dataType: 'json',
                 method: 'post',
-                data: JSON.stringify({ id: ID, cat: $scope.selectedCategory, image:Image, name:Name, des:Description, price:Price, PAD:PriceAfterDiscount, amount:Amount, discount: Discount })
+                data: JSON.stringify({ id: ID, cat: $scope.selectedCategory, image:Image, name:Name, des:Description, price:Price, amount:Amount, discount: Discount })
             }).then(function (response) {
                 $scope.editP = response.data;
-                $scope.products[index] = product;
+                $scope.products[index] = $scope.editP;
                 product.edit = false;
                 //$scope.selectedCategoryChanged();
                 }, function (error) {
                 /////////////////////
-                alert(error);
+                alert(error.ToString());
                 $scope.R = error;
                 /////////////////////
             });

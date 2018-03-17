@@ -15,8 +15,8 @@ using System.Web.Services;
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
 [System.Web.Script.Services.ScriptService]
 public class Products : System.Web.Services.WebService {
-    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
+    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
     string ShopEmail = "lamia@gmail.com";
 
     [WebMethod]
@@ -130,7 +130,7 @@ public class Products : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public Product EditProduct(int id, string cat, string image, string name, string des, double price, double PAD, int amount, int discount)
+    public Product EditProduct(int id, string cat, string image, string name, string des, double price, int amount, int discount)
     {
         int x;
         Product product = new Product();
@@ -160,8 +160,55 @@ public class Products : System.Web.Services.WebService {
                         if (discount != 0)
                         {
                             double k = price * discount / 100;
-                            k = price - k;
-                            product.PriceAfterDiscount = k;
+                            //k = price - k;
+                            product.PriceAfterDiscount = price - k;
+                        }
+                        else { product.PriceAfterDiscount = price; }
+                    }
+                }
+            }
+        }
+        return product;
+    }
+
+    [WebMethod]
+    public Product AddNewProduct(string cat, string image, string name, string des, double price, double PAD, int amount, int discount)
+    {
+        int rows;
+        Product product = new Product();
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand check = new SqlCommand("select ID from Category where (Name =N'" + cat + "' and ShopEmail = '" + ShopEmail + "')", con);
+            SqlDataReader reader = check.ExecuteReader();
+            if (reader.Read())
+            {
+                int catID = Convert.ToInt32(reader["ID"]);
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Category_ID, ShopEmail, Price, Image, Description, Discount, Amount) values(N'" + name + "', " + catID + ",'" + ShopEmail + "'," + price + ",'" + image + "',N'" + des + "'," + discount + "," + amount + ")", con))
+                {
+                    
+                    //string query = "SELECT ID FROM Product WHERE (Name= N'" + name + "' AND Category_ID = '" + reader["ID"].ToString() + "' AND ShopEmail = '" + ShopEmail + "')";
+                    reader.Close();
+
+                    rows = cmd.ExecuteNonQuery();
+
+                    using (SqlCommand cmd2 = new SqlCommand("SELECT ID FROM Product WHERE (Name =N'" + name + "' AND Category_ID =" + catID + ") AND ShopEmail = '" + ShopEmail + "'", con))
+                    {
+                        SqlDataReader id = cmd2.ExecuteReader();
+                       // product.ID = Convert.ToInt32(id["ID"]);
+                        product.Name = name;
+                        product.Price = price;
+                        product.Image = image;
+                        product.Description = des;
+                        product.Discount = discount;
+                        product.Category_ID = cat;
+                        product.Amount = amount;
+                        product.StoreEmail = ShopEmail;
+                        if (product.Discount != 0)
+                        {
+                            double i = product.Price * product.Discount / 100;
+                            i = product.Price - i;
+                            product.PriceAfterDiscount = i;
                         }
                         else { product.PriceAfterDiscount = 0; }
                     }
@@ -170,5 +217,5 @@ public class Products : System.Web.Services.WebService {
         }
         return product;
     }
-
+    
 }
