@@ -128,7 +128,7 @@
 
                 </div><!-- /input-group -->
                 <button style="float:right;" class="btn btn-default" ng-click="UpdateLinks()" type="submit">Update</button>
-                <p style="font-size:x-small; color:red;"> * your links must be valid </p>
+                <p style="font-size:x-small; color:firebrick;"> Note: your links must be valid </p>
             </div>
             <br />
             <div class="row">
@@ -169,9 +169,9 @@
             </div>
             <br />
         </div>
-        <div style="padding-left:5px;">
-            <div class="embed-responsive embed-responsive-4by3" style="overflow: hidden; height: 800px; padding-left:3vw;">
-                <iframe style="padding-left:5px;" refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
+        <div class="col-sm-8 col-md-8">
+            <div class="embed-responsive embed-responsive-4by3" style="margin-left:4vw; width:57vw; height: 60vw;">
+                <iframe refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
                 <!--style="overflow: hidden; height: 200%; width: 100%;"-->
             </div>
         </div>
