@@ -5,15 +5,15 @@
         <form name="myForm" ng-model="checkboxPayment" ng-init="checkedPayment()">
             <label>
                 <input type="checkbox" ng-model="checkboxPayment.cash" ng-change="acceptPayment()">
-                Cash <img style="max-width:5%;" src="/Templates/Template_6/Images/cash.png" alt="Cash">
+                Cash <img style="max-width:5%;" src="/images/cash.png" alt="Cash">
             </label><br />
                     <label>
                         <input type="checkbox" ng-model="checkboxPayment.paypal" ng-change="acceptPayment()">
-                        <img style="max-width:8%;" src="/Templates/Template_6/Images/paypal.png" alt="PayPal"> 
+                        <img style="max-width:8%;" src="/images/PayPal.png" alt="PayPal"> 
                     </label><br />
                     <label>
                         <input type="checkbox" ng-model="checkboxPayment.bankTransfer" aria-label="Toggle ngShow" ng-change="acceptPayment()">
-                        Bank Transfer <img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer">
+                        Bank Transfer <img style="max-width:10%;" src="/images/transfer.png" alt="bank transfer">
                     </label><br />
         </form>
     </div>
