@@ -595,7 +595,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
     .controller("PreviewWebsiteController", function ($scope, $http) {
         $scope.tabHeader = "Previe wWebsite";
     })
-    .controller("TemplateController", function ($scope, $http) {
+    .controller("TemplateController", function ($scope, $http, $location) {
         $scope.tabHeader = "Template";
     /*    $scope.getImageUrl = function (index) {
             return "/images/T" + (index+1)+".png";
@@ -609,9 +609,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 data: { id: Tid },
                 headers: { "Content-Type": "application/json" }
             });
+            post.then(function (response) { }, function (error) { });
+            $location.path('/DevelopmentEnvironment');
         };
-
-
     })
     .controller("ProductsController", function ($scope, $http) {
         $scope.tabHeader = "Products";
