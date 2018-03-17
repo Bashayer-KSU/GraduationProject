@@ -481,9 +481,23 @@ public class CreationStage : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
-    public void ConnectInstagram(string link, string logo, string descripton)
+    [WebMethod(EnableSession = true)]
+    public void ConnectInstagram(string link, string logo, string descripton, string name)
     {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreName = N'" + name + "', logo = '"+logo+ "', Location = N'"+descripton+ "', InstagramLink = '"+link+"' WHERE Email='" + Session["user"] + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            store.Name = name;
+            store.InstagramLink = link;
+            store.Logo = logo;
+            store.Address = descripton;
+            Context.Response.Write(js.Serialize(store));
+        }
     }
 
     [WebMethod(EnableSession = true)]
