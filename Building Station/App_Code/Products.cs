@@ -146,7 +146,7 @@ public class Products : System.Web.Services.WebService {
          int s = Convert.ToInt32(c["ID"]);*/
             SqlCommand cmd = new SqlCommand();
             SqlDataReader reader;
-            cmd.CommandText = "SELECT ID FROM Category WHERE (ShopEmail = '" + ShopEmail + "' AND Name = '" + cat + "')";
+            cmd.CommandText = "SELECT ID FROM Category WHERE (StoreEmail = '" + ShopEmail + "' AND Name = '" + cat + "')";
             cmd.CommandType = CommandType.Text;
             cmd.Connection = con;
 
@@ -200,7 +200,7 @@ public class Products : System.Web.Services.WebService {
             SqlCommand cmd0 = new SqlCommand();
             SqlDataReader reader;
 
-            cmd0.CommandText = "SELECT ID FROM Category WHERE (ShopEmail = '" + ShopEmail + "' AND Name = '" + cat + "')";
+            cmd0.CommandText = "SELECT ID FROM Category WHERE (StoreEmail = '" + ShopEmail + "' AND Name = '" + cat + "')";
             cmd0.CommandType = CommandType.Text;
             cmd0.Connection = con;
 
@@ -210,7 +210,7 @@ public class Products : System.Web.Services.WebService {
             if (reader.Read())
             {
                 int catID = Convert.ToInt32(reader["ID"]);
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Category_ID, ShopEmail, Price, Image, Description, Discount, Amount) values(N'" + name + "', " + catID + ",'" + ShopEmail + "'," + price + ",'" + image + "',N'" + des + "'," + discount + "," + amount + ")", con))
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Category_ID, StoreEmail, Price, Image, Description, Discount, Amount) values(N'" + name + "', " + catID + ",'" + ShopEmail + "'," + price + ",'" + image + "',N'" + des + "'," + discount + "," + amount + ")", con))
                 {
                     
                     //string query = "SELECT ID FROM Product WHERE (Name= N'" + name + "' AND Category_ID = '" + reader["ID"].ToString() + "' AND ShopEmail = '" + ShopEmail + "')";
