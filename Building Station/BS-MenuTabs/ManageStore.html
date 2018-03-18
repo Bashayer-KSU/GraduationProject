@@ -1,24 +1,36 @@
-﻿<h2>{{tabHeader}}</h2>
+﻿<div class="container">
+    <h2>{{tabHeader}}</h2>
 
-<form name="myForm" ng-model="checkboxPayment" ng-init="checkedPayment()">
-    <label>
-        Cash:
-        <input type="checkbox" ng-model="checkboxPayment.cash" ng-change="acceptPayment()">
-    </label><br />
-    <label>
-        PayPal:
-        <input type="checkbox" ng-model="checkboxPayment.paypal" ng-change="acceptPayment()">
-    </label><br />
-    <label>
-        Bank Transfer:
-        <input type="checkbox" ng-model="checkboxPayment.bankTransfer" aria-label="Toggle ngShow" ng-change="acceptPayment()">
-    </label><br />
-</form>
-
-<form class="check-element animate-show-hide" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()">
-    <div class="form-group">
-        <label for="IBAN">IBAN</label>
-        <input type="text" class="form-control" ng-model="bankInfo.IBAN" id="IBAN" placeholder="Enter IBAN" required>
+    <div class="row">
+        <form name="myForm" ng-model="checkboxPayment" ng-init="checkedPayment()">
+            <label>
+                <input type="checkbox" ng-model="checkboxPayment.cash" ng-change="acceptPayment()">
+                Cash <img style="max-width:5%;" src="/images/cash.png" alt="Cash">
+            </label><br />
+                    <label>
+                        <input type="checkbox" ng-model="checkboxPayment.paypal" ng-change="acceptPayment()">
+                        <img style="max-width:8%;" src="/images/PayPal.png" alt="PayPal"> 
+                    </label><br />
+                    <label>
+                        <input type="checkbox" ng-model="checkboxPayment.bankTransfer" aria-label="Toggle ngShow" ng-change="acceptPayment()">
+                        Bank Transfer <img style="max-width:10%;" src="/images/transfer.png" alt="bank transfer">
+                    </label><br />
+        </form>
     </div>
-    <button type="submit" ng-click="UpdateBankInfo()" class="btn btn-primary">Update</button>
-</form>
+    <div class="row">
+        <div class="col-lg-6">
+            <form name="IBAN" class="check-element animate-show-hide" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()">
+                <label for="IBAN">IBAN</label>
+                <div class="input-group">
+                    <input type="text" class="form-control validate" name="bankInfoIBAN" ng-model="bankInfo.IBAN" id="IBAN" placeholder="Enter IBAN" required>
+                    <span class="input-group-btn">
+                        <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdateBankInfo()" class="btn">Update</button>
+                    </span>
+                </div>
+                <p class=" alert alert-danger" ng-show="!IBAN.bankInfoIBAN.$valid">
+                    You must enter the IBAN.
+                </p>
+            </form>
+            </div>
+    </div>
+</div>

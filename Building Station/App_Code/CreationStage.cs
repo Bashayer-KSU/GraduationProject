@@ -17,10 +17,11 @@ using System.Text;
 public class CreationStage : System.Web.Services.WebService
 {
 
-  //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-   string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
+  string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+  // string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
 
     public Store store = new Store();
+    List<Element> ElementsList = new List<Element>();
 
     public CreationStage()
     {
@@ -419,13 +420,13 @@ public class CreationStage : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Category (ShopEmail, Name, OrderInMenu) values('" + Session["user"] + "', 'Category example', 1)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Category (StoreEmail, Name, OrderInMenu) values('" + Session["user"] + "', 'Category example', 1)", con);
                 cmd.ExecuteNonQuery(); con.Close();
             }
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT ID FROM Category WHERE ShopEmail = '"+ Session["user"] + "' AND Name = 'Category example'", con);
+                SqlCommand cmd = new SqlCommand("SELECT ID FROM Category WHERE StoreEmail = '" + Session["user"] + "' AND Name = 'Category example'", con);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -436,7 +437,7 @@ public class CreationStage : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Price, Description, Category_ID, ShopEmail, Image, Amount) values('product example', 50, N'" + Product_Description + "', "+id+", '" + Session["user"] + "', '" + Product_Image + "', 1)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Price, Description, Category_ID, StoreEmail, Image, Amount) values('product example', 50, N'" + Product_Description + "', "+id+", '" + Session["user"] + "', '" + Product_Image + "', 1)", con);
                 cmd.ExecuteNonQuery(); con.Close();
             }
         }
@@ -445,13 +446,13 @@ public class CreationStage : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Category (ShopEmail, Name, OrderInMenu) values('" + Session["user"] + "', N'"+"تصنيف مؤقت"+"', 1)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Category (StoreEmail, Name, OrderInMenu) values('" + Session["user"] + "', N'"+"تصنيف مؤقت"+"', 1)", con);
                 cmd.ExecuteNonQuery(); con.Close();
             }
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT ID FROM Category WHERE ShopEmail = '" + Session["user"] + "' AND Name = 'N'" + "تصنيف مؤقت" + "')", con);
+                SqlCommand cmd = new SqlCommand("SELECT ID FROM Category WHERE StoreEmail = '" + Session["user"] + "' AND Name = N'" + "تصنيف مؤقت" + "'", con);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -462,7 +463,7 @@ public class CreationStage : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Price, Description, Category_ID, ShopEmail, Image, Amount) values(N'" + "مثال على منتج" + "', 50, N'" + Product_Description + "',"+id+", '" + Session["user"] + "', '" + Product_Image + "', 1)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Price, Description, Category_ID, StoreEmail, Image, Amount) values(N'" + "مثال على منتج" + "', 50, N'" + Product_Description + "',"+id+", '" + Session["user"] + "', '" + Product_Image + "', 1)", con);
                 cmd.ExecuteNonQuery(); con.Close();
             }
         }
@@ -480,9 +481,23 @@ public class CreationStage : System.Web.Services.WebService
         }
     }
 
-    [WebMethod]
-    public void ConnectInstagram(string link, string logo, string descripton)
+    [WebMethod(EnableSession = true)]
+    public void ConnectInstagram(string link, string logo, string descripton, string name)
     {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET StoreName = N'" + name + "', logo = '"+logo+ "', Location = N'"+descripton+ "', InstagramLink = '"+link+"' WHERE Email='" + Session["user"] + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            store.Name = name;
+            store.InstagramLink = link;
+            store.Logo = logo;
+            store.Address = descripton;
+            Context.Response.Write(js.Serialize(store));
+        }
     }
 
     [WebMethod(EnableSession = true)]
@@ -498,6 +513,139 @@ public class CreationStage : System.Web.Services.WebService
             con.Close();
 
             store.TemplateID = id;
+            //Create Elements of shop owner template
+            con.Open();
+            //Link Elements
+
+            //Snapchat Link
+            Element element = new Element();
+            element.StoreEmail = Session["user"].ToString();
+            if (store.SnapchatLink != null)
+            {
+                element.Value = store.SnapchatLink;
+                if (store.SnapchatLink.ToLower().Contains("snapchat"))
+                {
+                    element.Hidden = false;
+                }
+                else
+                    element.Hidden = true;
+            }
+            else
+            {
+                element.Hidden = true;
+                element.Value = "No Value";
+            }
+
+            element.Name = "Snapchat";
+                element.Type = "Link";
+                ElementsList.Add(element);
+                cmd = new SqlCommand("insert into Element (Name, Type, Value, Hidden, StoreEmail) values " +
+               "('"+element.Name+"','"+ element.Type + "','" + element.Value + "','" + element.Hidden + "','" + element.StoreEmail + "')", con);
+            cmd.ExecuteNonQuery();
+
+
+            //Twitter Link
+             element = new Element();
+            element.StoreEmail = Session["user"].ToString();
+            if (store.TwitterLink != null)
+            {
+                element.Value = store.TwitterLink;
+                if (store.TwitterLink.ToLower().Contains("https://twitter.com/"))
+                    element.Hidden = false;
+                else
+                    element.Hidden = true;
+            }
+            else {
+                element.Hidden = true;
+                element.Value = "No Value";
+            }
+
+            element.Name = "Twitter";
+                element.Type = "Link";
+                ElementsList.Add(element);
+            cmd = new SqlCommand("insert into Element (Name, Type, Value, Hidden, StoreEmail) values " +
+               "('" + element.Name + "','" + element.Type + "','" + element.Value + "','" + element.Hidden + "','" + element.StoreEmail + "')", con);
+            cmd.ExecuteNonQuery();
+
+
+            //Facebook Link
+            element = new Element();
+            element.StoreEmail = Session["user"].ToString();
+            if (store.FacebookLink != null)
+            {
+                element.Value = store.FacebookLink;
+                if (store.FacebookLink.ToLower().Contains("https://www.facebook.com/"))
+                    element.Hidden = false;
+                else
+                    element.Hidden = true;
+            }
+            else
+            {
+                element.Hidden = true;
+                element.Value = "No Value";
+            }
+
+            element.Name = "Facebook";
+                element.Type = "Link";
+                ElementsList.Add(element);
+            cmd = new SqlCommand("insert into Element (Name, Type, Value, Hidden, StoreEmail) values " +
+           "('" + element.Name + "','" + element.Type + "','" + element.Value + "','" + element.Hidden + "','" + element.StoreEmail + "')", con);
+            cmd.ExecuteNonQuery();
+
+
+            //Instagram Link
+            element = new Element();
+            element.StoreEmail = Session["user"].ToString();
+            if (store.InstagramLink != null)
+            {
+                element.Value = store.InstagramLink;
+                if (store.InstagramLink.ToLower().Contains("https://www.instagram.com/"))
+                    element.Hidden = false;
+                else
+                    element.Hidden = true;
+            }
+            else
+            {
+                element.Hidden = true;
+                element.Value = "No Value";
+            }
+
+            element.Name = "Instagram";
+            element.Type = "Link";
+            ElementsList.Add(element);
+            cmd = new SqlCommand("insert into Element (Name, Type, Value, Hidden, StoreEmail) values " +
+               "('" + element.Name + "','" + element.Type + "','" + element.Value + "','" + element.Hidden + "','" + element.StoreEmail + "')", con);
+            cmd.ExecuteNonQuery();
+
+
+            //Slider Element
+            element = new Element();
+            element.StoreEmail = Session["user"].ToString();
+            element.Name = "Slider";
+            element.Type = "Slider";
+            element.Value = store.Description;
+            element.Hidden = false;
+            element.Image = store.SliderImage;
+            ElementsList.Add(element);
+
+            cmd = new SqlCommand("insert into Element (Name, Type, Value, Hidden, StoreEmail, Image) values " +
+               "('"+element.Name+"','"+element.Type+"','" + element.Value + "','"+ element.Hidden +"','" + element.StoreEmail + "','" + element.Image + "')", con);
+            cmd.ExecuteNonQuery();
+
+            //About Element
+            element = new Element();
+            element.StoreEmail = Session["user"].ToString();
+            element.Name = "About";
+            element.Type = "About";
+            element.Value = store.Description;
+            element.Hidden = false;
+            element.Image = store.Logo;
+            ElementsList.Add(element);
+            cmd = new SqlCommand("insert into Element (Name, Type, Value, Hidden, StoreEmail, Image) values " +
+              "('" + element.Name + "','" + element.Type + "','" + element.Value + "','" + element.Hidden + "','" + element.StoreEmail + "','" + element.Image + "')", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
             Context.Response.Write(js.Serialize(store));
         }
     }

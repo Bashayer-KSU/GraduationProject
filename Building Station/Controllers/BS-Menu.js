@@ -121,18 +121,24 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 }, function (error) {
                     $scope.error = error;
             });*/
-            $http({
-                url: "PaymentMethods.asmx/UbdateBankInfo",
-                method: "get",
-                params: { IBAN: IBAN }
-            })
-                .then(function (response) {
-                    $scope.bankInfo.IBAN = response.data;
-                    $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-
-                }, function (error) {
-                    $scope.error = error.data;
-                });
+            if (IBAN != "" && IBAN != null) {
+                $http({
+                    url: "PaymentMethods.asmx/UbdateBankInfo",
+                    method: "get",
+                    params: { IBAN: IBAN }
+                })
+                    .then(function (response) {
+                        if (!response.data === " No ShopOwnerBank ") {
+                            $scope.bankInfo.IBAN = response.data;
+                            $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
+                        }
+                        else {
+                            $scope.bankInfo.IBAN = "";
+                        }
+                    }, function (error) {
+                        $scope.error = error.data;
+                    });
+            }
         };
 
         $scope.bankInfo = {
@@ -158,10 +164,14 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 params: {}
             })
                 .then(function (response) {
-                    $scope.bankInfo.IBAN = response.data;
-                    $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-
-
+                    if (!response.data == " No ShopOwnerBank ") {
+                        $scope.bankInfo.IBAN = response.data;
+                        $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
+                    }
+                    else {
+                        $scope.bankInfo.IBAN = "";
+                    }
+                    
                 }, function (error) {
                     $scope.error = error.data;
                 });
@@ -585,7 +595,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
     .controller("PreviewWebsiteController", function ($scope, $http) {
         $scope.tabHeader = "Previe wWebsite";
     })
-    .controller("TemplateController", function ($scope, $http) {
+    .controller("TemplateController", function ($scope, $http, $location) {
         $scope.tabHeader = "Template";
     /*    $scope.getImageUrl = function (index) {
             return "/images/T" + (index+1)+".png";
@@ -599,9 +609,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 data: { id: Tid },
                 headers: { "Content-Type": "application/json" }
             });
+            post.then(function (response) { }, function (error) { });
+            $location.path('/DevelopmentEnvironment');
         };
-
-
     })
     .controller("ProductsController", function ($scope, $http) {
         $scope.tabHeader = "Products";
@@ -699,11 +709,18 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 product.Description = '';
                 product.Price = '';
                 product.Amount = '';
+<<<<<<< HEAD
                 product.Discount = '';*/
                 Scope.selectedCategoryChanged();
                 }, function (error) {
                     alert("failed add");
                     alert(error);
+=======
+                product.Discount = '';
+                alert("success add");
+                }, function (error) {
+                    alert("failed add");
+>>>>>>> 5422682f2ba5d5a5c005180f481c80259585b927
                 product.Image = '';
                 product.Name = '';
                 product.Description = '';

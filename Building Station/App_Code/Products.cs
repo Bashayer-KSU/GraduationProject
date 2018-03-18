@@ -18,8 +18,11 @@ using System.Web.Services;
 public class Products : System.Web.Services.WebService {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
-    string ShopEmail = "lamia@gmail.com";
-      //  string ShopEmail = "bs@mail.com";
+
+    //string ShopEmail = "lamia@gmail.com";
+    //  string ShopEmail = "bs@mail.com";
+    string ShopEmail = "star7s@msn.com";
+
 
     [WebMethod]
     public void GetAllCategories(/*string ShopEmail*/)
@@ -29,7 +32,7 @@ public class Products : System.Web.Services.WebService {
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("select Name from Category where ShopEmail = '" + ShopEmail + "'", con);
+            SqlCommand cmd = new SqlCommand("select Name from Category where StoreEmail = '" + ShopEmail + "'", con);
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
@@ -52,12 +55,12 @@ public class Products : System.Web.Services.WebService {
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand check = new SqlCommand("select Name from Category where Name =N'" + cat + "' and ShopEmail = '" + ShopEmail + "'", con);
+            SqlCommand check = new SqlCommand("select Name from Category where Name =N'" + cat + "' and StoreEmail = '" + ShopEmail + "'", con);
             SqlDataReader reader = check.ExecuteReader();
             if (!reader.Read())
             {
                 reader.Close();
-                using (SqlCommand cmd = new SqlCommand("insert into Category (ShopEmail, Name, OrderInMenu) values " + "('" + ShopEmail + "',N'" + cat + "','0')", con))
+                using (SqlCommand cmd = new SqlCommand("insert into Category (StoreEmail, Name, OrderInMenu) values " + "('" + ShopEmail + "',N'" + cat + "','0')", con))
                 {
                     x = cmd.ExecuteNonQuery();
                     if (x != 0) { msg = cat + " category added successfully"; }
@@ -76,7 +79,7 @@ public class Products : System.Web.Services.WebService {
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("select ID from Category where Name =N'" + category + "' and ShopEmail = '" + ShopEmail + "'", con);
+            SqlCommand cmd = new SqlCommand("select ID from Category where Name =N'" + category + "' and StoreEmail = '" + ShopEmail + "'", con);
             SqlDataReader R = cmd.ExecuteReader();
             if (R.Read())
             {
@@ -95,7 +98,7 @@ public class Products : System.Web.Services.WebService {
                         pro.Discount = Convert.ToInt32(reader["Discount"]);
                         pro.Category_ID = reader["Category_ID"].ToString();
                         pro.Amount = Convert.ToInt32(reader["Amount"]);
-                        pro.StoreEmail = reader["ShopEmail"].ToString();
+                        pro.StoreEmail = reader["StoreEmail"].ToString();
                         if(pro.Discount != 0)
                         {
                             double i = pro.Price * pro.Discount / 100;
@@ -143,7 +146,6 @@ public class Products : System.Web.Services.WebService {
          int s = Convert.ToInt32(c["ID"]);*/
             SqlCommand cmd = new SqlCommand();
             SqlDataReader reader;
-
             cmd.CommandText = "SELECT ID FROM Category WHERE (ShopEmail = '" + ShopEmail + "' AND Name = '" + cat + "')";
             cmd.CommandType = CommandType.Text;
             cmd.Connection = con;
@@ -164,7 +166,7 @@ public class Products : System.Web.Services.WebService {
                         product.Description = des;
                         product.Price = price;
                         product.Amount = amount;
-                        product.Image =image;
+                        product.Image = image;
                         product.ID = id;
                         product.Discount = discount;
                         product.Category_ID = cat;

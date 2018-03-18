@@ -1,0 +1,38 @@
+﻿ <!-- Header -->
+<header style="padding-bottom:0%;">
+    <h2 style="line-height: 0.9; font-size:40px;"><strong>ما هو اسم حساب متجرك على الانستقرام؟</strong></h2>
+</header>
+
+<!-- Main content area -->
+<form name="myform">
+    <main>
+        <input name="myUsername" type="text" style="width:85%;" ng-model="search" ng-model-options="{ debounce: 800 }" onclick="select()" placeholder="ادخل اسم المستخدم لمتجرك على انستقرام" required />
+        <span class="input-group-addon bar-style"><i class="glyphicon glyphicon-search"></i></span>
+        <span class="asterisk_input"></span>
+        <p style="font-size:x-small; margin-top:0px; padding-top:0px; color: darkred;" ng-show="!search && myform.myUsername.$touched"> هذا الحقل مطلوب أو يمكنك التخطي </p>
+        <div style="display:inline; overflow: auto; white-space: nowrap; padding: 0px 0px;">
+            <a style="padding-left:150%; float: left; font-size:25px; padding: 0.4cm 0.4cm 0.4cm 0.4cm; border-radius: 20%;" href="3.2a" class="button button-large">تخطي &#62;&#62;&#62; </a>
+            <br />
+        </div> <br />
+        <div ng-if="search">
+            <p style="font-size:small; color:dimgray;">سيتم استخدام المعلومات التالية في متجرك</p>
+            <div style=" text-align: center;">
+                <p><strong>الوصف:</strong> {{details.graphql.user.biography}}</p>
+                <p><strong>الاسم: </strong> {{details.graphql.user.full_name}}</p>
+                <img ng-src="{{details.graphql.user.profile_pic_url}}" class="thumbnail animated flip movie-poster">
+            </div>
+        </div>
+    </main>
+
+    <br>
+
+    <div style="display:inline; overflow: auto;
+                white-space: nowrap; padding: 0px 0px;">
+        <button ng-disabled="!search" ng-click="savedata(); getColors()" style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="7a" class="button button-large" data-toggle="tooltip" data-placement="right" title="التالي">&#8250;</button>
+        <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="2a" class="button button-large" data-toggle="tooltip" data-placement="left" title="السابق">&#8249;</a>
+    </div>
+    </form>
+    <!-- Footer -->
+    <footer>
+        <!-- F   <p>Free Web Template from <a href="https://zypopwebtemplates.com/">ZyPop</a>.</p>-->
+    </footer>
