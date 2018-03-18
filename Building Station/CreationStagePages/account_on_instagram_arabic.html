@@ -9,17 +9,16 @@
         <input name="myUsername" type="text" style="width:85%;" ng-model="search" ng-model-options="{ debounce: 800 }" onclick="select()" placeholder="ادخل اسم المستخدم لمتجرك على انستقرام" required />
         <span class="input-group-addon bar-style"><i class="glyphicon glyphicon-search"></i></span>
         <span class="asterisk_input"></span>
-        <p style=" margin-top:0px; padding-top:0px; color: darkred;" ng-show="myform.myUsername.$touched"> هذا الحقل مطلوب أو يمكنك التخطي </p>
-        <br />
+        <p style="font-size:x-small; margin-top:0px; padding-top:0px; color: darkred;" ng-show="!search && myform.myUsername.$touched"> هذا الحقل مطلوب أو يمكنك التخطي </p>
         <div style="display:inline; overflow: auto; white-space: nowrap; padding: 0px 0px;">
-            <a style="padding-left:150%; float: left; font-size:25px; padding: 0.4cm 0.4cm 0.4cm 0.4cm; border-radius: 20%;" href="3.2" class="button button-large"> Skip &#62;&#62;&#62;</a>
+            <a style="padding-left:150%; float: left; font-size:25px; padding: 0.4cm 0.4cm 0.4cm 0.4cm; border-radius: 20%;" href="3.2a" class="button button-large">تخطي &#62;&#62;&#62; </a>
             <br />
         </div> <br />
         <div ng-if="search">
             <p style="font-size:small; color:dimgray;">سيتم استخدام المعلومات التالية في متجرك</p>
             <div style=" text-align: center;">
-                <p><strong>bio :</strong> {{details.graphql.user.biography}}</p>
-                <p><strong>الاسم: :</strong> {{details.graphql.user.full_name}}</p>
+                <p><strong>الوصف:</strong> {{details.graphql.user.biography}}</p>
+                <p><strong>الاسم: </strong> {{details.graphql.user.full_name}}</p>
                 <img ng-src="{{details.graphql.user.profile_pic_url}}" class="thumbnail animated flip movie-poster">
             </div>
         </div>

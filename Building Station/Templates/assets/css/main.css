@@ -1661,12 +1661,12 @@
 
 /* Banner */
 
-	#banner {
-		background-position: center center;
-		background-size: auto 100%;
-		background-repeat: no-repeat;
-		text-align: center;
-	}
+#banner {
+    background-position: center center;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    text-align: center;
+}
 
 		#banner header {
 			background-color: #252122;

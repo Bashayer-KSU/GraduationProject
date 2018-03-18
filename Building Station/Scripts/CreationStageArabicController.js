@@ -4,7 +4,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/0a", {
-                templateUrl: "CreationStagePages/welcome.html",
+                templateUrl: "CreationStagePages/welcome_arabic.html",
                 controller: "0aController"
             })
             .when("/1a", {
@@ -17,7 +17,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             })
             .when("/3.1a", {
                 templateUrl: "CreationStagePages/account_on_instagram_arabic.html",
-                controller: "InstaNameController"
+                controller: "InstagramController"
             })
             .when("/3.2a", {
                 templateUrl: "CreationStagePages/enter_store_info_arabic.html",
@@ -170,9 +170,71 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             }
         };
     })
-    .controller("InstaNameController", function ($scope, $rootScope, $window) {
+    .controller("InstagramController", function ($scope, $rootScope, $window, $http, $location) {
         $rootScope.English = function () {
             $window.location.href = '../CreationStage.html';
+        };
+
+        $scope.$watch('search', function () {
+            fetch();
+        });
+
+        //http://rest-service.guides.spring.io/greeting
+        //https://www.instagram.com/" + $scope.search + "/?__a=1
+        //https://www.instagram.com/asmaa.ru/?__a=1
+        //https://www.instagram.com/therock/?__a=1
+        //  $scope.search = "asmaa.ru";
+
+        function fetch() {
+
+            $http.get("https://www.instagram.com/" + $scope.search + "/?__a=1")
+
+                .then(function (response) {
+                    $scope.details = response.data;
+                    //    alert($scope.details);
+                });
+        }
+
+        $scope.update = function (user) {
+
+            $scope.search = user.username;
+        };
+
+        $scope.select = function () {
+
+            this.setSelectionRange(0, this.value.length);
+        };
+
+        $scope.savedata = function () {
+            var post = $http({
+                method: "POST",
+                url: "CreationStage.asmx/ConnectInstagram",
+                dataType: 'json',
+                data: { link: 'https://www.instagram.com/' + $scope.search + '/', logo: $scope.details.graphql.user.profile_pic_url, descripton: $scope.details.graphql.user.biography, name: $scope.details.graphql.user.full_name },
+                headers: { "Content-Type": "application/json" }
+            });
+            post.then(function (response) { }, function (error) { $scope.R = error.data; });
+        };
+
+        $scope.getColors = function () {
+            //var File_Path = $scope.imageSrc;
+            //    alert($scope.imageSrc);
+            $http({
+                url: "manageWebsiteColors.asmx/GetWebsiteColors",
+                dataType: 'json',
+                method: "POST",
+                data: { path: $scope.details.graphql.user.profile_pic_url },
+                headers: { "Content-Type": "application/json; charset=utf-8" }
+            })
+                .then(function (response) {
+                    //       alert("success");
+                    $scope.Colors = response.data;
+                }, function (error) {
+                    //      alert("failed");
+                    $scope.R = error.data;
+                });
+
+            $location.path('/7a');
         };
     })
     .controller("InfoController", function ($scope, $http, $location, $rootScope, $window) {

@@ -9,8 +9,7 @@
         <input name="myUsername" type="text" style="width:85%;" ng-model="search" ng-model-options="{ debounce: 800 }" onclick="select()" placeholder="Enter your full username on Instagram" required/>
         <span class="input-group-addon bar-style"><i class="glyphicon glyphicon-search"></i></span>
         <span class="asterisk_input"></span>
-        <p style=" margin-top:0px; padding-top:0px; color: darkred;" ng-show="myform.myUsername.$touched"> this field is required or you can skip </p>
-        <br />
+        <p style="font-size:x-small; margin-top:0px; padding-top:0px; color: darkred;" ng-show="!search && myform.myUsername.$touched"> this field is required or you can skip </p>
         <div style="display:inline; overflow: auto; white-space: nowrap; padding: 0px 0px;">
             <a style="padding-left:150%; float: right; font-size:25px; padding: 0.4cm 0.4cm 0.4cm 0.4cm; border-radius: 20%;" href="3.2" class="button button-large"> Skip &#62;&#62;&#62;</a>
             <br />

@@ -16,7 +16,8 @@ using System.Data.SqlClient;
 [System.Web.Script.Services.ScriptService]
 public class TemplateData : System.Web.Services.WebService
 {
-
+    //Session["user"]
+   // string email = "star7s@msn.com";
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
     JavaScriptSerializer js = new JavaScriptSerializer();
@@ -36,7 +37,7 @@ public class TemplateData : System.Web.Services.WebService
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, SliderImage, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink, PayPal, BankTransfer, Cash, ShopOwnerBank FROM Store Where Email = '" + Session["user"]+"'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, SliderImage, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink, PayPal, BankTransfer, Cash, ShopOwnerBank FROM Store Where Email = '" + Session["user"] + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -72,7 +73,7 @@ public class TemplateData : System.Web.Services.WebService
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Name, Price, Description, Discount, Category_ID, ShopEmail, Image FROM Product WHERE ShopEmail = '" + Session["user"] + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Name, Price, Description, Discount, Category_ID, StoreEmail, Image FROM Product WHERE StoreEmail = '" + Session["user"] + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -82,7 +83,7 @@ public class TemplateData : System.Web.Services.WebService
                 product.Description = reader["Description"].ToString();
                 product.Discount = Convert.ToInt32(reader["Discount"]);
                 product.Category_ID = reader["Category_ID"].ToString();
-                product.StoreEmail = reader["ShopEmail"].ToString();
+                product.StoreEmail = reader["StoreEmail"].ToString();
                 product.Image = reader["Image"].ToString();
             }
         }

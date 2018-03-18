@@ -420,13 +420,13 @@ public class CreationStage : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Category (ShopEmail, Name, OrderInMenu) values('" + Session["user"] + "', 'Category example', 1)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Category (StoreEmail, Name, OrderInMenu) values('" + Session["user"] + "', 'Category example', 1)", con);
                 cmd.ExecuteNonQuery(); con.Close();
             }
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT ID FROM Category WHERE ShopEmail = '"+ Session["user"] + "' AND Name = 'Category example'", con);
+                SqlCommand cmd = new SqlCommand("SELECT ID FROM Category WHERE StoreEmail = '" + Session["user"] + "' AND Name = 'Category example'", con);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -437,7 +437,7 @@ public class CreationStage : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Price, Description, Category_ID, ShopEmail, Image, Amount) values('product example', 50, N'" + Product_Description + "', "+id+", '" + Session["user"] + "', '" + Product_Image + "', 1)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Price, Description, Category_ID, StoreEmail, Image, Amount) values('product example', 50, N'" + Product_Description + "', "+id+", '" + Session["user"] + "', '" + Product_Image + "', 1)", con);
                 cmd.ExecuteNonQuery(); con.Close();
             }
         }
@@ -446,13 +446,13 @@ public class CreationStage : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Category (ShopEmail, Name, OrderInMenu) values('" + Session["user"] + "', N'"+"تصنيف مؤقت"+"', 1)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Category (StoreEmail, Name, OrderInMenu) values('" + Session["user"] + "', N'"+"تصنيف مؤقت"+"', 1)", con);
                 cmd.ExecuteNonQuery(); con.Close();
             }
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT ID FROM Category WHERE ShopEmail = '" + Session["user"] + "' AND Name = N'" + "تصنيف مؤقت" + "'", con);
+                SqlCommand cmd = new SqlCommand("SELECT ID FROM Category WHERE StoreEmail = '" + Session["user"] + "' AND Name = N'" + "تصنيف مؤقت" + "'", con);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -463,7 +463,7 @@ public class CreationStage : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Price, Description, Category_ID, ShopEmail, Image, Amount) values(N'" + "مثال على منتج" + "', 50, N'" + Product_Description + "',"+id+", '" + Session["user"] + "', '" + Product_Image + "', 1)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Price, Description, Category_ID, StoreEmail, Image, Amount) values(N'" + "مثال على منتج" + "', 50, N'" + Product_Description + "',"+id+", '" + Session["user"] + "', '" + Product_Image + "', 1)", con);
                 cmd.ExecuteNonQuery(); con.Close();
             }
         }

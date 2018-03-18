@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" />
     <script src="../../Scripts/angular.js"></script>
     <script src="../../Scripts/angular.min.js"></script>
-    <script src="Template1Controller.js"></script>
+    <script src="../Template1Controller.js"></script>
 
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -21,8 +21,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
-<body ng-style="{'color':Store.Color1}" class="homepage">
-    <div id="page-wrapper"  ng-style="{'background': Store.Color4}">
+<body class="homepage">
+    <div id="page-wrapper" ng-style="{'background': Store.Color4}">
 
         <!-- Header -->
         <section class="box" style=" padding:0px 0px 0px 0px; margin:0px 0px 0px 0px;">
@@ -31,128 +31,132 @@
                 <div id="header" style="position: relative;	margin:0 auto; overflow: hidden;">
 
                     <!-- Logo -->
-                    <div style=" float:left; width:33%;">
-                        <img src="../../images/shopping-cart.png" style="width:5vw; height:5vw;" href="">
-                    </div>
-                    <div ng-style="{'color': Store.Color1}" style=" position: absolute; left: 7em; right: 0em; margin: 0px 0px 0px 0px; width:auto;">
-                        <h1 style="font-size:3vw; margin: 15px 0px 0px 0px; ">{{Store.Name}}</h1>
-                    </div>
-                    <div style=" float:right;  margin:0px 0px 0px 0px; width:33%;">
-                        <img ng-src="{{Store.Logo}}" style="width: 10vw; height: 10vw; border-radius: 50%;" alt="Cinque Terre">
+                    <div class="row">
+                        <div class="12u">
+                            <div style=" float:left; width:33%;">
+                                <img src="../../images/shopping-cart.png" style="width:5vw; height:5vw;" href="">
+                            </div>
+                            <div ng-style="{'color': Store.Color1}" style=" position: absolute; left: 7em; right: 0em; margin: 0px 0px 0px 0px; width:auto;">
+                                <h1 style="font-size:3vw; margin: 15px 0px 0px 0px; ">{{Store.Name}}</h1>
+                            </div>
+                            <div style=" float:right;  margin:0px 0px 0px 0px; width:33%;">
+                                <img ng-src="{{Store.Logo}}" style="width: 10vw; height: 10vw; border-radius: 50%;" alt="Cinque Terre">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
         <!-- store welcom -->
-        <section  ng-style="{'background': Store.Color2}" style="padding-top:0%; padding-bottom: 0%; " id="banner">
-            <header ng-style="{'background': Store.Color2}">
-                <h2>{{Store.Description}}</h2>
-                <p>{{Store.Address}}</p>
-            </header>
+        <section style="padding-top:0%; padding-bottom: 0%; " id="banner">
+            <div class="row">
+                <div class="12u">
+                    <header ng-style="{'background': Store.Color2}">
+                        <h2>{{Store.Description}}</h2>
+                        <p>{{Store.Address}}</p>
+                    </header>
+                </div>
+            </div>
         </section>
         <!-- slider image -->
-        <section id="banner">
-            <img style="width:100%; height:auto;" ng-src="{{Store.SliderImage}}" />
+        <section style="padding-top:0px; padding-bottom:0px;" id="banner">
+            <div class="12u">
+                <img style="width:100%; height:auto;" ng-src="{{Store.SliderImage}}" />
+            </div>
         </section>
-
-        <!-- Main -->
-        <div  ng-style="{'background': Store.Color2}" id="main-wrapper">
-            <div class="container">
-                <div class="row">
-                    <div class="9u 12u(mobile)">
-                        <!-- Portfolio -->
-                        <section dir="rtl">
-                            <header class="major">
-                                <h2>المنتجات</h2>
-                            </header>
-                            <div class="row">
-                                <div style="float:left; width:30%;" class="4u 12u(mobile)">
-                                    <section ng-style="{'background': Store.Color4}" class="box">
-                                        <a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="product" /></a>
-                                        <header>
-                                            <h3>{{Product.Name}}</h3>
-                                        </header>
-                                        <p>{{Product.Description}}</p>
-                                        <footer>
-                                            <a class="button alt" data-toggle="modal" data-target="#myModal">اضف للعربة</a>
-                                        </footer>
-                                    </section>
-                                </div>
-                                <div style="float:left; width:30%;" class="4u 12u(mobile)">
-                                    <section ng-style="{'background': Store.Color4}" class="box">
-                                        <a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="product" /></a>
-                                        <header>
-                                            <h3>{{Product.Name}}</h3>
-                                        </header>
-                                        <p>{{Product.Description}}</p>
-                                        <footer>
-                                            <a class="button alt" data-toggle="modal" data-target="#myModal">اضف للعربة</a>
-                                        </footer>
-                                    </section>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-
-                    <!-- Sidebar -->
-                    <div style=" float:right; width:20%;" class="3u 12u(mobile)">
-
-                        <section class="box">
-                            <header>
-                                <h3 dir="rtl"> {{Store.menuTitle}}</h3>
-                            </header>
-                            <!-- Nav -->
-                            <nav id="menu">
-                                <ul dir="rtl">
-                                    <li class="current"><a style="text-decoration:none;" href="index.html">الرئيسية</a></li>
-                                    <li><a style="text-decoration:none;" href="left-sidebar.html">Left Sidebar</a></li>
-                                    <li><a style="text-decoration:none;" href="right-sidebar.html">Right Sidebar</a></li>
-                                    <li><a style="text-decoration:none;" href="no-sidebar.html">No Sidebar</a></li>
-                                </ul>
-                            </nav>
-                        </section>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div dir="rtl" class="modal-content">
-                <div class="modal-header">
-                    <button style="float:left;" type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">{{Product.Name}}</h4>
-
-                </div>
-                <div class="modal-body">
-                    <article ng-style="{'background': Store.Color3}" dir="rtl" class="box post">
-                        <a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="" /></a>
-                        <header>
-                            <p>{{Product.Description}}</p>
-                        </header>
-                    </article>
-                </div>
-                <div class="modal-footer">
-                    <a href="#" class="button alt">اضف للعربة</a>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <div style="background-color:#0d1626;" class="row">
-        <div class="12u">
-            <div id="footer-wrapper" ng-style="{'background': Store.Color1}">
-                <section id="footer" class="container">
+            <!-- Main -->
+            <div ng-style="{'background': Store.Color2}" id="main-wrapper">
+                <div class="container">
                     <div class="row">
-                        <div class="4u 12u(mobile)">
-                        </div>
-                        <div class="4u 12u(mobile)">
+                        <div class="9u 12u(mobile)">
+                            <!-- Portfolio -->
                             <section dir="rtl">
+                                <header class="major">
+                                    <h2 ng-style="{'background': Store.Color2}">المنتجات</h2>
+                                </header>
+                                <div class="row">
+                                    <div style="float:right;" class="4u 12u(mobile)">
+                                        <section ng-style="{'background': Store.Color4}" class="box">
+                                            <a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="product" /></a>
+                                            <header>
+                                                <h3>{{Product.Name}}</h3>
+                                            </header>
+                                            <p>{{Product.Description}}</p>
+                                            <footer>
+                                                <a class="button alt" data-toggle="modal" data-target="#myModal">اضف للعربة</a>
+                                            </footer>
+                                        </section>
+                                    </div>
+                                    <div style="float:right;" class="4u 12u(mobile)">
+                                        <section ng-style="{'background': Store.Color4}" class="box">
+                                            <a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="product" /></a>
+                                            <header>
+                                                <h3>{{Product.Name}}</h3>
+                                            </header>
+                                            <p>{{Product.Description}}</p>
+                                            <footer>
+                                                <a class="button alt" data-toggle="modal" data-target="#myModal">اضف للعربة</a>
+                                            </footer>
+                                        </section>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Sidebar -->
+                        <div style=" float:right;" class="3u 12u(mobile)">
+
+                            <section class="box">
+                                <header>
+                                    <h3 dir="rtl"> {{Store.menuTitle}}</h3>
+                                </header>
+                                <!-- Nav -->
+                                <nav id="menu">
+                                    <ul dir="rtl">
+                                        <li class="current"><a style="text-decoration:none;" href="index.html">الرئيسية</a></li>
+                                        <li><a style="text-decoration:none;" href="left-sidebar.html">Left Sidebar</a></li>
+                                        <li><a style="text-decoration:none;" href="right-sidebar.html">Right Sidebar</a></li>
+                                        <li><a style="text-decoration:none;" href="no-sidebar.html">No Sidebar</a></li>
+                                    </ul>
+                                </nav>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div dir="rtl" class="modal-content">
+                    <div class="modal-header">
+                        <button style="float:left;" type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">{{Product.Name}}</h4>
+
+                    </div>
+                    <div class="modal-body">
+                        <article ng-style="{'background': Store.Color3}" dir="rtl" class="box post">
+                            <a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="" /></a>
+                            <header>
+                                <p>{{Product.Description}}</p>
+                            </header>
+                        </article>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="button alt">اضف للعربة</a>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <!-- Footer -->
+        <div ng-style="{'background': Store.Color1}">
+            <div class="12u">
+                <div id="footer-wrapper">
+                    <section id="footer" class="container">
+                        <div class="row">
+                            <div dir="rtl" class="4u 12u(mobile)">
                                 <header>
                                     <h2>للتواصل</h2>
                                 </header>
@@ -162,45 +166,49 @@
                                     <a ng-show="Svisible" herf="{{Store.SnapchatLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Snapchat" src="../../images/snapchat.png"></a>
                                     <a ng-show="Ivisible" herf="{{Store.InstagramLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Instagram" src="../../images/insta.png"></a>
                                 </div>
-                                <ul class="contact">
-                                    <li>
-                                        <h3>{{Store.Address}}</h3>
-                                        <p> أين نحن ؟</p>
-                                    </li>
-                                    <li>
-                                        <p>البريد</p>
-                                        <h3>{{Store.Email}}</h3>
-                                    </li>
-                                    <li>
-                                        <p>الجوال</p>
-                                        <h3>{{Store.Phone}}</h3>
-                                    </li>
-                                </ul>
-                            </section>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="12u">
-                            <!-- Copyright -->
-                            <div id="copyright">
-                                <ul class="links">
-                                    <li><a href=""><img style="width:5vw;" src="../../images/logo-arabi.png"/>&copy; Building Station. جميع الحقوق محفوظة </li></a>
-                                    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-                                </ul>
+                            </div>
+                            <div class="2u 12u(mobile)"></div>
+                            <div class="4u 12u(mobile)">
+                                <section dir="rtl">
+                                    <ul class="contact">
+                                        <li>
+                                            <h4> أين نحن ؟</h4>
+                                            <h3>{{Store.Address}}</h3>
+                                        </li>
+                                        <li>
+                                            <h4>البريد</h4>
+                                            <h3>{{Store.Email}}</h3>
+                                        </li>
+                                        <li>
+                                            <h4>الجوال</h4>
+                                            <h3>{{Store.Phone}}</h3>
+                                        </li>
+                                    </ul>
+                                </section>
                             </div>
                         </div>
-                    </div>
-                </section>
+                        <div class="row">
+                            <div class="12u">
+                                <!-- Copyright -->
+                                <div style="margin-bottom:0px;" id="copyright">
+                                    <ul ng-style="{'background': Store.Color2}" class="links">
+                                        <li><a href=""><img style="width:5vw;" src="../../images/logo-arabi.png" />&copy; Building Station. جميع الحقوق محفوظة </a></li>
+                                        <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.dropotron.min.js"></script>
-    <script src="assets/js/skel.min.js"></script>
-    <script src="assets/js/skel-viewport.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-    <script src="assets/js/main.js"></script>
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.dropotron.min.js"></script>
+        <script src="assets/js/skel.min.js"></script>
+        <script src="assets/js/skel-viewport.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+        <script src="assets/js/main.js"></script>
 </body>
 </html>
