@@ -715,20 +715,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 }, function (error) {
                     alert("failed add");
                     alert(error);
-=======
-                product.Discount = '';
-                alert("success add");
-                }, function (error) {
-                    alert("failed add");
->>>>>>> 5422682f2ba5d5a5c005180f481c80259585b927
-                product.Image = '';
-                product.Name = '';
-                product.Description = '';
-                product.Price = '';
-                product.Amount = '';
-                product.Discount = '';
-                $scope.selectedCategoryChanged();
-                //////////////////////////
             });
         };
         //\to add new row

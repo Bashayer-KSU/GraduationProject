@@ -17,7 +17,7 @@ using System.Data.SqlClient;
 public class TemplateData : System.Web.Services.WebService
 {
     //Session["user"]
-    string email = "star7s@msn.com";
+   // string email = "star7s@msn.com";
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
     JavaScriptSerializer js = new JavaScriptSerializer();
@@ -37,7 +37,7 @@ public class TemplateData : System.Web.Services.WebService
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, SliderImage, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink, PayPal, BankTransfer, Cash, ShopOwnerBank FROM Store Where Email = '" + email +"'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, SliderImage, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink, PayPal, BankTransfer, Cash, ShopOwnerBank FROM Store Where Email = '" + Session["user"] + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -73,7 +73,7 @@ public class TemplateData : System.Web.Services.WebService
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Name, Price, Description, Discount, Category_ID, StoreEmail, Image FROM Product WHERE StoreEmail = '" + email + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Name, Price, Description, Discount, Category_ID, StoreEmail, Image FROM Product WHERE StoreEmail = '" + Session["user"] + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -109,7 +109,7 @@ public class TemplateData : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("UPDATE Store SET  [" + DataType + "] = N'" + NewValue + "' Where Email = '" + email + "'", con))
+                using (SqlCommand cmd = new SqlCommand("UPDATE Store SET  [" + DataType + "] = N'" + NewValue + "' Where Email = '" + Session["user"] + "'", con))
                 {
                     x = cmd.ExecuteNonQuery();
                     if (x != 0)
@@ -132,7 +132,7 @@ public class TemplateData : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET SnapchatLink = '" + snapchat_link + "', TwitterLink = '" + twitter_link + "', FacebookLink = '" + facebook_link + "', InstagramLink = '" + instagram_link + "' WHERE Email='" + email + "'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET SnapchatLink = '" + snapchat_link + "', TwitterLink = '" + twitter_link + "', FacebookLink = '" + facebook_link + "', InstagramLink = '" + instagram_link + "' WHERE Email='" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
             store.SnapchatLink = snapchat_link;
@@ -152,7 +152,7 @@ public class TemplateData : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET SliderImage = '" + slider + "' WHERE Email='" + email + "'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET SliderImage = '" + slider + "' WHERE Email='" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
