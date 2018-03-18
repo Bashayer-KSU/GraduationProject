@@ -128,7 +128,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                     params: { IBAN: IBAN }
                 })
                     .then(function (response) {
-                        if (!response.data.toLowerCase().includes("No")) {
+                        if (!response.data === " No ShopOwnerBank ") {
                             $scope.bankInfo.IBAN = response.data;
                             $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
                         }
@@ -164,7 +164,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 params: {}
             })
                 .then(function (response) {
-                    if (!response.data.toLowerCase().includes("No")) {
+                    if (!response.data == " No ShopOwnerBank ") {
                         $scope.bankInfo.IBAN = response.data;
                         $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
                     }
