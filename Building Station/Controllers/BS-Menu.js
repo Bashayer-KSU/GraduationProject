@@ -607,14 +607,12 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
         };
         $scope.tabHeader = "Previe wWebsite";
     })
-<<<<<<< HEAD
     .controller("TemplateController", function ($rootScope, $scope, $http) {
         $scope.Logout = function () {
             $rootScope.Logout();
         };
-=======
+    })
     .controller("TemplateController", function ($scope, $http, $location) {
->>>>>>> 215e25f16b0d952d066d8ccd7f6c0a4167ed571a
         $scope.tabHeader = "Template";
     /*    $scope.getImageUrl = function (index) {
             return "/images/T" + (index+1)+".png";
@@ -731,7 +729,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 product.Description = '';
                 product.Price = '';
                 product.Amount = '';
-<<<<<<< HEAD
                 product.Discount = '';*/
                 Scope.selectedCategoryChanged();
                 }, function (error) {
