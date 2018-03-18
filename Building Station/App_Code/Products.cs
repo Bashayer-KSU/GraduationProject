@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,7 @@ public class Products : System.Web.Services.WebService {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
     string ShopEmail = "lamia@gmail.com";
+      //  string ShopEmail = "bs@mail.com";
 
     [WebMethod]
     public void GetAllCategories(/*string ShopEmail*/)
@@ -110,7 +112,6 @@ public class Products : System.Web.Services.WebService {
         Context.Response.Write(js.Serialize(ProductsList));
     }
 
-    
     [WebMethod]
     public void RemoveProduct(int product_ID)
     {
@@ -130,21 +131,33 @@ public class Products : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public Product EditProduct(int id, string cat, string image, string name, string des, double price, int amount, int discount)
+    public Product EditProduct(int id, string cat, string image, string name, string des, double price, double PADs, int amount, int discount)
     {
         int x;
         Product product = new Product();
             using (SqlConnection con = new SqlConnection(cs))
             {
-                con.Open();
-            SqlCommand check = new SqlCommand("select ID from Category where Name =N'" + cat + "' and ShopEmail = '" + ShopEmail + "'", con);
-            SqlDataReader reader = check.ExecuteReader();
+            /* con.Open();
+         SqlCommand check = new SqlCommand("SELECT ID FROM Category WHERE (ShopEmail = '" + ShopEmail + "' AND Name = '" + cat + "')", con);
+         SqlDataReader c = check.ExecuteReader();
+         int s = Convert.ToInt32(c["ID"]);*/
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader reader;
+
+            cmd.CommandText = "SELECT ID FROM Category WHERE (ShopEmail = '" + ShopEmail + "' AND Name = '" + cat + "')";
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = con;
+
+            con.Open();
+
+            reader = cmd.ExecuteReader();
             if (reader.Read())
             {
-                using (SqlCommand cmd = new SqlCommand("UPDATE Product SET Name =N'" + name + "', Price =" + price + ", Image = '" + image + "', Description = N'" + des + "', Discount = " + discount + ", Amount = " + amount + ",Category_ID	='" + reader["ID"].ToString() + "' WHERE ID =" + id , con))
+                string catID = reader["ID"].ToString();
+                reader.Close();
+                using (SqlCommand cmd2 = new SqlCommand("UPDATE Product SET Name = N'" + name + "', Price =" + price + ", Image = '" + image + "', Description = N'" + des + "', Discount = " + discount + ", Amount = " + amount + ",Category_ID	='" + catID + "' WHERE ID =" + id , con))
                 {
-                    reader.Close();
-                    x = cmd.ExecuteNonQuery();
+                    x = cmd2.ExecuteNonQuery();
                     if (x != 0)
                     {
                         product.Name = name;
@@ -172,15 +185,26 @@ public class Products : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public Product AddNewProduct(string cat, string image, string name, string des, double price, double PAD, int amount, int discount)
+    public Product AddNewProduct(string cat, string image, string name, string des, double price, double PADs, int amount, int discount)
     {
         int rows;
         Product product = new Product();
         using (SqlConnection con = new SqlConnection(cs))
         {
+            /* con.Open();
+             SqlCommand check = new SqlCommand("select ID from Category where (Name = N'" + cat + "' and ShopEmail = '" + ShopEmail + "')", con);
+             SqlDataReader reader = check.ExecuteReader();*/
+
+            SqlCommand cmd0 = new SqlCommand();
+            SqlDataReader reader;
+
+            cmd0.CommandText = "SELECT ID FROM Category WHERE (ShopEmail = '" + ShopEmail + "' AND Name = '" + cat + "')";
+            cmd0.CommandType = CommandType.Text;
+            cmd0.Connection = con;
+
             con.Open();
-            SqlCommand check = new SqlCommand("select ID from Category where (Name =N'" + cat + "' and ShopEmail = '" + ShopEmail + "')", con);
-            SqlDataReader reader = check.ExecuteReader();
+
+            reader = cmd0.ExecuteReader();
             if (reader.Read())
             {
                 int catID = Convert.ToInt32(reader["ID"]);
@@ -191,10 +215,7 @@ public class Products : System.Web.Services.WebService {
                     reader.Close();
 
                     rows = cmd.ExecuteNonQuery();
-
-                    using (SqlCommand cmd2 = new SqlCommand("SELECT ID FROM Product WHERE (Name =N'" + name + "' AND Category_ID =" + catID + ") AND ShopEmail = '" + ShopEmail + "'", con))
-                    {
-                        SqlDataReader id = cmd2.ExecuteReader();
+                    
                        // product.ID = Convert.ToInt32(id["ID"]);
                         product.Name = name;
                         product.Price = price;
@@ -211,7 +232,6 @@ public class Products : System.Web.Services.WebService {
                             product.PriceAfterDiscount = i;
                         }
                         else { product.PriceAfterDiscount = 0; }
-                    }
                 }
             }
         }
