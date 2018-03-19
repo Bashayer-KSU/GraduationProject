@@ -82,7 +82,6 @@ public class ShowHideElement : System.Web.Services.WebService
                 e.Value = reader["Value"].ToString();
                 e.Hidden = Convert.ToBoolean(reader["Hidden"]);
                 e.Image = reader["Image"].ToString();
-                e.Store_ID = reader["Store_ID"].ToString();
                 ElementsList.Add(e);
 
             }

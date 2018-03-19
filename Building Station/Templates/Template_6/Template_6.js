@@ -5,6 +5,11 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http) {
     $scope.checkout = false;
     $scope.payment = false;
     $scope.buyerName = "";
+    $scope.PaymentMethod = {
+        Cash: false,
+       PayPal : false,
+      BankTransfer: false
+    };
     var init = function () {
 
         $http.post('/TemplateData.asmx/StoreData').then(function (response) {
@@ -17,7 +22,15 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http) {
             if ($scope.Store.BankTransfer) {
                 if ($scope.Store.BankAccount.includes("No"))
                     $scope.Store.BankTransfer = false;
-                }
+            }
+
+            if ($scope.Store.Cash)
+                $scope.PaymentMethod.Cash = "Cash";
+            else if ($scope.Store.BankTransfer)
+                $scope.PaymentMethod = "BankTransfer";
+            else $scope.PaymentMethod = "PayPal";
+
+
 
             //Social Media Link
             $scope.Facebook = $scope.Store.FacebookLink.toLowerCase().includes("https://www.facebook.com/");
@@ -82,5 +95,34 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http) {
     };
     ElementsData();
 
+    $scope.Checkout = function () {
+        console.log("Hi " + $scope.BuyerName);
+        console.log("Hi " + $scope.BuyerPhone);
+        console.log("Hi " + $scope.BuyerEmail);
+        console.log("Hi " + $scope.BuyerLocation);
+        console.log("Hi " + $scope.PaymentMethod);
+        console.log("Hi " + $scope.BankAccount);
 
+
+        /*
+        $http.post('/BuyerOrder.asmx/CreateOrder',
+            {
+                'BuyerName': $scope.BuyerName,
+                'BuyerPhone': $scope.BuyerPhone,
+                'BuyerEmail': $scope.BuyerEmail,
+                'BuyerLocation': $scope.BuyerLocation,
+                'PaymentMethod': $scope.PaymentMethod,
+                'BankAccount': $scope.BankAccount,
+                'TotalPrice': $scope.TotalPrice
+    
+            }
+    
+        ).then(function (response) {
+        }, function (error) {
+            $scope.error = error;
+        });*/
+    };
 });
+
+
+
