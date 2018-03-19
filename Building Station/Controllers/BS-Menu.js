@@ -121,7 +121,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 }, function (error) {
                     $scope.error = error;
             });*/
-            if (IBAN != "" && IBAN != null) {
+            if (IBAN !== "" && IBAN !== null) {
                 $http({
                     url: "PaymentMethods.asmx/UbdateBankInfo",
                     method: "get",
@@ -164,14 +164,14 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 params: {}
             })
                 .then(function (response) {
-                    if (!response.data == " No ShopOwnerBank ") {
+                    if (!response.data === " No ShopOwnerBank ") {
                         $scope.bankInfo.IBAN = response.data;
                         $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
                     }
                     else {
                         $scope.bankInfo.IBAN = "";
                     }
-                    
+
                 }, function (error) {
                     $scope.error = error.data;
                 });
@@ -339,9 +339,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                     if ($scope.elementInfo[i].Name === "Snapchat") {
                         $scope.icon.snapchat = !$scope.elementInfo[i].Hidden;
                         validLinkService.valid("Snapchat").then(function (responseSnap) {
-                            if (responseSnap == 'true')
+                            if (responseSnap === 'true')
                                 $scope.disableSnapchat = false;
-                            else if (responseSnap == 'false') {
+                            else if (responseSnap === 'false') {
                                 $scope.disableSnapchat = true;
                                 $scope.icon.snapchat = false;
                             }
@@ -350,9 +350,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                     else if ($scope.elementInfo[i].Name === "Facebook") {
                         $scope.icon.facebook = !$scope.elementInfo[i].Hidden;
                         validLinkService.valid("Facebook").then(function (response) {
-                            if (response == 'true')
+                            if (response === 'true')
                                 $scope.disableFacebook = false;
-                            else if (response == 'false') {
+                            else if (response === 'false') {
                                 $scope.disableFacebook = true;
                                 $scope.icon.facebook = false;
                             }
@@ -361,9 +361,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                     else if ($scope.elementInfo[i].Name === "Twitter") {
                         $scope.icon.twitter = !$scope.elementInfo[i].Hidden;
                         validLinkService.valid("Twitter").then(function (response) {
-                            if (response == 'true')
+                            if (response === 'true')
                                 $scope.disableTwitter = false;
-                            else if (response == 'false') {
+                            else if (response === 'false') {
                                 $scope.disableTwitter = true;
                                 $scope.icon.twitter = false;
                             }
@@ -372,9 +372,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                     else if ($scope.elementInfo[i].Name === "Instagram") {
                         $scope.icon.instagram = !$scope.elementInfo[i].Hidden;
                         validLinkService.valid("Instagram").then(function (response) {
-                            if (response == 'true')
+                            if (response === 'true')
                                 $scope.disableInstagram = false;
-                            else if (response == 'false') {
+                            else if (response === 'false') {
                                 $scope.disableInstagram = true;
                                 $scope.icon.instagram = false;
                             }
@@ -405,8 +405,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 if ($scope.section.about)
                     action = "Show";
                 else action = "Hide";
-        }
-            if (section != "" && action != "") {
+            }
+            if (section !== "" && action !== "") {
                 $http({
                     url: "ShowHideElement.asmx/ShowHideSection",
                     method: "get",
@@ -444,7 +444,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                     action = "Show";
                 else action = "Hide";
             }
-            if (icon != "" && action != "") {
+            if (icon !== "" && action !== "") {
                 $http({
                     url: "ShowHideElement.asmx/ShowHideIcon",
                     method: "get",
@@ -469,7 +469,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
 
             if (typeof $scope.selectedTextType !== "undefined") {
                 if ($scope.selectedTextType !== null || $scope.selectedTextType !== "") {
-                    DataType = $scope.selectedTextType.name;                    
+                    DataType = $scope.selectedTextType.name;
                     NewValue = $scope.ShopOwnerText;
                     $http({
                         url: "TemplateData.asmx/UpdatStoreData",
@@ -483,14 +483,14 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                             console.log(response);
                             $scope.selectedTextType.value = response.data.substr(1, response.data.length - 2);
                             $scope.ShopOwnerText = response.data.substr(1, response.data.length - 2);
-                          //  $scope.ShopOwnerText = $filter('newlines')($scope.ShopOwnerText);
-                           // $scope.selectedTextType.value = $filter('newlines')($scope.ShopOwnerText);
+                            //  $scope.ShopOwnerText = $filter('newlines')($scope.ShopOwnerText);
+                            // $scope.selectedTextType.value = $filter('newlines')($scope.ShopOwnerText);
 
                             $scope.refreshIframe();
 
                         }, function (error) {
-                    $scope.error = error.data;
-                });
+                            $scope.error = error.data;
+                        });
 
                 }
             }
@@ -522,12 +522,12 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 headers: { "Content-Type": "application/json; charset=utf-8" }
             })
                 .then(function (response) {
-                  /*  $scope.Colors = response.data;
-                    $scope.color1 = $scope.Colors.Color1;
-                    $scope.color2 = $scope.Colors.Color2;
-                    $scope.color3 = $scope.Colors.Color3;
-                    $scope.color4 = $scope.Colors.Color4;*/
-                   // $scope.refreshMyColors = true;
+                    /*  $scope.Colors = response.data;
+                      $scope.color1 = $scope.Colors.Color1;
+                      $scope.color2 = $scope.Colors.Color2;
+                      $scope.color3 = $scope.Colors.Color3;
+                      $scope.color4 = $scope.Colors.Color4;*/
+                    // $scope.refreshMyColors = true;
                 }, function (error) {
                     $scope.R = error.data;
                 });
@@ -543,9 +543,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
             })
                 .then(function (response) { }, function (error) { });
 
-        //    $scope.refreshIframe();
-          //  $scope.tab.myColors = true;
-            $scope.refreshIframe();            
+            //    $scope.refreshIframe();
+            //  $scope.tab.myColors = true;
+            $scope.refreshIframe();
             myservice.refresh();
         };
 
@@ -597,9 +597,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
     })
     .controller("TemplateController", function ($scope, $http, $location) {
         $scope.tabHeader = "Template";
-    /*    $scope.getImageUrl = function (index) {
-            return "/images/T" + (index+1)+".png";
-        };*/
+        /*    $scope.getImageUrl = function (index) {
+                return "/images/T" + (index+1)+".png";
+            };*/
 
         $scope.Template = function (Tid) {
             var post = $http({
@@ -624,7 +624,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 .then(function (response) {
                     $scope.categories = response.data;
                     if (newCategury == null || newCategury === 'undefined')
-                    { $scope.selectedCategory = $scope.categories[0]; }
+                    { $scope.selectedCategory = $scope.categories[0].Name; }
                     else { $scope.selectedCategory = newCategury; }
                     $scope.selectedCategoryChanged();
                 });
@@ -646,6 +646,23 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
             $scope.newCat = false;
         };
         //\to add category
+
+        // change category Order
+        $scope.ChangeOrder = function (categories) {
+            var cats = [{ OrderInMenu: 1, Name: "فئة2" }, { OrderInMenu: 2, Name: "فئة1" }]
+            alert("change order");
+            $http({
+                url: "Products.asmx/ChangeOrder",
+                method: "get",
+                params: { categories: cats }
+            })
+                .then(function (response) {
+                    $scope.resultoforder = response.data;
+                }, function (error) {
+                    alert(error);
+                });
+        };
+        //\change category Order
 
         //upload image for product
         $scope.uploadImage = function (fileReader) {
@@ -691,14 +708,15 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
         //\apply edit the product
 
         //to add new row
-        $scope.addNewProduct = function (product, Image, Name, Description, Price, PAD, Amount, Discount) {
-            
+        $scope.addNewProduct = function (product, Category_ID, Image, Name, Description, Price, PAD, Amount, Discount) {
+            alert("addProduct function");
+            alert($scope.selectedCategory);
             $http({
                 url: "Products.asmx/AddNewProduct",
                 headers: { "Content-Type": "application/json;charset=utf-8" },
                 dataType: 'json',
                 method: 'post',
-                data: JSON.stringify({ cat: product.Category_ID, image: Image, name: Name, des: Description, price: Price, PADs:PAD, amount: Amount, discount: Discount })
+                data: JSON.stringify({ cat: $scope.selectedCategory, image: Image, name: Name, des: Description, price: Price, PADs:PAD, amount: Amount, discount: Discount })
             }).then(function (response) {
                 /*alert("success add");
                 $scope.addProduct = response.data;
@@ -709,12 +727,11 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 product.Description = '';
                 product.Price = '';
                 product.Amount = '';
-<<<<<<< HEAD
                 product.Discount = '';*/
                 Scope.selectedCategoryChanged();
                 }, function (error) {
-                    alert("failed add");
                     alert(error);
+                    alert("failed add");
             });
         };
         //\to add new row
