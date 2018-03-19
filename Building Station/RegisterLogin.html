@@ -77,13 +77,15 @@
                                 <p class="alert alert-danger" ng-show="register_eng.RECpassword.$error.mismatchpass">Password and Confirm Password must match.</p>
 
                                 <div class="input-field col s6">
-                                    <input id="REphone" type="number" name="REphone" ng-model="REphone" ng-minlength='8' ng-maxlength='15' class="validate" required>
+                                    <input id="REphone" type="text" name="REphone" ng-model="REphone" ng-pattern="/^[0-9]{1,13}$/" ng-minlength='8' ng-maxlength='15' class="validate" required>
                                     <label for="REphone">Phone number</label>
                                     <p class="alert alert-danger" ng-show="register_eng.REphone.$error.maxlength || register_eng.REphone.$error.minlength || form.REphone.$invalid">Your should write your phone number</p>
+                                    <p class="alert alert-danger" ng-show="register_eng.REphone.$error.pattern">Not a valid number!</p>
+
                                 </div>
                                 <div class="space-top text-center">
                                     <button ng-disabled="register_eng.$invalid" ng-click="SendData('reg','eng')" class="waves-effect waves-light btn done">
-                                        <!-- <i class="material-icons left">done</i>--> REGISTER
+                                        REGISTER
                                     </button>
                                 </div>
                             </form>
@@ -137,9 +139,11 @@
 
 
                                 <div class="input-field col s6">
-                                    <input id="RAphone" type="number" name="Rphone" ng-model="Rphone" ng-minlength='8' ng-maxlength='15' class="validate" required>
+                                    <input id="RAphone" type="text" name="Rphone" ng-pattern="/^[0-9]{1,13}$/" ng-model="Rphone" ng-minlength='8' ng-maxlength='15' class="validate" required>
                                     <label for="RAphone" style="position: absolute; left:260px;font-family:NeoSansArabic;">رقم الجوال</label>
                                     <p class="alert alert-danger" ng-show="register_ar.Rphone.$error.maxlength || register_ar.Rphone.$error.minlength || form.Rphone.$invalid">الرجاء إدخال رقم الجوال بشكل صحيح</p>
+                                    <p class="alert alert-danger" ng-show="register_ar.Rphone.$error.pattern">الرقم المدخل غير صحيح!</p>
+
                                 </div>
                                 <div class="space-top text-center">
                                     <button style="font-family:NeoSansArabic;" ng-disabled="register_ar.$invalid" ng-click="SendData('reg','ar')" class="waves-effect waves-light btn done">

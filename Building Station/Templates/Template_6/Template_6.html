@@ -162,26 +162,30 @@
                                                         <div class="col-sm-12 mb-3">
                                                             <label for="buyerName">Buyer Name</label>
                                                             <input type="text" class="form-control validate" name="buyerName" ng-model="buyerName" id="Name" placeholder="Enter Your Name" required>
-                                                            <p class="alert alert-danger" ng-show="!buyer.buyerName.$valid">Buyer Name Required</p>
+                                                            <p class="alert alert-danger" ng-show="!buyer.buyerName.$valid">Your Name Required.</p>
                                                         </div>
                                                         <div class="col-sm-12 mb-3">
                                                             <label for="Phone">Phone Number</label>
-                                                            <input type="text" class="form-control" id="Phone" placeholder="Enter Your Phone Number" value="" required>
+                                                            <input type="text" class="form-control" ng-pattern="/^[0-9]{1,13}$/" id="Phone" name="buyerPhone" ng-model="buyerPhone" placeholder="Enter Your Phone Number" required>
+                                                            <p class="alert alert-danger" ng-show="buyer.buyerPhone.$error.pattern">Not a valid number!</p>
+                                                            <p class="alert alert-danger" ng-show="buyer.buyerPhone.$error.required">Your Phone Required.</p>
                                                         </div>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="email">Email</label>
-                                                        <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                                                        <div class="invalid-feedback">
-                                                            Please enter a valid email address for shipping updates.
-                                                        </div>
+                                                        <input type="email" class="form-control" id="email" name="buyerEmail" ng-model="buyerEmail" placeholder="you@example.com">
+                         
+                                                        <p class="invalid-feedback" ng-show="!buyer.buyerEmail.$error.email">Please enter a valid email address for shipping updates.</p>
+
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="Location">Location</label>
-                                                        <input type="text" class="form-control" id="Location" placeholder="1234 Main St" required>
+                                                        <input type="text" class="form-control" id="Location" name="buyerLocation" ng-model="buyerLocation" placeholder="1234 Main St" required>
                                                         <div class="invalid-feedback">
                                                             Please enter your shipping address.
                                                         </div>
+                                                        <p class="alert alert-danger" ng-show="!buyer.buyerLocation.$valid">Please enter your shipping address.</p>
+
                                                     </div>
                                             </form>
                                             <form ng-show="payment" class="needs-validation text-sm-left" novalidate>
@@ -234,8 +238,8 @@
                     <div class="modal-footer justify-content-center">
                         <button ng-show="!checkout" type="button" class="btn btn-info btn-md" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Proceed to Checkout</button>
                         <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=false; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
-                        <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Choose Payment Method</button>
-                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
+                        <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="buyer.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Choose Payment Method</button>
+                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=true; payment=false;"  ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
                         <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="checkout()" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
 
                     </div>
