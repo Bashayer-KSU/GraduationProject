@@ -71,18 +71,14 @@ public class ShowHideElement : System.Web.Services.WebService
 
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("select Name, Hidden from Element Where StoreEmail='" + Session["user"] + "' AND Hidden = False ", con);
+            SqlCommand cmd = new SqlCommand("select Name, Hidden from Element Where StoreEmail='" + Session["user"] + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
                 Element e = new Element();
                 e.Name = reader["Name"].ToString();
-                e.Type = reader["Type"].ToString();
-                e.Value = reader["Value"].ToString();
                 e.Hidden = Convert.ToBoolean(reader["Hidden"]);
-                e.Image = reader["Image"].ToString();
-                e.Store_ID = reader["Store_ID"].ToString();
                 ElementsList.Add(e);
 
             }

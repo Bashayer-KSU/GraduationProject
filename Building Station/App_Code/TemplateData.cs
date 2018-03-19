@@ -25,6 +25,8 @@ public class TemplateData : System.Web.Services.WebService
 
     public Store store = new Store();
     public Product product = new Product();
+    List<Element> ElementsList = new List<Element>();
+
     public TemplateData()
     {
 
@@ -139,6 +141,123 @@ public class TemplateData : System.Web.Services.WebService
             store.TwitterLink = twitter_link;
             store.FacebookLink = facebook_link;
             store.InstagramLink = instagram_link;
+
+            con.Open();
+            //Link Elements
+
+            //Snapchat Link
+            Element element = new Element();
+            element.StoreEmail = Session["user"].ToString();
+            if (store.SnapchatLink != null)
+            {
+                element.Value = store.SnapchatLink;
+                if (store.SnapchatLink.ToLower().Contains("snapchat"))
+                {
+                    element.Hidden = false;
+                }
+                else
+                    element.Hidden = true;
+            }
+            else
+            {
+                element.Hidden = true;
+                element.Value = "No Value";
+            }
+
+            element.Name = "Snapchat";
+            ElementsList.Add(element);
+            cmd = new SqlCommand("UPDATE Element SET Value = '" + element.Value + "', Hidden= '" + element.Hidden + "' WHERE StoreEmail = '" + element.StoreEmail + "' AND Name = '" + element.Name + "'", con);
+            cmd.ExecuteNonQuery();
+
+
+            //Twitter Link
+            element = new Element();
+            element.StoreEmail = Session["user"].ToString();
+            if (store.TwitterLink != null)
+            {
+                element.Value = store.TwitterLink;
+                if (store.TwitterLink.ToLower().Contains("https://twitter.com/"))
+                    element.Hidden = false;
+                else
+                    element.Hidden = true;
+            }
+            else
+            {
+                element.Hidden = true;
+                element.Value = "No Value";
+            }
+
+            element.Name = "Twitter";
+            ElementsList.Add(element);
+            cmd = new SqlCommand("UPDATE Element SET Value = '" + element.Value + "', Hidden= '" + element.Hidden + "' WHERE StoreEmail = '" + element.StoreEmail + "' AND Name = '" + element.Name + "'", con);
+            cmd.ExecuteNonQuery();
+
+
+            //Facebook Link
+            element = new Element();
+            element.StoreEmail = Session["user"].ToString();
+            if (store.FacebookLink != null)
+            {
+                element.Value = store.FacebookLink;
+                if (store.FacebookLink.ToLower().Contains("https://www.facebook.com/"))
+                    element.Hidden = false;
+                else
+                    element.Hidden = true;
+            }
+            else
+            {
+                element.Hidden = true;
+                element.Value = "No Value";
+            }
+
+            element.Name = "Facebook";
+            ElementsList.Add(element);
+            cmd = new SqlCommand("UPDATE Element SET Value = '" + element.Value + "', Hidden= '" + element.Hidden + "' WHERE StoreEmail = '" + element.StoreEmail + "' AND Name = '" + element.Name + "'", con);
+            cmd.ExecuteNonQuery();
+
+
+            //Instagram Link
+            element = new Element();
+            element.StoreEmail = Session["user"].ToString();
+            if (store.InstagramLink != null)
+            {
+                element.Value = store.InstagramLink;
+                if (store.InstagramLink.ToLower().Contains("https://www.instagram.com/"))
+                    element.Hidden = false;
+                else
+                    element.Hidden = true;
+            }
+            else
+            {
+                element.Hidden = true;
+                element.Value = "No Value";
+            }
+
+            element.Name = "Instagram";
+            ElementsList.Add(element);
+            cmd = new SqlCommand("UPDATE Element SET Value = '" + element.Value + "', Hidden= '" + element.Hidden + "' WHERE StoreEmail = '" + element.StoreEmail + "' AND Name = '" + element.Name + "'", con);
+            cmd.ExecuteNonQuery();
+
+            con.Close();
+
+            Context.Response.Write(js.Serialize(store));
+        }
+    }
+
+    [WebMethod(EnableSession = true)]
+    public void UploadLogo(string logo)
+    {
+
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET logo = '" + logo + "' WHERE Email='" + Session["user"] + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            store.Logo = logo;
             Context.Response.Write(js.Serialize(store));
         }
 
@@ -157,6 +276,20 @@ public class TemplateData : System.Web.Services.WebService
             con.Close();
 
             store.SliderImage = slider;
+
+            con.Open();
+            Element element = new Element();
+            //Slider Element
+            element = new Element();
+            element.StoreEmail = Session["user"].ToString();
+            element.Name = "Slider";
+            element.Hidden = false;
+            element.Image = store.SliderImage;
+            ElementsList.Add(element);
+
+            cmd = new SqlCommand("UPDATE Element SET Hidden = '" + element.Hidden + "', Image = '" + element.Image + "' WHERE StoreEmail = '" + element.StoreEmail + "' AND Name = '" + element.Name + "'", con);
+            cmd.ExecuteNonQuery();
+
             Context.Response.Write(js.Serialize(store));
         }
     }
