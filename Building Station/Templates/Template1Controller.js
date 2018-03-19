@@ -5,24 +5,24 @@
     $http.get('../../TemplateData.asmx/StoreData').then(function (response) {
         $scope.Store = response.data;
 
-        if ($scope.Store.SnapchatLink.toLowerCase().includes("snapchat")) {
+        if ($scope.Store.SnapchatLink.toLowerCase().includes("https://www.snapchat.com/add/")) {
             $scope.Svisible = true;
         } 
         else { $scope.Svisible = false; }
 
-        if ($scope.Store.TwitterLink.toLowerCase().includes("twitter")) {
+        if ($scope.Store.TwitterLink.toLowerCase().includes("https://twitter.com/")) {
             $scope.Tvisible = true;
         }
         else {
             $scope.Tvisible = false;
         }
 
-        if ($scope.Store.FacebookLink.toLowerCase().includes("facebook")) {
+        if ($scope.Store.FacebookLink.toLowerCase().includes("https://www.facebook.com/")) {
             $scope.Fvisible = true;
         }
         else { $scope.Fvisible = false; }
 
-        if ($scope.Store.InstagramLink.toLowerCase().includes("instagram")) {
+        if ($scope.Store.InstagramLink.toLowerCase().includes("https://www.instagram.com/")) {
             $scope.Ivisible = true;
         }
         else { $scope.Ivisible = false; }
