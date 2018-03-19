@@ -30,25 +30,32 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
             requireBase: false
         });
     })
-    .run(function ($rootScope, $location, loginService) {
+    .run(function ($rootScope, $location, loginService, $http) {
 
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
-
-            $rootScope.loggin = function () {
-                return loginService.login();
-            };
+            
             loginService.login().then(function (response) {
                 $rootScope.login = response;
-                console.log("in then " + $rootScope.login);
+                console.log("in $routeChangeStart " + $rootScope.login);
                 if (response === "false") {
                     //redirect to login page
                     location.href = "/RegisterLogin.html";
                 }
             });
         });
+        $rootScope.Logout = function () {
+            $http.get('/RegisterLogin.asmx/SignOut').then(function (response) {
+
+                $rootScope.result = response.data;
+                location.href = $rootScope.result.substr(1, $rootScope.result.length - 2);
+            });
+        };
     })
-    .controller("ManageStoreController", function ($scope, $http) {
+    .controller("ManageStoreController", function ($rootScope,$scope, $http) {
+        $scope.Logout = function () {
+            $rootScope.Logout();
+        };
         $scope.tabHeader = "Manage Store";
         $scope.templatew = "";
 
@@ -177,8 +184,10 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 });
         };
     })
-    .controller("DevelopmentEnvironmentController", function ($scope, $http, $filter, validLinkService) {
-
+    .controller("DevelopmentEnvironmentController", function ($rootScope,$scope, $http, $filter, validLinkService) {
+        $scope.Logout = function () {
+            $rootScope.Logout();
+        };
         $scope.icon = {
             snapchat: false,
             twitter: false,
@@ -592,11 +601,17 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
             $scope.refreshIframe();
         };
     })
-    .controller("PreviewWebsiteController", function ($scope, $http) {
+    .controller("PreviewWebsiteController", function ($rootScope,$scope, $http) {
+        $scope.Logout = function () {
+            $rootScope.Logout();
+        };
         $scope.tabHeader = "Previe wWebsite";
     })
-    .controller("TemplateController", function ($scope, $http, $location) {
+    .controller("TemplateController", function ($scope, $http, $location, $rootScope) {
         $scope.tabHeader = "Template";
+        $scope.Logout = function () {
+            $rootScope.Logout();
+        };
         /*    $scope.getImageUrl = function (index) {
                 return "/images/T" + (index+1)+".png";
             };*/
@@ -613,7 +628,10 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
             $location.path('/DevelopmentEnvironment');
         };
     })
-    .controller("ProductsController", function ($scope, $http) {
+    .controller("ProductsController", function ($rootScope,$scope, $http) {
+        $scope.Logout = function () {
+            $rootScope.Logout();
+        };
         $scope.tabHeader = "Products";
         //to retrieve all categories
         $scope.getCat = function (newCategury) {
@@ -846,7 +864,6 @@ app.filter('range', function () {
 app.factory('loginService', function ($http) {
     var login = function () {
         return $http.post('/RegisterLogin.asmx/CheckUser').then(function (msg) {
-            console.log(msg.data);
             return msg.data;
         });
     };
@@ -900,3 +917,5 @@ app.directive('customOnChange', function () {
         }
     };
 });
+
+
