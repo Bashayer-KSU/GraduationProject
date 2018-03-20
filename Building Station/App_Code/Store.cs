@@ -34,6 +34,8 @@ public class Store
     public bool BankTransfer { get; set; }
     public string BankAccount { get; set; }
     public string menuTitle { get; set; }
+    public string About { get; set; }
+
 
     public Store()
     {
