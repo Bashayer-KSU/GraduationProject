@@ -157,18 +157,20 @@
             <!--add new category-->
             <!--to display categories-->
             <div ng-init="getCat()" style="display:inline-block; margin-top:15px;">
-                <h style="font-size:20px;">الفئة:</h>
-                <select class=" styled-select black rounded"
+                <h ng-hide="editCategory" style="font-size:20px;">الفئة:</h>
+                <select ng-hide="editCategory" class=" styled-select black rounded"
                         ng-model="selectedCategory"
                         ng-init="selectedCategory = categories[0].Name"
                         ng-options="option.Name as option.Name for option in categories"
                         ng-change="selectedCategoryChanged()"></select>
-                <!--تغيير الفئة ماطاعت تضبط
-                    <select ng-show="edit" class=" styled-select black rounded"
-                            ng-model="selectedCategory"
-                            ng-options="option for option in categories"></select>
-                    <span ng-show="edit" >*اختر الفئة التي تريد نقل المنتج لها</span>
-                    -->
+                <a ng-hide="editCategory" href="" ng-click="DeleteCategory()">حذف</a>
+
+                <h ng-show="editCategory" style="font-size:20px;">اختر الفئة التي تريد نقل المنتج لها:</h>
+                <select ng-show="editCategory" class=" styled-select black rounded"
+                        ng-model="selectedCategory"
+                        ng-init="selectedCategory = categories[0].Name"
+                        ng-options="option.Name as option.Name for option in categories"></select>
+                    
             </div>
         </div>
         <!--\add new category-->
@@ -211,7 +213,7 @@
                         <td ng-hide="true">{{product.ID}}</td>
                         <td><button class="remove" ng-click="removeproduct(product, product.ID)" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button></td>
                         <td>
-                            <button ng-show="!product.edit" ng-click="product.edit = !product.edit" style="background-color:transparent; border: none;"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;" /></button>
+                            <button ng-show="!product.edit" ng-click="x(); product.edit = !product.edit" style="background-color:transparent; border: none;"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;" /></button>
                             <button ng-show="product.edit" ng-click="editProduct($index,product,product.ID,product.Image,product.Name,product.Description,product.Price,product.PriceAfterDiscount,product.Amount,product.Discount)" style="background-color:transparent; border: none;"><img src="/images/success.png" alt="" style="width:25px; height:25px;" /></button>
                         </td>
                         <td class="arb" ng-show="!product.edit"><label>{{product.Discount}}%</label></td>

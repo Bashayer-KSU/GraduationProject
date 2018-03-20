@@ -644,6 +644,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
         $scope.tabHeader = "Products";
         $scope.displayCategoryTable = false;
         $scope.selectedCategory = "";
+        $scope.editCategory = false;
         //logout
         $scope.Logout = function () {
             $rootScope.Logout();
@@ -682,6 +683,24 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
         };
         //\to add category
 
+        $scope.x = function () {
+            $scope.editCategory = true;
+        }
+
+        //Delete Category
+        $scope.DeleteCategory = function () {
+            $http({
+                url: "Products.asmx/DeleteCategory",
+                method: "GET",
+                params: { category: $scope.selectedCategory }
+            })
+                .then(function (response) {
+                    $scope.getCat();
+                }, function (error) {
+                    alert("failed delete");
+                });
+        };
+        //\DeleteCategory
         // change category Order
         $scope.ChangeOrder = function (cats) {
             var categories = "";
@@ -739,6 +758,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 /*$scope.editP = response.data;
                 $scope.products[index] = product;
                 product.edit = false;*/
+                $scope.editCategory = false;
                 $scope.selectedCategoryChanged();
                 }, function (error) {
                     alert(error);
