@@ -1,6 +1,27 @@
 ﻿var myApp = angular.module("T6", []);
 
-var T6 = myApp.controller("T6Ctrl", function ($scope, $http) {
+myApp.run(function (initialSetup) {
+    initialSetup.getStoreInfo();
+
+});
+
+myApp.service('initialSetup', function ($http) {
+    var promise;
+    return {
+        InitialSetup: function () {
+            promise = $http.get();
+        },
+        getStoreInfo: function () {
+            return promise;
+        }
+    }
+});
+
+var T6 = myApp.controller("T6Ctrl", function ($scope, $http, initialSetup) {
+ /*   initialSetup.getStoreInfo().then(function (resp) {
+        $scope.data = resp.data;
+    });
+    */
     $scope.Store = [];
     $scope.checkout = false;
     $scope.payment = false;
