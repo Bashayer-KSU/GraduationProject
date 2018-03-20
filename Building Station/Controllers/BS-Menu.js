@@ -614,10 +614,27 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
         };
     })
     .controller("PreviewWebsiteController", function ($rootScope,$scope, $http) {
+        $scope.tabHeader = "Previe wWebsite";
+        $scope.EnableDesktopView = false;
+        $scope.EnableMobileView = false;
+
         $scope.Logout = function () {
             $rootScope.Logout();
         };
-        $scope.tabHeader = "Previe wWebsite";
+        
+        //Desktop View
+        $scope.DesktopView = function () {
+            $scope.EnableDesktopView = true;
+            $scope.EnableMobileView = false;
+        }
+        //\Desktop View
+
+        //Mobile View
+        $scope.MobileView = function () {
+            $scope.EnableDesktopView = false;
+            $scope.EnableMobileView = true;
+        }
+        //\Mobile View
     })
     .controller("TemplateController", function ($scope, $http, $location, $rootScope) {
         $scope.tabHeader = "Template";

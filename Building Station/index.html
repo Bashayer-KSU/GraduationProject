@@ -15,7 +15,7 @@
     <script src="/Controllers/BS-Menu.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-
+    <base href="/" />
     <style>
         table, td, th {
             border: 1px solid #ddd;
@@ -184,9 +184,9 @@
                                         معاينة الموقع<b class="caret"></b>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li style="background:none; font-family:'NeoSansArabic'"><a href="#">معاينة على الحاسب &nbsp; <img ng-src="/images/imac.png" alt="" style="width:37px; height:37px;" /></a></li>
+                                        <li style="background:none; font-family:'NeoSansArabic'"><a href="PreviewWebsite" ng-click="DesktopView()">معاينة على الحاسب &nbsp; <img ng-src="/images/imac.png" alt="" style="width:37px; height:37px;" /></a></li>
                                         <li class="divider"></li>
-                                        <li style="background:none; font-family:'NeoSansArabic'"><a href="#">معاينة على الجوال &nbsp; <img ng-src="/images/iphone.png" alt="" style="width:37px; height:37px;" /></a></li>
+                                        <li style="background:none; font-family:'NeoSansArabic'"><a href="PreviewWebsite" ng-click="MobileView()">معاينة على الجوال &nbsp; <img ng-src="/images/iphone.png" alt="" style="width:37px; height:37px;" /></a></li>
                                     </ul>
                                 </li>
                                 <li><a href="/ManageStore" style="font-family:'NeoSansArabic'">إدارة المتجر</a></li>
