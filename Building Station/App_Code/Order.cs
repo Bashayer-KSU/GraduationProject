@@ -27,6 +27,8 @@ public class Order
     public string BankAccount { get; set; }
     public string ShipmentMethod { get; set; }
     public string StoreEmail { get; set; }
+    public string OrderID { get; set; }
+
 
 
 }

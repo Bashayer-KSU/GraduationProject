@@ -41,16 +41,22 @@ public class BuyerOrder : System.Web.Services.WebService
         return 44.4;
     }
     [WebMethod(EnableSession = true)]
-    public void CreateOrder(string BuyerName, string BuyerPhone, string BuyerEmail, string BuyerLocation,string PaymentMethod, string BankAccount)
+    public void CreateOrder(string BuyerName, string BuyerPhone, string BuyerEmail, string BuyerLocation,string PaymentMethod, string BankAccount, string OrderID, string TotalPrice)
     {
         string StoreEmail = getStoreEmail();
-        double TotalPrice = getTotalPrice();
+        //double TotalPrice = getTotalPrice();
         int row = 0;
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("insert into Order (BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod, BankAccount , TotalPrice, ShopEmail) values " +
-               "(N'" + BuyerName + "','" + BuyerPhone + "','" + BuyerEmail + "', N'" + BuyerLocation + "','" + PaymentMethod + "','" + BankAccount + "','" + TotalPrice + "','" + StoreEmail + "')", con);
+            SqlCommand cmd;
+            if (PaymentMethod == "BankTransfer") 
+             cmd = new SqlCommand("insert into \"Order\" (BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod, BankAccount , TotalPrice, OrderID, Status , StoreEmail) values " +
+               "(N'" + BuyerName + "','" + BuyerPhone + "','" + BuyerEmail + "', N'" + BuyerLocation + "','" + PaymentMethod + "','" + BankAccount + "','" + Convert.ToDouble(TotalPrice) + "','" + OrderID + "','" + false + "','" + StoreEmail + "')", con);
+            else
+                cmd = new SqlCommand("insert into \"Order\" (BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod , TotalPrice, OrderID, Status , StoreEmail) values " +
+               "(N'" + BuyerName + "','" + BuyerPhone + "','" + BuyerEmail + "', N'" + BuyerLocation + "','" + PaymentMethod + "','" + Convert.ToDouble(TotalPrice) + "','" + OrderID + "','" + false + "','" + StoreEmail + "')", con);
+
             row = cmd.ExecuteNonQuery();
             con.Close();
         }
@@ -61,10 +67,12 @@ public class BuyerOrder : System.Web.Services.WebService
             order.BuyerEmail = BuyerEmail;
             order.BuyerLocation = BuyerLocation;
             order.PaymentMethod = PaymentMethod;
-            order.BankAccount = BankAccount;
-            order.TotalPrice = TotalPrice;
+            if (PaymentMethod == "BankTransfer")
+                order.BankAccount = BankAccount;
+            order.TotalPrice = Convert.ToDouble(TotalPrice);
             order.StoreEmail = StoreEmail;
-            Context.Response.Write(js.Serialize("Order Added Successfully"));
+            order.OrderID = OrderID;
+            Context.Response.Write(js.Serialize(order));
 
         }
         else

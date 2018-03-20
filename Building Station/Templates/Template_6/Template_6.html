@@ -205,11 +205,9 @@
                                                     <h4 class="col-sm-12">Confirm Bank Transfer</h4>
                                                     <h6 class="col-sm-12"><small>IBAN:  {{Store.BankAccount}}</small></h6>
                                                     <div class="col-sm-12">
-                                                        <label for="ReqNum">Request Number</label>
-                                                        <input type="text" class="form-control" id="ReqNum" name="ReqNum" ng-model="ReqNum" ng-pattern="/^[0-9]{1,}$/" placeholder="Enter request number" required>
-                                                        <p class="alert alert-danger" ng-show="!BuyerPayment.ReqNum.$pristine && BuyerPayment.ReqNum.$invalid">Please enter the request number.</p>
-                                                        <p class="alert alert-danger" ng-show="BuyerPayment.ReqNum.$error.pattern">Not a valid number.</p>
-
+                                                        <label for="OrderID">Order ID</label>
+                                                        <input type="text" class="form-control" id="OrderID" name="OrderID" ng-model="OrderID" placeholder="Enter The Order ID" required>
+                                                        <p class="alert alert-danger" ng-show="!BuyerPayment.OrderID.$pristine && BuyerPayment.OrderID.$invalid">Please enter the order ID.</p>
                                                     </div>
                                                     <div class="col-sm-12">
                                                         <label for="HolName">Account Holder Name</label>
@@ -299,10 +297,10 @@
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#Pancakes" role="tab" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">Pancakes</a>
+                                    <a class="nav-link active" data-toggle="tab" data-target="#Pancakes" role="tab" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">Pancakes</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link " data-toggle="tab" href="#Waffles" role="tab" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">Waffles</a>
+                                    <a class="nav-link " data-toggle="tab" data-target="#Waffles" role="tab" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">Waffles</a>
                                 </li>
                             </ul>
                             <!-- Tab panes -->
@@ -332,6 +330,8 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title">Waffle</h5>
                                                     <p class="card-text">waffles</p>
+                                                    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
+
                                                 </div>
                                             </div>
                                         </div>

@@ -19,9 +19,11 @@ public class Products : System.Web.Services.WebService {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
 
-    string ShopEmail = "lamia@gmail.com";
+    //string ShopEmail = "lamia@gmail.com";
     //  string ShopEmail = "bs@mail.com";
     //string ShopEmail = "star7s@msn.com";
+    string ShopEmail = "test4@4";
+
 
 
     [WebMethod]
