@@ -29,11 +29,9 @@ public class ShowHideElement : System.Web.Services.WebService
        
     }
 
-
     [WebMethod(EnableSession = true)]
     public void GetElementsInfo()
     {
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             SqlCommand cmd = new SqlCommand("select * from Element Where StoreEmail ='" + Session["user"] + "'", con);
@@ -71,7 +69,7 @@ public class ShowHideElement : System.Web.Services.WebService
 
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("select Name, Hidden from Element Where StoreEmail='" + Session["user"] + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Name, Hidden FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Type = 'Link'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -80,10 +78,8 @@ public class ShowHideElement : System.Web.Services.WebService
                 e.Name = reader["Name"].ToString();
                 e.Hidden = Convert.ToBoolean(reader["Hidden"]);
                 ElementsList.Add(e);
-
             }
         }
-
         Context.Response.Write(js.Serialize(ElementsList));
     }
 
@@ -92,7 +88,7 @@ public class ShowHideElement : System.Web.Services.WebService
     {
         string link = "";
         if (name.ToLower() == "snapchat")
-            link = "snapchat";
+            link = "https://www.snapchat.com/add/";
         else if (name.ToLower() == "facebook")
             link = "https://www.facebook.com/";
         else if (name.ToLower() == "instagram")
@@ -119,7 +115,6 @@ public class ShowHideElement : System.Web.Services.WebService
         else
         Context.Response.Write(js.Serialize(false));
     }
-
 
     [WebMethod(EnableSession = true)]
     public void ShowHideSection(string section, string action)

@@ -39,7 +39,8 @@ public class TemplateData : System.Web.Services.WebService
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, SliderImage, Location, SnapchatLink, TwitterLink, FacebookLink, InstagramLink, PayPal, BankTransfer, Cash, ShopOwnerBank FROM Store Where Email = '" + Session["user"] + "'", con);
+            // SnapchatLink, TwitterLink, FacebookLink, InstagramLink,
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, Location, PayPal, BankTransfer, Cash, ShopOwnerBank FROM Store Where Email = '" + Session["user"] + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -54,18 +55,79 @@ public class TemplateData : System.Web.Services.WebService
                 store.Logo = reader["logo"].ToString();
                 store.menuTitle= reader["MenuTitle"].ToString();
                 store.Description = reader["StoreDescription"].ToString();
-                store.SliderImage = reader["SliderImage"].ToString();
+             //   store.SliderImage = reader["SliderImage"].ToString();
                 store.Address = reader["Location"].ToString();
-                store.SnapchatLink = reader["SnapchatLink"].ToString();
-                store.TwitterLink = reader["TwitterLink"].ToString();
-                store.FacebookLink = reader["FacebookLink"].ToString();
-                store.InstagramLink = reader["InstagramLink"].ToString();
+               // store.SnapchatLink = reader["SnapchatLink"].ToString();
+               // store.TwitterLink = reader["TwitterLink"].ToString();
+               // store.FacebookLink = reader["FacebookLink"].ToString();
+               // store.InstagramLink = reader["InstagramLink"].ToString();
                 store.PayPal = Convert.ToBoolean(reader["PayPal"]);
                 store.BankTransfer = Convert.ToBoolean(reader["BankTransfer"]);
                 store.Cash = Convert.ToBoolean(reader["Cash"]);
                 store.BankAccount = reader["ShopOwnerBank"].ToString();
-
             }
+            reader.Close();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Snapchat'", con);
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.SnapchatLink = reader["Value"].ToString();
+            }
+            reader.Close();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Twitter'", con);
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.TwitterLink = reader["Value"].ToString();
+            }
+            reader.Close();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Facebook'", con);
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.FacebookLink = reader["Value"].ToString();
+            }
+            reader.Close();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Instagram'", con);
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.InstagramLink = reader["Value"].ToString();
+            }
+            reader.Close();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'About'", con);
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.About = reader["Value"].ToString();
+            }
+            reader.Close();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("SELECT Image FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Slider'", con);
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.SliderImage = reader["Image"].ToString();
+            }
+            reader.Close();
+            con.Close();
         }
         Context.Response.Write(js.Serialize(store));
     }
@@ -133,10 +195,10 @@ public class TemplateData : System.Web.Services.WebService
 
         using (SqlConnection con = new SqlConnection(cs))
         {
-            con.Open();
+           /* con.Open();
             SqlCommand cmd = new SqlCommand("UPDATE Store SET SnapchatLink = '" + snapchat_link + "', TwitterLink = '" + twitter_link + "', FacebookLink = '" + facebook_link + "', InstagramLink = '" + instagram_link + "' WHERE Email='" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
-            con.Close();
+            con.Close();*/
             store.SnapchatLink = snapchat_link;
             store.TwitterLink = twitter_link;
             store.FacebookLink = facebook_link;
@@ -150,13 +212,16 @@ public class TemplateData : System.Web.Services.WebService
             element.StoreEmail = Session["user"].ToString();
             if (store.SnapchatLink != null)
             {
-                element.Value = store.SnapchatLink;
-                if (store.SnapchatLink.ToLower().Contains("snapchat"))
+                if (store.SnapchatLink.ToLower().Contains("https://www.snapchat.com/add/"))
                 {
                     element.Hidden = false;
+                    element.Value = store.SnapchatLink;
                 }
                 else
+                {
                     element.Hidden = true;
+                    element.Value = "No Value";
+                }
             }
             else
             {
@@ -166,7 +231,7 @@ public class TemplateData : System.Web.Services.WebService
 
             element.Name = "Snapchat";
             ElementsList.Add(element);
-            cmd = new SqlCommand("UPDATE Element SET Value = '" + element.Value + "', Hidden= '" + element.Hidden + "' WHERE StoreEmail = '" + element.StoreEmail + "' AND Name = '" + element.Name + "'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Element SET Value = '" + element.Value + "', Hidden= '" + element.Hidden + "' WHERE StoreEmail = '" + element.StoreEmail + "' AND Name = '" + element.Name + "'", con);
             cmd.ExecuteNonQuery();
 
 
@@ -175,11 +240,16 @@ public class TemplateData : System.Web.Services.WebService
             element.StoreEmail = Session["user"].ToString();
             if (store.TwitterLink != null)
             {
-                element.Value = store.TwitterLink;
                 if (store.TwitterLink.ToLower().Contains("https://twitter.com/"))
+                {
                     element.Hidden = false;
+                    element.Value = store.TwitterLink;
+                }
                 else
+                {
                     element.Hidden = true;
+                    element.Value = "No Value";
+                }
             }
             else
             {
@@ -198,11 +268,16 @@ public class TemplateData : System.Web.Services.WebService
             element.StoreEmail = Session["user"].ToString();
             if (store.FacebookLink != null)
             {
-                element.Value = store.FacebookLink;
                 if (store.FacebookLink.ToLower().Contains("https://www.facebook.com/"))
+                {
                     element.Hidden = false;
+                    element.Value = store.FacebookLink;
+                }
                 else
+                {
                     element.Hidden = true;
+                    element.Value = "No Value";
+                }
             }
             else
             {
@@ -221,11 +296,16 @@ public class TemplateData : System.Web.Services.WebService
             element.StoreEmail = Session["user"].ToString();
             if (store.InstagramLink != null)
             {
-                element.Value = store.InstagramLink;
                 if (store.InstagramLink.ToLower().Contains("https://www.instagram.com/"))
+                {
                     element.Hidden = false;
+                    element.Value = store.InstagramLink;
+                }
                 else
+                {
                     element.Hidden = true;
+                    element.Value = "No Value";
+                }
             }
             else
             {
@@ -271,24 +351,11 @@ public class TemplateData : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET SliderImage = '" + slider + "' WHERE Email='" + Session["user"] + "'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Element SET Hidden = 'false', Image = '" + slider + "' WHERE StoreEmail='" + Session["user"] + "' AND Type = 'Slider' AND Name = 'Slider'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
             store.SliderImage = slider;
-
-            con.Open();
-            Element element = new Element();
-            //Slider Element
-            element = new Element();
-            element.StoreEmail = Session["user"].ToString();
-            element.Name = "Slider";
-            element.Hidden = false;
-            element.Image = store.SliderImage;
-            ElementsList.Add(element);
-
-            cmd = new SqlCommand("UPDATE Element SET Hidden = '" + element.Hidden + "', Image = '" + element.Image + "' WHERE StoreEmail = '" + element.StoreEmail + "' AND Name = '" + element.Name + "'", con);
-            cmd.ExecuteNonQuery();
 
             Context.Response.Write(js.Serialize(store));
         }
