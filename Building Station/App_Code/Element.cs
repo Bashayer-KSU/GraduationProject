@@ -20,7 +20,6 @@ public class Element
     public String Value { get; set; }
     public Boolean Hidden { get; set; }
     public String Image { get; set; }
-    public String Store_ID { get; set; }
     public String StoreEmail { get; set; }
 
 

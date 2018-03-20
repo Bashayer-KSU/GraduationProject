@@ -116,121 +116,116 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="row">
-                                <div class="col-xs-12">
-                                    <div class=" text-center">
-                                        <div ng-show="!checkout&&!payment" class="card-body">
-                                            <!----------------------->
-                                            <ul class="list-group mb-3">
-                                                <li id="yourcart" class="list-group-item d-flex justify-content-between">
-                                                    <div class="col-5"><img src="/Templates/Template_6/Images/pancake.jpg" alt="..." class="img-fluid" /></div>
-                                                    <div>
-                                                        <h6 class="my-0">Pancake</h6>
-                                                        <small class="text-muted">Pancakes</small>
+                                <div class="col-xs-12 text-center">
+                                    <div ng-show="!checkout&&!payment" class="card-body">
+                                        <!----------------------->
+                                        <ul class="list-group mb-3">
+                                            <li id="yourcart" class="list-group-item d-flex justify-content-between">
+                                                <div class="col-5"><img src="/Templates/Template_6/Images/pancake.jpg" alt="..." class="img-fluid" /></div>
+                                                <div>
+                                                    <h6 class="my-0">Pancake</h6>
+                                                    <small class="text-muted">Pancakes</small>
+                                                </div>
+                                                <span>2</span>
+                                                <span class="text-muted">$12</span>
+                                                <span>
+                                                    <button type="button" class="close" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </span>
+                                            </li>
+                                            <li id="yourcart" class="list-group-item d-flex justify-content-between lh-condensed">
+                                                <div class="col-5"><img src="/Templates/Template_6/Images/waffle.jpg" alt="..." class="img-fluid" /></div>
+                                                <div>
+                                                    <h6 class="my-0">Waffle</h6>
+                                                    <small class="text-muted">Waffles</small>
+                                                </div>
+                                                <span>2</span>
+                                                <span class="text-muted">$8</span>
+                                                <span>
+                                                    <button type="button" class="close" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <span>Total</span><span><strong>$20</strong></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- Checkout-->
+                                    <div ng-show="checkout" class="card-body">
+                                        <!----------------------->
+                                        <form name="Buyer" ng-show="!payment" class=" text-sm-left" novalidate>
+                                            <div class="row">
+                                                <div class="col-sm-12 mb-3">
+                                                    <label for="BuyerName">Buyer Name</label>
+                                                    <input type="text" class="form-control validate" name="BuyerName" ng-model="BuyerName" id="BuyerName" placeholder="Enter Your Name" required>
+                                                    <p class="alert alert-danger" ng-show="!Buyer.BuyerName.$pristine && Buyer.BuyerName.$invalid">Your Name Required.</p>
+                                                </div>
+                                                <div class="col-sm-12 mb-3">
+                                                    <label for="BuyerPhone">Phone Number</label>
+                                                    <input type="text" class="form-control" ng-pattern="/^[0-9]{8,13}$/" id="BuyerPhone" name="BuyerPhone" ng-model="BuyerPhone" placeholder="Enter Your Phone Number" required>
+                                                    <p class="alert alert-danger" ng-show="Buyer.BuyerPhone.$error.pattern">Not a valid number</p>
+                                                    <p class="alert alert-danger" ng-show="!Buyer.BuyerPhone.$pristine && Buyer.BuyerPhone.$error.required">Your Phone Required.</p>
+                                                </div>
+                                                <div class="col-sm-12 mb-3">
+                                                    <label for="email">Email</label>
+                                                    <input type="email" class="form-control" id="email" name="BuyerEmail" ng-model="BuyerEmail" placeholder="you@example.com">
+                                                    <p class="alert alert-danger" ng-show="Buyer.BuyerEmail.$error.email">Please enter a valid email address for shipping updates.</p>
+                                                </div>
+                                                <div class="col-sm-12 mb-3">
+                                                    <label for="Location">Location</label>
+                                                    <input type="text" class="form-control" id="Location" name="BuyerLocation" ng-model="BuyerLocation" placeholder="1234 Main St" required>
+                                                    <p class="alert alert-danger" ng-show="!Buyer.BuyerLocation.$pristine && !Buyer.BuyerLocation.$valid">Please enter your shipping address.</p>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <form name="BuyerPayment" ng-model="BuyerPayment" ng-show="payment" class="text-sm-left" novalidate>
+                                            <div id="payment">
+                                                <h4 class="mb-3">Payment</h4>
+                                                <div id="PaymentMethod" name="PaymentMethod" class="d-block my-3">
+                                                    <div ng-show="Store.Cash" class="custom-control custom-radio">
+                                                        <input id="cash" name="PaymentMethod" ng-model="PaymentMethod" value="Cash" type="radio" class="custom-control-input">
+                                                        <label class="custom-control-label" for="cash">Cash<img style="max-width:5%;" src="/Templates/Template_6/Images/cash.png" alt="Cash"></label>
                                                     </div>
-                                                    <span>2</span>
-                                                    <span class="text-muted">$12</span>
-                                                    <span>
-                                                        <button type="button" class="close" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </span>
-                                                </li>
-                                                <li id="yourcart" class="list-group-item d-flex justify-content-between lh-condensed">
-                                                    <div class="col-5"><img src="/Templates/Template_6/Images/waffle.jpg" alt="..." class="img-fluid" /></div>
-                                                    <div>
-                                                        <h6 class="my-0">Waffle</h6>
-                                                        <small class="text-muted">Waffles</small>
+                                                    <div ng-show="Store.BankTransfer" class="custom-control custom-radio">
+                                                        <input id="banktransfer" name="PaymentMethod" ng-model="PaymentMethod" value="BankTransfer" type="radio" class="custom-control-input">
+                                                        <label class="custom-control-label" for="banktransfer">Bank Transfer<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer"></label>
                                                     </div>
-                                                    <span>2</span>
-                                                    <span class="text-muted">$8</span>
-                                                    <span>
-                                                        <button type="button" class="close" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </span>
-                                                </li>
-                                                <li class="list-group-item d-flex justify-content-between">
-                                                    <span>Total</span><span><strong>$20</strong></span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <!-- Checkout-->
-                                        <div ng-show="checkout" class="card-body">
-                                            <!----------------------->
-                                            <form name="buyer" ng-show="!payment" class=" text-sm-left" novalidate>
-                                                    <div class="row">
-                                                        <div class="col-sm-12 mb-3">
-                                                            <label for="buyerName">Buyer Name</label>
-                                                            <input type="text" class="form-control validate" name="buyerName" ng-model="buyerName" id="Name" placeholder="Enter Your Name" required>
-                                                            <p class="alert alert-danger" ng-show="!buyer.buyerName.$valid">Your Name Required.</p>
-                                                        </div>
-                                                        <div class="col-sm-12 mb-3">
-                                                            <label for="Phone">Phone Number</label>
-                                                            <input type="text" class="form-control" ng-pattern="/^[0-9]{1,13}$/" id="Phone" name="buyerPhone" ng-model="buyerPhone" placeholder="Enter Your Phone Number" required>
-                                                            <p class="alert alert-danger" ng-show="buyer.buyerPhone.$error.pattern">Not a valid number!</p>
-                                                            <p class="alert alert-danger" ng-show="buyer.buyerPhone.$error.required">Your Phone Required.</p>
-                                                        </div>
+                                                    <div ng-show="Store.PayPal" class="custom-control custom-radio">
+                                                        <input id="paypal" name="PaymentMethod" ng-model="PaymentMethod" value="PayPal" type="radio" class="custom-control-input">
+                                                        <label class="custom-control-label" for="paypal"><img style="max-width:20%;" src="/Templates/Template_6/Images/paypal.png" alt="paypal"></label>
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label for="email">Email</label>
-                                                        <input type="email" class="form-control" id="email" name="buyerEmail" ng-model="buyerEmail" placeholder="you@example.com">
-                         
-                                                        <p class="invalid-feedback" ng-show="!buyer.buyerEmail.$error.email">Please enter a valid email address for shipping updates.</p>
+                                                </div>
+                                                <br>
+                                            </div>
+                                            <div ng-show="PaymentMethod === 'BankTransfer'" id="transfer">
+                                                <div class="row mb-3">
+                                                    <h4 class="col-sm-12">Confirm Bank Transfer</h4>
+                                                    <h6 class="col-sm-12"><small>IBAN:  {{Store.BankAccount}}</small></h6>
+                                                    <div class="col-sm-12">
+                                                        <label for="ReqNum">Request Number</label>
+                                                        <input type="text" class="form-control" id="ReqNum" name="ReqNum" ng-model="ReqNum" ng-pattern="/^[0-9]{1,}$/" placeholder="Enter request number" required>
+                                                        <p class="alert alert-danger" ng-show="!BuyerPayment.ReqNum.$pristine && BuyerPayment.ReqNum.$invalid">Please enter the request number.</p>
+                                                        <p class="alert alert-danger" ng-show="BuyerPayment.ReqNum.$error.pattern">Not a valid number.</p>
 
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label for="Location">Location</label>
-                                                        <input type="text" class="form-control" id="Location" name="buyerLocation" ng-model="buyerLocation" placeholder="1234 Main St" required>
-                                                        <div class="invalid-feedback">
-                                                            Please enter your shipping address.
-                                                        </div>
-                                                        <p class="alert alert-danger" ng-show="!buyer.buyerLocation.$valid">Please enter your shipping address.</p>
-
+                                                    <div class="col-sm-12">
+                                                        <label for="HolName">Account Holder Name</label>
+                                                        <input type="text" class="form-control" id="HolName" name="HolName" ng-model="HolName" placeholder="Enter account holder name" required>
+                                                        <p class="alert alert-danger" ng-show="!BuyerPayment.HolName.$pristine && BuyerPayment.HolName.$invalid">Please enter the holder name.</p>
                                                     </div>
-                                            </form>
-                                            <form ng-show="payment" class="needs-validation text-sm-left" novalidate>
-                                                    <div id="payment">
-                                                        <h4 class="mb-3">Payment</h4>
-                                                        <div id="paymentMethod" class="d-block my-3">
-                                                            <div ng-show="Store.Cash" class="custom-control custom-radio">
-                                                                <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                                                                <label class="custom-control-label" for="cash">Cash<img style="max-width:5%;" src="/Templates/Template_6/Images/cash.png" alt="Cash"></label>
-                                                            </div>
-                                                            <div ng-show="Store.BankTransfer" class="custom-control custom-radio">
-                                                                <input id="banktransfer" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                                                <label class="custom-control-label" for="banktransfer">Bank Transfer<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer"></label>
-                                                            </div>
-                                                            <div ng-show="Store.PayPal" class="custom-control custom-radio">
-                                                                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                                                <label class="custom-control-label" for="paypal"><img style="max-width:20%;" src="/Templates/Template_6/Images/paypal.png" alt="paypal"></label>
-                                                            </div>
-                                                        </div>
-                                                        <br>
+                                                    <div class="col-sm-12">
+                                                        <label for="Price">Price</label>
+                                                        <input type="text" class="form-control" id="Price" Value="30" ng-disabled="true" required>
                                                     </div>
-                                                    <div id="transfer" class="collapse">
-                                                        <hr class="mb-4">
-                                                        <div class="row">
-                                                            <h4 class="mb-3 col-sm-12">Confirm Bank Transfer</h4>
-                                                            <h6 class="mb-3 col-sm-12"><small>IBAN:  {{Store.BankAccount}}</small></h6>
-                                                            <div class="col-sm-12 mb-3">
-                                                                <label for="reqNum">Request Number</label>
-                                                                <input type="text" class="form-control" id="reqNum" placeholder="Enter request number" required>
-                                                            </div>
-                                                            <div class="col-sm-12 mb-3">
-                                                                <label for="cc-number">Account Holder Name</label>
-                                                                <input type="text" class="form-control" id="cc-number" placeholder="Enter account holder name" required>
-                                                            </div>
-                                                            <div class="col-sm-12 mb-3">
-                                                                <label for="Price">Price</label>
-                                                                <input type="text" class="form-control" id="Price" placeholder="" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                            </form>
-
-                                        </div>
+                                                </div>
+                                            </div>
+                                        </form>
 
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -238,9 +233,9 @@
                     <div class="modal-footer justify-content-center">
                         <button ng-show="!checkout" type="button" class="btn btn-info btn-md" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Proceed to Checkout</button>
                         <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=false; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
-                        <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="buyer.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Choose Payment Method</button>
-                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=true; payment=false;"  ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
-                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="checkout()" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
+                        <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="Buyer.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Choose Payment Method</button>
+                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
+                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" ng-disabled="BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer'" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
 
                     </div>
                 </div>
@@ -292,9 +287,8 @@
             </div>
         </div>
         <div ng-show="!section.slider"><br /><br /><br /></div>
-        <div id="content">
+        <div id="content" class="container">
             <!------------  Product ------------>
-            <div class="container">
                 <section id="products">
                     <div class="row featurette">
                         <div class="col-md-12">
@@ -385,134 +379,7 @@
                     <br><br><br><br>
                 </section>
                 <!---- About ---->
-            </div><!---- Content ---->
-            <div class="container">
-                <section class="collapse" id="checkoutS">
-                    <hr class="featurette-divider">
-                    <div class="col-md-12">
-                        <h2 class="featurette-heading text-center">
-                            Shopping Cart
-                        </h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6  mb-4">
-                            <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="text-muted">Your cart <span class="badge badge-secondary badge-pill">3</span></span>
-                            </h4>
-                            <ul class="list-group mb-3">
-                                <li id="yourcart" class="list-group-item d-flex justify-content-between">
-                                    <div class="col-5"><img src="/Templates/Template_6/Images/pancake.jpg" alt="..." class="img-fluid" /></div>
-                                    <div>
-                                        <h6 class="my-0">Pancake</h6>
-                                        <small class="text-muted">Pancakes</small>
-                                    </div>
-                                    <span>2</span>
-                                    <span class="text-muted">$12</span>
-                                    <span>
-                                        <button type="button" class="close" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </span>
-                                </li>
-                                <li id="yourcart" class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div class="col-5"><img src="/Templates/Template_6/Images/waffle.jpg" alt="..." class="img-fluid" /></div>
-                                    <div>
-                                        <h6 class="my-0">Waffle</h6>
-                                        <small class="text-muted">Waffles</small>
-                                    </div>
-                                    <span>2</span>
-                                    <span class="text-muted">$8</span>
-                                    <span>
-                                        <button type="button" class="close" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span>Total</span><span><strong>$20</strong></span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6 ">
-                            <h4 class="mb-3">Billing Address</h4>
-                            <form class="needs-validation" novalidate>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="Name">Buyer Name</label>
-                                        <input type="text" class="form-control" id="Name" placeholder="Enter Your Name" value="" required>
-                                        <div class="invalid-feedback">
-                                            Valid name is required.
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="Phone">Phone Number</label>
-                                        <input type="text" class="form-control" id="Phone" placeholder="Enter Your Phone Number" value="" required>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                                    <div class="invalid-feedback">
-                                        Please enter a valid email address for shipping updates.
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="Location">Location</label>
-                                    <input type="text" class="form-control" id="Location" placeholder="1234 Main St" required>
-                                    <div class="invalid-feedback">
-                                        Please enter your shipping address.
-                                    </div>
-                                </div>
-                                <div id="payment">
-                                    <hr class="mb-4">
-                                    <h4 class="mb-3">Payment</h4>
-                                    <div id="paymentMethod" class="d-block my-3">
-                                        <div ng-show="Store.Cash" class="custom-control custom-radio">
-                                            <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                                            <label class="custom-control-label" for="cash">Cash<img style="max-width:5%;" src="/Templates/Template_6/Images/cash.png" alt="Cash"></label>
-                                        </div>
-                                        <div ng-show="Store.BankTransfer" class="custom-control custom-radio">
-                                            <input id="banktransfer" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                            <label class="custom-control-label" for="banktransfer">Bank Transfer<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer"></label>
-                                        </div>
-                                        <div ng-show="Store.PayPal" class="custom-control custom-radio">
-                                            <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                            <label class="custom-control-label" for="paypal"><img style="max-width:20%;" src="/Templates/Template_6/Images/paypal.png" alt="paypal"></label>
-                                        </div>
-                                    </div>
-                                    <br>
-                                </div>
-                                <hr class="mb-4">
-                                <div id="transfer" class="collapse">
-                                    <div class="row">
-                                        <h4 class="mb-3 col-md-12">Confirm Bank Transfer</h4>
-                                        <h6 class="mb-3 col-md-12"><small>IBAN:  {{Store.BankAccount}}</small></h6>
-                                        <div class="col-md-8 mb-3">
-                                            <label for="reqNum">Request Number</label>
-                                            <input type="text" class="form-control" id="reqNum" placeholder="" required>
-                                        </div>
-                                        <div class="col-md-6"></div>
-                                        <div class="col-md-8 mb-3">
-                                            <label for="cc-number">Account Holder Name</label>
-                                            <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                                        </div>
-                                        <div class="col-md-6"></div>
-                                        <div class="col-md-8 mb-3">
-                                            <label for="Price">Price</label>
-                                            <input type="text" class="form-control" id="Price" placeholder="" required>
-                                        </div>
-                                    </div>
-                                    <hr class="mb-4">
-                                </div>
-                                <button class="btn btn-info btn-md" type="submit" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
-                            </form>
-                            <br>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-
+        </div><!---- Content ---->
         <!-- FOOTER -->
         <div class="ToTop" id="back-to-top">
             <p class="float-right rounded "><a class="btn btn-info btn-md" role="button" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}" href="#"><i class="fa fa-angle-double-up" aria-hidden="true"></i></a></p>
@@ -551,15 +418,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
-
-            $('#paymentMethod').click(function () {
-                if ($('#banktransfer').is(':checked')) {
-                    $('#transfer').collapse("toggle");
-                }
-                else if ($('#banktransfer').is('not:checked')) {
-                    $('#transfer').collapse("hide");
-                }
-            });
             if ($('#back-to-top').length) {
                 var scrollTrigger = 100, // px
                     backToTop = function () {

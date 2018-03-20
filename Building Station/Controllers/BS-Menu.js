@@ -621,13 +621,13 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
     })
     .controller("TemplateController", function ($scope, $http, $location, $rootScope) {
         $scope.tabHeader = "Template";
+
+    /*    $scope.getImageUrl = function (index) {
+            return "/images/T" + (index+1)+".png";
+        };*/
         $scope.Logout = function () {
             $rootScope.Logout();
         };
-        /*    $scope.getImageUrl = function (index) {
-                return "/images/T" + (index+1)+".png";
-            };*/
-
         $scope.Template = function (Tid) {
             var post = $http({
                 method: "POST",
