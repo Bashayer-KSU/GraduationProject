@@ -628,11 +628,16 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
             $location.path('/DevelopmentEnvironment');
         };
     })
-    .controller("ProductsController", function ($rootScope,$scope, $http) {
+    .controller("ProductsController", function ($rootScope, $scope, $http) {
+        $scope.tabHeader = "Products";
+        $scope.displayCategoryTable = false;
+        $scope.selectedCategory = "";
+        //logout
         $scope.Logout = function () {
             $rootScope.Logout();
         };
-        $scope.tabHeader = "Products";
+        //logout
+
         //to retrieve all categories
         $scope.getCat = function (newCategury) {
             $http({
@@ -666,18 +671,23 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
         //\to add category
 
         // change category Order
-        $scope.ChangeOrder = function (categories) {
-            var cats = [{ OrderInMenu: 1, Name: "فئة2" }, { OrderInMenu: 2, Name: "فئة1" }]
+        $scope.ChangeOrder = function (cats) {
+            var categories = "";
+            for (var i = 0; i < cats.length; i++) {
+                categories += cats[i].OrderInMenu + ",";
+            }
             alert("change order");
             $http({
                 url: "Products.asmx/ChangeOrder",
                 method: "get",
-                params: { categories: cats }
+                params: { categoriesOrders: categories }
             })
                 .then(function (response) {
-                    $scope.resultoforder = response.data;
+                    $scope.categories = response.data;
+                    $scope.displayCategoryTable = false;
                 }, function (error) {
-                    alert(error);
+                    alert(error.data);
+                    $scope.resultoforder = error.data;
                 });
         };
         //\change category Order
@@ -728,13 +738,12 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
         //to add new row
         $scope.addNewProduct = function (product, Category_ID, Image, Name, Description, Price, PAD, Amount, Discount) {
             alert("addProduct function");
-            alert($scope.selectedCategory);
             $http({
                 url: "Products.asmx/AddNewProduct",
                 headers: { "Content-Type": "application/json;charset=utf-8" },
                 dataType: 'json',
                 method: 'post',
-                data: JSON.stringify({ cat: $scope.selectedCategory, image: Image, name: Name, des: Description, price: Price, PADs:PAD, amount: Amount, discount: Discount })
+                data: JSON.stringify({ cat: $scope.selectedCategory, image: Image, name: Name, des: Description, price: Price, PADs: PAD, amount: Amount, discount: Discount })
             }).then(function (response) {
                 /*alert("success add");
                 $scope.addProduct = response.data;
@@ -747,10 +756,11 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 product.Amount = '';
                 product.Discount = '';*/
                 Scope.selectedCategoryChanged();
-                }, function (error) {
-                    alert(error);
-                    alert("failed add");
-            });
+            }, function (error) {
+                alert(error);
+                alert("failed add");
+                });
+
         };
         //\to add new row
 
