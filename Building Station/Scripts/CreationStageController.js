@@ -245,15 +245,10 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             $location.path('/7');
         };
     })
-    .controller("InfoController", function ($scope, $http, $location, $rootScope, $window) {
+    .controller("InfoController", function ($scope, $rootScope, $window, $http, $location) {
         $rootScope.Arabic = function () {
             $window.location.href = '../CreationStageArabic.html';
         };
-
-        var snapchat;
-        var twitter;
-        var facebook;
-        var instagram;
 
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
@@ -262,57 +257,53 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
                 $scope.Address = $scope.Store.Address;
             }
 
-            if ($scope.Store.SnapchatLink.toLowerCase().includes("https://www.snapchat.com/add/")) {
+            if ($scope.Store.SnapchatLink !== 'No Value') {
                 $scope.snapchatLink = $scope.Store.SnapchatLink;
-                snapchat = $scope.Store.SnapchatLink;
             }
-            else { snapchat = "No Link"; }
 
-            if ($scope.Store.TwitterLink.toLowerCase().includes("https://twitter.com/")) {
+            if ($scope.Store.TwitterLink !== 'No Value') {
                 $scope.twitterLink = $scope.Store.TwitterLink;
-                twitter = $scope.Store.TwitterLink;
             }
-            else { twitter = "No Link"; }
 
-            if ($scope.Store.FacebookLink.toLowerCase().includes("https://www.facebook.com/")) {
+            if ($scope.Store.FacebookLink !== 'No Value') {
                 $scope.facebookLink = $scope.Store.FacebookLink;
-                facebook = $scope.Store.FacebookLink;
             }
-            else { facebook = "No Link"; }
 
-            if ($scope.Store.InstagramLink.toLowerCase().includes("https://www.instagram.com/")) {
+            if ($scope.Store.InstagramLink !== 'No Value') {
                 $scope.instagramLink = $scope.Store.InstagramLink;
-                instagram = $scope.Store.InstagramLink;
             }
-            else { instagram = "No Link"; }
         });
 
-        $scope.checkContent_snapchat = function () {
-            if ($scope.snapchatLink.toLowerCase().includes("https://www.snapchat.com/add/"))
-                snapchat = $scope.snapchatLink;
-        };
-        $scope.checkContent_twitter = function () {
-            if ($scope.twitterLink.toLowerCase().includes("https://twitter.com/"))
-                twitter = $scope.twitterLink;
-        };
-        $scope.checkContent_facebook = function () {
-            if ($scope.facebookLink.toLowerCase().includes("https://www.facebook.com/"))
-                facebook = $scope.facebookLink;
-        };
-        $scope.checkContent_instagram = function () {
-            if ($scope.instagramLink.toLowerCase().includes("https://www.instagram.com/"))
-                instagram = $scope.instagramLink;
-        };
-
         $scope.sendData = function () {
-            var post = $http({
+/*            var post = $http({
                 method: "POST",
                 url: "CreationStage.asmx/UpdateData",
                 dataType: 'json',
-                data: { address: $scope.Address, snapchat_link: snapchat, twitter_link: twitter, facebook_link: facebook, instagram_link: instagram },
+                data: { address: $scope.Address, snapchat_link: $scope.snapchatLink, twitter_link: $scope.twitterLink, facebook_link: $scope.facebookLink, instagram_link: $scope.instagramLink },
                 headers: { "Content-Type": "application/json" }
             });
-            post.then(function (response) { }, function (error) { });
+                post.then(function (response) { }, function (error) { });*/
+
+            $http.post(
+                "CreationStage.asmx/UpdateData",
+                $.param({
+                    address: $scope.Address,
+                    snapchat_link: $scope.snapchatLink,
+                    twitter_link: $scope.twitterLink,
+                    facebook_link: $scope.facebookLink,
+                    instagram_link: $scope.instagramLink
+                }),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                    }
+                }
+            )
+                .then(function (response) {
+                    $scope.result = response.data;
+                }, function (error) {
+                    $scope.error = error.data;
+                });
             $location.path('/4.2');
         };
     })
@@ -385,28 +376,27 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
 
             $scope.Store = response.data;
 
-            if ($scope.Store.SnapchatLink.toLowerCase().includes("https://www.snapchat.com/add/")) {
-                $scope.Svisible = false;
+            if ($scope.Store.SnapchatLink !== "No Value") {
+                $scope.Svisible = true;
             }
-            else { $scope.Svisible = true; }
+            else { $scope.Svisible = false; }
 
-            if ($scope.Store.TwitterLink.toLowerCase().includes("https://twitter.com/")) {
-                $scope.Tvisible = false;
-            }
-            else {
+            if ($scope.Store.TwitterLink !== "No Value") {
                 $scope.Tvisible = true;
             }
-
-            if ($scope.Store.FacebookLink.toLowerCase().includes("https://www.facebook.com/")) {
-                $scope.Fvisible = false;
+            else {
+                $scope.Tvisible = false;
             }
-            else { $scope.Fvisible = true; }
 
-            if ($scope.Store.InstagramLink.InstagramLink.toLowerCase().includes("https://www.instagram.com/")) {
-                $scope.Ivisible = false;
+            if ($scope.Store.FacebookLink !== "No Value") {
+                $scope.Fvisible = true;
             }
-            else { $scope.Ivisible = true; }
+            else { $scope.Fvisible = false; }
 
+            if ($scope.Store.InstagramLink !== "No Value") {
+                $scope.Ivisible = true;
+            }
+            else { $scope.Ivisible = false; }
         });
     })
     .controller("ColorsController", function ($scope, $http, $rootScope, $window) {
@@ -436,40 +426,40 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             $window.location.href = '../CreationStageArabic.html';
         };
         var TemplateID = 0;
-        $scope.width1 = "15vw";
-        $scope.width2 = "15vw";
-        $scope.width3 = "15vw ";
-        $scope.height1 = "26vw";
-        $scope.height2 = "26vw";
-        $scope.height3 = "26vw";
+        $scope.Border1 = "none";
+        $scope.Border2 = "none";
+        $scope.Border3 = "none ";
+        $scope.c1 = "none";
+        $scope.c2 = "none";
+        $scope.c3 = "none";
 
 
         $scope.firstTemplate = function () {
-            $scope.width1 = "17vw";
-            $scope.width2 = "12vw";
-            $scope.width3 = "12vw ";
-            $scope.height1 = "30vw";
-            $scope.height2 = "21vw";
-            $scope.height3 = "21vw";
+            $scope.Border1 = "solid";
+            $scope.Border2 = "none";
+            $scope.Border3 = "none ";
+            $scope.c1 = "teal";
+            $scope.c2 = "none";
+            $scope.c3 = "none";
             TemplateID = 4;
         };
 
         $scope.secondTemplate = function () {
-            $scope.width2 = "17vw";
-            $scope.width1 = "12vw";
-            $scope.width3 = "12vw ";
-            $scope.height2 = "30vw";
-            $scope.height1 = "21vw";
-            $scope.height3 = "21vw";
+            $scope.Border2 = "solid";
+            $scope.Border1 = "none";
+            $scope.Border3 = "none ";
+            $scope.c1 = "none";
+            $scope.c2 = "teal";
+            $scope.c3 = "none";
             TemplateID = 5;
         };
         $scope.thirdTemplate = function () {
-            $scope.width3 = "17vw";
-            $scope.width2 = "12vw";
-            $scope.width1 = "12vw ";
-            $scope.height3 = "30vw";
-            $scope.height2 = "21vw";
-            $scope.height1 = "21vw";
+            $scope.Border3 = "solid";
+            $scope.Border2 = "none";
+            $scope.Border1 = "none ";
+            $scope.c1 = "none";
+            $scope.c2 = "none";
+            $scope.c3 = "teal";
             TemplateID = 6;
         };
 
