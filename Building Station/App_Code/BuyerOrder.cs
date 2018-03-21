@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
@@ -20,6 +19,8 @@ public class BuyerOrder : System.Web.Services.WebService
 {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     JavaScriptSerializer js = new JavaScriptSerializer();
+    List<Order> OrdersList = new List<Order>();
+
     Order order = new Order();
     public BuyerOrder()
     {
@@ -86,4 +87,51 @@ public class BuyerOrder : System.Web.Services.WebService
         Context.Response.Write(js.Serialize("Failed to make order"));
     }
 
-}
+    [WebMethod(EnableSession = true)]
+    public void GetAllTransactions()
+    {
+        string StoreEmail = getStoreEmail();
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            SqlCommand cmd = new SqlCommand("select * from \"Order\" Where StoreEmail ='" + Session["user"] + "' AND Status = 'FALSE'", con);
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                order = new Order();
+                order.ID = Convert.ToInt32(reader["ID"]);
+                order.BuyerName = reader["BuyerName"].ToString();
+                order.BuyerPhone = reader["BuyerPhone"].ToString();
+                order.BuyerEmail = reader["BuyerEmail"].ToString();
+                order.BuyerLocation = reader["BuyerLocation"].ToString();
+                order.PaymentMethod = reader["PaymentMethod"].ToString();
+                order.BankAccount = reader["BankAccount"].ToString();
+                order.OrderID = reader["OrderID"].ToString();
+                if (order.PaymentMethod != "BankTransfer")
+                {
+                    order.BankAccount = "";
+                    order.OrderID = "";
+                }
+                order.Status = Convert.ToBoolean(reader["Status"]);
+                OrdersList.Add(order);
+            }
+        }
+
+        Context.Response.Write(js.Serialize(OrdersList));
+    }
+
+    [WebMethod(EnableSession = true)]
+    public void UpdateStatus (string ID)
+    {
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            SqlCommand cmd = new SqlCommand("UPDATE \"Order\" SET Status = 'TRUE' Where StoreEmail='" + Session["user"] + "' AND ID = '" + ID + "'", con);
+            con.Open();
+            int x = cmd.ExecuteNonQuery();
+            if (x != 0)
+                Context.Response.Write(js.Serialize(true));
+            else Context.Response.Write(js.Serialize(false));
+        }
+    }
+
+    }

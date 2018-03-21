@@ -135,13 +135,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                     params: { IBAN: IBAN }
                 })
                     .then(function (response) {
-                        if (!response.data === " No ShopOwnerBank ") {
                             $scope.bankInfo.IBAN = response.data;
                             $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-                        }
-                        else {
-                            $scope.bankInfo.IBAN = "";
-                        }
+                       
                     }, function (error) {
                         $scope.error = error.data;
                     });
@@ -171,7 +167,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 params: {}
             })
                 .then(function (response) {
-                    if (!response.data === " No ShopOwnerBank ") {
+                    if (!response.data.includes("No ShopOwnerBank")) {
                         $scope.bankInfo.IBAN = response.data;
                         $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
                     }
@@ -182,6 +178,30 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 }, function (error) {
                     $scope.error = error.data;
                 });
+        };
+
+
+        $scope.GetAllTransactions = function () {
+            $http({
+                url: "/BuyerOrder.asmx/GetAllTransactions",
+                method: "get",
+                params: { }
+            })
+                .then(function (response) {
+                    $scope.orders = response.data;
+                });
+        };
+        $scope.UpdateStatus = function (order, id) {
+            $http({
+                url: "BuyerOrder.asmx/UpdateStatus",
+                method: "get",
+                params: { ID: id }
+            })
+                .then(function (response) {
+                    $scope.result = response.data;
+                    var remove = $scope.orders.indexOf(order);
+                    $scope.orders.splice(remove, 1);
+                }, function (error) { });
         };
     })
     .controller("DevelopmentEnvironmentController", function ($rootScope,$scope, $http, $filter, validLinkService) {
