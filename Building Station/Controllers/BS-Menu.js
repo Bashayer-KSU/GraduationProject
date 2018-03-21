@@ -847,6 +847,62 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 }, function (error) { });
         };
         //\to remove row
+
+        //to add new row
+        /*$scope.addNewProduct = function (product, Category_ID, Image, Name, Description, Price, PAD, Amount, Discount) {
+            alert("addProduct function");
+            alert($scope.selectedCategory);
+        //    var data = { 'cat': $scope.selectedCategory, 'image': Image, 'name': Name, 'des': Description, 'price': Price, 'PADs': PAD, 'amount': Amount, 'discount': Discount };
+            /*  $http({
+                  method: 'post',
+                  url: "Products.asmx/AddNewProduct",
+                //  data: "json=" + JSON.stringify(data),
+                  headers: { "Content-Type": "application/json;charset=utf-8" },
+                  dataType: 'json',
+                  data: "json=" + JSON.stringify({ 'cat': $scope.selectedCategory, 'image': Image, 'name': Name, 'des': Description, 'price': Price, 'PADs': PAD, 'amount': Amount, 'discount': Discount })
+             }).then(function (response) {
+                  /*alert("success add");
+                  $scope.addProduct = response.data;
+                  product.PriceAfterDiscount = addProduct.PriceAfterDiscount;
+                  $scope.products.push({ 'image': addProduct.Image, 'name': addProduct.Name, 'description': addProduct.Description, 'price': addProduct.Price, 'amount': addProduct.Amount, 'discount': addProduct.Discount });
+                  product.Image = '';
+                  product.Name = '';
+                  product.Description = '';
+                  product.Price = '';
+                  product.Amount = '';
+                  product.Discount = '';*/
+            /* Scope.selectedCategoryChanged();
+             }, function (error) {
+                 alert(error);
+                 alert("failed add");
+             });
+            $http.post(
+                "Products.asmx/AddNewProduct",
+                $.param(
+                    {
+                        cat: $scope.selectedCategory,
+                        image: Image,
+                        name: Name,
+                        des: Description,
+                        price: Price,
+                        PADs: PAD,
+                        amount: Amount,
+                        discount: Discount
+                    }
+                ),
+                {
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8;'
+                    }
+                })
+                .then(function (response) {
+                    $scope.result = response.data;
+                    Scope.selectedCategoryChanged();
+                }, function (error) {
+                    alert(error);
+                    alert("failed add");
+                });
+        };*/
     });
 
 //to upload image
