@@ -1,1 +1,30 @@
 ﻿<h2>{{tabHeader}}</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div class="container">
+    <div ng-show="EnableMobileView " class="row">
+            <div class="col-sm-4 col-md-4"></div>
+        <div class="col-sm-4 col-md-4">
+            <div class="embed-responsive embed-responsive-4by3" style="margin-left:4vw; width:57vw; height: 60vw;">
+                <iframe refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
+                <!--style="overflow: hidden; height: 200%; width: 100%;"-->
+            </div>
+        </div>
+            <div class="col-sm-4 col-md-4"></div>
+    </div>
+
+    <div ng-show="EnableDesktopView " class="row">
+        <div class="col-sm-12 col-md-12">
+
+            <div class="embed-responsive embed-responsive-4by3" style="margin-left:4vw; width:57vw; height: 60vw;">
+                <iframe refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
+                <!--style="overflow: hidden; height: 200%; width: 100%;"-->
+            </div>
+
+        </div>
+    </div>
+</div>
+
