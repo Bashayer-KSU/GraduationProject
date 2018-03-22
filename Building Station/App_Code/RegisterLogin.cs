@@ -85,6 +85,12 @@ public class RegisterLogin : System.Web.Services.WebService
                 cmd.ExecuteNonQuery();
                 con.Close();
 
+                con.Open();
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
+                "('PayPal', 'Button','" + Session["user"] + "')", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
                 if (lang.Equals("eng"))
                 {
                     Context.Response.Write(js.Serialize("/CreationStage.html"));

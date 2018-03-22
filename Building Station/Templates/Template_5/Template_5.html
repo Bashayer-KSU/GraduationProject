@@ -20,13 +20,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body class="homepage">
+<body class="homepage" ng-style="{'background': Store.Color4}">
     <div id="page-wrapper">
 
         <!-- Header -->
         <section class="box" style=" padding:0px 0px 0px 0px; margin:0px 0px 0px 0px;">
 
-            <div id="header-wrapper" style=" padding:20px 0px 10px 0px;">
+            <div ng-style="{'background': Store.Color1}" id="header-wrapper" style=" padding:20px 0px 10px 0px;">
                 <div id="header" style="position: relative;	margin:0 auto; overflow: hidden;">
 
                     <!-- Logo -->
@@ -35,8 +35,8 @@
                             <div style=" float:left; width:33%;">
                                 <img src="../../images/shopping-cart.png" style="width:5vw; height:5vw;" href="">
                             </div>
-                            <div ng-style="{'color': Store.Color1}" style=" position: absolute; left: 7em; right: 0em; margin: 0px 0px 0px 0px; width:auto;">
-                                <h1 style="font-size:3vw; margin: 15px 0px 0px 0px; ">{{Store.Name}}</h1>
+                            <div style=" position: absolute; left: 7em; right: 0em; margin: 0px 0px 0px 0px; width:auto;">
+                                <h1 ng-style="{'color': Store.Color3}" style="font-size:3vw; margin: 15px 0px 0px 0px; ">{{Store.Name}}</h1>
                             </div>
                             <div style=" float:right;  margin:0px 0px 0px 0px; width:33%;">
                                 <img ng-src="{{Store.Logo}}" style="width: 10vw; height: 10vw; border-radius: 50%;" alt="Cinque Terre">
@@ -47,32 +47,11 @@
             </div>
         </section>
         <!-- Nav -->
-        <div style="margin-top:10px" id="header">
+        <div style="margin-top:10px" id="header" ng-style="{'background': Store.Color4}">
             <nav id="nav">
                 <ul>
-                    <li class="current"><a href="index.html">Home</a></li>
-                    <li>
-                        <a href="#">Dropdown</a>
-                        <ul>
-                            <li><a href="#">Lorem ipsum dolor</a></li>
-                            <li><a href="#">Magna phasellus</a></li>
-                            <li><a href="#">Etiam dolore nisl</a></li>
-                            <li>
-                                <a href="#">Phasellus consequat</a>
-                                <ul>
-                                    <li><a href="#">Magna phasellus</a></li>
-                                    <li><a href="#">Etiam dolore nisl</a></li>
-                                    <li><a href="#">Veroeros feugiat</a></li>
-                                    <li><a href="#">Nisl sed aliquam</a></li>
-                                    <li><a href="#">Dolore adipiscing</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Veroeros feugiat</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="left-sidebar.html">Left Sidebar</a></li>
-                    <li><a href="right-sidebar.html">Right Sidebar</a></li>
-                    <li><a href="no-sidebar.html">No Sidebar</a></li>
+                    <li class="current"><a ng-style="{'background': Store.Color1, 'color': Store.Color3}" href="">Home</a></li>
+                    <li><a ng-style="{'color': Store.Color3}" href="#">Dropdown</a></li>
                 </ul>
             </nav>
         </div>
@@ -81,20 +60,20 @@
             <div class="row">
                 <div class="12u">
                     <header ng-style="{'background': Store.Color2}">
-                        <h2>{{Store.Description}}</h2>
-                        <p>{{Store.Address}}</p>
+                        <h2 ng-style="{'color': Store.Color1}">{{Store.Description}}</h2>
+                        <p ng-style="{'color': Store.Color4}">{{Store.Address}}</p>
                     </header>
                 </div>
             </div>
         </section>
         <!-- slider image -->
-        <section style="padding-top:0px; padding-bottom:0px;" id="banner">
+        <section ng-show="section.slider" style="padding-top:0px; padding-bottom:0px;" id="banner">
             <div class="12u">
                 <img style="width:100%; height:auto;" ng-src="{{Store.SliderImage}}" />
             </div>
         </section>
         <!-- Main -->
-        <div id="main-wrapper">
+        <div ng-style="{'background': Store.Color1}" id="main-wrapper">
             <div class="container">
                 <div class="row">
                     <div class="12u">
@@ -102,18 +81,18 @@
                         <!-- Portfolio -->
                         <section>
                             <header class="major">
-                                <h2>Products</h2>
+                                <h2 ng-style="{'background': Store.Color1, 'color': Store.Color3}">Products</h2>
                             </header>
                             <div class="row">
                                 <div class="4u 12u(mobile)">
-                                    <section class="box">
-                                        <a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
+                                    <section ng-style="{'background': Store.Color4}" class="box">
+                                        <a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="product" /></a>
                                         <header>
-                                            <h3>Ipsum feugiat et dolor</h3>
+                                            <h3 ng-style="{'color': Store.Color3}">{{Product.Name}}</h3>
                                         </header>
-                                        <p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
+                                        <p ng-style="{'color': Store.Color3}">{{Product.Description}}</p>
                                         <footer>
-                                            <a href="#" class="button alt">Find out more</a>
+                                            <a href="#" ng-style="{'color': Store.Color3, 'background': Store.Color1}" class="button" data-toggle="modal" data-target="#myModal">View</a>
                                         </footer>
                                     </section>
                                 </div>
@@ -124,13 +103,15 @@
             </div>
         </div>
     </div>
-    <div class="12u">
-        <section class="container">
-            <div class="row">
-                <h1> About us </h1><br /><br />
-                <h4> {{Store.About}}</h4>
-            </div>
-        </section>
+    <div class="12u" ng-show="section.about">
+        <div id="main-wrapper" ng-style="{'background': Store.Color2}">
+            <section class="container">
+                <div class="row">
+                    <h1 ng-style="{'color': Store.Color1}"> About us </h1><br /><br />
+                    <h4 ng-style="{'color': Store.Color1}"> {{Store.About}}</h4>
+                </div>
+            </section>
+        </div>
     </div>
     <br />
     <!-- Modal -->
@@ -138,36 +119,36 @@
         <div class="modal-dialog">
 
             <!-- Modal content-->
-            <div class="modal-content">
+            <div class="modal-content" ng-style="{'background': Store.Color2}">
                 <div class="modal-header">
-                    <button style="float:left;" type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">{{Product.Name}}</h4>
+                    <button ng-style="{'color': Store.Color3}" style="float:right;" type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 ng-style="{'color': Store.Color3}" class="modal-title">{{Product.Name}}</h4>
 
                 </div>
                 <div class="modal-body">
-                    <article ng-style="{'background': Store.Color3}" class="box post">
+                    <article ng-style="{'background': Store.Color4}" class="box post">
                         <a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="" /></a>
                         <header>
-                            <p>{{Product.Description}}</p>
+                            <p ng-style="{'color': Store.Color3}">{{Product.Description}}</p>
                         </header>
                     </article>
                 </div>
                 <div class="modal-footer">
-                    <a href="#" class="button alt">Add to Cart </a>
+                    <a href="#" ng-style="{'color': Store.Color3, 'background': Store.Color1}" class="button alt">Add to Cart </a>
                 </div>
             </div>
 
         </div>
     </div>
     <!-- Footer -->
-    <div ng-style="{'background': Store.Color1}">
+    <div ng-style="{'background': Store.Color3}">
         <div class="12u">
             <div id="footer-wrapper">
                 <section id="footer" class="container">
                     <div class="row">
                         <div class="4u 12u(mobile)">
                             <header>
-                                <h2>Contact us</h2>
+                                <h2 ng-style="{'color': Store.Color1}">Contact us</h2>
                             </header>
                             <div class="social">
                                 <a ng-show="Fvisible" herf="{{Store.FacebookLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Facebook" src="../../images/Facebook4.png"></a>
@@ -181,17 +162,16 @@
                             <section>
                                 <ul class="contact">
                                     <li>
-                                        <h3> Address</h3>
-                                        <p>{{Store.Address}}</p>
+                                        <h3 ng-style="{'color': Store.Color1}">Address</h3>
+                                        <h1 style="padding-top:1vw; font-size:medium;" ng-style="{'color': Store.Color1}">{{Store.Address}}</h1>
                                     </li>
                                     <li>
-                                        <h3>Mail</h3>
-                                        <p>{{Store.Email}}</p>
+                                        <h3 ng-style="{'color': Store.Color1}">Email</h3>
+                                        <h1 style="font-size:medium;" ng-style="{'color': Store.Color1}">{{Store.Email}}</h1>
                                     </li>
                                     <li>
-                                        <h3>Phone</h3>
-                                        <p>{{Store.Phone}}</p>
-                                    </li>
+                                        <h3 ng-style="{'color': Store.Color1}">Phone</h3>
+                                        <h1 style="font-size:medium;" ng-style="{'color': Store.Color1}">{{Store.Phone}}</h1></li>
                                 </ul>
                             </section>
                         </div>
@@ -201,8 +181,7 @@
                             <!-- Copyright -->
                             <div style="margin-bottom:0px;" id="copyright">
                                 <ul ng-style="{'background': Store.Color2}" class="links">
-                                    <li><a href=""><img style="width:5vw;" src="../../images/logo-arabi.png" />&copy; Building Station. All rights reserved. </a></li>
-                                    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                                    <li><a ng-style="{'color': Store.Color1}" href=""><img style="width:5vw;" src="../../images/logo-arabi.png" />&copy; Building Station. All rights reserved. </a></li>
                                 </ul>
                             </div>
                         </div>

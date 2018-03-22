@@ -7,14 +7,14 @@
                 <input type="checkbox" ng-model="checkboxPayment.cash" ng-change="acceptPayment()">
                 Cash <img style="max-width:5%;" src="/images/cash.png" alt="Cash">
             </label><br />
-                    <label>
-                        <input type="checkbox" ng-model="checkboxPayment.paypal" ng-change="acceptPayment()">
-                        <img style="max-width:8%;" src="/images/PayPal.png" alt="PayPal"> 
-                    </label><br />
-                    <label>
-                        <input type="checkbox" ng-model="checkboxPayment.bankTransfer" aria-label="Toggle ngShow" ng-change="acceptPayment()">
-                        Bank Transfer <img style="max-width:10%;" src="/images/transfer.png" alt="bank transfer">
-                    </label><br />
+            <label>
+                <input type="checkbox" ng-model="checkboxPayment.paypal" ng-change="acceptPayment()">
+                <img style="max-width:8%;" src="/images/PayPal.png" alt="PayPal">
+            </label><br />
+            <label>
+                <input type="checkbox" ng-model="checkboxPayment.bankTransfer" aria-label="Toggle ngShow" ng-change="acceptPayment()">
+                Bank Transfer <img style="max-width:10%;" src="/images/transfer.png" alt="bank transfer">
+            </label><br />
         </form>
     </div>
     <div class="row">
@@ -31,6 +31,28 @@
                     You must enter the IBAN.
                 </p>
             </form>
-            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <form name="PayPal" class="check-element animate-show-hide" ng-show="checkboxPayment.paypal" ng-model="PayPalInfo" ng-init="GetPayPalInfo()">
+                <label for="PayPal">PayPal Button Code</label>
+                <div class="input-group">
+                    <input type="text" class="form-control validate" name="PayPalButton" ng-model="PayPalInfo.Button" id="PayPal" placeholder="Enter your PayPal Button Code" required>
+                    <span class="input-group-btn">
+                        <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdatePayPalInfo()" class="btn">Update</button>
+                    </span>
+                </div>
+                <p class=" alert alert-danger" ng-show="!PayPal.PayPalButton.$valid">
+                    You must enter a VALID Code, Copy it as it is in PayPal.
+                </p>
+            </form>
+
+            <div ng-bind-html='PayPalButtonCode2'> </div>
+            <div ng-bind-html='PayPalButtonCode'> </div>
+
+            <code>{{PayPalButtonCode}}</code>
+
+        </div>
     </div>
 </div>

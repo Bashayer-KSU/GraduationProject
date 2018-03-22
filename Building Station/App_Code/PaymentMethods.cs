@@ -77,7 +77,7 @@ public class PaymentMethods : System.Web.Services.WebService
 
 
     [WebMethod(EnableSession = true)]
-    public void UbdateBankInfo(String IBAN)
+    public void UpdateBankInfo(String IBAN)
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -88,9 +88,7 @@ public class PaymentMethods : System.Web.Services.WebService
             con.Close();
 
             Context.Response.Write(js.Serialize(IBAN));
-
         }
-
     }
 
     [WebMethod(EnableSession = true)]
@@ -114,6 +112,66 @@ public class PaymentMethods : System.Web.Services.WebService
                 Context.Response.Write(js.Serialize(IBAN));
 
             }
+        }
+    }
+
+    [WebMethod(EnableSession = true)]
+    public void GetPayPalInfo()
+    {
+        var PayPalButton = "";
+
+       /* using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("SELECT Value FROM Element Where StoreEmail = '" + Session["user"] + "' AND Type = 'Button' AND Name = 'PayPal'", con);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                reader.Read();
+                PayPalButton = reader["Value"].ToString();
+            }
+            con.Close();
+
+            Context.Response.Write(js.Serialize(PayPalButton));
+        }*/
+
+        using (var conn = new SqlConnection(cs))
+        using (var cmd = conn.CreateCommand())
+        {
+            cmd.CommandText = "SELECT Value FROM Element Where StoreEmail = @User AND Type = 'Button' AND Name = 'PayPal'";
+            cmd.Parameters.AddWithValue("@User", Session["user"]);
+            conn.Open();
+            using (SqlDataReader oReader = cmd.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    PayPalButton = oReader["Value"].ToString();
+                }
+
+                conn.Close();
+            }
+        }
+        Context.Response.Write(js.Serialize(PayPalButton));
+    }
+
+    [WebMethod(EnableSession = true)]
+    public void UpdatePayPalInfo(String button)
+    {
+     /*   using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Element SET Value = '" + button + "' Where StoreEmail = '" + Session["user"] + "' AND Type = 'Button' AND Name = 'PayPal'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            Context.Response.Write(js.Serialize(button));
+        }*/
+        using (var conn = new SqlConnection(cs))
+        using (var cmd = conn.CreateCommand())
+        {
+            conn.Open();
+            cmd.CommandText = "UPDATE Element SET Value = @Value Where StoreEmail = '" + Session["user"] + "' AND Type = 'Button' AND Name = 'PayPal'";
+            cmd.Parameters.AddWithValue("@Value", button);
+            cmd.ExecuteNonQuery();
         }
     }
 }

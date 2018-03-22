@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module("BS", ["ngRoute", "ngMaterial"])
+var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/ManageStore", {
@@ -114,6 +114,40 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
                 });
         };
 
+        //PayPal
+        $scope.UpdatePayPalInfo = function () {
+            var buttonCode = $scope.PayPalInfo.Button;
+            if (buttonCode.includes("<form")) {
+                $http({
+                    url: "PaymentMethods.asmx/UpdatePayPalInfo",
+                    method: "get",
+                    params: { button: buttonCode }
+                })
+                    .then(function (response) {
+                        $scope.theresults = response.data;
+                    }, function (error) {
+                        $scope.error = error.data;
+                    });
+            }
+        };
+
+        $scope.GetPayPalInfo = function () {
+            $http({
+            url: "PaymentMethods.asmx/GetPayPalInfo",
+                method: "get",
+                    params: { }
+        })
+                .then(function (response) {
+        $scope.PayPalButtonCode = response.data;
+
+      //  $scope.PayPalButtonCode = $sce.trustAsHtml(response.data);
+                    $scope.PayPalButtonCode2 = "<form><button type='submit'>test</button></form>";
+
+    }, function (error) {
+        $scope.error = error.data;
+    });
+        };
+
         $scope.UpdateBankInfo = function () {
             var IBAN = $scope.bankInfo.IBAN;
             /*
@@ -130,7 +164,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial"])
             });*/
             if (IBAN !== "" && IBAN !== null) {
                 $http({
-                    url: "PaymentMethods.asmx/UbdateBankInfo",
+                    url: "PaymentMethods.asmx/UpdateBankInfo",
                     method: "get",
                     params: { IBAN: IBAN }
                 })

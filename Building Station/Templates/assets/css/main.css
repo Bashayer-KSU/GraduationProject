@@ -1086,11 +1086,9 @@
 		body.is-loading * {
 			-moz-transition: none !important;
 			-webkit-transition: none !important;
-			-ms-transition: none !important;
 			transition: none !important;
 			-moz-animation: none !important;
 			-webkit-animation: none !important;
-			-ms-animation: none !important;
 			animation: none !important;
 		}
 
@@ -1312,12 +1310,10 @@
 		border: 0;
 		border-radius: 5px;
 		background: #d52349;
-		color: #fff !important;
 		font-weight: 700;
 		outline: 0;
 		-moz-transition: background-color .25s ease-in-out;
 		-webkit-transition: background-color .25s ease-in-out;
-		-ms-transition: background-color .25s ease-in-out;
 		transition: background-color .25s ease-in-out;
 	}
 
@@ -1519,19 +1515,6 @@
 				margin-left: 0;
 			}
 
-			ul.social li a {
-				display: inline-block;
-				width: 3em;
-				height: 3em;
-				text-align: center;
-				border-radius: 5px;
-				background: #888;
-				-moz-transition: background-color .25s ease-in-out;
-				-webkit-transition: background-color .25s ease-in-out;
-				-ms-transition: background-color .25s ease-in-out;
-				transition: background-color .25s ease-in-out;
-			}
-
 				ul.social li a:before {
 					color: #fff;
 					font-size: 2em;
@@ -1729,10 +1712,6 @@
 			background-size: 100% 100%;
 			z-index: 0;
 			opacity: 0.5;
-		}
-
-		#footer-wrapper a {
-			color: #c5c4c4;
 		}
 
 		#footer-wrapper h2, #footer-wrapper h3, #footer-wrapper h4, #footer-wrapper h5, #footer-wrapper h6, #footer-wrapper strong, #footer-wrapper b {
@@ -1944,7 +1923,6 @@
 						padding: 0.6em 1.2em 0.6em 1.2em;
 						-moz-transition: background-color .25s ease-in-out;
 						-webkit-transition: background-color .25s ease-in-out;
-						-ms-transition: background-color .25s ease-in-out;
 						transition: background-color .25s ease-in-out;
 						outline: 0;
 					}
@@ -1955,13 +1933,11 @@
 
 					#nav > ul > li.current > a {
 						background: #d52349;
-						color: #fff !important;
 						font-weight: 900;
 					}
 
 					#menu > ul > li.current > a {
 						background: #d52349;
-						color: #fff !important;
 						font-weight: 900;
 					}
 
@@ -1983,7 +1959,6 @@
 					text-decoration: none;
 					-moz-transition: color .25s ease-in-out;
 					-webkit-transition: color .25s ease-in-out;
-					-ms-transition: color .25s ease-in-out;
 					transition: color .25s ease-in-out;
 				}
 
@@ -2317,11 +2292,9 @@
 			#page-wrapper {
 				-moz-backface-visibility: hidden;
 				-webkit-backface-visibility: hidden;
-				-ms-backface-visibility: hidden;
 				backface-visibility: hidden;
 				-moz-transition: -moz-transform 0.5s ease;
 				-webkit-transition: -webkit-transform 0.5s ease;
-				-ms-transition: -ms-transform 0.5s ease;
 				transition: transform 0.5s ease;
 				padding-bottom: 1px;
 			}
@@ -2329,11 +2302,9 @@
 			#titleBar {
 				-moz-backface-visibility: hidden;
 				-webkit-backface-visibility: hidden;
-				-ms-backface-visibility: hidden;
 				backface-visibility: hidden;
 				-moz-transition: -moz-transform 0.5s ease;
 				-webkit-transition: -webkit-transform 0.5s ease;
-				-ms-transition: -ms-transform 0.5s ease;
 				transition: transform 0.5s ease;
 				display: block;
 				height: 44px;
@@ -2379,7 +2350,6 @@
 			#navPanel {
 				-moz-backface-visibility: hidden;
 				-webkit-backface-visibility: hidden;
-				-ms-backface-visibility: hidden;
 				backface-visibility: hidden;
 				-moz-transform: translateX(-275px);
 				-webkit-transform: translateX(-275px);
@@ -2387,7 +2357,6 @@
 				transform: translateX(-275px);
 				-moz-transition: -moz-transform 0.5s ease;
 				-webkit-transition: -webkit-transform 0.5s ease;
-				-ms-transition: -ms-transform 0.5s ease;
 				transition: transform 0.5s ease;
 				display: block;
 				height: 100%;
