@@ -1,58 +1,257 @@
-﻿<div class="container">
-    <h2>{{tabHeader}}</h2>
+<head>
+    <style>
+        @font-face {
+            font-family: "NeoSansArabic";
+            src: url('NeoSansArabic.ttf'); /* IE9 */
+        }
 
-    <div class="row">
-        <form name="myForm" ng-model="checkboxPayment" ng-init="checkedPayment()">
-            <label>
-                <input type="checkbox" ng-model="checkboxPayment.cash" ng-change="acceptPayment()">
-                Cash <img style="max-width:5%;" src="/images/cash.png" alt="Cash">
-            </label><br />
-            <label>
-                <input type="checkbox" ng-model="checkboxPayment.paypal" ng-change="acceptPayment()">
-                <img style="max-width:8%;" src="/images/PayPal.png" alt="PayPal">
-            </label><br />
-            <label>
-                <input type="checkbox" ng-model="checkboxPayment.bankTransfer" aria-label="Toggle ngShow" ng-change="acceptPayment()">
-                Bank Transfer <img style="max-width:10%;" src="/images/transfer.png" alt="bank transfer">
-            </label><br />
-        </form>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <form name="IBAN" class="check-element animate-show-hide" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()">
-                <label for="IBAN">IBAN</label>
-                <div class="input-group">
-                    <input type="text" class="form-control validate" name="bankInfoIBAN" ng-model="bankInfo.IBAN" id="IBAN" placeholder="Enter IBAN" required>
-                    <span class="input-group-btn">
-                        <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdateBankInfo()" class="btn">Update</button>
-                    </span>
-                </div>
-                <p class=" alert alert-danger" ng-show="!IBAN.bankInfoIBAN.$valid">
-                    You must enter the IBAN.
-                </p>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <form name="PayPal" class="check-element animate-show-hide" ng-show="checkboxPayment.paypal" ng-model="PayPalInfo" ng-init="GetPayPalInfo()">
-                <label for="PayPal">PayPal Button Code</label>
-                <div class="input-group">
-                    <input type="text" class="form-control validate" name="PayPalButton" ng-model="PayPalInfo.Button" id="PayPal" placeholder="Enter your PayPal Button Code" required>
-                    <span class="input-group-btn">
-                        <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdatePayPalInfo()" class="btn">Update</button>
-                    </span>
-                </div>
-                <p class=" alert alert-danger" ng-show="!PayPal.PayPalButton.$valid">
-                    You must enter a VALID Code, Copy it as it is in PayPal.
-                </p>
-            </form>
+        body {
+            font-family: 'NeoSansArabic';
+        }
+        /*@media only screen and (max-width:620px) {
+            #table
 
-            <div ng-bind-html='PayPalButtonCode2'> </div>
-            <div ng-bind-html='PayPalButtonCode'> </div>
+        {
+            overflow-x: scroll;
+        }
 
-            <code>{{PayPalButtonCode}}</code>
+        }*/
 
-        </div>
-    </div>
-</div>
+        table {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            color: #454545;
+            background: #F6F8EA;
+            border-radius: 0px 0px 30px 30px;
+            border: hidden;
+        }
+
+        tr.hover:hover {
+            background-color: #dcdda2;
+            border: hidden;
+            border-radius: 0px 0px 30px 30px;
+        }
+
+        .btn {
+            border-radius: 2px;
+        }
+
+        .done {
+            background-color: #c6ba57;
+        }
+
+            .done:hover {
+                background-color: #d3ca7d;
+            }
+
+            .done:focus {
+                background-color: #d3ca7d;
+            }
+
+        .btn, .btn-large, .btn-floating {
+            box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)
+        }
+
+            .btn:hover, .btn-large:hover, .btn-floating:hover {
+                box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15)
+            }
+
+        .btn, .btn-large, .btn-flat {
+            border: none;
+            border-radius: 2px;
+            display: inline-block;
+            height: 36px;
+            line-height: 36px;
+            outline: 0;
+            padding: 0 2rem;
+            text-transform: uppercase;
+            vertical-align: middle;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        .btn, .btn-large {
+            text-decoration: none;
+            color: #fff;
+            text-align: center;
+            letter-spacing: .5px;
+            -webkit-transition: .2s ease-out;
+            -moz-transition: .2s ease-out;
+            -o-transition: .2s ease-out;
+            -ms-transition: .2s ease-out;
+            transition: .2s ease-out;
+            cursor: pointer
+        }
+
+        th, td {
+            text-align: center;
+        }
+
+        input.ar, textarea.ar {
+            text-align: right;
+        }
+
+        .ar {
+            border: none;
+            border-radius: 20px;
+            padding: 5px 8px;
+            color: #333;
+            box-shadow: inset 0 2px 0 rgba(0,0,0,.2), 0 0 4px rgba(0,0,0,0.1);
+        }
+
+            .ar:focus {
+                outline: none;
+                box-shadow: inset 0 2px 0 rgba(0,0,0,.2), 0 0 4px rgba(0,0,0,0.1), 0 0 2px .5px #969595;
+            }
+
+        .styled-select {
+            height: 35px;
+            overflow: hidden;
+            width: 140px;
+        }
+
+            .styled-select select {
+                background: transparent;
+                border: none;
+                font-size: 14px;
+                height: 29px;
+                padding: 5px; /* If you add too much padding here, the options won't show in IE */
+                width: 268px;
+            }
+
+        .rounded {
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+        }
+
+        .black {
+            background-color: #fff;
+        }
+
+            .black select {
+                color: #fff;
+            }
+
+        .arb {
+            text-align: right;
+        }
+    </style>
+</head>
+ <body>
+
+     <div class="container">
+         <h2>{{tabHeader}}</h2>
+
+         <div class="row">
+             <form name="myForm" ng-model="checkboxPayment" ng-init="checkedPayment()">
+                 <label>
+                     <input type="checkbox" ng-model="checkboxPayment.cash" ng-change="acceptPayment()">
+                     Cash <img style="max-width:5%;" src="/images/cash.png" alt="Cash">
+                 </label><br />
+                 <label>
+                     <input type="checkbox" ng-model="checkboxPayment.paypal" ng-change="acceptPayment()">
+                     <img style="max-width:8%;" src="/images/PayPal.png" alt="PayPal">
+                 </label><br />
+                 <label>
+                     <input type="checkbox" ng-model="checkboxPayment.bankTransfer" aria-label="Toggle ngShow" ng-change="acceptPayment()">
+                     Bank Transfer <img style="max-width:10%;" src="/images/transfer.png" alt="bank transfer">
+                 </label><br />
+             </form>
+         </div>
+         <div class="row">
+             <div class="col-lg-6">
+                 <form name="IBAN" class="check-element animate-show-hide" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()">
+                     <label for="IBAN">IBAN</label>
+                     <div class="input-group">
+                         <input type="text" class="form-control validate" name="bankInfoIBAN" ng-model="bankInfo.IBAN" id="IBAN" placeholder="Enter IBAN" required>
+                         <span class="input-group-btn">
+                             <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdateBankInfo()" class="btn">Update</button>
+                         </span>
+                     </div>
+                     <p class=" alert alert-danger" ng-show="!IBAN.bankInfoIBAN.$valid">
+                         You must enter the IBAN.
+                     </p>
+                 </form>
+             </div>
+         </div>
+     </div>
+
+     <div class="container" style="margin-top:30px;">
+         <div dir="rtl">
+
+             <div>
+                 <h style="font-size:20px;">العمليات التجارية</h>
+             </div>
+             <!--
+            <div style="display:inline-block; margin-top:15px;">
+                <h  style="font-size:20px;">عرض</h>
+                <select name="singleSelect" ng-model="data.singleSelect" ng-style="{'width':'200px'}" class=" styled-select black rounded"
+                        ng-init="data.singleSelect = 'option1'">
+                    <option value="option1">Bank Transfer Transactions</option>
+                    <option value="option2">Cash Transactions</option>
+                </select>
+            </div>-->
+         </div>
+         <!--\add new category-->
+         <!--list Current Transactions-->
+         <div class="table-responsive centered" ng-init="GetAllTransactions()" id="table" style="margin-top:15px;">
+             <table class="table">
+                 <thead style="border-collapse:collapse; table-layout:fixed;">
+                     <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
+                         <th>الحالة</th>
+                         <th>اسم الحساب</th>
+                         <th>رقم التعريف الخاص بالطلب</th>
+                         <th>طريقة الدفع</th>
+                         <th>العنوان</th>
+                         <th>الإيميل الالكتروني</th>
+                         <th>رقم الجوال</th>
+                         <th>اسم المشتري</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <tr data-ng-repeat="order in orders" class="hover">
+                         <!--
+                        <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
+                        <td ng-hide="true">{{product.ID}}</td>
+                                                -->
+                         <td>
+                             <small>لم تتم العملية بعد</small>
+                             <button class="addfields waves-effect waves-light btn done" ng-click="UpdateStatus(order, order.ID)" style="float:left;">تم</button>
+                         </td>
+                         <td class="arb"><label>{{order.BankAccount}}</label></td>
+                         <td class="arb"><label>{{order.OrderID}}</label></td>
+                         <td class="arb"><label>{{order.PaymentMethod}}</label></td>
+                         <td class="arb"><label>{{order.BuyerLocation}}</label></td>
+                         <td class="arb"><label>{{order.BuyerEmail}}</label></td>
+                         <td class="arb"><label>{{order.BuyerPhone}}</label></td>
+                         <td class="arb"><label>{{order.BuyerName}}</label></td>
+                     </tr>
+
+                 </tbody>
+             </table>
+         </div>
+
+     </div>
+
+     <div class="row">
+         <div class="col-lg-6">
+             <form name="PayPal" class="check-element animate-show-hide" ng-show="checkboxPayment.paypal" ng-model="PayPalInfo" ng-init="GetPayPalInfo()">
+                 <label for="PayPal">PayPal Button Code</label>
+                 <div class="input-group">
+                     <input type="text" class="form-control validate" name="PayPalButton" ng-model="PayPalInfo.Button" id="PayPal" placeholder="Enter your PayPal Button Code" required>
+                     <span class="input-group-btn">
+                         <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdatePayPalInfo()" class="btn">Update</button>
+                     </span>
+                 </div>
+                 <p class=" alert alert-danger" ng-show="!PayPal.PayPalButton.$valid">
+                     You must enter a VALID Code, Copy it as it is in PayPal.
+                 </p>
+             </form>
+
+             <div ng-bind-html='PayPalButtonCode2'> </div>
+             <div ng-bind-html='PayPalButtonCode'> </div>
+
+             <code>{{PayPalButtonCode}}</code>
+
+         </div>
+     </div>
+ </body>

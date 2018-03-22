@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="/Scripts/angular.min.js"></script>
     <script src="/Scripts/angular-route.min.js"></script>
@@ -83,9 +84,13 @@
                         <div class="head">
                             <div class="my_account" style="float:right; margin-top:7px; margin-right:-30px; margin-top:15px;"><a href="#">My account</a></div>
                         </div>
+                        <div class="my_account" style="float:right; margin-top:7px; margin-right:5px; margin-top:15px;"><span>|</span></div>
                         <div class="head">
-                            <div class="my_account" style="float:right; margin-top:7px; margin-right:5px; margin-top:15px;"><a ng-click="Logout()" href="#">
-    <i class="fa fa-sign-out" style="font-size:20px"></i></a></div>
+                            <div class="my_account" style="float:right; margin-top:7px; margin-right:5px; margin-top:15px;">
+                                <a ng-click="Logout()" href="#">
+                                    Logout  <i class="fa fa-sign-out" style="font-size:15px"></i>
+                                </a>
+                            </div>
                         </div>
 
                         <!--2-->
@@ -144,10 +149,12 @@
                         <div class="head">
                             <div class="my_account" style="float:right; font-family:'NeoSansArabic'; margin-top:7px; margin-right:-30px; margin-top:15px;"><a href="#">حسابي</a></div>
                         </div>
+                        <div class="my_account" style="float:right; margin-top:7px; margin-right:5px; margin-top:15px;"><span>|</span></div>
                         <div class="head">
                             <div class="my_account" style="float:right; margin-top:7px; margin-right:5px; margin-top:15px;">
                                 <a ng-click="Logout()" href="#">
-                                    <i class="fa fa-sign-out" style="font-size:20px"></i>
+                                    تسجيل خروج
+                                    <i class="fa fa-sign-out" style="font-size:15px"></i>
                                 </a>
                             </div>
                         </div>
