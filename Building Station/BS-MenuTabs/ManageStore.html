@@ -305,8 +305,10 @@
                  <div id="quote">
                      <!-- Best Categories,-->  Best Products
                  </div>
+               
              </div>
              <div class="col-sm-12 statbox" data-ng-repeat="product in BestProducts | orderBy:'-Amount' | limitTo: 3" style="color:#E6293C">
+                 
                  <div ng-show="product.Amount!=0">
                      <div class="number">{{product.Amount}}</div>
                      <div class="type" style="color:#F26F7D">

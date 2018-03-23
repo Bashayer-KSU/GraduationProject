@@ -50,38 +50,38 @@ public class RegisterLogin : System.Web.Services.WebService
                 //Context.Response.Write(js.Serialize(Session["user"].ToString()));
 
                 con.Open();
-                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
-                "('Snapchat', 'Link','" + Session["user"] + "')", con);
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail, Hidden) values " +
+                "('Snapchat', 'Link','" + Session["user"] + "','"+true+"')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 
                 con.Open();
-                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
-                "('Twitter', 'Link','" + Session["user"] + "')", con);
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail, Hidden) values " +
+                "('Twitter', 'Link','" + Session["user"] + "','" + true + "')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 
                 con.Open();
-                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
-                "('Facebook', 'Link','" + Session["user"] + "')", con);
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail, Hidden) values " +
+                "('Facebook', 'Link','" + Session["user"] + "','" + true + "')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 
                 con.Open();
-                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
-                "('Instagram', 'Link','" + Session["user"] + "')", con);
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail, Hidden) values " +
+                "('Instagram', 'Link','" + Session["user"] + "','" + true + "')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 
                 con.Open();
-                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
-                "('Slider', 'Slider','" + Session["user"] + "')", con);
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail, Hidden) values " +
+                "('Slider', 'Slider','" + Session["user"] + "','" + false + "')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 
                 con.Open();
-                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
-                "('About', 'About','" + Session["user"] + "')", con);
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail, Hidden) values " +
+                "('About', 'About','" + Session["user"] + "','" + false + "')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 

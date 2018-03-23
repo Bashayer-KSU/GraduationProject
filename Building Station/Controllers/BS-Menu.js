@@ -658,6 +658,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             });
             post.then(function (response) { }, function (error) { });
             */
+            console.log($scope.mySnapchatLink);
+            console.log($scope.myTwitterLink);
             $http.post(
                 "TemplateData.asmx/UpdateLinks",
                 $.param({
@@ -674,6 +676,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             )
                 .then(function (response) {
                     $scope.result = response.data;
+                    console.log($scope.result);
                 }, function (error) {
                     $scope.error = error.data;
                 });

@@ -195,38 +195,41 @@ public class TemplateData : System.Web.Services.WebService
 
         using (SqlConnection con = new SqlConnection(cs))
         {
-           /* con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET SnapchatLink = '" + snapchat_link + "', TwitterLink = '" + twitter_link + "', FacebookLink = '" + facebook_link + "', InstagramLink = '" + instagram_link + "' WHERE Email='" + Session["user"] + "'", con);
-            cmd.ExecuteNonQuery();
-            con.Close();*/
-            store.SnapchatLink = snapchat_link;
-            store.TwitterLink = twitter_link;
-            store.FacebookLink = facebook_link;
-            store.InstagramLink = instagram_link;
-
+            /* con.Open();
+             SqlCommand cmd = new SqlCommand("UPDATE Store SET SnapchatLink = '" + snapchat_link + "', TwitterLink = '" + twitter_link + "', FacebookLink = '" + facebook_link + "', InstagramLink = '" + instagram_link + "' WHERE Email='" + Session["user"] + "'", con);
+             cmd.ExecuteNonQuery();
+             con.Close();
+             store.SnapchatLink = snapchat_link;
+             store.TwitterLink = twitter_link;
+             store.FacebookLink = facebook_link;
+             store.InstagramLink = instagram_link;
+             */
             con.Open();
             //Link Elements
-
+            List<Element> ElementsList = new List<Element>();
             //Snapchat Link
             Element element = new Element();
             element.StoreEmail = Session["user"].ToString();
-            if (store.SnapchatLink != null)
+            if (snapchat_link != null)
             {
-                if (store.SnapchatLink.ToLower().Contains("https://www.snapchat.com/add/"))
+                if (snapchat_link.ToLower().Contains("https://www.snapchat.com/add/"))
                 {
+                    store.SnapchatLink = snapchat_link;
                     element.Hidden = false;
-                    element.Value = store.SnapchatLink;
+                    element.Value = snapchat_link;
                 }
                 else
                 {
                     element.Hidden = true;
                     element.Value = "No Value";
+                    store.SnapchatLink = "No Value";
                 }
             }
             else
             {
                 element.Hidden = true;
                 element.Value = "No Value";
+                store.SnapchatLink = "No Value";
             }
 
             element.Name = "Snapchat";
@@ -238,23 +241,26 @@ public class TemplateData : System.Web.Services.WebService
             //Twitter Link
             element = new Element();
             element.StoreEmail = Session["user"].ToString();
-            if (store.TwitterLink != null)
+            if (twitter_link != null)
             {
-                if (store.TwitterLink.ToLower().Contains("https://twitter.com/"))
+                if (twitter_link.ToLower().Contains("https://www.twitter.com/"))
                 {
+                    store.TwitterLink = twitter_link;
                     element.Hidden = false;
-                    element.Value = store.TwitterLink;
+                    element.Value = twitter_link;
                 }
                 else
                 {
                     element.Hidden = true;
                     element.Value = "No Value";
+                    store.TwitterLink = "No Value";
                 }
             }
             else
             {
                 element.Hidden = true;
                 element.Value = "No Value";
+                store.TwitterLink = "No Value";
             }
 
             element.Name = "Twitter";
@@ -266,23 +272,27 @@ public class TemplateData : System.Web.Services.WebService
             //Facebook Link
             element = new Element();
             element.StoreEmail = Session["user"].ToString();
-            if (store.FacebookLink != null)
+            if (facebook_link != null)
             {
-                if (store.FacebookLink.ToLower().Contains("https://www.facebook.com/"))
+                if (facebook_link.ToLower().Contains("https://www.facebook.com/"))
                 {
                     element.Hidden = false;
-                    element.Value = store.FacebookLink;
+                    element.Value = facebook_link;
+                    store.FacebookLink = facebook_link ;
                 }
                 else
                 {
                     element.Hidden = true;
                     element.Value = "No Value";
+                    store.FacebookLink = "No Value";
                 }
             }
             else
             {
                 element.Hidden = true;
                 element.Value = "No Value";
+                store.FacebookLink = "No Value";
+
             }
 
             element.Name = "Facebook";
@@ -294,23 +304,27 @@ public class TemplateData : System.Web.Services.WebService
             //Instagram Link
             element = new Element();
             element.StoreEmail = Session["user"].ToString();
-            if (store.InstagramLink != null)
+            if (instagram_link != null)
             {
-                if (store.InstagramLink.ToLower().Contains("https://www.instagram.com/"))
+                if (instagram_link.ToLower().Contains("https://www.instagram.com/"))
                 {
                     element.Hidden = false;
-                    element.Value = store.InstagramLink;
+                    element.Value = instagram_link;
+                    store.InstagramLink = instagram_link;
                 }
                 else
                 {
                     element.Hidden = true;
                     element.Value = "No Value";
+                    store.InstagramLink = "No Value";
+
                 }
             }
             else
             {
                 element.Hidden = true;
                 element.Value = "No Value";
+                store.InstagramLink = "No Value";
             }
 
             element.Name = "Instagram";
@@ -320,7 +334,7 @@ public class TemplateData : System.Web.Services.WebService
 
             con.Close();
 
-            Context.Response.Write(js.Serialize(store));
+            Context.Response.Write(js.Serialize(ElementsList));
         }
     }
 
