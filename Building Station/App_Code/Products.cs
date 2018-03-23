@@ -309,4 +309,91 @@ public class Products : System.Web.Services.WebService
         return product;
     }
 
+    [WebMethod(EnableSession = true)]
+    public void BestProducts()
+    {
+        List<Product> StoreProductsList = GetAllStoreProducts();
+        List<Statstic> statsticList = new List<Statstic>();
+
+        Statstic statstic = new Statstic();
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            foreach (var pro in StoreProductsList)
+            {
+                int id = pro.ID;            
+            SqlCommand cmd = new SqlCommand("select SUM(Amount) AS amnt from ProductOrder Where Product_ID = '" + id + "'", con);
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                statstic = new Statstic();
+                statstic.ProductID = Convert.ToInt32(pro.ID);
+                statstic.ProductName = pro.Name;
+                statstic.CategoryName = GetCategoryName(Convert.ToInt32(pro.Category_ID));
+                statstic.Image = pro.Image;
+               string amount = reader["amnt"].ToString();
+                    if (reader["amnt"] != DBNull.Value)
+                    {
+                        statstic.Amount = Convert.ToInt32(reader["amnt"]);
+                    }
+
+                    statsticList.Add(statstic);
+            }
+                        con.Close();
+
+        }
+        }
+
+        Context.Response.Write(js.Serialize(statsticList));
+    }
+
+    [WebMethod(EnableSession = true)]
+    public List<Product> GetAllStoreProducts()
+    {
+        List<Product> ProductsList = new List<Product>();
+        Product product = new Product();
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            SqlCommand cmd = new SqlCommand("select * from Product Where StoreEmail ='" + Session["user"] + "'", con);
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+
+                product = new Product();
+                product.ID = Convert.ToInt32(reader["ID"]);
+                product.Name = reader["Name"].ToString();
+                product.Category_ID = reader["Category_ID"].ToString();
+                product.Image = reader["Image"].ToString();
+
+                ProductsList.Add(product);
+
+            }
+            con.Close();
+        }
+
+
+        return ProductsList;
+    }
+
+    [WebMethod(EnableSession = true)]
+    public string GetCategoryName(int id)
+    {
+        string category_name = "";
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("select Name from Category where ID ='" + id + "' and StoreEmail = '" + Session["user"] + "'", con);
+            SqlDataReader R = cmd.ExecuteReader();
+            if (R.Read())
+            {
+                return R["Name"].ToString();
+            }
+        }
+        return category_name;
+    }
 }

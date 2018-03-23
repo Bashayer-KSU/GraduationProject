@@ -237,6 +237,19 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     $scope.orders.splice(remove, 1);
                 }, function (error) { });
         };
+
+        $scope.statistic = function () {
+            $http({
+                url: "/Products.asmx/BestProducts",
+                method: "get",
+                params: {}
+            })
+                .then(function (response) {
+                    $scope.BestProducts = response.data;
+                    console.log($scope.BestProducts);
+                });
+        };
+
     })
     .controller("DevelopmentEnvironmentController", function ($rootScope,$scope, $http, $filter, validLinkService) {
         $scope.Logout = function () {
