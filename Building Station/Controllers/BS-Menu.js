@@ -171,7 +171,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     .then(function (response) {
                             $scope.bankInfo.IBAN = response.data;
                             $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-                       
+                            $scope.editIBAN = false;
                     }, function (error) {
                         $scope.error = error.data;
                     });
@@ -181,6 +181,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         $scope.bankInfo = {
             IBAN: ""
         };
+        $scope.editIBAN = false;
 
         $scope.GetBankInfo = function () {
             /*
