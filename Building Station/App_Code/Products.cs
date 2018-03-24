@@ -23,7 +23,7 @@ public class Products : System.Web.Services.WebService
    // string ShopEmail = "lamia@gmail.com";
      // string ShopEmail = "as@mail.com";
     //string ShopEmail = "star7s@msn.com";
-    string ShopEmail = "test4@4";
+    string ShopEmail = "test7@7";
 
 
 
@@ -256,44 +256,29 @@ public class Products : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public Product AddNewProduct(string cat, string image, string name, string des, double price, double PADs, int amount, int discount)
+    public Product AddNewProduct(string category, string image, string name, string des, double price, double PADs, int amount, int discount)
     {
+        int catID = getCategoryID(category);
         int rows;
         Product product = new Product();
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            /*SqlCommand check = new SqlCommand("select ID from Category where (Name = N'" + cat + "' and ShopEmail = '" + ShopEmail + "')", con);
-            SqlDataReader reader = check.ExecuteReader();*/
+            SqlCommand cmd;
 
-            SqlCommand cmd0 = new SqlCommand();
-            SqlDataReader reader;
+            cmd = new SqlCommand("INSERT INTO Product (Name, Category_ID, StoreEmail, Price, Image, Description, Discount, Amount) values(N'" + name + "', " + catID + ",'" + ShopEmail + "'," + price + ",'" + image + "',N'" + des + "'," + discount + "," + amount + ")", con);
+            //string query = "SELECT ID FROM Product WHERE (Name= N'" + name + "' AND Category_ID = '" + reader["ID"].ToString() + "' AND ShopEmail = '" + ShopEmail + "')";
+            //reader.Close();
 
-            cmd0.CommandText = "SELECT ID FROM Category WHERE (StoreEmail = '" + ShopEmail + "' AND Name = N'" + cat + "')";
-            cmd0.CommandType = CommandType.Text;
-            cmd0.Connection = con;
-
-            con.Open();
-
-            reader = cmd0.ExecuteReader();
-            if (reader.Read())
-            {
-                int catID = Convert.ToInt32(reader["ID"]);
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Product (Name, Category_ID, StoreEmail, Price, Image, Description, Discount, Amount) values(N'" + name + "', " + catID + ",'" + ShopEmail + "'," + price + ",'" + image + "',N'" + des + "'," + discount + "," + amount + ")", con))
-                {
-
-                    //string query = "SELECT ID FROM Product WHERE (Name= N'" + name + "' AND Category_ID = '" + reader["ID"].ToString() + "' AND ShopEmail = '" + ShopEmail + "')";
-                    //reader.Close();
-
-                    rows = cmd.ExecuteNonQuery();
-
+            rows = cmd.ExecuteNonQuery();
+            con.Close();
                     // product.ID = Convert.ToInt32(id["ID"]);
                     product.Name = name;
                     product.Price = price;
                     product.Image = image;
                     product.Description = des;
                     product.Discount = discount;
-                    product.Category_ID = cat;
+                    product.Category_ID = category;
                     product.Amount = amount;
                     product.StoreEmail = ShopEmail;
                     if (product.Discount != 0)
@@ -303,9 +288,7 @@ public class Products : System.Web.Services.WebService
                         product.PriceAfterDiscount = i;
                     }
                     else { product.PriceAfterDiscount = 0; }
-                }
             }
-        }
         return product;
     }
 
@@ -396,4 +379,21 @@ public class Products : System.Web.Services.WebService
         }
         return category_name;
     }
+    [WebMethod(EnableSession = true)]
+    public int getCategoryID(String category)
+    {
+        int id = 0;
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("select ID from Category where Name ='" + category + "' and StoreEmail = '" + ShopEmail + "'", con);
+            SqlDataReader R = cmd.ExecuteReader();
+            if (R.Read())
+            {
+                return Convert.ToInt32(R["ID"]);
+            }
+        }
+        return id;
+    }
+    
 }
