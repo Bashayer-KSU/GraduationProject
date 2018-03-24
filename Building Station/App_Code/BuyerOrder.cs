@@ -36,11 +36,7 @@ public class BuyerOrder : System.Web.Services.WebService
         else
             return "test4@4";
     }
-    [WebMethod(EnableSession = true)]
-    public double getTotalPrice()
-    {
-        return 44.4;
-    }
+  
     [WebMethod(EnableSession = true)]
     public void CreateOrder(string BuyerName, string BuyerPhone, string BuyerEmail, string BuyerLocation,string PaymentMethod, string BankAccount, string OrderID, string TotalPrice)
     {

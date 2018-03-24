@@ -747,6 +747,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             })
                 .then(function (response) {
                     $scope.categories = response.data;
+
                     if (newCategury == null || newCategury === 'undefined')
                     { $scope.selectedCategory = $scope.categories[0].Name; }
                     else { $scope.selectedCategory = newCategury; }
@@ -855,6 +856,35 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         };
         //\apply edit the product
 
+        $scope.addNewProduct2 = function (product) {
+            console.log(product.Category_ID);
+            $http.post(
+                "/Products.asmx/AddNewProduct",
+                $.param({
+                    category: product.Category_ID,
+                    image: product.Image,
+                    name: product.Name,
+                    des: product.Description,
+                    price: product.Price,
+                    PADs: 23.3,
+                    amount: product.Amount,
+                    discount: product.Discount
+                }),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                    }
+                }
+
+            )
+                .then(function (response) {
+                    $scope.result = response.data;
+                    console.log(response.data);
+
+                }, function (error) {
+                    $scope.error = error.data;
+                });
+        }
         //to add new row
         $scope.addNewProduct = function (product, Category_ID, Image, Name, Description, Price, PAD, Amount, Discount) {
             alert("addProduct function");
@@ -863,7 +893,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 headers: { "Content-Type": "application/json;charset=utf-8" },
                 dataType: 'json',
                 method: 'post',
-                data: JSON.stringify({ cat: $scope.selectedCategory, image: Image, name: Name, des: Description, price: Price, PADs: PAD, amount: Amount, discount: Discount })
+                data: JSON.stringify({ cat: product.Category_ID, image: Image, name: Name, des: Description, price: Price, PADs: PAD, amount: Amount, discount: Discount })
             }).then(function (response) {
                 /*alert("success add");
                 $scope.addProduct = response.data;
