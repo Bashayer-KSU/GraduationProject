@@ -394,9 +394,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
                 $scope.TextType = [{ name: "Store Name", value: $scope.StoreName },
                 { name: "Store Description", value: $scope.desc },
-                { name: "Email", value: $scope.Email },
                 { name: "Phone", value: $scope.Phone },
-                { name: "Address", value: $scope.address }
+                { name: "Address", value: $scope.address }/*,
+                { name: "Email", value: $scope.Email }*/
                 ];
                 $scope.selectedTextType = $scope.TextType[0];
                 $scope.ShopOwnerText = $scope.selectedTextType.value;

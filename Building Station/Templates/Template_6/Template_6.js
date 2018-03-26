@@ -42,6 +42,8 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
             $scope.Store = response.data;
             console.log($scope.Store);//Store Info
 
+
+            //WEBSITE ICON and Title 
             document.title = $scope.Store.Name;
             document.getElementById("icon").href = $scope.Store.Logo;
             //Payment Methods
@@ -140,6 +142,8 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
             .then(function (response) {
                 $scope.result = response.data;
                 $scope.addProductToOrder($scope.result.ID);
+                $scope.checkout = false;
+                $scope.payment = false;
 
             }, function (error) {
                 $scope.error = error.data;
@@ -155,6 +159,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
     $scope.TotalPrice = 0;
     $scope.ProductOrderArray = [];
     $scope.ProductsArray = [];
+
 
     //Displaying All Category
     $scope.GetAllCategories = function () {
@@ -176,7 +181,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
     $scope.AddProductToCart = function (product) {
         if (typeof product !== "undefined") {
             $scope.addProduct = product;
-              $scope.quantity = 1;
+            $scope.quantity = 1;
         }
     };
 
@@ -189,11 +194,21 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
             product.Amount = product.Amount - amount;
             }
                 $scope.TotalPrice += product.PriceAfterDiscount * amount;
-            $scope.Exist = false;
+                $scope.Exist = false;
 
         }
     };
-
+    $scope.ItemsInShoppingCart = function () {
+        if ($scope.ProductsArray.length === 0)
+            return 0;
+        else {
+            var sum = 0;
+            angular.forEach($scope.ProductsArray, function (value, key) {
+                sum += value.Amount;
+            });
+            return sum;
+        }
+    };
     // Remove Product from shopping cart
     $scope.removeFromCart = function (product) {
         var index = $scope.ProductsArray.indexOf(product);

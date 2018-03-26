@@ -23,7 +23,7 @@
             </div>
 -->
         <nav id="header" ng-style="{'background-color':Store.Color1}" class="navbar navbar-expand-md navbar-dark fixed-top">
-            <a class="navbar-brand" href="#"><img ng-src="{{Store.Logo}}" style="width: 4vw; height: 4vw; border-radius: 50%;" alt="Store Logo" class="">{{Store.Name}}</a>
+            <a class="navbar-brand" href="#"><img id="StoreLogo" ng-src="{{Store.Logo}}" alt="Store Logo">{{Store.Name}}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -55,7 +55,7 @@
                     </li>
                     <li class="nav-item">
                         <!--data-toggle="collapse" data-target="#checkoutS"-->
-                        <a class="nav-link" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS"><span class="hidden-xs">Shopping Cart </span><i style="font-size:20px" class="fa fa-shopping-cart"></i></a>
+                        <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS"><span class="hidden-xs">Shopping Cart </span><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
                     </li>
                 </ul>
             </div>
@@ -79,17 +79,19 @@
                             </div>
                         </div>
                     </div>
+                    <!--  We don't have multible slider images feature  -->
                     <!--
-                <div class="carousel-item">
-                    <img class="carousel-image img-fluid" src="/Templates/Template_6/Images/waffle.jpg" alt="Second slide">
-                    <div class="container">
-                        <div class="carousel-caption">
-                            <h1>{{Store.Name}}</h1>
-                            <p>{{Store.Description}}</p><br><br>
-                        </div>
-                    </div>
-                </div>-->
+    <div class="carousel-item">
+        <img class="carousel-image img-fluid" src="/Templates/Template_6/Images/waffle.jpg" alt="Second slide">
+        <div class="container">
+            <div class="carousel-caption">
+                <h1>{{Store.Name}}</h1>
+                <p>{{Store.Description}}</p><br><br>
+            </div>
+        </div>
+    </div>-->
                 </div>
+                <!--
                 <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -98,6 +100,7 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
+                    -->
             </div>
         </section>
         <!----- carousel ---->
@@ -240,7 +243,7 @@
                         <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=false; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
                         <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="Buyer.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Choose Payment Method</button>
                         <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
-                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
+                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
 
                     </div>
                 </div>
