@@ -128,7 +128,7 @@
                                                 </div>
                                                 <span class="my-0">Amount</span>
                                                 <span class="my-0">Price</span>
-                                                <span></span>
+                                                <div class="my-0"></div>
                                             </li>
                                             <li ng-repeat='x in ProductsArray' id="yourcart" class="list-group-item d-flex justify-content-between">
                                                 <div class="col-5"><img ng-src="{{x.Image}}" alt="..." class="img-fluid" /></div>
@@ -137,7 +137,11 @@
                                                     <small class="text-muted">{{x.Desc}}</small>
                                                 </div>
                                                 <span>{{x.Amount}}</span>
-                                                <span>{{x.Price}}</span>
+                                                <span ng-show="x.Discount == 0">{{x.Price}} SR</span>
+                                                <span ng-show="x.Discount != 0">
+                                                    <del style="color:#ff0000"> {{x.Price}} </del>
+                                                    {{x.PriceAfterDiscount}} SR
+                                                </span>
                                                 <span>
                                                     <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -146,7 +150,7 @@
                                             </li>
 
                                             <li  class="list-group-item d-flex justify-content-between">
-                                                <span>Total</span><span><strong>{{TotalPrice}}</strong></span>
+                                                <span>Total</span><span><strong>{{TotalPrice}} SR</strong></span>
                                             </li>
                                             </ul>
                                             <div ng-show="ProductsArray.length==0" style="text-align:center;">
@@ -263,21 +267,26 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">{{addProduct.Name}}</h5>
                                                 <p class="card-text">{{addProduct.Description}}</p>
+                                                <p ng-show="addProduct.Discount == 0">{{addProduct.Price}} SR</p>
+                                                <p ng-show="addProduct.Discount != 0">
+                                                    <del style="color:#ff0000"> {{addProduct.Price}} </del>
+                                                    {{addProduct.PriceAfterDiscount}} SR
+                                                </p>
                                                 <div class="col-xs-12  col-sm-12 col-md-12 col-lg-12">
                                                     <input class="form-control" type="number" min="1" ng-model="quantity" max="{{addProduct.Amount}}" name="quantity" placeholder="enter quantity" required>
                                                     <!--
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">Size</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Size</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01">
+                <option selected>Choose...</option>
+                <option value="1">S</option>
+                <option value="2">M</option>
+                <option value="3">L</option>
+            </select>
         </div>
-        <select class="custom-select" id="inputGroupSelect01">
-            <option selected>Choose...</option>
-            <option value="1">S</option>
-            <option value="2">M</option>
-            <option value="3">L</option>
-        </select>
-    </div>
-    -->
+        -->
                                                 </div>
                                             </div>
                                         </form>
@@ -287,7 +296,9 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-info btn-md" ng-click="addToCartlist(addProduct,quantity)"  ng-disabled="AddProduct.quantity.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
+                        <button type="button" class="btn btn-info btn-md" ng-click="addToCartlist(addProduct,quantity)" data-dismiss="modal" ng-disabled="AddProduct.quantity.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">
+                            Add To Cart
+                        </button>
                     </div>
                 </div>
             </div>
@@ -313,13 +324,19 @@
                                 <!-- - -->
                                 <div class="tab-pane fade show active" role="tabpanel">
                                     <div class="row">
-                                        <div ng-repeat="product in products" ng-show="product.Amount!=0" class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                                        <div ng-repeat="product in products" class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
                                             <div class="card text-center">
                                                 <img class="card-img-top" ng-src="{{product.Image}}" alt="Card image cap">
                                                 <div class="card-body">
                                                     <h5 class="card-title">{{product.Name}}</h5>
                                                     <p class="card-text">{{product.Description}}</p>
-                                                    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
+                                                    <p ng-show="product.Discount == 0" >{{product.Price}} SR</p>
+                                                    <p ng-show="product.Discount != 0">
+                                                        <del style="color:#ff0000"> {{product.Price}} </del>
+                                                        {{product.PriceAfterDiscount}} SR
+                                                    </p>
+                                                    <p  style="color:#ff0000" ng-show="product.Amount == 0">Out of stock</p>
+                                                    <button type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -366,13 +383,13 @@
                         </ul>
                         <br>
                     </div>
-                    <div class="col-sm-2">
-                        <h5 class="text-md-right">Contact Us</h5>
-                        <hr>
-                        <h6>{{Store.Email}}</h6>
-                        <h6>{{Store.Address}}</h6>
-                        <h6>{{Store.Phone}}</h6>
-
+                    <div class="col-sm-6">
+                        <h5 class="text-md-left">Contact Us</h5>
+                        <hr><div class ="row">
+    <h6 class="col-sm-4"><i class="fa fa-send"></i>                {{Store.Email}}</h6>
+    <h6 class="col-sm-4"><i class="fa fa-location-arrow"></i>                {{Store.Address}}</h6>
+    <h6 class="col-sm-4"><i class="fa fa-phone"></i>                {{Store.Phone}}</h6>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -406,37 +423,6 @@
                     }, 700);
                 });
             }
-
-            var quantitiy = 0;
-            $('.quantity-right-plus').click(function (e) {
-
-                // Stop acting like a button
-                e.preventDefault();
-                // Get the field name
-                var quantity = parseInt($('#quantity').val());
-
-                // If is not undefined
-
-                $('#quantity').val(quantity + 1);
-
-
-                // Increment
-
-            });
-
-            $('.quantity-left-minus').click(function (e) {
-                // Stop acting like a button
-                e.preventDefault();
-                // Get the field name
-                var quantity = parseInt($('#quantity').val());
-
-                // If is not undefined
-
-                // Increment
-                if (quantity > 0) {
-                    $('#quantity').val(quantity - 1);
-                }
-            });
 
         });
     </script>

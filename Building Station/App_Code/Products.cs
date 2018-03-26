@@ -21,9 +21,8 @@ public class Products : System.Web.Services.WebService
     //string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
 
    // string ShopEmail = "lamia@gmail.com";
-      string ShopEmail = "lastlink@mail.com";
+     // string ShopEmail = "lastlink@mail.com";
     //string ShopEmail = "star7s@msn.com";
-   // string ShopEmail = "test4@4";
     // string ShopEmail = "as@mail.com";
     //string ShopEmail = "test7@7";
 
@@ -140,8 +139,10 @@ public class Products : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
+
             int catID = getCategoryID(category);
             if (catID != -1)
+
             {
                 using (SqlCommand check = new SqlCommand("select * from Product where Category_ID ='" + catID + "'", con))
                 {
@@ -165,7 +166,7 @@ public class Products : System.Web.Services.WebService
                             i = pro.Price - i;
                             pro.PriceAfterDiscount = i;
                         }
-                        else { pro.PriceAfterDiscount = 0; }
+                        else { pro.PriceAfterDiscount = pro.Price; }
                         ProductsList.Add(pro);
                     }
                 }
@@ -218,6 +219,7 @@ public class Products : System.Web.Services.WebService
                         product.ID = id;
                         product.Discount = discount;
                         product.Category_ID = cat;
+
                         product.StoreEmail = "" + Session["user"];
 
                         if (discount != 0)
@@ -235,12 +237,15 @@ public class Products : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
+
     public Product AddNewProduct(string category, string image, string name, string des, double price, int amount, int discount)
+
     {
         int catID = getCategoryID(category);
         Product product = new Product();
         if (catID != -1)
         {
+
             int rows;
             using (SqlConnection con = new SqlConnection(cs))
             {
@@ -368,6 +373,7 @@ public class Products : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
+
             SqlCommand cmd = new SqlCommand("select ID from Category where Name = N'" + category + "' and StoreEmail = '" + Session["user"] + "'", con);
             SqlDataReader R = cmd.ExecuteReader();
             if (R.Read())
