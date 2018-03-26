@@ -166,7 +166,7 @@ public class Products : System.Web.Services.WebService
                             i = pro.Price - i;
                             pro.PriceAfterDiscount = i;
                         }
-                        else { pro.PriceAfterDiscount = 0; }
+                        else { pro.PriceAfterDiscount = pro.Price; }
                         ProductsList.Add(pro);
                     }
                 }

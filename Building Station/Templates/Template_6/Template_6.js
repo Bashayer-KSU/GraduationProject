@@ -17,7 +17,7 @@ myApp.service('initialSetup', function ($http) {
     };
 });
 
-var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, CategoryService) {
+var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, CategoryService, AddProductService) {
     /*   initialSetup.getStoreInfo().then(function (resp) {
            $scope.data = resp.data;
        });
@@ -55,8 +55,6 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
             else if ($scope.Store.BankTransfer)
                 $scope.PaymentMethod = "BankTransfer";
             else $scope.PaymentMethod = "PayPal";
-
-
 
             //Social Media Link
             $scope.Facebook = $scope.Store.FacebookLink.toLowerCase().includes("https://www.facebook.com/");
@@ -123,15 +121,6 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
     ElementsData();
 
     $scope.Checkout = function () {
-        console.log("Hi " + $scope.BuyerName);
-        console.log("Hi " + $scope.BuyerPhone);
-        console.log("Hi " + $scope.BuyerEmail);
-        console.log("Hi " + $scope.BuyerLocation);
-        console.log("Hi " + $scope.PaymentMethod);
-        console.log("Hi " + $scope.HolName);
-        console.log("Hi " + $scope.TotalPrice);
-        console.log("HII" + $scope.ProductsArray);
-
         
         $http.post(
             "/BuyerOrder.asmx/CreateOrder",
@@ -143,44 +132,18 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
                 PaymentMethod: $scope.PaymentMethod,
                 BankAccount: $scope.HolName,
                 OrderID: $scope.OrderID,
-                TotalPrice: $scope.TotalPrice //,
-               // ProductsArray : $scope.ProductsArray
+                TotalPrice: $scope.TotalPrice
             }),
             {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                }
-            }
-
-        )
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' }
+            })
             .then(function (response) {
                 $scope.result = response.data;
-                console.log($scope.result.ID);
                 $scope.addProductToOrder($scope.result.ID);
 
             }, function (error) {
                 $scope.error = error.data;
             });
-    };
-    $scope.addProductToOrder = function (OrderID) {
-        angular.forEach($scope.ProductsArray, function (value, key) {
-            console.log(value.ID);
-            console.log(value.Amount);
-            $http.post(
-                "/BuyerOrder.asmx/AddProductToOrder",
-                $.param({
-                    OrderID: OrderID,
-                    ProductID: value.ID,
-                    Amount: value.Amount
-                }),
-                { headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
-                .then(function (response) {
-                    $scope.result = response.data;
-                    console.log($scope.result);
-                }, function (error) {
-                    $scope.error = error.data;
-                });
-        });
     };
 
 
@@ -193,6 +156,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
     $scope.ProductOrderArray = [];
     $scope.ProductsArray = [];
 
+    //Displaying All Category
     $scope.GetAllCategories = function () {
         CategoryService.GetAllCategories().then(function (response) {
             $scope.categories = response;
@@ -205,7 +169,6 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
         $scope.currentTab = item;
         ProductService.GetAllProducts(item.Name).then(function (response) {
             $scope.products = response;
-            console.log($scope.products);
         });
     };
 
@@ -225,27 +188,39 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
                 $scope.ProductsArray.push({ ID: product.ID, Name: product.Name, Desc: product.Description, Price: product.Price, Image: product.Image, Discount: product.Discount, PriceAfterDiscount: product.PriceAfterDiscount, Amount: amount });
             product.Amount = product.Amount - amount;
             }
-            $scope.TotalPrice += product.Price * amount;
+                $scope.TotalPrice += product.PriceAfterDiscount * amount;
             $scope.Exist = false;
 
         }
     };
+
+    // Remove Product from shopping cart
     $scope.removeFromCart = function (product) {
         var index = $scope.ProductsArray.indexOf(product);
         $scope.addProduct.Amount = $scope.addProduct.Amount + $scope.ProductsArray[index].Amount; //return the amount of product to the orginal amount
         $scope.ProductsArray.splice(index, 1);
-            $scope.TotalPrice -= product.Price * product.Amount;
+        $scope.TotalPrice -= product.PriceAfterDiscount * product.Amount;
         
     };
+
     $scope.isExist = function (product, amount) { //If product exist update the amount only
         angular.forEach($scope.ProductsArray, function (value, key) {
             if (value.ID === product.ID) {
                 $scope.message = ' already exists!';
                 value.Amount = value.Amount + amount;
                 product.Amount -= amount; 
-                console.log($scope.message);
                 $scope.Exist = true;
             }
+        });
+    };
+
+
+    // Add products to Buyer's Order
+    $scope.addProductToOrder = function (OrderID) {
+        angular.forEach($scope.ProductsArray, function (value, key) {
+            AddProductService.AddProductToCart(OrderID, value.ID, value.Amount).then(function (response) {
+                $scope.ProductAdded = response;
+            });
         });
     };
 });
@@ -287,20 +262,17 @@ myApp.factory('ProductService', function ($http) {
 
 
 myApp.factory('AddProductService', function ($http) {
-    var AddProductToCart = function (ProductID, Amount) {
+    var AddProductToCart = function (OrderID,ProductID, Amount) {
         return $http.post(
-            "/Products.asmx/GetAllProducts",
+            "/BuyerOrder.asmx/AddProductToOrder",
             $.param({
-                Category: CategoryName
+                OrderID: OrderID,
+                ProductID: ProductID,
+                Amount: Amount
             }),
-            {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                }
-            })
+            { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' } })
             .then(function (response) {
                 return response.data;
-
             });
     };
     return { AddProductToCart: AddProductToCart };

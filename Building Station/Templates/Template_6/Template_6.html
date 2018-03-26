@@ -128,7 +128,7 @@
                                                 </div>
                                                 <span class="my-0">Amount</span>
                                                 <span class="my-0">Price</span>
-                                                <span></span>
+                                                <div class="my-0"></div>
                                             </li>
                                             <li ng-repeat='x in ProductsArray' id="yourcart" class="list-group-item d-flex justify-content-between">
                                                 <div class="col-5"><img ng-src="{{x.Image}}" alt="..." class="img-fluid" /></div>
@@ -137,7 +137,11 @@
                                                     <small class="text-muted">{{x.Desc}}</small>
                                                 </div>
                                                 <span>{{x.Amount}}</span>
-                                                <span>{{x.Price}}</span>
+                                                <span ng-show="x.Discount == 0">{{x.Price}} SR</span>
+                                                <span ng-show="x.Discount != 0">
+                                                    <del style="color:#ff0000"> {{x.Price}} </del>
+                                                    {{x.PriceAfterDiscount}} SR
+                                                </span>
                                                 <span>
                                                     <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -146,7 +150,7 @@
                                             </li>
 
                                             <li  class="list-group-item d-flex justify-content-between">
-                                                <span>Total</span><span><strong>{{TotalPrice}}</strong></span>
+                                                <span>Total</span><span><strong>{{TotalPrice}} SR</strong></span>
                                             </li>
                                             </ul>
                                             <div ng-show="ProductsArray.length==0" style="text-align:center;">
@@ -292,7 +296,9 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-info btn-md" ng-click="addToCartlist(addProduct,quantity)"  ng-disabled="AddProduct.quantity.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
+                        <button type="button" class="btn btn-info btn-md" ng-click="addToCartlist(addProduct,quantity)" data-dismiss="modal" ng-disabled="AddProduct.quantity.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">
+                            Add To Cart
+                        </button>
                     </div>
                 </div>
             </div>
@@ -377,13 +383,13 @@
                         </ul>
                         <br>
                     </div>
-                    <div class="col-sm-2">
-                        <h5 class="text-md-right">Contact Us</h5>
-                        <hr>
-                        <h6>{{Store.Email}}</h6>
-                        <h6>{{Store.Address}}</h6>
-                        <h6>{{Store.Phone}}</h6>
-
+                    <div class="col-sm-6">
+                        <h5 class="text-md-left">Contact Us</h5>
+                        <hr><div class ="row">
+    <h6 class="col-sm-4"><i class="fa fa-send"></i>                {{Store.Email}}</h6>
+    <h6 class="col-sm-4"><i class="fa fa-location-arrow"></i>                {{Store.Address}}</h6>
+    <h6 class="col-sm-4"><i class="fa fa-phone"></i>                {{Store.Phone}}</h6>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -417,37 +423,6 @@
                     }, 700);
                 });
             }
-
-            var quantitiy = 0;
-            $('.quantity-right-plus').click(function (e) {
-
-                // Stop acting like a button
-                e.preventDefault();
-                // Get the field name
-                var quantity = parseInt($('#quantity').val());
-
-                // If is not undefined
-
-                $('#quantity').val(quantity + 1);
-
-
-                // Increment
-
-            });
-
-            $('.quantity-left-minus').click(function (e) {
-                // Stop acting like a button
-                e.preventDefault();
-                // Get the field name
-                var quantity = parseInt($('#quantity').val());
-
-                // If is not undefined
-
-                // Increment
-                if (quantity > 0) {
-                    $('#quantity').val(quantity - 1);
-                }
-            });
 
         });
     </script>
