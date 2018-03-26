@@ -155,11 +155,32 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
         )
             .then(function (response) {
                 $scope.result = response.data;
-                console.log(response.data);
+                console.log($scope.result.ID);
+                $scope.addProductToOrder($scope.result.ID);
 
             }, function (error) {
                 $scope.error = error.data;
             });
+    };
+    $scope.addProductToOrder = function (OrderID) {
+        angular.forEach($scope.ProductsArray, function (value, key) {
+            console.log(value.ID);
+            console.log(value.Amount);
+            $http.post(
+                "/BuyerOrder.asmx/AddProductToOrder",
+                $.param({
+                    OrderID: OrderID,
+                    ProductID: value.ID,
+                    Amount: value.Amount
+                }),
+                { headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
+                .then(function (response) {
+                    $scope.result = response.data;
+                    console.log($scope.result);
+                }, function (error) {
+                    $scope.error = error.data;
+                });
+        });
     };
 
 
@@ -262,14 +283,29 @@ myApp.factory('ProductService', function ($http) {
                 return response.data;
 
             });
-
-        /*
-        return $http.post('/Products.asmx/GetAllProducts', CategoryName).then(function (products) {
-            return products.data;
-        });*/
     };
     return { GetAllProducts: GetAllProducts };
 
 });
 
 
+myApp.factory('AddProductService', function ($http) {
+    var AddProductToCart = function (ProductID, Amount) {
+        return $http.post(
+            "/Products.asmx/GetAllProducts",
+            $.param({
+                Category: CategoryName
+            }),
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            })
+            .then(function (response) {
+                return response.data;
+
+            });
+    };
+    return { AddProductToCart: AddProductToCart };
+
+});
