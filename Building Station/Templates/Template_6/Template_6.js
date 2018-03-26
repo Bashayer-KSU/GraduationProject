@@ -213,10 +213,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
     $scope.AddProductToCart = function (product) {
         if (typeof product !== "undefined") {
             $scope.addProduct = product;
-            $scope.isExist(product, 0);
-            if (!$scope.Exist)
-                $scope.quantity = 1;
-            $scope.Exist = false;
+              $scope.quantity = 1;
         }
     };
 
@@ -225,7 +222,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
         if (!(product === undefined || product === '' || amount === undefined || amount === '')) {
             $scope.isExist(product, amount); //If product exist don't add new product to list, only update the amount
             if (!$scope.Exist) {
-            $scope.ProductsArray.push({ ID: product.ID, Name: product.Name, Desc: product.Description, Price: product.Price, Image: product.Image, Discount: product.Discount, Amount: amount });
+                $scope.ProductsArray.push({ ID: product.ID, Name: product.Name, Desc: product.Description, Price: product.Price, Image: product.Image, Discount: product.Discount, PriceAfterDiscount: product.PriceAfterDiscount, Amount: amount });
             product.Amount = product.Amount - amount;
             }
             $scope.TotalPrice += product.Price * amount;
@@ -245,9 +242,9 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
             if (value.ID === product.ID) {
                 $scope.message = ' already exists!';
                 value.Amount = value.Amount + amount;
+                product.Amount -= amount; 
                 console.log($scope.message);
                 $scope.Exist = true;
-                $scope.quantity = value.Amount;
             }
         });
     };

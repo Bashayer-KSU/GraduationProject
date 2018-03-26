@@ -21,7 +21,7 @@ public class Products : System.Web.Services.WebService
     //string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
 
    // string ShopEmail = "lamia@gmail.com";
-      string ShopEmail = "lastlink@mail.com";
+     // string ShopEmail = "lastlink@mail.com";
     //string ShopEmail = "star7s@msn.com";
     // string ShopEmail = "as@mail.com";
     //string ShopEmail = "test7@7";

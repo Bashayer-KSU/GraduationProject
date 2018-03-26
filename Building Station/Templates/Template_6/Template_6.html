@@ -263,21 +263,26 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">{{addProduct.Name}}</h5>
                                                 <p class="card-text">{{addProduct.Description}}</p>
+                                                <p ng-show="addProduct.Discount == 0">{{addProduct.Price}} SR</p>
+                                                <p ng-show="addProduct.Discount != 0">
+                                                    <del style="color:#ff0000"> {{addProduct.Price}} </del>
+                                                    {{addProduct.PriceAfterDiscount}} SR
+                                                </p>
                                                 <div class="col-xs-12  col-sm-12 col-md-12 col-lg-12">
                                                     <input class="form-control" type="number" min="1" ng-model="quantity" max="{{addProduct.Amount}}" name="quantity" placeholder="enter quantity" required>
                                                     <!--
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">Size</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Size</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01">
+                <option selected>Choose...</option>
+                <option value="1">S</option>
+                <option value="2">M</option>
+                <option value="3">L</option>
+            </select>
         </div>
-        <select class="custom-select" id="inputGroupSelect01">
-            <option selected>Choose...</option>
-            <option value="1">S</option>
-            <option value="2">M</option>
-            <option value="3">L</option>
-        </select>
-    </div>
-    -->
+        -->
                                                 </div>
                                             </div>
                                         </form>
@@ -313,13 +318,19 @@
                                 <!-- - -->
                                 <div class="tab-pane fade show active" role="tabpanel">
                                     <div class="row">
-                                        <div ng-repeat="product in products" ng-show="product.Amount!=0" class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                                        <div ng-repeat="product in products" class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
                                             <div class="card text-center">
                                                 <img class="card-img-top" ng-src="{{product.Image}}" alt="Card image cap">
                                                 <div class="card-body">
                                                     <h5 class="card-title">{{product.Name}}</h5>
                                                     <p class="card-text">{{product.Description}}</p>
-                                                    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
+                                                    <p ng-show="product.Discount == 0" >{{product.Price}} SR</p>
+                                                    <p ng-show="product.Discount != 0">
+                                                        <del style="color:#ff0000"> {{product.Price}} </del>
+                                                        {{product.PriceAfterDiscount}} SR
+                                                    </p>
+                                                    <p  style="color:#ff0000" ng-show="product.Amount == 0">Out of stock</p>
+                                                    <button type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
                                                 </div>
                                             </div>
                                         </div>
