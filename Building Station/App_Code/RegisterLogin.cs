@@ -133,7 +133,7 @@ public class RegisterLogin : System.Web.Services.WebService
                 {
                     if (lang.Equals("eng"))
                     {
-                        Context.Response.Write(js.Serialize("/DevelopmentEnvironment.html"));
+                        Context.Response.Write(js.Serialize("/Basic.html"));
                     }
                     else
                     {
