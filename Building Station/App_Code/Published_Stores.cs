@@ -31,6 +31,48 @@ public class Published_Stores : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
+    [WebMethod(EnableSession = true)]
+    public void Publish()
+    {
+        string domain = " ";
+        string storeName = " ";
+        bool mayExists = false;
+        int addChange = 0;
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            SqlCommand cmd = new SqlCommand("SELECT StoreName FROM Store WHERE Email ='" + Session["user"] + "'", con);
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                storeName = reader["StoreName"].ToString();
+            }
+            con.Close();
+
+           domain =  storeName.Replace(" ", String.Empty);
+
+            do {
+                con.Open();
+                cmd = new SqlCommand("SELECT WebsiteDomain FROM Store WHERE WebsiteDomain ='" + domain + "'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    domain = reader["WebsiteDomain"].ToString() + addChange;
+
+                    addChange++;
+                    mayExists = true;
+                }
+                con.Close();
+            } while (mayExists);
+
+            con.Open();
+            cmd = new SqlCommand("UPDATE Store SET WebsiteDomain = N'" + domain + "', Published = 'true' Where Email = '" + Session["user"] + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+        Context.Response.Write(js.Serialize(domain));
+    }
+
     [WebMethod]
     public void GetTemplate(string StoreDomain)
     {
