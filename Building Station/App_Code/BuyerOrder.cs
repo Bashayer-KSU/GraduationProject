@@ -144,10 +144,13 @@ public class BuyerOrder : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void AddProductToOrder(string OrderID, string ProductID, string Amount)
+    public void AddProductToOrder(string OrderID, string ProductID, string Amount, string PreviousAmount)
     {
         string StoreEmail = getStoreEmail();
         int row = 0;
+        bool result1 = false;
+        bool result2 = false;
+
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -159,6 +162,24 @@ public class BuyerOrder : System.Web.Services.WebService
             con.Close();
         }
         if (row > 0)
+            result1 = true;
+            else result1 = false;
+
+        row = 0;
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd;
+            cmd = new SqlCommand("UPDATE Product SET Amount = '" + (Convert.ToInt32(PreviousAmount) - Convert.ToInt32(Amount)) + "' WHERE ID =" + ProductID, con);
+
+                row = cmd.ExecuteNonQuery();
+            con.Close();
+        }
+        if (row > 0)
+            result2 = true;
+        else result2 = false;
+
+        if (result1 && result2)
         {
             Context.Response.Write(js.Serialize(true));
         }

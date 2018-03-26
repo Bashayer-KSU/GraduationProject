@@ -146,6 +146,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
                 $scope.addProductToOrder($scope.result.ID);
                 $scope.checkout = false;
                 $scope.payment = false;
+                $scope.ProductsArray.length = 0;
 
             }, function (error) {
                 $scope.error = error.data;
@@ -159,7 +160,6 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
     //Initialization
     $scope.Exist = false;
     $scope.TotalPrice = 0;
-    $scope.ProductOrderArray = [];
     $scope.ProductsArray = [];
 
 
@@ -192,12 +192,11 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
         if (!(product === undefined || product === '' || amount === undefined || amount === '')) {
             $scope.isExist(product, amount); //If product exist don't add new product to list, only update the amount
             if (!$scope.Exist) {
-                $scope.ProductsArray.push({ ID: product.ID, Name: product.Name, Desc: product.Description, Price: product.Price, Image: product.Image, Discount: product.Discount, PriceAfterDiscount: product.PriceAfterDiscount, Amount: amount });
+                $scope.ProductsArray.push({ ID: product.ID, Name: product.Name, Desc: product.Description, Price: product.Price, Image: product.Image, Discount: product.Discount, PriceAfterDiscount: product.PriceAfterDiscount, Amount: amount, PreviousAmount: product.Amount });
             product.Amount = product.Amount - amount;
             }
                 $scope.TotalPrice += product.PriceAfterDiscount * amount;
                 $scope.Exist = false;
-
         }
     };
     $scope.ItemsInShoppingCart = function () {
@@ -235,7 +234,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
     // Add products to Buyer's Order
     $scope.addProductToOrder = function (OrderID) {
         angular.forEach($scope.ProductsArray, function (value, key) {
-            AddProductService.AddProductToCart(OrderID, value.ID, value.Amount).then(function (response) {
+            AddProductService.AddProductToCart(OrderID, value.ID, value.Amount, value.PreviousAmount).then(function (response) {
                 $scope.ProductAdded = response;
             });
         });
@@ -279,13 +278,14 @@ myApp.factory('ProductService', function ($http) {
 
 
 myApp.factory('AddProductService', function ($http) {
-    var AddProductToCart = function (OrderID,ProductID, Amount) {
+    var AddProductToCart = function (OrderID,ProductID, Amount, PreviousAmount) {
         return $http.post(
             "/BuyerOrder.asmx/AddProductToOrder",
             $.param({
                 OrderID: OrderID,
                 ProductID: ProductID,
-                Amount: Amount
+                Amount: Amount,
+                PreviousAmount: PreviousAmount
             }),
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' } })
             .then(function (response) {
