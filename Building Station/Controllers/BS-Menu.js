@@ -403,6 +403,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
                 //Menu
                 $scope.MenuTitle = $scope.resultset.MenuTitle;
+
+                ElementsData();
+
             }, function (error) {
                 $scope.error = error;
             });
@@ -471,6 +474,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     }
                     else if ($scope.elementInfo[i].Name === "About") {
                         $scope.section.about = !$scope.elementInfo[i].Hidden;
+                        $scope.AboutContect = $scope.elementInfo[i].Value;
+                        $scope.TextType.push({ name: "About", value: $scope.elementInfo[i].Value  })
+                        console.log($scope.AboutContect);
                     }
                 }
 
@@ -478,7 +484,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 $scope.error = error;
             });
         };
-        ElementsData();
 
         $scope.ShowHideSection = function (section) {
             var action = "";

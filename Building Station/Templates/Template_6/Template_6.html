@@ -199,9 +199,10 @@
                                                     </div>
                                                     <div ng-show="Store.BankTransfer" class="custom-control custom-radio">
                                                         <input id="banktransfer" name="PaymentMethod" ng-model="PaymentMethod" value="BankTransfer" type="radio" class="custom-control-input"required>
-                                                        <label class="custom-control-label" for="banktransfer">Bank Transfer<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer"></label>
+                                                        <label class="custom-control-label" for="banktransfer">
+                                                            Bank Transfer<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer">                                                        <span> <small>IBAN:  {{Store.BankAccount}}</small> </span>
+                                                        </label>
                                                         
-                                                        <h6 class="col-sm-12"> <small>IBAN:  {{Store.BankAccount}}</small> </h6>
 </div>
                                                     <div ng-show="Store.PayPal" class="custom-control custom-radio">
                                                         <input id="paypal" name="PaymentMethod" ng-model="PaymentMethod" value="PayPal" type="radio" class="custom-control-input"required>
@@ -226,7 +227,7 @@
                                                     </div>
                                                     <div class="col-sm-12">
                                                         <label for="Price">Total Price</label>
-                                                        <input type="text" class="form-control" id="Price" Value="30" ng-disabled="true" required>
+                                                        <input type="text" class="form-control" id="Price" value="{{TotalPrice}}" ng-disabled="true" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -357,7 +358,7 @@
                     <div class="row featurette">
                         <div class="col-md-7 order-md-2">
                             <h2 class="featurette-heading">About Us </h2>
-                            <p class="lead">{{Store.Description}}</p>
+                           <p class="lead" style=" word-wrap:break-word;">{{AboutContent}}</p>
                         </div>
                         <div class="col-md-5 order-md-1">
                             <img class="featurette-image img-fluid mx-auto" src="/Templates/Template_6/Images/waffle.jpg" alt="Generic placeholder image">
@@ -379,10 +380,10 @@
                         <div class="row">
                         </div>
                         <ul class="nav">
-                            <li ng-show="Facebook" class="nav-item"><a ng-href="{Store.FacebookLink}" class="nav-link pl-0" ng-style="{'color':Store.Color1}"><i class="fa fa-facebook fa-lg"></i></a></li>
-                            <li ng-show="Twitter" class="nav-item"><a ng-href="{Store.TwitterLink}" class="nav-link" ng-style="{'color':Store.Color1}"><i class="fa fa-twitter fa-lg"></i></a></li>
-                            <li ng-show="Snapchat" class="nav-item"><a ng-href="{Store.SnapchatLink}" class="nav-link" ng-style="{'color':Store.Color1}"><i class="fa fa-snapchat fa-lg"></i></a></li>
-                            <li ng-show="Instagram" class="nav-item"><a ng-href="{Store.InstagramLink}" class="nav-link" ng-style="{'color':Store.Color1}"><i class="fa fa-instagram fa-lg"></i></a></li>
+                            <li ng-show="Facebook" class="nav-item"><a ng-href="{{Store.FacebookLink}}" href="" target="_blank" class="nav-link pl-0" ng-style="{'color':Store.Color1}"><i class="fa fa-facebook fa-lg"></i></a></li>
+                            <li ng-show="Twitter" class="nav-item"><a ng-href="{{Store.TwitterLink}}"  href="" target="_blank" class="nav-link" ng-style="{'color':Store.Color1}"><i class="fa fa-twitter fa-lg"></i></a></li>
+                            <li ng-show="Snapchat" class="nav-item"><a ng-href="{{Store.SnapchatLink}}"  href="" target="_blank" class="nav-link" ng-style="{'color':Store.Color1}"><i class="fa fa-snapchat fa-lg"></i></a></li>
+                            <li ng-show="Instagram" class="nav-item"><a ng-href="{{Store.InstagramLink}}"  href="" target="_blank" class="nav-link" ng-style="{'color':Store.Color1}"><i class="fa fa-instagram fa-lg"></i></a></li>
                         </ul>
                         <br>
                     </div>

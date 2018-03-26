@@ -112,7 +112,9 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
                 }
                 else if ($scope.elementInfo[i].Name === "About") {
                     $scope.section.about = !$scope.elementInfo[i].Hidden;
-                    $scope.section.about.content = $scope.elementInfo[i].Value;
+                    $scope.AboutContent = $scope.elementInfo[i].Value;
+                    if ($scope.AboutContent === null || $scope.AboutContent === "")
+                        $scope.section.about = true;
                 }
             }
 
