@@ -94,7 +94,7 @@ public class ShowHideElement : System.Web.Services.WebService
         else if (name.ToLower() == "instagram")
             link = "https://www.instagram.com/";
         else if (name.ToLower() == "twitter")
-            link = "https://twitter.com/";
+            link = "https://www.twitter.com/";
 
         if (link != "")
         {

@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Preview</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="../Controllers/Preview.js"></script>
+</head>
+<body ng-app="Preview" ng-controller="managePreview">
+    <div ng-init="PreviewType()">
+        <div>
+            <h style="font-size:20px;">طريقة المعاينة:</h>
+            <select class=" styled-select black rounded"
+                    ng-options="option for option in Previews"
+                    ng-model="selectedPreview"
+                    ng-change="selectedPreviewChanged()">
+            </select>
+        </div>
+        <hr />
+        <div class="container-fluid">
+            <div ng-show="DesktopView">
+                <div class="row">
+                    <div class="col-md-12">
+                        <iframe style="width:100%; height:550px;" id="TemplateIframe" ng-src="{{template}}" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="MobileView">
+                <div class="row">
+                    <div class="col-sm-4 col-md-4"></div>
+                    <div class="col-sm-4 col-md-4">
+                            <iframe style="height:500px;" id="TemplateIframe"  ng-src="{{template}}" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-sm-4 col-md-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

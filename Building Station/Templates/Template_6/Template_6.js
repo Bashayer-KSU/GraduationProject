@@ -30,12 +30,12 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
     $scope.checkout = false;
     $scope.payment = false;
     $scope.buyerName = "";
-    $scope.PaymentMethod = {
+    
+    $scope.Store.PaymentMethod = {
         Cash: false,
         PayPal: false,
         BankTransfer: false
     };
-
     var init = function () {
 
         $http.post('/TemplateData.asmx/StoreData').then(function (response) {
@@ -51,7 +51,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
             }
 
             if ($scope.Store.Cash)
-                $scope.PaymentMethod.Cash = "Cash";
+                $scope.PaymentMethod = "Cash";
             else if ($scope.Store.BankTransfer)
                 $scope.PaymentMethod = "BankTransfer";
             else $scope.PaymentMethod = "PayPal";
@@ -130,6 +130,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
         console.log("Hi " + $scope.PaymentMethod);
         console.log("Hi " + $scope.HolName);
         console.log("Hi " + $scope.TotalPrice);
+        console.log("HII" + $scope.ProductsArray);
 
         
         $http.post(
@@ -142,7 +143,8 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
                 PaymentMethod: $scope.PaymentMethod,
                 BankAccount: $scope.HolName,
                 OrderID: $scope.OrderID,
-                TotalPrice: 44.4
+                TotalPrice: $scope.TotalPrice //,
+               // ProductsArray : $scope.ProductsArray
             }),
             {
                 headers: {
@@ -160,18 +162,74 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
             });
     };
 
-    $scope.DisplayProducts = function () {
+
+
+    //////////////// PRODUCTS AND CATEGORIES /////////////
+
+    //Initialization
+    $scope.Exist = false;
+    $scope.TotalPrice = 0;
+    $scope.ProductOrderArray = [];
+    $scope.ProductsArray = [];
+
+    $scope.GetAllCategories = function () {
         CategoryService.GetAllCategories().then(function (response) {
             $scope.categories = response;
-            console.log($scope.categories);
         });
+    };
+    $scope.GetAllCategories();
 
-        ProductService.GetAllProducts('Cat').then(function (response) {
+    //When Buyer change Category Tab display related products
+    $scope.setTabItem = function (item) {
+        $scope.currentTab = item;
+        ProductService.GetAllProducts(item.Name).then(function (response) {
             $scope.products = response;
             console.log($scope.products);
         });
     };
-   $scope.DisplayProducts();
+
+    //Once buyer choose a product before displaying modal 
+    $scope.AddProductToCart = function (product) {
+        if (typeof product !== "undefined") {
+            $scope.addProduct = product;
+            $scope.isExist(product, 0);
+            if (!$scope.Exist)
+                $scope.quantity = 1;
+            $scope.Exist = false;
+        }
+    };
+
+    //After Buyer choose product and determine the amount
+    $scope.addToCartlist = function (product, amount) {
+        if (!(product === undefined || product === '' || amount === undefined || amount === '')) {
+            $scope.isExist(product, amount); //If product exist don't add new product to list, only update the amount
+            if (!$scope.Exist) {
+            $scope.ProductsArray.push({ ID: product.ID, Name: product.Name, Desc: product.Description, Price: product.Price, Image: product.Image, Discount: product.Discount, Amount: amount });
+            product.Amount = product.Amount - amount;
+            }
+            $scope.TotalPrice += product.Price * amount;
+            $scope.Exist = false;
+
+        }
+    };
+    $scope.removeFromCart = function (product) {
+        var index = $scope.ProductsArray.indexOf(product);
+        $scope.addProduct.Amount = $scope.addProduct.Amount + $scope.ProductsArray[index].Amount; //return the amount of product to the orginal amount
+        $scope.ProductsArray.splice(index, 1);
+            $scope.TotalPrice -= product.Price * product.Amount;
+        
+    };
+    $scope.isExist = function (product, amount) { //If product exist update the amount only
+        angular.forEach($scope.ProductsArray, function (value, key) {
+            if (value.ID === product.ID) {
+                $scope.message = ' already exists!';
+                value.Amount = value.Amount + amount;
+                console.log($scope.message);
+                $scope.Exist = true;
+                $scope.quantity = value.Amount;
+            }
+        });
+    };
 });
 
 
@@ -203,8 +261,6 @@ myApp.factory('ProductService', function ($http) {
             .then(function (response) {
                 return response.data;
 
-            }, function (error) {
-                $scope.error = error.data;
             });
 
         /*
@@ -213,6 +269,7 @@ myApp.factory('ProductService', function ($http) {
         });*/
     };
     return { GetAllProducts: GetAllProducts };
+
 });
 
 

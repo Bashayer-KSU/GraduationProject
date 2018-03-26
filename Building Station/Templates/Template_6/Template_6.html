@@ -118,41 +118,42 @@
                             <div class="row">
                                 <div class="col-xs-12 text-center">
                                     <div ng-show="!checkout&&!payment" class="card-body">
+
                                         <!----------------------->
-                                        <ul class="list-group mb-3">
+                                        <ul ng-show="!(ProductsArray.length==0)" class="list-group mb-3">
                                             <li id="yourcart" class="list-group-item d-flex justify-content-between">
-                                                <div class="col-5"><img src="/Templates/Template_6/Images/pancake.jpg" alt="..." class="img-fluid" /></div>
-                                                <div>
-                                                    <h6 class="my-0">Pancake</h6>
-                                                    <small class="text-muted">Pancakes</small>
+                                                <div class="col-5 my-0">Product Image</div>
+                                                <div class="col-3">
+                                                    <h6 class="my-0">Product</h6>
                                                 </div>
-                                                <span>2</span>
-                                                <span class="text-muted">$12</span>
+                                                <span class="my-0">Amount</span>
+                                                <span class="my-0">Price</span>
+                                                <span></span>
+                                            </li>
+                                            <li ng-repeat='x in ProductsArray' id="yourcart" class="list-group-item d-flex justify-content-between">
+                                                <div class="col-5"><img ng-src="{{x.Image}}" alt="..." class="img-fluid" /></div>
+                                                <div class="col-3">
+                                                    <h6 class="my-0">{{x.Name}}</h6>
+                                                    <small class="text-muted">{{x.Desc}}</small>
+                                                </div>
+                                                <span>{{x.Amount}}</span>
+                                                <span>{{x.Price}}</span>
                                                 <span>
-                                                    <button type="button" class="close" aria-label="Close">
+                                                    <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </span>
                                             </li>
-                                            <li id="yourcart" class="list-group-item d-flex justify-content-between lh-condensed">
-                                                <div class="col-5"><img src="/Templates/Template_6/Images/waffle.jpg" alt="..." class="img-fluid" /></div>
-                                                <div>
-                                                    <h6 class="my-0">Waffle</h6>
-                                                    <small class="text-muted">Waffles</small>
-                                                </div>
-                                                <span>2</span>
-                                                <span class="text-muted">$8</span>
-                                                <span>
-                                                    <button type="button" class="close" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </span>
+
+                                            <li  class="list-group-item d-flex justify-content-between">
+                                                <span>Total</span><span><strong>{{TotalPrice}}</strong></span>
                                             </li>
-                                            <li class="list-group-item d-flex justify-content-between">
-                                                <span>Total</span><span><strong>$20</strong></span>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                            </ul>
+                                            <div ng-show="ProductsArray.length==0" style="text-align:center;">
+                                                <span style="text-align:center;">Shopping Cart Empty</span>
+                                            </div>
+                                           
+</div>
                                     <!-- Checkout-->
                                     <div ng-show="checkout" class="card-body">
                                         <!----------------------->
@@ -186,16 +187,18 @@
                                                 <h4 class="mb-3">Payment</h4>
                                                 <div id="PaymentMethod" name="PaymentMethod" class="d-block my-3">
                                                     <div ng-show="Store.Cash" class="custom-control custom-radio">
-                                                        <input id="cash" name="PaymentMethod" ng-model="PaymentMethod" value="Cash" type="radio" class="custom-control-input">
+                                                        <input id="cash" name="PaymentMethod" ng-model="PaymentMethod" value="Cash" type="radio" class="custom-control-input" required>
                                                         <label class="custom-control-label" for="cash">Cash<img style="max-width:5%;" src="/Templates/Template_6/Images/cash.png" alt="Cash"></label>
                                                     </div>
                                                     <div ng-show="Store.BankTransfer" class="custom-control custom-radio">
-                                                        <input id="banktransfer" name="PaymentMethod" ng-model="PaymentMethod" value="BankTransfer" type="radio" class="custom-control-input">
+                                                        <input id="banktransfer" name="PaymentMethod" ng-model="PaymentMethod" value="BankTransfer" type="radio" class="custom-control-input"required>
                                                         <label class="custom-control-label" for="banktransfer">Bank Transfer<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer"></label>
-                                                    </div>
+                                                        
+                                                        <h6 class="col-sm-12"> <small>IBAN:  {{Store.BankAccount}}</small> </h6>
+</div>
                                                     <div ng-show="Store.PayPal" class="custom-control custom-radio">
-                                                        <input id="paypal" name="PaymentMethod" ng-model="PaymentMethod" value="PayPal" type="radio" class="custom-control-input">
-                                                        <label class="custom-control-label" for="paypal"><img style="max-width:20%;" src="/Templates/Template_6/Images/paypal.png" alt="paypal"></label>
+                                                        <input id="paypal" name="PaymentMethod" ng-model="PaymentMethod" value="PayPal" type="radio" class="custom-control-input"required>
+                                                        <label class="custom-control-label" for="paypal"><img style="max-width:20%;" src="/Templates/Template_6/Images/paypal.png" alt="paypal" ></label>
                                                     </div>
                                                 </div>
                                                 <br>
@@ -215,7 +218,7 @@
                                                         <p class="alert alert-danger" ng-show="!BuyerPayment.HolName.$pristine && BuyerPayment.HolName.$invalid">Please enter the holder name.</p>
                                                     </div>
                                                     <div class="col-sm-12">
-                                                        <label for="Price">Price</label>
+                                                        <label for="Price">Total Price</label>
                                                         <input type="text" class="form-control" id="Price" Value="30" ng-disabled="true" required>
                                                     </div>
                                                 </div>
@@ -229,11 +232,11 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button ng-show="!checkout" type="button" class="btn btn-info btn-md" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Proceed to Checkout</button>
+                        <button ng-show="!checkout" ng-disabled="ProductsArray.length===0" type="button" class="btn btn-info btn-md" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Proceed to Checkout</button>
                         <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=false; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
                         <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="Buyer.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Choose Payment Method</button>
                         <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
-                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" ng-disabled="BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer'" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
+                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
 
                     </div>
                 </div>
@@ -244,6 +247,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
+                        
                         <h5 class="modal-title" id="exampleModalLabel">Add To Cart</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -254,32 +258,36 @@
                             <div class="row">
                                 <div class="col-xs-12 ">
                                     <div class=" text-center">
-                                        <img class="card-img-top" src="/Templates/Template_6/Images/pancake.jpg" alt="Card image cap">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Pancake</h5>
-                                            <p class="card-text">Pancakes</p>
-                                            <div class="col-xs-12  col-sm-12 col-md-12 col-lg-12">
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <label class="input-group-text" for="inputGroupSelect01">Size</label>
-                                                    </div>
-                                                    <select class="custom-select" id="inputGroupSelect01">
-                                                        <option selected>Choose...</option>
-                                                        <option value="1">S</option>
-                                                        <option value="2">M</option>
-                                                        <option value="3">L</option>
-                                                    </select>
+                                        <form name="AddProduct">
+                                            <img class="card-img-top" ng-src="{{addProduct.Image}}" alt="product image">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{addProduct.Name}}</h5>
+                                                <p class="card-text">{{addProduct.Description}}</p>
+                                                <div class="col-xs-12  col-sm-12 col-md-12 col-lg-12">
+                                                    <input class="form-control" type="number" min="1" ng-model="quantity" max="{{addProduct.Amount}}" name="quantity" placeholder="enter quantity" required>
+                                                    <!--
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Size</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01">
+            <option selected>Choose...</option>
+            <option value="1">S</option>
+            <option value="2">M</option>
+            <option value="3">L</option>
+        </select>
+    </div>
+    -->
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
+                        <button type="button" class="btn btn-info btn-md" ng-click="addToCartlist(addProduct,quantity)"  ng-disabled="AddProduct.quantity.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
                     </div>
                 </div>
             </div>
@@ -296,69 +304,28 @@
                         <div class="tabs">
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" data-target="#Pancakes" role="tab" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">Pancakes</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link " data-toggle="tab" data-target="#Waffles" role="tab" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">Waffles</a>
+                                <li ng-repeat="category in categories" ng-init="setTabItem(categories[0])" class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#{{currentTab}}"role="tab" ng-click="setTabItem(category)" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">{{category.Name}}</a>
                                 </li>
                             </ul>
                             <!-- Tab panes -->
-                            <div class="tab-content">
+                            <div id="{{currentTab}}" class="tab-content">
                                 <!-- - -->
-
-                                <div class="tab-pane fade show active" id="Pancakes" role="tabpanel">
+                                <div class="tab-pane fade show active" role="tabpanel">
                                     <div class="row">
-                                        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                                        <div ng-repeat="product in products" ng-show="product.Amount!=0" class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
                                             <div class="card text-center">
-                                                <img class="card-img-top" src="/Templates/Template_6/Images/pancake.jpg" alt="Card image cap">
+                                                <img class="card-img-top" ng-src="{{product.Image}}" alt="Card image cap">
                                                 <div class="card-body">
-                                                    <h5 class="card-title">Pancake</h5>
-                                                    <p class="card-text">Pancakes</p>
-                                                    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
+                                                    <h5 class="card-title">{{product.Name}}</h5>
+                                                    <p class="card-text">{{product.Description}}</p>
+                                                    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="tab-pane fade " id="Waffles" role="tabpanel">
-                                    <div class="row">
-                                        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
-                                            <div class="card text-center">
-                                                <img class="card-img-top" src="/Templates/Template_6/Images/waffle.jpg" alt="Card image cap">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Waffle</h5>
-                                                    <p class="card-text">waffles</p>
-                                                    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- - -->
-
-                            </div> <!-- .tab-content -->
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                            </div>
                         </div> <!-- tabs -->
                     </div>
                 </section>
