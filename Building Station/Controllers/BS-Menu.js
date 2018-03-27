@@ -37,7 +37,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             
             loginService.login().then(function (response) {
                 $rootScope.login = response;
-                console.log("in $routeChangeStart " + $rootScope.login);
+                //console.log("in $routeChangeStart " + $rootScope.login);
                 if (response === "false") {
                     //redirect to login page
                     location.href = "/RegisterLogin.html";
@@ -260,8 +260,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         $scope.GetAllTransactions = function () {
             $http({
                 url: "/BuyerOrder.asmx/GetAllTransactions",
-                method: "get",
-                params: { }
+                method: "get"
             })
                 .then(function (response) {
                     $scope.orders = response.data;
@@ -288,7 +287,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             })
                 .then(function (response) {
                     $scope.BestProducts = response.data;
-                    console.log($scope.BestProducts);
                 });
         };
 
@@ -385,8 +383,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
             $http.post('/TemplateData.asmx/StoreData').then(function (response) {
                 $scope.resultset = response.data;
-                console.log($scope.resultset);
-
                 //Store Info
                 $scope.logo = $scope.resultset.Logo;
                 $scope.StoreName = $scope.resultset.Name;
@@ -458,7 +454,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         var ElementsData = function () {
             $http.post('/ShowHideElement.asmx/GetElementsInfo').then(function (response) {
                 $scope.elementInfo = response.data;
-                console.log($scope.elementInfo);
 
                 $scope.disableSnapchat = true;
                 $scope.disableInstagram = true;
@@ -517,7 +512,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                         $scope.section.about = !$scope.elementInfo[i].Hidden;
                         $scope.AboutContect = $scope.elementInfo[i].Value;
                         $scope.TextType.push({ name: "About", value: $scope.elementInfo[i].Value  })
-                        console.log($scope.AboutContect);
                     }
                 }
 
@@ -597,7 +591,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             $scope.ShopOwnerText = $scope.selectedTextType.value;
         };
         $scope.UpdateStoreInfo = function () {
-            console.log($scope.selectedTextType.value);
 
             if (typeof $scope.selectedTextType !== "undefined") {
                 if ($scope.selectedTextType !== null || $scope.selectedTextType !== "") {
@@ -612,7 +605,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                         }
                     })
                         .then(function (response) {
-                            console.log(response);
                             $scope.selectedTextType.value = response.data.substr(1, response.data.length - 2);
                             $scope.ShopOwnerText = response.data.substr(1, response.data.length - 2);
                             //  $scope.ShopOwnerText = $filter('newlines')($scope.ShopOwnerText);
@@ -704,8 +696,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             });
             post.then(function (response) { }, function (error) { });
             */
-            console.log($scope.mySnapchatLink);
-            console.log($scope.myTwitterLink);
             $http.post(
                 "TemplateData.asmx/UpdateLinks",
                 $.param({
@@ -722,7 +712,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             )
                 .then(function (response) {
                     $scope.result = response.data;
-                    console.log($scope.result);
                 }, function (error) {
                     $scope.error = error.data;
                 });

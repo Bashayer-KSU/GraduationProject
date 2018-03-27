@@ -37,11 +37,9 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
         BankTransfer: false
     };
     var init = function () {
-
+        //Store Info
         $http.post('/TemplateData.asmx/StoreData').then(function (response) {
             $scope.Store = response.data;
-            console.log($scope.Store);//Store Info
-
 
             //WEBSITE ICON and Title 
             document.title = $scope.Store.Name;
@@ -88,7 +86,6 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
 
         $http.post('/ShowHideElement.asmx/GetElementsInfo').then(function (response) {
             $scope.elementInfo = response.data;
-            console.log($scope.elementInfo);
             for (var i = 0; i < $scope.elementInfo.length; i++) {
                 if ($scope.elementInfo[i].Name === "Snapchat") {
                     $scope.icon.snapchat = !$scope.elementInfo[i].Hidden;
