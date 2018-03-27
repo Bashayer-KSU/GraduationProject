@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -40,6 +41,7 @@ public class BuyerOrder : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void CreateOrder(string BuyerName, string BuyerPhone, string BuyerEmail, string BuyerLocation,string PaymentMethod, string BankAccount, string OrderID, string TotalPrice)
     {
+        SqlDataReader reader;
         string StoreEmail = getStoreEmail();
         //double TotalPrice = getTotalPrice();
         int row = 0;
@@ -55,8 +57,20 @@ public class BuyerOrder : System.Web.Services.WebService
                "(N'" + BuyerName + "','" + BuyerPhone + "','" + BuyerEmail + "', N'" + BuyerLocation + "','" + PaymentMethod + "','" + Convert.ToDouble(TotalPrice) + "','" + OrderID + "','" + false + "','" + StoreEmail + "')", con);
 
             row = cmd.ExecuteNonQuery();
-            con.Close();
+            con.Close();            
         }
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            SqlCommand cmd = new SqlCommand("select ID from \"Order\" Where StoreEmail ='" + StoreEmail + "' AND BuyerName = '"+BuyerName+ "' AND BuyerPhone = '" + BuyerPhone + "' AND BuyerEmail = '" + BuyerEmail + "' AND BuyerLocation = '" + BuyerLocation + "' AND PaymentMethod = '" + PaymentMethod + "' AND TotalPrice = '" + Convert.ToDouble(TotalPrice) + "' AND OrderID = '" + OrderID + "' AND Status = '" + false + "'", con);
+            con.Open();
+             reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                order.ID = Convert.ToInt32(reader["ID"]);
+            }
+        }
+
         if (row > 0)
         {
             order.BuyerName = BuyerName;
@@ -64,8 +78,7 @@ public class BuyerOrder : System.Web.Services.WebService
             order.BuyerEmail = BuyerEmail;
             order.BuyerLocation = BuyerLocation;
             order.PaymentMethod = PaymentMethod;
-            if (PaymentMethod == "BankTransfer")
-                order.BankAccount = BankAccount;
+            order.BankAccount = BankAccount;
             order.TotalPrice = Convert.ToDouble(TotalPrice);
             order.StoreEmail = StoreEmail;
             order.OrderID = OrderID;
@@ -86,6 +99,7 @@ public class BuyerOrder : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void GetAllTransactions()
     {
+        Order ord = new Order();
         string StoreEmail = getStoreEmail();
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -94,22 +108,21 @@ public class BuyerOrder : System.Web.Services.WebService
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                order = new Order();
-                order.ID = Convert.ToInt32(reader["ID"]);
-                order.BuyerName = reader["BuyerName"].ToString();
-                order.BuyerPhone = reader["BuyerPhone"].ToString();
-                order.BuyerEmail = reader["BuyerEmail"].ToString();
-                order.BuyerLocation = reader["BuyerLocation"].ToString();
-                order.PaymentMethod = reader["PaymentMethod"].ToString();
-                order.BankAccount = reader["BankAccount"].ToString();
-                order.OrderID = reader["OrderID"].ToString();
-                if (order.PaymentMethod != "BankTransfer")
+                ord.ID = Convert.ToInt32(reader["ID"]);
+                ord.BuyerName = reader["BuyerName"].ToString();
+                ord.BuyerPhone = reader["BuyerPhone"].ToString();
+                ord.BuyerEmail = reader["BuyerEmail"].ToString();
+                ord.BuyerLocation = reader["BuyerLocation"].ToString();
+                ord.PaymentMethod = reader["PaymentMethod"].ToString();
+                ord.BankAccount = reader["BankAccount"].ToString();
+                ord.OrderID = reader["OrderID"].ToString();
+                if (ord.PaymentMethod != "BankTransfer")
                 {
-                    order.BankAccount = "";
-                    order.OrderID = "";
+                    ord.BankAccount = "";
+                    ord.OrderID = "";
                 }
-                order.Status = Convert.ToBoolean(reader["Status"]);
-                OrdersList.Add(order);
+                ord.Status = Convert.ToBoolean(reader["Status"]);
+                OrdersList.Add(ord);
             }
         }
 
@@ -130,4 +143,48 @@ public class BuyerOrder : System.Web.Services.WebService
         }
     }
 
+    [WebMethod(EnableSession = true)]
+    public void AddProductToOrder(string OrderID, string ProductID, string Amount, string PreviousAmount)
+    {
+        string StoreEmail = getStoreEmail();
+        int row = 0;
+        bool result1 = false;
+        bool result2 = false;
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd;
+                cmd = new SqlCommand("insert into ProductOrder (Order_ID, Product_ID, Amount) values " +
+               "(" + Convert.ToInt32(OrderID) + "," + Convert.ToInt32(ProductID) + "," + Convert.ToInt32(Amount) + ")", con);
+
+            row = cmd.ExecuteNonQuery();
+            con.Close();
+        }
+        if (row > 0)
+            result1 = true;
+            else result1 = false;
+
+        row = 0;
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd;
+            cmd = new SqlCommand("UPDATE Product SET Amount = '" + (Convert.ToInt32(PreviousAmount) - Convert.ToInt32(Amount)) + "' WHERE ID =" + ProductID, con);
+
+                row = cmd.ExecuteNonQuery();
+            con.Close();
+        }
+        if (row > 0)
+            result2 = true;
+        else result2 = false;
+
+        if (result1 && result2)
+        {
+            Context.Response.Write(js.Serialize(true));
+        }
+        else
+            Context.Response.Write(js.Serialize(false));
     }
+
+}

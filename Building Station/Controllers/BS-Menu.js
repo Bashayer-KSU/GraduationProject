@@ -30,7 +30,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             requireBase: false
         });
     })
-    .run(function ($rootScope, $location, loginService, $http) {
+    .run(function ($rootScope, $location, loginService, $http, $mdDialog) {
 
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
@@ -51,11 +51,52 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 location.href = $rootScope.result.substr(1, $rootScope.result.length - 2);
             });
         };
+
+      /*  $rootScope.publish = function () {
+            $http.get('/Published_Stores.asmx/PublishRequest').then(function (response) {
+                var WebsitePath = "http://localhost:50277/BuildingStation/" + response.data;
+
+                $rootScope.WebsiteDomain = WebsitePath;
+            });
+        };*/
+
+        $rootScope.showConfirm = function (ev) {
+            $http.get('/Published_Stores.asmx/PublishRequest').then(function (response) {
+                var StoreValues = response.data;
+                var WebsiteDomain = "http://localhost:50277/BuildingStation/" + StoreValues.Domain;
+
+                // Appending dialog to document.body to cover sidenav in docs app
+                var confirm = $mdDialog.confirm()
+                    .title('This is your store link (' + WebsiteDomain + '), would you like to publish?')
+                    .textContent('Please Copy the link and save it.')
+                    //  .ariaLabel('Lucky day')
+                    .targetEvent(ev)
+                    .ok('Publish')
+                    .cancel('Cancel');
+
+                $mdDialog.show(confirm).then(function () {
+                   // $http.get('/Published_Stores.asmx/Publish');
+                    $http({
+                        url: "Published_Stores.asmx/Publish",
+                        params: { storeDomainName: StoreValues.Domain },
+                        method: "get"
+                    })
+                    //  $rootScope.status = 'You decided to get rid of your debt.';
+                }, function () {
+                    // $rootScope.status = 'You decided to keep your debt.';
+                });
+            });
+        };
     })
     .controller("ManageStoreController", function ($rootScope,$scope, $http) {
         $scope.Logout = function () {
             $rootScope.Logout();
         };
+
+        $scope.showConfirm = function () {
+            $rootScope.showConfirm();
+        };
+
         $scope.tabHeader = "Manage Store";
         $scope.templatew = "";
 
@@ -394,15 +435,18 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
                 $scope.TextType = [{ name: "Store Name", value: $scope.StoreName },
                 { name: "Store Description", value: $scope.desc },
-                { name: "Email", value: $scope.Email },
                 { name: "Phone", value: $scope.Phone },
-                { name: "Address", value: $scope.address }
+                { name: "Address", value: $scope.address }/*,
+                { name: "Email", value: $scope.Email }*/
                 ];
                 $scope.selectedTextType = $scope.TextType[0];
                 $scope.ShopOwnerText = $scope.selectedTextType.value;
 
                 //Menu
                 $scope.MenuTitle = $scope.resultset.MenuTitle;
+
+                ElementsData();
+
             }, function (error) {
                 $scope.error = error;
             });
@@ -471,6 +515,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     }
                     else if ($scope.elementInfo[i].Name === "About") {
                         $scope.section.about = !$scope.elementInfo[i].Hidden;
+                        $scope.AboutContect = $scope.elementInfo[i].Value;
+                        $scope.TextType.push({ name: "About", value: $scope.elementInfo[i].Value  })
+                        console.log($scope.AboutContect);
                     }
                 }
 
@@ -478,7 +525,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 $scope.error = error;
             });
         };
-        ElementsData();
 
         $scope.ShowHideSection = function (section) {
             var action = "";
