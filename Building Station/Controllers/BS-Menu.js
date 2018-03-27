@@ -30,7 +30,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             requireBase: false
         });
     })
-    .run(function ($rootScope, $location, loginService, $http) {
+    .run(function ($rootScope, $location, loginService, $http, $mdDialog) {
 
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
@@ -51,11 +51,52 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 location.href = $rootScope.result.substr(1, $rootScope.result.length - 2);
             });
         };
+
+      /*  $rootScope.publish = function () {
+            $http.get('/Published_Stores.asmx/PublishRequest').then(function (response) {
+                var WebsitePath = "http://localhost:50277/BuildingStation/" + response.data;
+
+                $rootScope.WebsiteDomain = WebsitePath;
+            });
+        };*/
+
+        $rootScope.showConfirm = function (ev) {
+            $http.get('/Published_Stores.asmx/PublishRequest').then(function (response) {
+                var StoreValues = response.data;
+                var WebsiteDomain = "http://localhost:50277/BuildingStation/" + StoreValues.Domain;
+
+                // Appending dialog to document.body to cover sidenav in docs app
+                var confirm = $mdDialog.confirm()
+                    .title('This is your store link (' + WebsiteDomain + '), would you like to publish?')
+                    .textContent('Please Copy the link and save it.')
+                    //  .ariaLabel('Lucky day')
+                    .targetEvent(ev)
+                    .ok('Publish')
+                    .cancel('Cancel');
+
+                $mdDialog.show(confirm).then(function () {
+                   // $http.get('/Published_Stores.asmx/Publish');
+                    $http({
+                        url: "Published_Stores.asmx/Publish",
+                        params: { storeDomainName: StoreValues.Domain },
+                        method: "get"
+                    })
+                    //  $rootScope.status = 'You decided to get rid of your debt.';
+                }, function () {
+                    // $rootScope.status = 'You decided to keep your debt.';
+                });
+            });
+        };
     })
     .controller("ManageStoreController", function ($rootScope,$scope, $http) {
         $scope.Logout = function () {
             $rootScope.Logout();
         };
+
+        $scope.showConfirm = function () {
+            $rootScope.showConfirm();
+        };
+
         $scope.tabHeader = "Manage Store";
         $scope.templatew = "";
 
@@ -394,15 +435,18 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
                 $scope.TextType = [{ name: "Store Name", value: $scope.StoreName },
                 { name: "Store Description", value: $scope.desc },
-                { name: "Email", value: $scope.Email },
                 { name: "Phone", value: $scope.Phone },
-                { name: "Address", value: $scope.address }
+                { name: "Address", value: $scope.address }/*,
+                { name: "Email", value: $scope.Email }*/
                 ];
                 $scope.selectedTextType = $scope.TextType[0];
                 $scope.ShopOwnerText = $scope.selectedTextType.value;
 
                 //Menu
                 $scope.MenuTitle = $scope.resultset.MenuTitle;
+
+                ElementsData();
+
             }, function (error) {
                 $scope.error = error;
             });
@@ -471,6 +515,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     }
                     else if ($scope.elementInfo[i].Name === "About") {
                         $scope.section.about = !$scope.elementInfo[i].Hidden;
+                        $scope.AboutContect = $scope.elementInfo[i].Value;
+                        $scope.TextType.push({ name: "About", value: $scope.elementInfo[i].Value  })
+                        console.log($scope.AboutContect);
                     }
                 }
 
@@ -478,7 +525,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 $scope.error = error;
             });
         };
-        ElementsData();
 
         $scope.ShowHideSection = function (section) {
             var action = "";
@@ -684,8 +730,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             Links_service.refresh();
         };
     })
-    .controller("PreviewWebsiteController", function ($rootScope,$scope, $http) {
-        $scope.tabHeader = "Previe wWebsite";
+    .controller("PreviewWebsiteController", function ($rootScope, $scope, $http, $window) {
+        $scope.tabHeader = "Previe Website";
         $scope.EnableDesktopView = false;
         $scope.EnableMobileView = false;
 
@@ -695,16 +741,24 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         
         //Desktop View
         $scope.DesktopView = function () {
-            $scope.EnableDesktopView = true;
-            $scope.EnableMobileView = false;
-        }
+            alert("EnableDesktopView before");
+            $http.get("Preview.asmx/EnableDesktopView").then(function (response) {
+                $window.open('/Views/Preview.html', '_blank');
+            }, function (error) {
+                alert(error.data);
+                });
+        };
         //\Desktop View
 
         //Mobile View
         $scope.MobileView = function () {
-            $scope.EnableDesktopView = false;
-            $scope.EnableMobileView = true;
-        }
+            alert("EnableMobileView before");
+            $http.get("Preview.asmx/EnableMobileView").then(function (response) {
+                $window.open('/Views/Preview.html', '_blank');
+            }, function (error) {
+                alert(error.data);
+            });
+        };
         //\Mobile View
     })
     .controller("TemplateController", function ($scope, $http, $location, $rootScope) {
@@ -748,8 +802,12 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 .then(function (response) {
                     $scope.categories = response.data;
 
-                    if (newCategury == null || newCategury === 'undefined')
-                    { $scope.selectedCategory = $scope.categories[0].Name; }
+                    if (newCategury == null || newCategury === 'undefined' || newCategury == "CurrentCategoryDeleted")
+                    {
+                        if ($scope.categories[0].Name != null)
+                            $scope.selectedCategory = $scope.categories[0].Name;
+                        else $scope.selectedCategory = "";
+                    }
                     else { $scope.selectedCategory = newCategury; }
                     $scope.selectedCategoryChanged();
                 });
@@ -784,7 +842,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 params: { category: $scope.selectedCategory }
             })
                 .then(function (response) {
-                    $scope.getCat();
+                    $scope.getCat("CurrentCategoryDeleted");
                 }, function (error) {
                     alert("failed delete");
                 });
@@ -856,8 +914,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         };
         //\apply edit the product
 
+        //to add new row
         $scope.addNewProduct2 = function (product) {
-            console.log(product.Category_ID);
             $http.post(
                 "/Products.asmx/AddNewProduct",
                 $.param({
@@ -866,7 +924,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     name: product.Name,
                     des: product.Description,
                     price: product.Price,
-                    PADs: 23.3,
                     amount: product.Amount,
                     discount: product.Discount
                 }),
@@ -878,39 +935,16 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
             )
                 .then(function (response) {
-                    $scope.result = response.data;
-                    console.log(response.data);
-
+                    product.Image = '';
+                    product.Name = '';
+                    product.Description = '';
+                    product.Price = '';
+                    product.Amount = '';
+                    product.Discount = '';
+                    $scope.selectedCategoryChanged();
                 }, function (error) {
                     $scope.error = error.data;
                 });
-        }
-        //to add new row
-        $scope.addNewProduct = function (product, Category_ID, Image, Name, Description, Price, PAD, Amount, Discount) {
-            alert("addProduct function");
-            $http({
-                url: "Products.asmx/AddNewProduct",
-                headers: { "Content-Type": "application/json;charset=utf-8" },
-                dataType: 'json',
-                method: 'post',
-                data: JSON.stringify({ cat: product.Category_ID, image: Image, name: Name, des: Description, price: Price, PADs: PAD, amount: Amount, discount: Discount })
-            }).then(function (response) {
-                /*alert("success add");
-                $scope.addProduct = response.data;
-                product.PriceAfterDiscount = addProduct.PriceAfterDiscount;
-                $scope.products.push({ 'image': addProduct.Image, 'name': addProduct.Name, 'description': addProduct.Description, 'price': addProduct.Price, 'amount': addProduct.Amount, 'discount': addProduct.Discount });
-                product.Image = '';
-                product.Name = '';
-                product.Description = '';
-                product.Price = '';
-                product.Amount = '';
-                product.Discount = '';*/
-                Scope.selectedCategoryChanged();
-            }, function (error) {
-                alert(error);
-                alert("failed add");
-                });
-
         };
         //\to add new row
 
@@ -929,61 +963,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         };
         //\to remove row
 
-        //to add new row
-        /*$scope.addNewProduct = function (product, Category_ID, Image, Name, Description, Price, PAD, Amount, Discount) {
-            alert("addProduct function");
-            alert($scope.selectedCategory);
-        //    var data = { 'cat': $scope.selectedCategory, 'image': Image, 'name': Name, 'des': Description, 'price': Price, 'PADs': PAD, 'amount': Amount, 'discount': Discount };
-            /*  $http({
-                  method: 'post',
-                  url: "Products.asmx/AddNewProduct",
-                //  data: "json=" + JSON.stringify(data),
-                  headers: { "Content-Type": "application/json;charset=utf-8" },
-                  dataType: 'json',
-                  data: "json=" + JSON.stringify({ 'cat': $scope.selectedCategory, 'image': Image, 'name': Name, 'des': Description, 'price': Price, 'PADs': PAD, 'amount': Amount, 'discount': Discount })
-             }).then(function (response) {
-                  /*alert("success add");
-                  $scope.addProduct = response.data;
-                  product.PriceAfterDiscount = addProduct.PriceAfterDiscount;
-                  $scope.products.push({ 'image': addProduct.Image, 'name': addProduct.Name, 'description': addProduct.Description, 'price': addProduct.Price, 'amount': addProduct.Amount, 'discount': addProduct.Discount });
-                  product.Image = '';
-                  product.Name = '';
-                  product.Description = '';
-                  product.Price = '';
-                  product.Amount = '';
-                  product.Discount = '';*/
-            /* Scope.selectedCategoryChanged();
-             }, function (error) {
-                 alert(error);
-                 alert("failed add");
-             });
-            $http.post(
-                "Products.asmx/AddNewProduct",
-                $.param(
-                    {
-                        cat: $scope.selectedCategory,
-                        image: Image,
-                        name: Name,
-                        des: Description,
-                        price: Price,
-                        PADs: PAD,
-                        amount: Amount,
-                        discount: Discount
-                    }
-                ),
-                {
-                    headers: {
-                        'Content-Type': 'application/json;charset=utf-8;'
-                    }
-                })
-                .then(function (response) {
-                    $scope.result = response.data;
-                    Scope.selectedCategoryChanged();
-                }, function (error) {
-                    alert(error);
-                    alert("failed add");
-                });
-        };*/
+        
     });
 
 //to upload image

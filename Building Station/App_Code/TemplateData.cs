@@ -24,7 +24,7 @@ public class TemplateData : System.Web.Services.WebService
 
 
     public Store store = new Store();
-    public Product product = new Product();
+   // public Product Product = new Product();
     List<Element> ElementsList = new List<Element>();
 
     public TemplateData()
@@ -135,23 +135,29 @@ public class TemplateData : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void ProductData()
     {
+        List<Product> ProductsList = new List<Product>();
+
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Name, Price, Description, Discount, Category_ID, StoreEmail, Image FROM Product WHERE StoreEmail = '" + Session["user"] + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT ID, Name, Price, Description, Discount, Category_ID, Image FROM Product WHERE StoreEmail = '" + Session["user"] + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
+                Product product = new Product();
+                product.ID = Convert.ToInt32(reader["ID"]);
                 product.Name = reader["Name"].ToString();
                 product.Price = Convert.ToDouble(reader["Price"]);
                 product.Description = reader["Description"].ToString();
                 product.Discount = Convert.ToInt32(reader["Discount"]);
                 product.Category_ID = reader["Category_ID"].ToString();
-                product.StoreEmail = reader["StoreEmail"].ToString();
+              //  product.StoreEmail = reader["StoreEmail"].ToString();
                 product.Image = reader["Image"].ToString();
+
+                ProductsList.Add(product);
             }
         }
-        Context.Response.Write(js.Serialize(product));
+        Context.Response.Write(js.Serialize(ProductsList));
     }
 
     [WebMethod(EnableSession = true)]
@@ -163,12 +169,13 @@ public class TemplateData : System.Web.Services.WebService
             DataType = "StoreDescription";
         else if (DataType.Equals("Address"))
             DataType = "Location";
-
+        else if (DataType.Equals("About"))
+            DataType = "About";
 
         int x;
         Boolean result = false;
 
-        if (NewValue!= null) {
+        if (NewValue!= null && DataType!="About") {
 
             using (SqlConnection con = new SqlConnection(cs))
             {
@@ -179,12 +186,33 @@ public class TemplateData : System.Web.Services.WebService
                     if (x != 0)
                         result = true;
                 }
+                con.Close();
             }
             if(result)
         Context.Response.Write(js.Serialize(NewValue));
             else
                 Context.Response.Write(js.Serialize("Error"));
 
+        }
+        else if(DataType == "About")
+        {
+
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("UPDATE Element SET  Value = N'" + NewValue + "' Where StoreEmail = '" + Session["user"] + "' And Name = 'About'", con))
+                {
+                    x = cmd.ExecuteNonQuery();
+                    if (x != 0)
+                        result = true;
+                }
+                con.Close();
+
+            }
+            if (result)
+                Context.Response.Write(js.Serialize(NewValue));
+            else
+                Context.Response.Write(js.Serialize("Error"));
         }
     }
 

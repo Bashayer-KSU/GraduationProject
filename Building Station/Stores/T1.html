@@ -1,24 +1,19 @@
 ﻿<!DOCTYPE html>
-<!--
-    Dopetrope by HTML5 UP
-    html5up.net | @ajlkn
-    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html lang="en" ng-app="T6" ng-controller="T6Ctrl">
+<html lang="en" ng-app="published" ng-controller="PublishedStoreCtrl">
 <head>
     <title>{{Store.Name}}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <script src="../../Scripts/angular.js"></script>
-    <script src="../../Scripts/angular.min.js"></script>
-    <script src="/Templates/Template_6/Template_6.js"></script>
-
+    <link rel="stylesheet" href="../Templates/assets/css/main.css" />
+    <script src="../Scripts/angular.js"></script>
+    <script src="../Scripts/angular.min.js"></script>
+    <script src="/Controllers/PublishCTRL.js"></script>
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link id="icon" rel="icon" href="" />
 </head>
 <body class="homepage" ng-style="{'background': Store.Color4}">
     <div id="page-wrapper">
@@ -74,15 +69,15 @@
                                 <h2 ng-style="{'background': Store.Color1, 'color': Store.Color3}">المنتجات</h2>
                             </header>
                             <div class="row">
-                                <div data-ng-repeat="product in Products" style="float:right;" class="4u 12u(mobile)">
+                                <div style="float:right;" class="4u 12u(mobile)">
                                     <section ng-style="{'background': Store.Color2}" class="box">
-                                        <a href="#" class="image featured"><img ng-src="{{product.Image}}" alt="product" /></a>
+                                        <a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="product" /></a>
                                         <header>
-                                            <h3 ng-style="{'color': Store.Color3}">{{product.Name}}</h3>
+                                            <h3 ng-style="{'color': Store.Color3}">{{Product.Name}}</h3>
                                         </header>
-                                        <p ng-style="{'color': Store.Color3}">{{product.Description}}</p>
+                                        <p ng-style="{'color': Store.Color3}">{{Product.Description}}</p>
                                         <footer>
-                                            <a ng-style="{'color': Store.Color3, 'background': Store.Color1}" class="button" data-toggle="modal" data-target="#{{$product}}"> اضف للعربة</a>
+                                            <a ng-style="{'color': Store.Color3, 'background': Store.Color1}" class="button" data-toggle="modal" data-target="#myModal"> اضف للعربة</a>
                                         </footer>
                                     </section>
                                 </div>
@@ -124,21 +119,21 @@
     </div>
     <br />
     <!-- Modal -->
-    <div class="modal fade" id="{{$product}}" role="dialog">
+    <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
 
             <!-- Modal content-->
             <div dir="rtl" class="modal-content" ng-style="{'background': Store.Color2}">
                 <div class="modal-header">
                     <button ng-style="{'color': Store.Color3}" style="float:left;" type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 ng-style="{'color': Store.Color3}" class="modal-title">{{product.Name}}</h4>
+                    <h4 ng-style="{'color': Store.Color3}" class="modal-title">{{Product.Name}}</h4>
 
                 </div>
                 <div class="modal-body">
                     <article ng-style="{'background': Store.Color1}" dir="rtl" class="box post">
-                        <a href="#" class="image featured"><img ng-src="{{product.Image}}" alt="" /></a>
+                        <a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="" /></a>
                         <header>
-                            <p ng-style="{'color': Store.Color3}">{{product.Description}}</p>
+                            <p ng-style="{'color': Store.Color3}">{{Product.Description}}</p>
                         </header>
                     </article>
                 </div>
@@ -161,8 +156,8 @@
                             <div class="social">
                                 <a ng-show="Facebook" herf="{{Store.FacebookLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Facebook" src="../../images/Facebook4.png"></a>
                                 <a ng-show="Twitter" herf="{{Store.TwitterLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Twitter" src="../../images/twitter.png"></a>
-                                <a ng-show="Snapchat" herf="{{Store.SnapchatLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Snapchat" src="../../images/snapchat.png"></a>
-                                <a ng-show="Instagram" herf="{{Store.InstagramLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Instagram" src="../../images/insta.png"></a>
+                                <a ng-show="Svisible" herf="{{Store.SnapchatLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Snapchat" src="../../images/snapchat.png"></a>
+                                <a ng-show="Snapchat" herf="{{Store.InstagramLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Instagram" src="../../images/insta.png"></a>
                             </div>
                         </div>
                         <div class="2u 12u(mobile)"></div>
