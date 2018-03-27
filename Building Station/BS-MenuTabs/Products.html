@@ -163,7 +163,7 @@
                         ng-init="selectedCategory = categories[0].Name"
                         ng-options="option.Name as option.Name for option in categories"
                         ng-change="selectedCategoryChanged()"></select>
-                <a ng-hide="editCategory" href="" ng-click="DeleteCategory()">حذف</a>
+                <button ng-hide="editCategory" ng-click="DeleteCategory()" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button>
 
                 <h ng-show="editCategory" style="font-size:20px;">اختر الفئة التي تريد نقل المنتج لها:</h>
                 <select ng-show="editCategory" class=" styled-select black rounded"
@@ -176,7 +176,7 @@
         <!--\add new category-->
         <!--list products-->
         <div class="table-responsive centered" id="table" style="margin-top:15px;">
-         <p dir="rtl">لتغيير ترتيب الفئات اضغط <a href="" ng-click="displayCategoryTable = !displayCategoryTable">هنا</a></p>
+         <p dir="rtl">لتغيير ترتيب الفئات انقر هنا <button style="background-color:transparent; border: none;" ng-click="displayCategoryTable = !displayCategoryTable"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;"  /></button></p>
             <table ng-show="displayCategoryTable" class="table">
                 <thead style="border-collapse:collapse; table-layout:fixed;">
                     <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
@@ -190,7 +190,7 @@
                         <td>{{category.Name}}</td>
                     </tr>
                     <tr>
-                        <td colspan="2"><button ng-click="ChangeOrder(categories)">تسليم</button> {{resultoforder}}</td>
+                        <td colspan="2"><button class="addfields waves-effect waves-light btn done" ng-click="ChangeOrder(categories)">تسليم</button> {{resultoforder}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -241,7 +241,7 @@
                     <tr>
                         <td colspan="2">
                            <!-- ng-click="addNewProduct(product,product.Category_ID,product.Image,product.Name,product.Description,product.Price,product.PriceAfterDiscount,product.Amount,product.Discount)"-->
-                            <button class="addfields waves-effect waves-light btn done" ng-click="addNewProduct2(product)" style="float:right;">إضافة المنتج</button>
+                            <button style="background-color:transparent; border: none;" ng-click="addNewProduct2(product)" style="float:right;"><img src="/images/plus.png" alt="" style="width:37px; height:37px;" /></button>
                         </td>
 
                         <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>

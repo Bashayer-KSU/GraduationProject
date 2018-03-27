@@ -686,33 +686,35 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
     })
     .controller("PreviewWebsiteController", function ($rootScope, $scope, $http, $window) {
         $scope.tabHeader = "Previe Website";
-        $scope.EnableDesktopView = false;
-        $scope.EnableMobileView = false;
-
         $scope.Logout = function () {
             $rootScope.Logout();
         };
+        /*$scope.EnableDesktopView = false;
+        $scope.EnableMobileView = false;
+
         
+        */
         //Desktop View
         $scope.DesktopView = function () {
-            alert("EnableDesktopView before");
-            $http.get("Preview.asmx/EnableDesktopView").then(function (response) {
-                $window.open('/Views/Preview.html', '_blank');
-            }, function (error) {
-                alert(error.data);
-                });
+            //alert("EnableDesktopView before");
+            $window.open('/Views/Preview.html', '_blank');
+            //$http.get("Preview.asmx/EnableDesktopView").then(function (response) {
+               // $window.open('/Views/Preview.html', '_blank');
+            //}, function (error) {
+             //   alert(error.data);
+             //   });
         };
         //\Desktop View
 
         //Mobile View
-        $scope.MobileView = function () {
+        /*$scope.MobileView = function () {
             alert("EnableMobileView before");
             $http.get("Preview.asmx/EnableMobileView").then(function (response) {
                 $window.open('/Views/Preview.html', '_blank');
             }, function (error) {
                 alert(error.data);
             });
-        };
+        };*/
         //\Mobile View
     })
     .controller("TemplateController", function ($scope, $http, $location, $rootScope) {

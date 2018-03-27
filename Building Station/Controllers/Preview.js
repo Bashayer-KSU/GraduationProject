@@ -1,10 +1,11 @@
 ﻿var app = angular.module("Preview", []);
 
 var ctr = app.controller("managePreview", function ($scope, $http) {
-        $scope.DesktopView = false;
+        $scope.DesktopView = true;
         $scope.MobileView = false;
         $scope.Previews = ["معاينة على الحاسب", "معاينة على الجوال"];
         $scope.template = "";
+        $scope.selectedPreview = $scope.Previews[0];
         $http.get('/CreationStage.asmx/GetTemplateID').then(function (response) {
 
             $scope.storeID = response.data;
@@ -41,10 +42,11 @@ var ctr = app.controller("managePreview", function ($scope, $http) {
             }
         };
         //
-        $scope.PreviewType = function () {
+        /*$scope.PreviewType = function () {
             $http.get("Preview.asmx/SelectedView").then(function (response) {
                     alert("success");
                     alert(response.data);
+                    console.log(response.data);
                     if (response.data === 'DesktopView') {
                         $scope.DesktopView = true;
                         $scope.MobileView = false;
@@ -58,7 +60,7 @@ var ctr = app.controller("managePreview", function ($scope, $http) {
                         alert("mobileView after");
                     }
                 }, function (error) { alert(error.data); });
-        };
+        };*/
         //\
         
     });
