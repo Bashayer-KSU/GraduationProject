@@ -123,7 +123,7 @@
                                             <img ng-src="/images/settings.png" alt="" style="width:37px; height:37px; margin-top:12px; margin-left:15px;" /><b class="caret"></b>
                                         </a>
                                         <ul class="dropdown-menu">
-                                            <li style="background:none;"><a href="#">Publish website</a></li>
+                                            <li style="background:none;"><a ng-click="showConfirm($event)" href="#">Publish website</a></li>
                                             <li class="divider"></li>
                                             <li style="background:none;"><a href="#">Unpublish website</a></li>
                                             <li class="divider"></li>
@@ -173,7 +173,7 @@
                                             <img ng-src="/images/settings.png" alt="" style="width:37px; height:37px; top:15px; margin-top:12px; margin-left:15px;" /><b class="caret"></b>
                                         </a>
                                         <ul class="dropdown-menu">
-                                            <li style="background:none; font-family:'NeoSansArabic'"><a href="#">نشر الموقع</a></li>
+                                            <li style="background:none; font-family:'NeoSansArabic'"><a ng-click="showConfirm($event)" href="#">نشر الموقع</a></li>
                                             <li class="divider"></li>
                                             <li style="background:none; font-family:'NeoSansArabic'"><a href="#">إلغاء نشر الموقع</a></li>
                                             <li class="divider"></li>

@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" ng-app="AsmaaTempalate" ng-controller="AsmaaCtrl">
+<html lang="en" ng-app="published" ng-controller="PublishedStoreCtrl">
 <head>
     <title>{{Store.Name}}</title>
     <meta charset="utf-8" />
@@ -8,11 +8,12 @@
     <link rel="stylesheet" href="../Templates/assets/css/main.css" />
     <script src="../Scripts/angular.js"></script>
     <script src="../Scripts/angular.min.js"></script>
-    <script src="Actrl.js"></script>
+    <script src="/Controllers/PublishCTRL.js"></script>
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link id="icon" rel="icon" href="" />
 </head>
 <body class="homepage" ng-style="{'background': Store.Color4}">
     <div id="page-wrapper">
@@ -153,10 +154,10 @@
                                 <h2 ng-style="{'color': Store.Color1}">للتواصل</h2>
                             </header>
                             <div class="social">
-                                <a ng-show="Fvisible" herf="{{Store.FacebookLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Facebook" src="../../images/Facebook4.png"></a>
-                                <a ng-show="Tvisible" herf="{{Store.TwitterLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Twitter" src="../../images/twitter.png"></a>
+                                <a ng-show="Facebook" herf="{{Store.FacebookLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Facebook" src="../../images/Facebook4.png"></a>
+                                <a ng-show="Twitter" herf="{{Store.TwitterLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Twitter" src="../../images/twitter.png"></a>
                                 <a ng-show="Svisible" herf="{{Store.SnapchatLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Snapchat" src="../../images/snapchat.png"></a>
-                                <a ng-show="Ivisible" herf="{{Store.InstagramLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Instagram" src="../../images/insta.png"></a>
+                                <a ng-show="Snapchat" herf="{{Store.InstagramLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Instagram" src="../../images/insta.png"></a>
                             </div>
                         </div>
                         <div class="2u 12u(mobile)"></div>

@@ -32,7 +32,7 @@ public class Published_Stores : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void Publish()
+    public void PublishRequest()
     {
         string domain = " ";
         string storeName = " ";
@@ -52,6 +52,7 @@ public class Published_Stores : System.Web.Services.WebService
            domain =  storeName.Replace(" ", String.Empty);
 
             do {
+                mayExists = false;
                 con.Open();
                 cmd = new SqlCommand("SELECT WebsiteDomain FROM Store WHERE WebsiteDomain ='" + domain + "'", con);
                 reader = cmd.ExecuteReader();
@@ -64,13 +65,21 @@ public class Published_Stores : System.Web.Services.WebService
                 }
                 con.Close();
             } while (mayExists);
+            store.Domain = domain;
+        }
+        Context.Response.Write(js.Serialize(store));
+    }
 
+    [WebMethod(EnableSession = true)]
+    public void Publish( string storeDomainName)
+    {
+        using (SqlConnection con = new SqlConnection(cs))
+        {
             con.Open();
-            cmd = new SqlCommand("UPDATE Store SET WebsiteDomain = N'" + domain + "', Published = 'true' Where Email = '" + Session["user"] + "'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET WebsiteDomain = N'" + storeDomainName + "', Published = 'true' Where Email = '" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
         }
-        Context.Response.Write(js.Serialize(domain));
     }
 
     [WebMethod]
