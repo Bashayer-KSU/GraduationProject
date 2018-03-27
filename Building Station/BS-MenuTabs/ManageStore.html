@@ -1,8 +1,28 @@
-<head>
+﻿<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
+    <!---->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js">    </script> 
     <style>
+        body {
+            font-family: 'NeoSansArabic';
+            background-image: url(images/background.png);
+            background-attachment: fixed;
+            height: auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
         /* Statistic */
      
         #quote {
@@ -63,9 +83,7 @@
             src: url('NeoSansArabic.ttf'); /* IE9 */
         }
 
-        body {
-            font-family: 'NeoSansArabic';
-        }
+
         /*@media only screen and (max-width:620px) {
             #table
 
@@ -134,7 +152,6 @@
             -webkit-transition: .2s ease-out;
             -moz-transition: .2s ease-out;
             -o-transition: .2s ease-out;
-            -ms-transition: .2s ease-out;
             transition: .2s ease-out;
             cursor: pointer
         }
@@ -192,192 +209,299 @@
         .arb {
             text-align: right;
         }
+        .paymentMethod {
+            display: block;
+            background-color: #f5f6ef;
+            border-color: black;
+            width: 130px;
+            height: 180px;
+            max-width: 15%;
+            max-height: 20%;
+            border: 1px solid #C8D9BE;
+            border-radius: 10px;
+            position: center;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            margin-right: 4%;
+        }
+            .paymentMethod:hover {
+                background-color: #D4D8BA;
+            }
+        .bankTransfer {
+            background-color: #f5f6ef;
+            border: 1px solid #C8D9BE;
+            border-radius: 10px;
+            width:50%;
+            margin-bottom:10%;
+            height:auto;
+        }
+        .tabStyle.active a {
+            background-color: #F6F8EA !important;
+        }
+        .nav .tabStyle a:hover {
+            background-color: #F6F8EA;
+        }
+        ul.nav .tabStyle {
+            background-color:#c6ba57; 
+        }
+        a.hrefManage {
+            color: #F6F8EA;
+        }
+        a.hrefManage.active {
+            color: #2c2c2c;
+        }
+            a.hrefManage:hover {
+                color: #2c2c2c !important;
+            }
+
     </style>
+    <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#tabs').tab();
+        });
+
+
+    </script> 
 </head>
  <body>
 
-     <div class="container">
-         <h2>{{tabHeader}}</h2>
+    <!--Tabs-->
+    <div class="container">
+        <ul id="myTabs" class="nav nav-tabs nav-justified " data-tabs="tabs">
+            <li class="tabStyle active"><a  class="hrefManage" href="#PaymentsMethods" data-toggle="tab">طرق الدفع</a></li>
+            <li class="tabStyle"><a class="hrefManage" href="#TableOfProcesses" data-toggle="tab">العمليات التجارية</a></li>
+            <li class="tabStyle"><a  class="hrefManage" href="#Statistic" data-toggle="tab">الإحصائيات</a></li>
+        </ul>
 
-         <div class="row">
-             <form name="myForm" ng-model="checkboxPayment" ng-init="checkedPayment()">
-                 <label>
-                     <input type="checkbox" ng-model="checkboxPayment.cash" ng-change="acceptPayment()">
-                     Cash <img style="max-width:5%;" src="/images/cash.png" alt="Cash">
-                 </label><br />
-                 <label>
-                     <input type="checkbox" ng-model="checkboxPayment.paypal" ng-change="acceptPayment()">
-                     <img style="max-width:8%;" src="/images/PayPal.png" alt="PayPal">
-                 </label><br />
-                 <label>
-                     <input type="checkbox" ng-model="checkboxPayment.bankTransfer" aria-label="Toggle ngShow" ng-change="acceptPayment()">
-                     Bank Transfer <img style="max-width:10%;" src="/images/transfer.png" alt="bank transfer">
-                 </label><br />
-             </form>
-         </div>
-         <div class="row">
-             <div class="col-lg-6">
-                 <form name="IBAN" class="check-element animate-show-hide" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()">
-                     <label for="IBAN">IBAN</label>
-                     <div class="input-group">
-                         <input type="text" class="form-control validate" name="bankInfoIBAN" ng-model="bankInfo.IBAN" id="IBAN" ng-disabled="!editIBAN" placeholder="Enter IBAN" required>
-                         <span ng-show="!editIBAN" class="input-group-btn">
-                             <button  type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="editIBAN = true" class="btn">Edit</button>
-                         </span>
-                         <span ng-show="editIBAN" class="input-group-btn">
-                             <button  type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdateBankInfo()" class="btn">Update</button>
-                         </span>
-                     </div>
-                     <p class=" alert alert-danger" ng-show="!IBAN.bankInfoIBAN.$pristine && !IBAN.bankInfoIBAN.$valid">
-                         You must enter the IBAN.
-                     </p>
-                 </form>
-             </div>
-         </div>
-     </div>
+        <!--style="background: linear-gradient( #D4D8BA, #f5f6ef);"-->
+        <div class="tab-content" id="tabs">
+            <div class="tab-pane fade in active" role="tabpanel" id="PaymentsMethods">
 
-     <div class="container" style="margin-top:30px;">
-         <div dir="rtl">
 
-             <div>
-                 <h style="font-size:20px;">العمليات التجارية</h>
-             </div>
-             <!--
-            <div style="display:inline-block; margin-top:15px;">
-                <h  style="font-size:20px;">عرض</h>
-                <select name="singleSelect" ng-model="data.singleSelect" ng-style="{'width':'200px'}" class=" styled-select black rounded"
-                        ng-init="data.singleSelect = 'option1'">
-                    <option value="option1">Bank Transfer Transactions</option>
-                    <option value="option2">Cash Transactions</option>
-                </select>
-            </div>-->
-         </div>
-         <!--\add new category-->
-         <!--list Current Transactions-->
-         <div class="table-responsive centered" ng-init="GetAllTransactions()" id="table" style="margin-top:15px;">
-             <table class="table">
-                 <thead style="border-collapse:collapse; table-layout:fixed;">
-                     <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
-                         <th>الحالة</th>
-                         <th>اسم الحساب</th>
-                         <th>رقم التعريف الخاص بالطلب</th>
-                         <th>طريقة الدفع</th>
-                         <th>العنوان</th>
-                         <th>الإيميل الالكتروني</th>
-                         <th>رقم الجوال</th>
-                         <th>اسم المشتري</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr data-ng-repeat="order in orders" class="hover">
-                         <!--
-        <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
-        <td ng-hide="true">{{product.ID}}</td>
-                                -->
-                         <td>
-                             <small>لم تتم العملية بعد</small>
-                             <button class="addfields waves-effect waves-light btn done" ng-click="UpdateStatus(order, order.ID)" style="float:left;">تم</button>
-                             
-                         </td>
-                         
-                         <td class="arb"><label>{{order.BankAccount}}</label></td>
-                         <td class="arb"><label>{{order.OrderID}}</label></td>
-                         <td class="arb"><label>{{order.PaymentMethod}}</label></td>
-                         <td class="arb"><label>{{order.BuyerLocation}}</label></td>
-                         <td class="arb"><label>{{order.BuyerEmail}}</label></td>
-                         <td class="arb"><label>{{order.BuyerPhone}}</label></td>
-                         <td class="arb"><label>{{order.BuyerName}}</label></td>
-                     </tr>
-                     <tr ng-show="orders.length == 0">
-                         <td colspan="8">
-                             <label style="text-align:center;">لا يوجد أي عمليات تجارية</label>
-                             </td>
-                    </tr>
-                 </tbody>
-             </table>
-         </div>
+                <div class="container">
+                    <!--Payments Methods-->
+                    <div class="row" style="text-align:center">
+                        <h3 style="color: #2c2c2c">اختر طرق الدفع المناسبة لك</h3>
+                        <form name="myForm" ng-model="checkboxPayment" ng-init="checkedPayment()" style="display:inline;">
+                            <div class="form-group" style="margin-top:20px;">
+                                <!--Cash-->
+                                <div class="paymentMethod form-check">
+                                    <label class="custom-checkbox form-check-label centered" style="position:center; display:block;">
+                                        <input id="checkbox1" name="checkbox" type="checkbox" class="custom-control-input form-check-input center-block" style="display:block; margin-left: auto; margin-right: auto; margin-top:20%" ng-model="checkboxPayment.cash" ng-change="acceptPayment()">
+                                        <br>
+                                        <span class="custom-control-indicator">نقدًا</span>
+                                        <img style="max-width:50%; width:30%; display:block; margin-left: auto; margin-right: auto; margin-top:5%;" src="/images/cash2.png" alt="Cash">
+                                    </label>
+                                </div>
+                                <!--PayPal-->
+                                <div class="paymentMethod form-check">
+                                    <label class="custom-checkbox form-check-label centered" style="position:center; display:block;">
+                                        <input id="checkbox2" name="checkbox" type="checkbox" class="custom-control-input form-check-input center-block" style="display:block; margin-left: auto; margin-right: auto; margin-top:20%" ng-model="checkboxPayment.paypal" ng-change="acceptPayment()">
+                                        <br>
+                                        <span class="custom-control-indicator">  باي بال </span>
+                                        <img style="max-width:80%; width:60%; display:block; margin-left: auto; margin-right: auto; margin-top:15%;" src="/images/PayPal.png" alt="PayPal">
+                                    </label>
+                                </div>
+                                <!--BankTransfer-->
+                                <div class="paymentMethod form-check">
+                                    <label class="custom-checkbox form-check-label centered" style="position:center; display:block;">
+                                        <input id="checkbox3" name="checkbox" type="checkbox" class="custom-control-input form-check-input center-block" style="display:block; margin-left: auto; margin-right: auto; margin-top:20%" ng-model="checkboxPayment.bankTransfer" aria-label="Toggle ngShow" ng-change="acceptPayment()">
+                                        <br>
+                                        <span class="custom-control-indicator">  التحويل البنكي </span>
+                                        <img style="max-width:50%; width:30%; display:block; margin-left: auto; margin-right: auto; margin-top:5%;" src="/images/transfer.png" alt="bank transfer">
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
 
-     </div>
-     <div class="container">
-         <div class="row" ng-init="statistic()" >
-             <div class="statbox">
-                 Statistics
-                 <div id="quote">
-                     <!-- Best Categories,-->  Best Products
-                 </div>
-               
-             </div>
-             <div class="col-sm-12 statbox" data-ng-repeat="product in BestProducts | orderBy:'-Amount' | limitTo: 3" style="color:#E6293C">
-                 
-                 <div ng-show="product.Amount!=0">
-                     <div class="number">{{product.Amount}}</div>
-                     <div class="type" style="color:#F26F7D">
-                         {{product.ProductName}}
-                         <div class="details" style="color:#E6293C">{{product.CategoryName}}</div>
-                     </div>
-                     <img ng-src="{{product.Image}}" style=" height: 4vw; position: absolute; top: 30%; left: 63%;" alt="Product Image">
-                 </div>
-             </div>
-             <h1 class="text-center">~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~</h1>
-             <div class="col-sm-12 statbox" style="color:#E6293C">
-                 <div class="number">5,386</div>
-                 <div class="type" style="color:#F26F7D">
-                     Clothes
-                     <div class="details" style="color:#E6293C">Best Category</div>
-                 </div>
-                 <img ng-src="/images/paypal.png" style=" height: 4vw; position: absolute; top: 30%; left: 63%;" alt="Store Logo">
+                    </div>
 
-             </div>
-             <div class="col-sm-12 statbox" style="color:#F4733D">
-                 <div class="number">41,400</div>
-                 <div class="type" style="color:#FAB669">
-                     Best Product
-                     <div class="details" style="color:#F4733D">Red Hat</div>
-                 </div>
-                 <img ng-src="/images/paypal.png" style=" height: 4vw; position: absolute; top: 30%; left: 63%;" alt="Store Logo">
+                    <!--Bank Transfer Form-->
+                    <div class="row" style="text-align:center;">
+                        <div class="col-md-6 col-md-offset-6 center-block bankTransfer"  align="center" style="float:none; text-align:center;">
+                            <form name="IBAN" class="check-element animate-show-hide" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()" style="display:inline; width:40%">
+                                <label for="IBAN">لتسهيل عملية التحويل البنكي ، نرجو ادخال رقم الايبان الخاص بك</label>
+                                <div class="input-group">
+                                    <span ng-show="!editIBAN" class="input-group-btn">
+                                        <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="editIBAN = true" class="btn"> تعديل</button>
+                                    </span>
+                                    <span ng-show="editIBAN" class="input-group-btn">
+                                        <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdateBankInfo()" class="btn">إضافة</button>
+                                    </span>
+                                    <input type="text" class="form-control validate" name="bankInfoIBAN" ng-model="bankInfo.IBAN" id="IBAN" ng-disabled="!editIBAN" placeholder="أدخل الايبان" required style="text-align:right;">
+                                </div>
+                                <p class=" alert alert-danger" ng-show="!IBAN.bankInfoIBAN.$pristine && !IBAN.bankInfoIBAN.$valid">
+                                    يجب عليك إدخال الايبان
+                                </p>
+                            </form>
+                            </div>
+                        </div>
+                </div>
 
-             </div>
-             <div class="col-sm-12 statbox" style="color:#F1F73E">
-                 <div class="number">248</div>
-                 <div class="type" style="color:#F4F799">
-                     Profs
-                     <div class="details" style="color:#F1F73E">currently teaching</div>
-                 </div>
-                 <img ng-src="/images/paypal.png" style=" height: 4vw; position: absolute; top: 30%; left: 63%;" alt="Store Logo">
 
-             </div>
-             <div class="col-sm-12 statbox" style="color:#A4E838">
-                 <div class="number">316</div>
-                 <div class="type" style="color:#C6F27E">
-                     Students
-                     <div class="details" style="color:#A4E838">studying software engineering</div>
-                 </div>
-             </div>
-             <div class="col-sm-12 statbox" style="color:#42C91C">
-                 <div class="number">31</div>
-                 <div class="type" style="color:#8AF26D">
-                     Women
-                     <div class="details" style="color:#42C91C">studying software engineering</div>
-                 </div>
-             </div>
-             <div class="col-sm-12 statbox" style="color:#2A8DDE">
-                 <div class="number">16</div>
-                 <div class="type" style="color:#7CBDF2">
-                     Specialties
-                     <div class="details" style="color:#2A8DDE">in engineering offered</div>
-                 </div>
-             </div>
-             <div class="col-sm-12 statbox" style="color:#7148B8">
-                 <div class="number">250</div>
-                 <div class="type" style="color:#AE8AEB">
-                     Agreements
-                     <div class="details" style="color:#7148B8">with institutions all over the world</div>
-                 </div>
-             </div>
-         </div>
 
-         </div>
+            </div>
+            <div class="tab-pane fade in" role="tabpanel" id="TableOfProcesses">
+                <!--TableOfProcesses-->
+                <div class="container" style="margin-top:30px;">
+                    <div dir="rtl">
 
+                        <div>
+                            <h style="font-size:20px;">العمليات التجارية</h>
+                        </div>
+                        <!--
+                        <div style="display:inline-block; margin-top:15px;">
+                            <h  style="font-size:20px;">عرض</h>
+                            <select name="singleSelect" ng-model="data.singleSelect" ng-style="{'width':'200px'}" class=" styled-select black rounded"
+                                    ng-init="data.singleSelect = 'option1'">
+                                <option value="option1">Bank Transfer Transactions</option>
+                                <option value="option2">Cash Transactions</option>
+                            </select>
+                        </div>-->
+                    </div>
+                    <!--\add new category-->
+                    <!--list Current Transactions-->
+                    <div class="table-responsive centered" ng-init="GetAllTransactions()" id="table" style="margin-top:15px;">
+                        <table class="table">
+                            <thead style="border-collapse:collapse; table-layout:fixed;">
+                                <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
+                                    <th>الحالة</th>
+                                    <th>اسم الحساب</th>
+                                    <th>رقم التعريف الخاص بالطلب</th>
+                                    <th>طريقة الدفع</th>
+                                    <th>العنوان</th>
+                                    <th>الإيميل الالكتروني</th>
+                                    <th>رقم الجوال</th>
+                                    <th>اسم المشتري</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="order in orders" class="hover">
+                                    <!--
+                                    <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
+                                    <td ng-hide="true">{{product.ID}}</td>
+                                                            -->
+                                    <td>
+                                        <small>لم تتم العملية بعد</small>
+                                        <button class="addfields waves-effect waves-light btn done" ng-click="UpdateStatus(order, order.ID)" style="float:left;">تم</button>
+
+
+                                    </td>
+
+
+                                    <td class="arb"><label>{{order.BankAccount}}</label></td>
+                                    <td class="arb"><label>{{order.OrderID}}</label></td>
+                                    <td class="arb"><label>{{order.PaymentMethod}}</label></td>
+                                    <td class="arb"><label>{{order.BuyerLocation}}</label></td>
+                                    <td class="arb"><label>{{order.BuyerEmail}}</label></td>
+                                    <td class="arb"><label>{{order.BuyerPhone}}</label></td>
+                                    <td class="arb"><label>{{order.BuyerName}}</label></td>
+                                </tr>
+                                <tr ng-show="orders.length == 0">
+                                    <td colspan="8">
+                                        <label style="text-align:center;">لا يوجد أي عمليات تجارية</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="tab-pane fade in" role="tabpanel" id="Statistic">
+                <!--Statistic-->
+                <div class="container">
+                    <div class="row" ng-init="statistic()">
+                        <div class="statbox">
+                            Statistics
+                            <div id="quote">
+                                <!-- Best Categories,-->  Best Products
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12 statbox" data-ng-repeat="product in BestProducts | orderBy:'-Amount' | limitTo: 3" style="color:#E6293C">
+
+                            <div ng-show="product.Amount!=0">
+                                <div class="number">{{product.Amount}}</div>
+                                <div class="type" style="color:#F26F7D">
+                                    {{product.ProductName}}
+                                    <div class="details" style="color:#E6293C">{{product.CategoryName}}</div>
+                                </div>
+                                <img ng-src="{{product.Image}}" style=" height: 4vw; position: absolute; top: 30%; left: 63%;" alt="Product Image">
+                            </div>
+                        </div>
+                        <h1 class="text-center">~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~</h1>
+                        <div class="col-sm-12 statbox" style="color:#E6293C">
+                            <div class="number">5,386</div>
+                            <div class="type" style="color:#F26F7D">
+                                Clothes
+                                <div class="details" style="color:#E6293C">Best Category</div>
+                            </div>
+                            <img ng-src="/images/paypal.png" style=" height: 4vw; position: absolute; top: 30%; left: 63%;" alt="Store Logo">
+
+                        </div>
+                        <div class="col-sm-12 statbox" style="color:#F4733D">
+                            <div class="number">41,400</div>
+                            <div class="type" style="color:#FAB669">
+                                Best Product
+                                <div class="details" style="color:#F4733D">Red Hat</div>
+                            </div>
+                            <img ng-src="/images/paypal.png" style=" height: 4vw; position: absolute; top: 30%; left: 63%;" alt="Store Logo">
+
+                        </div>
+                        <div class="col-sm-12 statbox" style="color:#F1F73E">
+                            <div class="number">248</div>
+                            <div class="type" style="color:#F4F799">
+                                Profs
+                                <div class="details" style="color:#F1F73E">currently teaching</div>
+                            </div>
+                            <img ng-src="/images/paypal.png" style=" height: 4vw; position: absolute; top: 30%; left: 63%;" alt="Store Logo">
+
+                        </div>
+                        <div class="col-sm-12 statbox" style="color:#A4E838">
+                            <div class="number">316</div>
+                            <div class="type" style="color:#C6F27E">
+                                Students
+                                <div class="details" style="color:#A4E838">studying software engineering</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 statbox" style="color:#42C91C">
+                            <div class="number">31</div>
+                            <div class="type" style="color:#8AF26D">
+                                Women
+                                <div class="details" style="color:#42C91C">studying software engineering</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 statbox" style="color:#2A8DDE">
+                            <div class="number">16</div>
+                            <div class="type" style="color:#7CBDF2">
+                                Specialties
+                                <div class="details" style="color:#2A8DDE">in engineering offered</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 statbox" style="color:#7148B8">
+                            <div class="number">250</div>
+                            <div class="type" style="color:#AE8AEB">
+                                Agreements
+                                <div class="details" style="color:#7148B8">with institutions all over the world</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</body>
+
+     <!--PayPal
      <div class="row">
          <div class="col-lg-6">
              <form name="PayPal" class="check-element animate-show-hide" ng-show="checkboxPayment.paypal" ng-model="PayPalInfo" ng-init="GetPayPalInfo()">
@@ -400,4 +524,54 @@
 
          </div>
      </div>
- </body>
+         -->
+
+
+
+     <!--bootstrap(Just To Try)
+          <div class="container">
+         <div class="row" id="PaymentsMethods">
+             <div class="col-sm">
+                 <form name="myForm" ng-model="checkboxPayment" ng-init="checkedPayment()" style="background-color:white; border:1px solid gray; display:inline;">
+                     <div class="form-group">
+                         <div class="paymentMethod form-check">
+                             <label class="custom-control custom-checkbox form-check-label" style="position:center; display:block;">
+                                 <input id="checkbox1" name="checkbox" type="checkbox" class="custom-control-input form-check-input" style="display:block; margin-left: auto; margin-right: auto;" ng-model="checkboxPayment.cash" ng-change="acceptPayment()">
+                                 <br>
+                                 <span class="custom-control-indicator"> الدفع نقدًا</span>
+                                 <img style="max-width:50%; width:30%; display:block; margin-left: auto; margin-right: auto; margin-top:5%;" src="/images/cash2.png" alt="Cash">
+                             </label>
+                         </div>
+                         <div class="paymentMethod form-check">
+                             <label class="custom-control custom-checkbox form-check-label" style="position:center; display:block;">
+                                 <input id="checkbox2" name="checkbox" type="checkbox" class="custom-control-input form-check-input" style="display:block; margin-left: auto; margin-right: auto;" ng-model="checkboxPayment.paypal" ng-change="acceptPayment()">
+                                 <br>
+                                 <span class="custom-control-indicator">  الدفع عن طريق باي بال </span>
+                                 <img style="max-width:50%; width:30%; display:block; margin-left: auto; margin-right: auto; margin-top:5%;" src="/images/PayPal.png" alt="PayPal">
+                             </label>
+                         </div>
+                         <div class="paymentMethod form-check">
+                             <label class="custom-control custom-checkbox form-check-label" style="position:center; display:block;">
+                                 <input id="checkbox3" name="checkbox" type="checkbox" class="custom-control-input form-check-input" style="display:block; margin-left: auto; margin-right: auto;" ng-model="checkboxPayment.bankTransfer" aria-label="Toggle ngShow" ng-change="acceptPayment()">
+                                 <br>
+                                 <span class="custom-control-indicator">  الدفع عن التحويل البنكي </span>
+                                 <img style="max-width:50%; width:30%; display:block; margin-left: auto; margin-right: auto; margin-top:5%;" src="/images/transfer.png" alt="bank transfer">
+                             </label>
+                         </div>
+                         </div>
+</form>
+</div>
+             </div>
+ <div class="row" id="TableOfProcesses">
+                 <div class="col-sm">
+                 </div>
+                 </div>
+
+                 <div class="row" id="Statistic">
+                     <div class="col-sm">
+                     </div>
+                     </div>
+     </div>
+     -->
+
+
