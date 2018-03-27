@@ -52,49 +52,99 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             });
         };
 
-      /*  $rootScope.publish = function () {
-            $http.get('/Published_Stores.asmx/PublishRequest').then(function (response) {
-                var WebsitePath = "http://localhost:50277/BuildingStation/" + response.data;
-
-                $rootScope.WebsiteDomain = WebsitePath;
-            });
-        };*/
-
-        $rootScope.showConfirm = function (ev) {
+        $rootScope.Publish = function (ev) {
             $http.get('/Published_Stores.asmx/PublishRequest').then(function (response) {
                 var StoreValues = response.data;
-                var WebsiteDomain = "http://localhost:50277/BuildingStation/" + StoreValues.Domain;
+                if (StoreValues.Published === true) {
+                    var inform =
+                        $mdDialog.alert()
+                           // .clickOutsideToClose(true)
+                            // .parent(angular.element(document.querySelector('#popupContainer')))
+                            .title('You already published your store, this is your link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
+                            .textContent('Please Copy the link and save it.')
+                            // .ariaLabel('Alert Dialog Demo')
+                            .targetEvent(ev)
+                            .ok('Close');
+                    $mdDialog.show(inform).then(function () {                       
+                        //  $rootScope.status = 'You decided to get rid of your debt.';
+                    }, function () {
+                        // $rootScope.status = 'You decided to keep your debt.';
+                    });
+                }
+                else {
+                  // Appending dialog to document.body to cover sidenav in docs app
+                    var confirm = $mdDialog.confirm()
+                        .title('This is your store link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + '), would you like to publish?')
+                        .textContent('Please Copy the link and save it.')
+                        //  .ariaLabel('Lucky day')
+                        .targetEvent(ev)
+                        .ok('Publish')
+                        .cancel('Cancel');
 
-                // Appending dialog to document.body to cover sidenav in docs app
-                var confirm = $mdDialog.confirm()
-                    .title('This is your store link (' + WebsiteDomain + '), would you like to publish?')
-                    .textContent('Please Copy the link and save it.')
-                    //  .ariaLabel('Lucky day')
-                    .targetEvent(ev)
-                    .ok('Publish')
-                    .cancel('Cancel');
+                    $mdDialog.show(confirm).then(function () {
+                        $http({
+                            url: "Published_Stores.asmx/Publish",
+                            params: { storeDomainName: StoreValues.Domain },
+                            method: "get"
+                        })
+                        //  $rootScope.status = 'You decided to get rid of your debt.';
+                    }, function () {
+                        // $rootScope.status = 'You decided to keep your debt.';
+                    });
+                }
+            });
+        };
 
-                $mdDialog.show(confirm).then(function () {
-                   // $http.get('/Published_Stores.asmx/Publish');
-                    $http({
-                        url: "Published_Stores.asmx/Publish",
-                        params: { storeDomainName: StoreValues.Domain },
-                        method: "get"
-                    })
-                    //  $rootScope.status = 'You decided to get rid of your debt.';
-                }, function () {
-                    // $rootScope.status = 'You decided to keep your debt.';
-                });
+        $rootScope.UnPublish = function (ev) {
+            $http.get('/Published_Stores.asmx/UnPublishRequest').then(function (response) {
+                var StoreValues = response.data;
+                if (StoreValues.Published === false) {
+                    var inform =
+                        $mdDialog.alert()
+                            // .clickOutsideToClose(true)
+                            // .parent(angular.element(document.querySelector('#popupContainer')))
+                            .title('You have not publish your store yet')
+                            // .ariaLabel('Alert Dialog Demo')
+                            .targetEvent(ev)
+                            .ok('Close');
+                    $mdDialog.show(inform).then(function () {
+                        //  $rootScope.status = 'You decided to get rid of your debt.';
+                    }, function () {
+                        // $rootScope.status = 'You decided to keep your debt.';
+                    });
+                }
+                else {
+                    var confirm = $mdDialog.confirm()
+                        .title('Are you sure you want to unpublish your store?')
+                        //  .ariaLabel('Lucky day')
+                        .targetEvent(ev)
+                        .ok('YES')
+                        .cancel('Cancel');
+
+                    $mdDialog.show(confirm).then(function () {
+                        $http.get('/Published_Stores.asmx/UnPublish').then(function (response) {
+                            var Store_values = response.data;
+                            if(Store_values.Published === false){
+                                var Unpublished =
+                                    $mdDialog.alert()
+                                        .title('Your store was unpublished successfully')
+                                        .targetEvent(ev)
+                                        .ok('Close');
+                                $mdDialog.show(Unpublished).then(function () {
+                                    //  $rootScope.status = 'You decided to get rid of your debt.';
+                                }, function () {
+                                    // $rootScope.status = 'You decided to keep your debt.';
+                                });
+                            }
+                        });
+                    });
+                }
             });
         };
     })
     .controller("ManageStoreController", function ($rootScope,$scope, $http) {
         $scope.Logout = function () {
             $rootScope.Logout();
-        };
-
-        $scope.showConfirm = function () {
-            $rootScope.showConfirm();
         };
 
         $scope.tabHeader = "Manage Store";

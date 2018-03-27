@@ -37,49 +37,126 @@ public class Published_Stores : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void PublishRequest()
     {
-        string domain = " ";
-        string storeName = " ";
-        bool mayExists = false;
-        int addChange = 0;
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT StoreName FROM Store WHERE Email ='" + Session["user"] + "'", con);
+            // check if it's already published 
+            SqlCommand cmd = new SqlCommand("SELECT WebsiteDomain FROM Store WHERE Email ='" + Session["user"] + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                storeName = reader["StoreName"].ToString();
+                store.Domain = reader["WebsiteDomain"].ToString();
             }
+            reader.Close();
             con.Close();
 
-           domain =  storeName.Replace(" ", String.Empty);
+            if (store.Domain.Equals("No WebsiteDomain"))
+            {
+                string domain = " ";
+                string storeName = " ";
+                bool mayExists = false;
+                int addChange = 0;
+                store.Published = false;
+                // else generate domain
 
-            do {
-                mayExists = false;
+                cmd = new SqlCommand("SELECT StoreName FROM Store WHERE Email ='" + Session["user"] + "'", con);
                 con.Open();
-                cmd = new SqlCommand("SELECT WebsiteDomain FROM Store WHERE WebsiteDomain ='" + domain + "'", con);
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    domain = reader["WebsiteDomain"].ToString() + addChange;
-
-                    addChange++;
-                    mayExists = true;
+                    storeName = reader["StoreName"].ToString();
                 }
                 con.Close();
-            } while (mayExists);
-            store.Domain = domain;
+
+                domain = storeName.Replace(" ", String.Empty);
+
+                do
+                {
+                    mayExists = false;
+                    con.Open();
+                    cmd = new SqlCommand("SELECT WebsiteDomain FROM Store WHERE WebsiteDomain ='" + domain + "'", con);
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        domain = reader["WebsiteDomain"].ToString() + addChange;
+
+                        addChange++;
+                        mayExists = true;
+                    }
+                    con.Close();
+                } while (mayExists);
+                store.Domain = domain;
+            }
+            else {  // check if it's already published 
+                store.Published = true;
+            }
         }
         Context.Response.Write(js.Serialize(store));
     }
 
     [WebMethod(EnableSession = true)]
-    public void Publish( string storeDomainName)
+    public void Publish(string storeDomainName)
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET WebsiteDomain = N'" + storeDomainName + "', Published = 'true' Where Email = '" + Session["user"] + "'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET WebsiteDomain = N'" + storeDomainName + "' Where Email = '" + Session["user"] + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+    }
+
+    [WebMethod(EnableSession = true)]
+    public void UnPublishRequest()
+    {
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+
+            SqlCommand cmd = new SqlCommand("SELECT WebsiteDomain FROM Store WHERE Email ='" + Session["user"] + "'", con);
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.Domain = reader["WebsiteDomain"].ToString();
+            }
+            reader.Close();
+            con.Close();
+
+            if (store.Domain.Equals("No WebsiteDomain"))
+            {
+                store.Published = false;
+            }
+            else
+            {
+                store.Published = true;
+            }
+        }
+        Context.Response.Write(js.Serialize(store));
+    }
+
+    [WebMethod(EnableSession = true)]
+    public void UnPublish()
+    {
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Store SET WebsiteDomain = 'No WebsiteDomain' Where Email = '" + Session["user"] + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            store.Domain = "No WebsiteDomain";
+            store.Published = false;
+        }
+        Context.Response.Write(js.Serialize(store));
+    }
+
+    [WebMethod(EnableSession = true)]
+    public void DeleteStore() {
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("DELETE FROM Store WHERE Email = '" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
         }
@@ -274,15 +351,25 @@ public class Published_Stores : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void GetAllCategories()
+    public void GetAllCategories(string StoreDomain)
     {
         List<Categories> categories = new List<Categories>();
         //insert selected colors to database
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("select * from Category where StoreEmail = '" + store.Email + "' ORDER BY OrderInMenu ASC", con);
-            using (SqlDataReader reader = cmd.ExecuteReader())
+            SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = '" + StoreDomain + "'", con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.Email = reader["Email"].ToString();
+            }
+            reader.Close();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("select * from Category where StoreEmail = '" + store.Email + "' ORDER BY OrderInMenu ASC", con);
+            using (reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
                 {
@@ -300,21 +387,31 @@ public class Published_Stores : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void GetAllProducts(string category)
+    public void GetAllProducts(string category, string StoreDomain)
     {
         List<Product> ProductsList = new List<Product>();
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
+            SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = '" + StoreDomain + "'", con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.Email = reader["Email"].ToString();
+            }
+            reader.Close();
+            con.Close();
 
-            int catID = getCategoryID(category);
+            con.Open();
+
+            int catID = getCategoryID(category, StoreDomain);
             if (catID != -1)
 
             {
                 using (SqlCommand check = new SqlCommand("select * from Product where Category_ID ='" + catID + "'", con))
                 {
 
-                    SqlDataReader reader = check.ExecuteReader();
+                    reader = check.ExecuteReader();
                     while (reader.Read())
                     {
                         Product pro = new Product();
@@ -344,14 +441,24 @@ public class Published_Stores : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public int getCategoryID(string category)
+    public int getCategoryID(string category, string StoreDomain)
     {
         int id = -1;
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
+            SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = '" + StoreDomain + "'", con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.Email = reader["Email"].ToString();
+            }
+            reader.Close();
+            con.Close();
 
-            SqlCommand cmd = new SqlCommand("select ID from Category where Name = N'" + category + "' and StoreEmail = '" + Session["user"] + "'", con);
+            con.Open();
+
+            cmd = new SqlCommand("select ID from Category where Name = N'" + category + "' and StoreEmail = '" + store.Email + "'", con);
             SqlDataReader R = cmd.ExecuteReader();
             if (R.Read())
             {

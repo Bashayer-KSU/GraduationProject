@@ -78,11 +78,7 @@ var publishApp = angular.module("published", ["ngRoute"])
                 else $scope.PaymentMethod = "PayPal";
 
                 //Social Media Link
-             //   $scope.Facebook = $scope.Store.FacebookLink.toLowerCase().includes("https://www.facebook.com/");
-             //   $scope.Instagram = $scope.Store.InstagramLink.toLowerCase().includes("https://www.instagram.com/");
-             //   $scope.Snapchat = $scope.Store.SnapchatLink.toLowerCase().includes("snapchat");
-             //   $scope.Twitter = $scope.Store.TwitterLink.toLowerCase().includes("https://twitter.com/");
-                if ($scope.Store.SnapchatLink !== 'No Value') {
+              /*  if ($scope.Store.SnapchatLink !== 'No Value') {
                     $scope.Snapchat = true;
                 }
                 else { $scope.Snapchat = false; }
@@ -103,7 +99,7 @@ var publishApp = angular.module("published", ["ngRoute"])
                     $scope.Instagram = true;
                 }
                 else { $scope.Instagram = false; }
-
+                */
 
                 //Menu
                 $scope.MenuTitle = $scope.Store.MenuTitle;
@@ -297,9 +293,14 @@ var publishApp = angular.module("published", ["ngRoute"])
             });
     });
 
-publishApp.factory('CategoryService', function ($http) {
+publishApp.factory('CategoryService', function ($http, $routeParams) {
     var GetAllCategories = function () {
-        return $http.post('/Published_Stores.asmx/GetAllCategories').then(function (categories) {
+        return $http({
+            url: "../Published_Stores.asmx/GetAllCategories",
+            params: { StoreDomain: $routeParams.Domain },
+            method: "get"
+        })
+        .then(function (categories) {
             return categories.data;
         });
     };
@@ -307,12 +308,13 @@ publishApp.factory('CategoryService', function ($http) {
     return { GetAllCategories: GetAllCategories };
 });
 
-publishApp.factory('ProductService', function ($http) {
+publishApp.factory('ProductService', function ($http, $routeParams) {
     var GetAllProducts = function (CategoryName) {
         return $http.post(
             "/Published_Stores.asmx/GetAllProducts",
             $.param({
-                Category: CategoryName
+                Category: CategoryName,
+                StoreDomain: $routeParams.Domain
             }),
             {
                 headers: {
