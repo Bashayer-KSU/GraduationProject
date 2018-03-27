@@ -214,8 +214,10 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
     $scope.removeFromCart = function (product) {
         var index = $scope.ProductsArray.indexOf(product);
         $scope.addProduct.Amount = $scope.addProduct.Amount + $scope.ProductsArray[index].Amount; //return the amount of product to the orginal amount
-        $scope.ProductsArray.splice(index, 1);
+
         $scope.TotalPrice -= product.PriceAfterDiscount * product.Amount;
+        product.Amount = product.Amount + $scope.ProductsArray[index].Amount;
+        $scope.ProductsArray.splice(index, 1);
         
     };
 
