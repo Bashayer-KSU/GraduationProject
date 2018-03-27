@@ -169,12 +169,13 @@ public class TemplateData : System.Web.Services.WebService
             DataType = "StoreDescription";
         else if (DataType.Equals("Address"))
             DataType = "Location";
-
+        else if (DataType.Equals("About"))
+            DataType = "About";
 
         int x;
         Boolean result = false;
 
-        if (NewValue!= null) {
+        if (NewValue!= null && DataType!="About") {
 
             using (SqlConnection con = new SqlConnection(cs))
             {
@@ -185,12 +186,33 @@ public class TemplateData : System.Web.Services.WebService
                     if (x != 0)
                         result = true;
                 }
+                con.Close();
             }
             if(result)
         Context.Response.Write(js.Serialize(NewValue));
             else
                 Context.Response.Write(js.Serialize("Error"));
 
+        }
+        else if(DataType == "About")
+        {
+
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("UPDATE Element SET  Value = N'" + NewValue + "' Where StoreEmail = '" + Session["user"] + "' And Name = 'About'", con))
+                {
+                    x = cmd.ExecuteNonQuery();
+                    if (x != 0)
+                        result = true;
+                }
+                con.Close();
+
+            }
+            if (result)
+                Context.Response.Write(js.Serialize(NewValue));
+            else
+                Context.Response.Write(js.Serialize("Error"));
         }
     }
 
