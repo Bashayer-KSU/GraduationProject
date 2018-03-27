@@ -10,8 +10,15 @@ header.en {
 
 body {
     background-image: url(images/background.png);
+    background-attachment:fixed;
+        /* The image used */
+    /* Full height */
+    height: auto; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
     background-repeat: no-repeat;
-    background-size:cover;
+    background-size: cover;
 }
 
 .tab_menu {
