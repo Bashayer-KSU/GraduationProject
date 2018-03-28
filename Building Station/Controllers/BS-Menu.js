@@ -6,6 +6,10 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 templateUrl: "BS-MenuTabs/ManageStore.html",
                 controller: "ManageStoreController"
             })
+            .when("/ManageStoreE", {
+                templateUrl: "BS-MenuTabs/ManageStoreEnglish.html",
+                controller: "ManageStoreController"
+            })
             .when("/DevelopmentEnvironment", {
                 templateUrl: "BS-MenuTabs/DevelopmentEnvironment.html",
                 controller: "DevelopmentEnvironmentController"
@@ -20,6 +24,10 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             })
             .when("/Products", {
                 templateUrl: "BS-MenuTabs/Products.html",
+                controller: "ProductsController"
+            })
+            .when("/ProductE", {
+                templateUrl: "BS-MenuTabs/ProductsEnglish.html",
                 controller: "ProductsController"
             })
             .otherwise({
