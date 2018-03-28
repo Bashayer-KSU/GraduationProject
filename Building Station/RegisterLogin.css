@@ -3,13 +3,15 @@
     src: url('NeoSansArabic.ttf'); /* IE9 */
 }
 
-
 body {
     min-height: 100%;
-    background-size: cover;
+    font-family: 'NeoSansArabic';
+    background-image: url(/images/background3.png);
+    background-attachment: fixed;
+    height: auto;
+    background-position: center;
     background-repeat: no-repeat;
-    width: 100%;
-    background-image: url("images/background.png");
+    background-size: cover;
 }
 
 .text-center {
@@ -24,95 +26,31 @@ body {
     margin-top: 35px;
 }
 
-/* Title */
-
-h1 {
-    color: white;
-    font-family: 'Roboto';
-    text-transform: uppercase;
-    font-weight: 900;
-    font-size: 25px;
-    text-align: center;
-}
-
-/* Sign Up */
-
 .container {
-    max-width: 5000px;
-    max-height: 500px;
-    margin-top: 40px;
-    margin-left: 90px;
-    position: center;
-    width: 1200px;
+    max-width: 800px;
+    max-height: 100px;
+    margin-top: 10px;
 }
-
 
 .alert-danger {
     text-align: center;
 }
 
 .screen {
-    position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 1200px;
-    height: 500px;
-    background-size: 1200px 500px;
-    background-repeat: no-repeat;
-    background-image: url("images/center_en_signup.png");
+    padding: 20px;
+    padding-bottom: 40px;
+    border-radius: 5px;
+    background-color: black;
+    opacity: 0.5;
     box-shadow: 0 1px 6px rgba(0,0,0,.3);
-    display: flex;
-}
-
-.screen2 {
-    position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 1200px;
-    # height: 500px;
-    background-size: 1200px 500px;
-    background-repeat: no-repeat;
-    background-image: url("images/center_en_signin.png");
-    box-shadow: 0 1px 6px rgba(0,0,0,.3);
-    display: flex;
-}
-
-.screen_ar {
-    position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 1200px;
-    height: 500px;
-    background-size: 1200px 500px;
-    background-repeat: no-repeat;
-    background-image: url("images/center_ar_signin.png");
-    box-shadow: 0 1px 6px rgba(0,0,0,.3);
-    display: flex;
-}
-
-.screen2_ar {
-    position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 1200px;
-    height: 500px;
-    background-size: 1200px 500px;
-    background-repeat: no-repeat;
-    background-image: url("images/center_ar_signup.png");
-    box-shadow: 0 1px 6px rgba(0,0,0,.3);
-    display: flex;
+    color: white;
+    width:40%;
 }
 
 
 .btn {
     border-radius: 2px;
 }
-
-/*
-.cancel {
-    background-color: #df405a;
-}
-*/
 
 .done {
     background-color: #c6ba57;
@@ -125,15 +63,7 @@ h1 {
     .done:focus {
         background-color: #d3ca7d;
     }
-/*
-.cancel:hover {
-    background-color: #f0435f;
-}
 
-.cancel:focus {
-    background-color: #f0435f;
-}
-*/
 .input-group {
     width: 100%;
 }
@@ -160,14 +90,13 @@ h1 {
     color: white
 }
 
-
-
-
 .active a {
-    color: white;
+    color: #0C5E65;
 }
 
-
+a {
+    color: #333333;
+}
 
 label {
     position: absolute;
@@ -179,7 +108,6 @@ label {
     font-size: 22px;
 }
 
-
     label.active {
         transform: translateY(50px);
         left: 2px;
@@ -190,68 +118,10 @@ label {
     color: white;
 }
 
-.form-register {
-    width: 350px;
-    margin-top: 130px;
-    margin-left: 180px;
-}
 
-.form-register_ar {
-    width: 350px;
-    margin-top: 130px;
-    margin-left: 130px;
-}
-
-#form-login_ar {
-    width: 350px;
-    margin-top: 200px;
-    margin-left: 130px;
-}
-
-
-#form-login {
-    width: 350px;
-    margin-left: 200px;
-    margin-top: 200px;
-}
-
-.convertPage {
-    margin-top: 390px;
-    position: center;
-}
-
-.label2 {
-    transform: translateY(6px);
-    font-size: 30px;
-    margin-right: 10px;
-    display: inline-block;
-    font-family: "Century Gothic";
-}
-
-#pos {
-    margin-left: 460px;
-}
-
-#pos_ar {
-    margin-left: 215px;
-    font-family: "NeoSansArabic";
-}
-
-#pos2 {
-    margin-left: 425px;
-}
-
-#pos2_ar {
-    margin-left: 250px;
-    font-family: "NeoSansArabic";
-}
 
 li {
     display: inline;
-    font-size: 18px;
+    font-size: 1.5vw;
     font-family: "Century Gothic";
-}
-
-.language {
-    float: left;
 }
