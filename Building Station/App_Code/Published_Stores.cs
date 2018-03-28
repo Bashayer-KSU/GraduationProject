@@ -156,7 +156,27 @@ public class Published_Stores : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("DELETE FROM Store WHERE Email = '" + Session["user"] + "'", con);
+            SqlCommand cmd = new SqlCommand("DELETE FROM Element WHERE StoreEmail = '" + Session["user"] + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("DELETE FROM Product WHERE StoreEmail = '" + Session["user"] + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("DELETE FROM Category WHERE StoreEmail = '" + Session["user"] + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("DELETE FROM Order WHERE StoreEmail = '" + Session["user"] + "'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("DELETE FROM Store WHERE Email = '" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
         }

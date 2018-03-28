@@ -141,6 +141,25 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 }
             });
         };
+
+        $rootScope.DeleteStore = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure you want to delete your store ?')
+                .textContent('all your data will be removed, you will need to register again.')
+                .targetEvent(ev)
+                .ok('Delete')
+                .cancel('Cancel');
+
+            $mdDialog.show(confirm).then(function () {
+
+                $http.get('/Published_Stores.asmx/DeleteStore').then(function (response) {
+                    // logout or something , or the opposite
+                    // or go to login page
+                }); 
+            }, function () {
+                // $rootScope.status = 'You decided to keep your debt.';
+            });
+        };
     })
     .controller("ManageStoreController", function ($rootScope,$scope, $http) {
         $scope.Logout = function () {
