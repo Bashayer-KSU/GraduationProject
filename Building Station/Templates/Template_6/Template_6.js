@@ -37,11 +37,9 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
         BankTransfer: false
     };
     var init = function () {
-
+        //Store Info
         $http.post('/TemplateData.asmx/StoreData').then(function (response) {
             $scope.Store = response.data;
-            console.log($scope.Store);//Store Info
-
 
             //WEBSITE ICON and Title 
             document.title = $scope.Store.Name;
@@ -88,7 +86,6 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
 
         $http.post('/ShowHideElement.asmx/GetElementsInfo').then(function (response) {
             $scope.elementInfo = response.data;
-            console.log($scope.elementInfo);
             for (var i = 0; i < $scope.elementInfo.length; i++) {
                 if ($scope.elementInfo[i].Name === "Snapchat") {
                     $scope.icon.snapchat = !$scope.elementInfo[i].Hidden;
@@ -108,11 +105,13 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
                 }
                 else if ($scope.elementInfo[i].Name === "Slider") {
                     $scope.section.slider = !$scope.elementInfo[i].Hidden;
-                    $scope.section.slider.content = $scope.elementInfo[i].Value;
                 }
                 else if ($scope.elementInfo[i].Name === "About") {
                     $scope.section.about = !$scope.elementInfo[i].Hidden;
                     $scope.AboutContent = $scope.elementInfo[i].Value;
+                    $scope.AboutImage = $scope.elementInfo[i].Image;
+                    if ($scope.AboutImage === "No Image" || $scope.AboutImage === null || $scope.AboutImage === undefined)
+                         $scope.AboutImage = $scope.Store.Logo;
                     if ($scope.AboutContent === null || $scope.AboutContent === "")
                         $scope.section.about = true;
                 }
@@ -214,8 +213,10 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
     $scope.removeFromCart = function (product) {
         var index = $scope.ProductsArray.indexOf(product);
         $scope.addProduct.Amount = $scope.addProduct.Amount + $scope.ProductsArray[index].Amount; //return the amount of product to the orginal amount
-        $scope.ProductsArray.splice(index, 1);
+
         $scope.TotalPrice -= product.PriceAfterDiscount * product.Amount;
+        product.Amount = product.Amount + $scope.ProductsArray[index].Amount;
+        $scope.ProductsArray.splice(index, 1);
         
     };
 

@@ -46,10 +46,10 @@
     height: 4vw;
     background-color:transparent;">
                     <!--<span class="input-group-btn">
-                           <button class="btn btn-default" ng-click="UpdateColors()" type="submit">Update</button>
-                       </span>
-                    <div ng-if="refreshMyColors"
-                            ng-init="refreshColors()"></div>-->
+                   <button class="btn btn-default" ng-click="UpdateColors()" type="submit">Update</button>
+               </span>
+            <div ng-if="refreshMyColors"
+                    ng-init="refreshColors()"></div>-->
                 </div>
             </div> <br />
             <div class="row">
@@ -71,6 +71,15 @@
                     </span>
                 </div>
             </div>
+            <div class="row">
+                <h4>change About image</h4>
+                <div class="input-group">
+                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_about" style="width:100%;" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="UpdateAboutImage()" type="submit">Update</button>
+                    </span>
+                </div>
+            </div>
             <br />
             <div class="row">
                 <select id="" class="form-control" ng-model="selectedTextType" ng-change="updateText()" data-live-search="true" ng-options="x.name for x in TextType">
@@ -83,6 +92,10 @@
                     <span class="input-group-btn">
                         <button class="btn btn-default" ng-click="UpdateStoreInfo()" type="submit">Update</button>
                     </span>
+
+                </div>
+                <div ng-show="loading" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
+                    <md-progress-circular md-mode="indeterminate"  md-diameter="20px"></md-progress-circular>
                 </div>
             </div>
             <br />
@@ -127,7 +140,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <md-switch ng-model="section.slider" class="md-primary" ng-change="ShowHideSection('Slider')" aria-label="SliderSection">
-                        Slider
+                        Cover
                     </md-switch>
                 </div>
                 <div class="col-sm-6">

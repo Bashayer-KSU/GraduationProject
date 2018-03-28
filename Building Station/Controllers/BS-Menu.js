@@ -6,6 +6,10 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 templateUrl: "BS-MenuTabs/ManageStore.html",
                 controller: "ManageStoreController"
             })
+            .when("/ManageStoreE", {
+                templateUrl: "BS-MenuTabs/ManageStoreEnglish.html",
+                controller: "ManageStoreController"
+            })
             .when("/DevelopmentEnvironment", {
                 templateUrl: "BS-MenuTabs/DevelopmentEnvironment.html",
                 controller: "DevelopmentEnvironmentController"
@@ -20,6 +24,10 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             })
             .when("/Products", {
                 templateUrl: "BS-MenuTabs/Products.html",
+                controller: "ProductsController"
+            })
+            .when("/ProductE", {
+                templateUrl: "BS-MenuTabs/ProductsEnglish.html",
                 controller: "ProductsController"
             })
             .otherwise({
@@ -37,7 +45,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             
             loginService.login().then(function (response) {
                 $rootScope.login = response;
-                console.log("in $routeChangeStart " + $rootScope.login);
+                //console.log("in $routeChangeStart " + $rootScope.login);
                 if (response === "false") {
                     //redirect to login page
                     location.href = "/RegisterLogin.html";
@@ -52,49 +60,118 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             });
         };
 
-      /*  $rootScope.publish = function () {
-            $http.get('/Published_Stores.asmx/PublishRequest').then(function (response) {
-                var WebsitePath = "http://localhost:50277/BuildingStation/" + response.data;
-
-                $rootScope.WebsiteDomain = WebsitePath;
-            });
-        };*/
-
-        $rootScope.showConfirm = function (ev) {
+        $rootScope.Publish = function (ev) {
             $http.get('/Published_Stores.asmx/PublishRequest').then(function (response) {
                 var StoreValues = response.data;
-                var WebsiteDomain = "http://localhost:50277/BuildingStation/" + StoreValues.Domain;
+                if (StoreValues.Published === true) {
+                    var inform =
+                        $mdDialog.alert()
+                           // .clickOutsideToClose(true)
+                            // .parent(angular.element(document.querySelector('#popupContainer')))
+                            .title('You already published your store, this is your link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
+                            .textContent('Please Copy the link and save it.')
+                            // .ariaLabel('Alert Dialog Demo')
+                            .targetEvent(ev)
+                            .ok('Close');
+                    $mdDialog.show(inform).then(function () {                       
+                        //  $rootScope.status = 'You decided to get rid of your debt.';
+                    }, function () {
+                        // $rootScope.status = 'You decided to keep your debt.';
+                    });
+                }
+                else {
+                  // Appending dialog to document.body to cover sidenav in docs app
+                    var confirm = $mdDialog.confirm()
+                        .title('This is your store link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + '), would you like to publish?')
+                        .textContent('Please Copy the link and save it.')
+                        //  .ariaLabel('Lucky day')
+                        .targetEvent(ev)
+                        .ok('Publish')
+                        .cancel('Cancel');
 
-                // Appending dialog to document.body to cover sidenav in docs app
-                var confirm = $mdDialog.confirm()
-                    .title('This is your store link (' + WebsiteDomain + '), would you like to publish?')
-                    .textContent('Please Copy the link and save it.')
-                    //  .ariaLabel('Lucky day')
-                    .targetEvent(ev)
-                    .ok('Publish')
-                    .cancel('Cancel');
+                    $mdDialog.show(confirm).then(function () {
+                        $http({
+                            url: "Published_Stores.asmx/Publish",
+                            params: { storeDomainName: StoreValues.Domain },
+                            method: "get"
+                        })
+                        //  $rootScope.status = 'You decided to get rid of your debt.';
+                    }, function () {
+                        // $rootScope.status = 'You decided to keep your debt.';
+                    });
+                }
+            });
+        };
 
-                $mdDialog.show(confirm).then(function () {
-                   // $http.get('/Published_Stores.asmx/Publish');
-                    $http({
-                        url: "Published_Stores.asmx/Publish",
-                        params: { storeDomainName: StoreValues.Domain },
-                        method: "get"
-                    })
-                    //  $rootScope.status = 'You decided to get rid of your debt.';
-                }, function () {
-                    // $rootScope.status = 'You decided to keep your debt.';
-                });
+        $rootScope.UnPublish = function (ev) {
+            $http.get('/Published_Stores.asmx/UnPublishRequest').then(function (response) {
+                var StoreValues = response.data;
+                if (StoreValues.Published === false) {
+                    var inform =
+                        $mdDialog.alert()
+                            // .clickOutsideToClose(true)
+                            // .parent(angular.element(document.querySelector('#popupContainer')))
+                            .title('You have not publish your store yet')
+                            // .ariaLabel('Alert Dialog Demo')
+                            .targetEvent(ev)
+                            .ok('Close');
+                    $mdDialog.show(inform).then(function () {
+                        //  $rootScope.status = 'You decided to get rid of your debt.';
+                    }, function () {
+                        // $rootScope.status = 'You decided to keep your debt.';
+                    });
+                }
+                else {
+                    var confirm = $mdDialog.confirm()
+                        .title('Are you sure you want to unpublish your store?')
+                        //  .ariaLabel('Lucky day')
+                        .targetEvent(ev)
+                        .ok('YES')
+                        .cancel('Cancel');
+
+                    $mdDialog.show(confirm).then(function () {
+                        $http.get('/Published_Stores.asmx/UnPublish').then(function (response) {
+                            var Store_values = response.data;
+                            if(Store_values.Published === false){
+                                var Unpublished =
+                                    $mdDialog.alert()
+                                        .title('Your store was unpublished successfully')
+                                        .targetEvent(ev)
+                                        .ok('Close');
+                                $mdDialog.show(Unpublished).then(function () {
+                                    //  $rootScope.status = 'You decided to get rid of your debt.';
+                                }, function () {
+                                    // $rootScope.status = 'You decided to keep your debt.';
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        };
+
+        $rootScope.DeleteStore = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure you want to delete your store ?')
+                .textContent('all your data will be removed, you will need to register again.')
+                .targetEvent(ev)
+                .ok('Delete')
+                .cancel('Cancel');
+
+            $mdDialog.show(confirm).then(function () {
+
+                $http.get('/Published_Stores.asmx/DeleteStore').then(function (response) {
+                    // logout or something , or the opposite
+                    // or go to login page
+                }); 
+            }, function () {
+                // $rootScope.status = 'You decided to keep your debt.';
             });
         };
     })
     .controller("ManageStoreController", function ($rootScope,$scope, $http) {
         $scope.Logout = function () {
             $rootScope.Logout();
-        };
-
-        $scope.showConfirm = function () {
-            $rootScope.showConfirm();
         };
 
         $scope.tabHeader = "Manage Store";
@@ -260,8 +337,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         $scope.GetAllTransactions = function () {
             $http({
                 url: "/BuyerOrder.asmx/GetAllTransactions",
-                method: "get",
-                params: { }
+                method: "get"
             })
                 .then(function (response) {
                     $scope.orders = response.data;
@@ -288,7 +364,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             })
                 .then(function (response) {
                     $scope.BestProducts = response.data;
-                    console.log($scope.BestProducts);
                 });
         };
 
@@ -385,8 +460,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
             $http.post('/TemplateData.asmx/StoreData').then(function (response) {
                 $scope.resultset = response.data;
-                console.log($scope.resultset);
-
                 //Store Info
                 $scope.logo = $scope.resultset.Logo;
                 $scope.StoreName = $scope.resultset.Name;
@@ -458,7 +531,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         var ElementsData = function () {
             $http.post('/ShowHideElement.asmx/GetElementsInfo').then(function (response) {
                 $scope.elementInfo = response.data;
-                console.log($scope.elementInfo);
 
                 $scope.disableSnapchat = true;
                 $scope.disableInstagram = true;
@@ -517,7 +589,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                         $scope.section.about = !$scope.elementInfo[i].Hidden;
                         $scope.AboutContect = $scope.elementInfo[i].Value;
                         $scope.TextType.push({ name: "About", value: $scope.elementInfo[i].Value  })
-                        console.log($scope.AboutContect);
                     }
                 }
 
@@ -597,8 +668,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             $scope.ShopOwnerText = $scope.selectedTextType.value;
         };
         $scope.UpdateStoreInfo = function () {
-            console.log($scope.selectedTextType.value);
-
+            $scope.loading = true;
             if (typeof $scope.selectedTextType !== "undefined") {
                 if ($scope.selectedTextType !== null || $scope.selectedTextType !== "") {
                     DataType = $scope.selectedTextType.name;
@@ -612,13 +682,15 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                         }
                     })
                         .then(function (response) {
-                            console.log(response);
                             $scope.selectedTextType.value = response.data.substr(1, response.data.length - 2);
                             $scope.ShopOwnerText = response.data.substr(1, response.data.length - 2);
+
                             //  $scope.ShopOwnerText = $filter('newlines')($scope.ShopOwnerText);
                             // $scope.selectedTextType.value = $filter('newlines')($scope.ShopOwnerText);
 
                             $scope.refreshIframe();
+
+                            $scope.loading = false;
 
                         }, function (error) {
                             $scope.error = error.data;
@@ -694,6 +766,19 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             $scope.refreshIframe();
         };
 
+        $scope.UpdateAboutImage = function () {
+            var post = $http({
+                method: "POST",
+                url: "TemplateData.asmx/UploadAboutImage",
+                dataType: 'json',
+                data: { image: $scope.imageSrc_about },
+                headers: { "Content-Type": "application/json" }
+            })
+                .then(function (response) { }, function (error) { });
+
+            $scope.refreshIframe();
+        };
+
         $scope.UpdateLinks = function () {
         /*    var post = $http({
                 method: "POST",
@@ -704,8 +789,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             });
             post.then(function (response) { }, function (error) { });
             */
-            console.log($scope.mySnapchatLink);
-            console.log($scope.myTwitterLink);
             $http.post(
                 "TemplateData.asmx/UpdateLinks",
                 $.param({
@@ -722,7 +805,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             )
                 .then(function (response) {
                     $scope.result = response.data;
-                    console.log($scope.result);
                 }, function (error) {
                     $scope.error = error.data;
                 });
@@ -732,33 +814,35 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
     })
     .controller("PreviewWebsiteController", function ($rootScope, $scope, $http, $window) {
         $scope.tabHeader = "Previe Website";
-        $scope.EnableDesktopView = false;
-        $scope.EnableMobileView = false;
-
         $scope.Logout = function () {
             $rootScope.Logout();
         };
+        /*$scope.EnableDesktopView = false;
+        $scope.EnableMobileView = false;
+
         
+        */
         //Desktop View
         $scope.DesktopView = function () {
-            alert("EnableDesktopView before");
-            $http.get("Preview.asmx/EnableDesktopView").then(function (response) {
-                $window.open('/Views/Preview.html', '_blank');
-            }, function (error) {
-                alert(error.data);
-                });
+            //alert("EnableDesktopView before");
+            $window.open('/Views/Preview.html', '_blank');
+            //$http.get("Preview.asmx/EnableDesktopView").then(function (response) {
+               // $window.open('/Views/Preview.html', '_blank');
+            //}, function (error) {
+             //   alert(error.data);
+             //   });
         };
         //\Desktop View
 
         //Mobile View
-        $scope.MobileView = function () {
+        /*$scope.MobileView = function () {
             alert("EnableMobileView before");
             $http.get("Preview.asmx/EnableMobileView").then(function (response) {
                 $window.open('/Views/Preview.html', '_blank');
             }, function (error) {
                 alert(error.data);
             });
-        };
+        };*/
         //\Mobile View
     })
     .controller("TemplateController", function ($scope, $http, $location, $rootScope) {

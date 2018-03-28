@@ -52,10 +52,17 @@ var publishApp = angular.module("published", ["ngRoute"])
         };
         var init = function () {
 
-            $http.post('/TemplateData.asmx/StoreData').then(function (response) {
+            $http({
+                url: "../Published_Stores.asmx/GetStore",
+                params: { StoreDomain: $routeParams.Domain },
+                method: "get"
+            })
+           .then(function (response) {
                 $scope.Store = response.data;
                 console.log($scope.Store);//Store Info
 
+
+                //WEBSITE ICON and Title 
                 document.title = $scope.Store.Name;
                 document.getElementById("icon").href = $scope.Store.Logo;
                 //Payment Methods
@@ -71,11 +78,28 @@ var publishApp = angular.module("published", ["ngRoute"])
                 else $scope.PaymentMethod = "PayPal";
 
                 //Social Media Link
-                $scope.Facebook = $scope.Store.FacebookLink.toLowerCase().includes("https://www.facebook.com/");
-                $scope.Instagram = $scope.Store.InstagramLink.toLowerCase().includes("https://www.instagram.com/");
-                $scope.Snapchat = $scope.Store.SnapchatLink.toLowerCase().includes("snapchat");
-                $scope.Twitter = $scope.Store.TwitterLink.toLowerCase().includes("https://twitter.com/");
+              /*  if ($scope.Store.SnapchatLink !== 'No Value') {
+                    $scope.Snapchat = true;
+                }
+                else { $scope.Snapchat = false; }
 
+                if ($scope.Store.TwitterLink !== 'No Value') {
+                    $scope.Twitter = true;
+                }
+                else {
+                    $scope.Twitter = false;
+                }
+
+                if ($scope.Store.FacebookLink !== 'No Value') {
+                    $scope.Facebook = true;
+                }
+                else { $scope.Facebook = false; }
+
+                if ($scope.Store.InstagramLink !== 'No Value') {
+                    $scope.Instagram = true;
+                }
+                else { $scope.Instagram = false; }
+                */
 
                 //Menu
                 $scope.MenuTitle = $scope.Store.MenuTitle;
@@ -98,7 +122,12 @@ var publishApp = angular.module("published", ["ngRoute"])
                 about: false
             };
 
-            $http.post('/ShowHideElement.asmx/GetElementsInfo').then(function (response) {
+            $http({
+                url: "../Published_Stores.asmx/GetElements",
+                params: { StoreDomain: $routeParams.Domain },
+                method: "get"
+            })
+             .then(function (response) {
                 $scope.elementInfo = response.data;
                 console.log($scope.elementInfo);
                 for (var i = 0; i < $scope.elementInfo.length; i++) {
@@ -124,7 +153,9 @@ var publishApp = angular.module("published", ["ngRoute"])
                     }
                     else if ($scope.elementInfo[i].Name === "About") {
                         $scope.section.about = !$scope.elementInfo[i].Hidden;
-                        $scope.section.about.content = $scope.elementInfo[i].Value;
+                        $scope.AboutContent = $scope.elementInfo[i].Value;
+                        if ($scope.AboutContent === null || $scope.AboutContent === "")
+                            $scope.section.about = true;
                     }
                 }
 
@@ -154,6 +185,9 @@ var publishApp = angular.module("published", ["ngRoute"])
                 .then(function (response) {
                     $scope.result = response.data;
                     $scope.addProductToOrder($scope.result.ID);
+                    $scope.checkout = false;
+                    $scope.payment = false;
+                    $scope.ProductsArray.length = 0;
 
                 }, function (error) {
                     $scope.error = error.data;
@@ -167,8 +201,8 @@ var publishApp = angular.module("published", ["ngRoute"])
         //Initialization
         $scope.Exist = false;
         $scope.TotalPrice = 0;
-        $scope.ProductOrderArray = [];
         $scope.ProductsArray = [];
+
 
         //Displaying All Category
         $scope.GetAllCategories = function () {
@@ -199,15 +233,24 @@ var publishApp = angular.module("published", ["ngRoute"])
             if (!(product === undefined || product === '' || amount === undefined || amount === '')) {
                 $scope.isExist(product, amount); //If product exist don't add new product to list, only update the amount
                 if (!$scope.Exist) {
-                    $scope.ProductsArray.push({ ID: product.ID, Name: product.Name, Desc: product.Description, Price: product.Price, Image: product.Image, Discount: product.Discount, PriceAfterDiscount: product.PriceAfterDiscount, Amount: amount });
+                    $scope.ProductsArray.push({ ID: product.ID, Name: product.Name, Desc: product.Description, Price: product.Price, Image: product.Image, Discount: product.Discount, PriceAfterDiscount: product.PriceAfterDiscount, Amount: amount, PreviousAmount: product.Amount });
                     product.Amount = product.Amount - amount;
                 }
                 $scope.TotalPrice += product.PriceAfterDiscount * amount;
                 $scope.Exist = false;
-
             }
         };
-
+        $scope.ItemsInShoppingCart = function () {
+            if ($scope.ProductsArray.length === 0)
+                return 0;
+            else {
+                var sum = 0;
+                angular.forEach($scope.ProductsArray, function (value, key) {
+                    sum += value.Amount;
+                });
+                return sum;
+            }
+        };
         // Remove Product from shopping cart
         $scope.removeFromCart = function (product) {
             var index = $scope.ProductsArray.indexOf(product);
@@ -232,18 +275,32 @@ var publishApp = angular.module("published", ["ngRoute"])
         // Add products to Buyer's Order
         $scope.addProductToOrder = function (OrderID) {
             angular.forEach($scope.ProductsArray, function (value, key) {
-                AddProductService.AddProductToCart(OrderID, value.ID, value.Amount).then(function (response) {
+                AddProductService.AddProductToCart(OrderID, value.ID, value.Amount, value.PreviousAmount).then(function (response) {
                     $scope.ProductAdded = response;
                 });
             });
         };
 
         //////////////////////////////////
+
+        $http({
+            url: "../Published_Stores.asmx/GetProducts",
+            params: { StoreDomain: $routeParams.Domain },
+            method: "get"
+        })
+            .then(function (response) {
+                $scope.Product = response.data;
+            });
     });
 
-publishApp.factory('CategoryService', function ($http) {
+publishApp.factory('CategoryService', function ($http, $routeParams) {
     var GetAllCategories = function () {
-        return $http.post('/Products.asmx/GetAllCategories').then(function (categories) {
+        return $http({
+            url: "../Published_Stores.asmx/GetAllCategories",
+            params: { StoreDomain: $routeParams.Domain },
+            method: "get"
+        })
+        .then(function (categories) {
             return categories.data;
         });
     };
@@ -251,12 +308,13 @@ publishApp.factory('CategoryService', function ($http) {
     return { GetAllCategories: GetAllCategories };
 });
 
-publishApp.factory('ProductService', function ($http) {
+publishApp.factory('ProductService', function ($http, $routeParams) {
     var GetAllProducts = function (CategoryName) {
         return $http.post(
-            "/Products.asmx/GetAllProducts",
+            "/Published_Stores.asmx/GetAllProducts",
             $.param({
-                Category: CategoryName
+                Category: CategoryName,
+                StoreDomain: $routeParams.Domain
             }),
             {
                 headers: {
@@ -269,16 +327,19 @@ publishApp.factory('ProductService', function ($http) {
             });
     };
     return { GetAllProducts: GetAllProducts };
+
 });
 
+
 publishApp.factory('AddProductService', function ($http) {
-    var AddProductToCart = function (OrderID, ProductID, Amount) {
+    var AddProductToCart = function (OrderID, ProductID, Amount, PreviousAmount) {
         return $http.post(
-            "/BuyerOrder.asmx/AddProductToOrder",
+            "/Published_Stores.asmx/AddProductToOrder",
             $.param({
                 OrderID: OrderID,
                 ProductID: ProductID,
-                Amount: Amount
+                Amount: Amount,
+                PreviousAmount: PreviousAmount
             }),
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' } })
             .then(function (response) {
