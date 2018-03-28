@@ -668,7 +668,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             $scope.ShopOwnerText = $scope.selectedTextType.value;
         };
         $scope.UpdateStoreInfo = function () {
-
+            $scope.loading = true;
             if (typeof $scope.selectedTextType !== "undefined") {
                 if ($scope.selectedTextType !== null || $scope.selectedTextType !== "") {
                     DataType = $scope.selectedTextType.name;
@@ -684,10 +684,13 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                         .then(function (response) {
                             $scope.selectedTextType.value = response.data.substr(1, response.data.length - 2);
                             $scope.ShopOwnerText = response.data.substr(1, response.data.length - 2);
+
                             //  $scope.ShopOwnerText = $filter('newlines')($scope.ShopOwnerText);
                             // $scope.selectedTextType.value = $filter('newlines')($scope.ShopOwnerText);
 
                             $scope.refreshIframe();
+
+                            $scope.loading = false;
 
                         }, function (error) {
                             $scope.error = error.data;
@@ -756,6 +759,19 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 url: "TemplateData.asmx/UploadSlider",
                 dataType: 'json',
                 data: { slider: $scope.imageSrc_slider },
+                headers: { "Content-Type": "application/json" }
+            })
+                .then(function (response) { }, function (error) { });
+
+            $scope.refreshIframe();
+        };
+
+        $scope.UpdateAboutImage = function () {
+            var post = $http({
+                method: "POST",
+                url: "TemplateData.asmx/UploadAboutImage",
+                dataType: 'json',
+                data: { image: $scope.imageSrc_about },
                 headers: { "Content-Type": "application/json" }
             })
                 .then(function (response) { }, function (error) { });

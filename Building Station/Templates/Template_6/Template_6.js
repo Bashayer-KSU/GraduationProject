@@ -105,11 +105,13 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
                 }
                 else if ($scope.elementInfo[i].Name === "Slider") {
                     $scope.section.slider = !$scope.elementInfo[i].Hidden;
-                    $scope.section.slider.content = $scope.elementInfo[i].Value;
                 }
                 else if ($scope.elementInfo[i].Name === "About") {
                     $scope.section.about = !$scope.elementInfo[i].Hidden;
                     $scope.AboutContent = $scope.elementInfo[i].Value;
+                    $scope.AboutImage = $scope.elementInfo[i].Image;
+                    if ($scope.AboutImage === "No Image" || $scope.AboutImage === null || $scope.AboutImage === undefined)
+                         $scope.AboutImage = $scope.Store.Logo;
                     if ($scope.AboutContent === null || $scope.AboutContent === "")
                         $scope.section.about = true;
                 }
