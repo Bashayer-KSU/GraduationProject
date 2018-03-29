@@ -57,10 +57,10 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
             else $scope.PaymentMethod = "PayPal";
 
             //Social Media Link
-            $scope.Facebook = $scope.Store.FacebookLink.toLowerCase().includes("https://www.facebook.com/");
-            $scope.Instagram = $scope.Store.InstagramLink.toLowerCase().includes("https://www.instagram.com/");
-            $scope.Snapchat = $scope.Store.SnapchatLink.toLowerCase().includes("snapchat");
-            $scope.Twitter = $scope.Store.TwitterLink.toLowerCase().includes("https://twitter.com/");
+          //  $scope.Facebook = $scope.Store.FacebookLink.toLowerCase().includes("https://www.facebook.com/");
+            //$scope.Instagram = $scope.Store.InstagramLink.toLowerCase().includes("https://www.instagram.com/");
+            //$scope.Snapchat = $scope.Store.SnapchatLink.toLowerCase().includes("snapchat");
+          //  $scope.Twitter = $scope.Store.TwitterLink.toLowerCase().includes("https://twitter.com/");
 
 
             //Menu
@@ -173,6 +173,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
         $scope.currentTab = item;
         ProductService.GetAllProducts(item.Name).then(function (response) {
             $scope.products = response;
+            $scope.HeaderCategoryName = item.Name;
         });
     };
 

@@ -57,7 +57,7 @@
                 <div class="input-group">
                     <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc" style="width:100%;" /> <!-- custom-on-change="uploadFile($event)"-->
                     <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="getColors(); UpdateLogo()" type="submit">Update</button>
+                        <button ng-disabled="!imageSrc" class="btn btn-default" ng-click="ChangeLogo($event)" type="submit">Update</button>
                     </span>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                 <div class="input-group">
                     <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_slider" style="width:100%;" />
                     <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="UpdateSlider()" type="submit">Update</button>
+                        <button ng-disabled="!imageSrc_slider" class="btn btn-default" ng-click="UpdateSlider()" type="submit">Update</button>
                     </span>
                 </div>
             </div>

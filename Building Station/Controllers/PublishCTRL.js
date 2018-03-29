@@ -217,6 +217,7 @@ var publishApp = angular.module("published", ["ngRoute"])
             $scope.currentTab = item;
             ProductService.GetAllProducts(item.Name).then(function (response) {
                 $scope.products = response;
+                $scope.HeaderCategoryName = item.Name;
             });
         };
 
