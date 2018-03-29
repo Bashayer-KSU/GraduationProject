@@ -7,247 +7,277 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
     <script src="RegisterLogin.js"></script>
     <link href="RegisterLogin.css" rel="stylesheet" />
 
+    <script>
 
+        function replace() {
+            document.body.style.backgroundImage = 'url(/images/background2.jpg.png)';
+}
+
+        function replace2() {
+            document.body.style.backgroundImage = 'url(/images/background3.png)';
+        }
+    </script>
 </head>
-<body ng-app="myApp" ng-controller="RegisterLoginCtrl" >
+<body ng-app="myApp" ng-controller="RegisterLoginCtrl">
 
+        <div class="container-fluid">
+            <div class="language">
 
-    <div class="container">
-        <div class="language">
-
-            <ul class="tab-group">
-                <li class="=active"><a data-toggle="tab" href="#signup">English</a></li>
+            <ul class="tab-group" align="right" style="margin-top:1%;">
+                <li class="=active"><a onclick="replace2()" data-toggle="tab" href="#signup" class="eng">English</a></li>
                 <li>  |  </li>
-                <li><a data-toggle="tab" href="#signup_ar" style="font-family:NeoSansArabic;">عربي</a></li>
+                <li><a onclick="replace()" data-toggle="tab" href="#signup_ar" style="font-family:NeoSansArabic;" class="arb">عربي</a></li>
                 <li>  <img src="/images/language.png" alt="" style="width:35px; height:35px; font-family:'Neo Sans Arabic';">  </li>
-
             </ul>
         </div>
 
-        <div class="form">
-
-            <div class="tab-content">
-                <!-- -->
-                <div id="signup" class="tab-pane fade in active">
-
-                    <div class="screen">
 
 
-                        <div class="convertPage">
-                            <a data-toggle="tab" href="#login" class="waves-effect waves-light btn done" id="pos" role="button">
-                                LOG IN
+            <div class="form">
+                <div class="tab-content">
+                    <!-- -->
+                    <div id="signup" class="tab-pane fade in active">
+
+                        <div style="display:inline-block; margin-top:15%; margin-left:8%; font-size:1.25vw; float:left;">
+                            <h1 style="font-size:3vw; color:white; text-shadow: 2px 2px gray; font-family:Century Gothic; font-weight: bold;">Building Station <br /> Build your own website! </h1>
+                            <p style="font-size:2vw; color:white; text-shadow: 2px 2px gray; font-family:Century Gothic;"> Already have an account?</p>
+                            
+                                <a data-toggle="tab" href="#login" class="waves-effect waves-light btn done" role="button" >
+                                    LOG IN
+                                </a>
+                            
+                        </div>
+                            <div class="screen" style="float:right; margin-right:8%; margin-bottom:2%;  margin-top:2%;">
+                                <div align="center"><img src="/images/logoTransparent.png" style="max-width:30%; height: auto;" /></div>
+
+                                <div class="signUpForm">
+                                    <div class="space-bot text-center">
+
+                                        <div class="divider"></div>
+                                    </div>
+                                    <form name="register_eng" ng-model="RE" novalidate>
+                                        <div class="input-field col s6">
+                                            <input id="REname" type="text" ng-model="REname" class="validate" required>
+                                            <label for="REname">Name</label>
+                                        </div>
+                                        <div class="input-field col s6">
+                                            <input id="REemail" type="email" name="REemail" ng-model="REemail" class="validate" required>
+                                            <label for="REemail">Email</label>
+                                        </div>
+                                        <p class="alert alert-danger" ng-show="register_eng.REemail.$error.email">Your email is invalid.</p>
+
+                                        <div class="input-field col s6">
+                                            <input id="RECemail" type="email" name="RECemail" ng-model="RECemail" match="REemail" class="validate" required>
+                                            <label for="RECemail">Confirm Email</label>
+                                        </div>
+                                        <p class="alert alert-danger" ng-show="register_eng.RECemail.$error.mismatch">Email and Confirm Email must match.</p>
+
+                                        <div class="input-field col s6">
+                                            <input id="REpassword" type="password" name="REpassword" ng-model="REpassword" ng-minlength='8' ng-maxlength='20' class="validate" required>
+                                            <label for="REpassword">Password</label>
+                                        </div>
+                                        <p class="alert alert-danger" ng-show="register_eng.REpassword.$error.maxlength || register_eng.REpassword.$error.minlength || form.REpassword.$invalid">Your password must be between 8 to 20 characters.</p>
+                                        <div class="input-field col s6">
+                                            <input id="RECpassword" type="password" name="RECpassword" ng-model="RECpassword" matchpass="REpassword" class="validate" required>
+                                            <label for="RECpassword">Confirm Password</label>
+                                        </div>
+                                        <p class="alert alert-danger" ng-show="register_eng.RECpassword.$error.mismatchpass">Password and Confirm Password must match.</p>
+
+                                        <div class="input-field col s6">
+                                            <input id="REphone" type="text" name="REphone" ng-model="REphone" ng-pattern="/^[0-9]{1,13}$/" ng-minlength='8' ng-maxlength='15' class="validate" required>
+                                            <label for="REphone">Phone number</label>
+                                            <p class="alert alert-danger" ng-show="register_eng.REphone.$error.maxlength || register_eng.REphone.$error.minlength || form.REphone.$invalid">Your should write your phone number</p>
+                                            <p class="alert alert-danger" ng-show="register_eng.REphone.$error.pattern">Not a valid number!</p>
+
+                                        </div>
+                                        <div class="space-top text-center">
+                                            <button ng-disabled="register_eng.$invalid" ng-click="SendData('reg','eng')" class="waves-effect waves-light btn done">
+                                                REGISTER
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div> <!-- -->
+                        </div>
+
+                    <!--/////////////////////////////////////عربي/////////////////////////////////////-->
+                    <div id="signup_ar" class="tab-pane fade">
+
+                        <div class="convertPage" style="display:inline-block; margin-top:15%; margin-right:8%; font-size:1.25vw; float:right; text-align:right;">
+                            <h1 style="font-size:3vw; font-family:NeoSansArabic ; text-align:right; color:white; text-shadow: 2px 2px gray;font-weight: bold;">محطة البناء<br /> !أنشئ موقعك بنفسك </h1>
+                            <p style="font-size:2vw; text-align:right; color:white; text-shadow: 2px 2px gray;"> لديك حساب مسبقًا؟</p>
+
+                            <a data-toggle="tab" href="#login_ar" role="button" class="waves-effect waves-light btn done">
+                                تسجيل الدخول
                             </a>
+
                         </div>
 
+                        <div class="screen" style="float:left; margin-left:8%; margin-bottom:2%;  margin-top:2%;">
+                            <div align="center"><img src="/images/logoTransparent.png" style="max-width:30%; height: auto;" /></div>
 
-                        <div class="signUpForm">
-                            <div class="space-bot text-center">
+                            <div class="signUpForm">
+                                <div class="space-bot text-center">
 
-                                <div class="divider"></div>
+                                    <div class="divider"></div>
+                                </div>
+                                <form name="register_ar" novalidate>
+                                    <div class="input-field col s6">
+                                        <input id="RAname" type="text" ng-model="Rname" class="validate" required style="text-align:right;">
+                                        <label for="RAname" style="position: absolute; left:77%; font-family:NeoSansArabic;">اسم المستخدم</label>
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <input id="RAemail" type="email" name="Remail" ng-model="Remail" class="validate" required>
+                                        <label for="RAemail" style="position: absolute; left:75%; font-family:NeoSansArabic;">البريد الإلكتروني</label>
+                                    </div>
+                                    <p class="alert alert-danger" ng-show="register_ar.Remail.$error.email">البريد الاإلكتروني خاطئ</p>
+
+                                    <div class="input-field col s6">
+                                        <input id="RACemail" type="email" name="RACemail" ng-model="RACemail" match="Remail" class="validate" required>
+                                        <label for="RACemail" style="position: absolute; left:68%; font-family:NeoSansArabic;">تأكيد البريد الإلكتروني</label>
+                                    </div>
+                                    <p class="alert alert-danger" ng-show="register_ar.RACemail.$error.mismatch">
+                                        البريد الإلكتروني وتأكيد البريد الإلكتروني يجب أن تتطابق.
+                                    </p>
+
+
+                                    <div class="input-field col s6">
+                                        <input id="RApassword" type="password" name="Rpassword" ng-model="Rpassword" ng-minlength='8' ng-maxlength='20' class="validate" required>
+                                        <label for="RApassword" style="position: absolute; left:80%; font-family:NeoSansArabic;">الرقم السري</label>
+                                    </div>
+                                    <p class="alert alert-danger" ng-show="register_ar.Rpassword.$error.maxlength || register_ar.Rpassword.$error.minlength || form.Rpassword.$invalid">كلمة المرور يجب أن تكون ما بين 8 إلى 20 خانة</p>
+
+                                    <div class="input-field col s6">
+                                        <input id="RACpassword" type="password" name="RACpassword" ng-model="RACpassword" matchpass="Rpassword" class="validate" required>
+                                        <label for="RACpassword" style="position: absolute; left:73%; font-family:NeoSansArabic;">تأكيد الرقم السري</label>
+                                    </div>
+                                    <p class="alert alert-danger" ng-show="register_ar.RACpassword.$error.mismatchpass">الرقم السري وتأكيد الرقم السري يجب أن تتطابق.</p>
+
+
+                                    <div class="input-field col s6">
+                                        <input id="RAphone" type="text" name="Rphone" ng-pattern="/^[0-9]{1,13}$/" ng-model="Rphone" ng-minlength='8' ng-maxlength='15' class="validate" required>
+                                        <label for="RAphone" style="position: absolute; left:82%; font-family:NeoSansArabic;">رقم الجوال</label>
+                                        <p class="alert alert-danger" ng-show="register_ar.Rphone.$error.maxlength || register_ar.Rphone.$error.minlength || form.Rphone.$invalid">الرجاء إدخال رقم الجوال بشكل صحيح</p>
+                                        <p class="alert alert-danger" ng-show="register_ar.Rphone.$error.pattern">الرقم المدخل غير صحيح!</p>
+
+                                    </div>
+                                    <div class="space-top text-center">
+                                        <button style="font-family:NeoSansArabic;" ng-disabled="register_ar.$invalid" ng-click="SendData('reg','ar')" class="waves-effect waves-light btn done">
+                                            تسجيل
+                                        </button>
+
+                                    </div>
+                                </form>
                             </div>
-                            <form class="form-register" name="register_eng" ng-model="RE" novalidate>
-                                <div class="input-field col s6">
-                                    <input id="REname" type="text" ng-model="REname" class="validate" required>
-                                    <label for="REname">Name</label>
-                                </div>
-                                <div class="input-field col s6">
-                                    <input id="REemail" type="email" name="REemail" ng-model="REemail" class="validate" required>
-                                    <label for="REemail">Email</label>
-                                </div>
-                                <p class="alert alert-danger" ng-show="register_eng.REemail.$error.email">Your email is invalid.</p>
-
-                                <div class="input-field col s6">
-                                    <input id="RECemail" type="email" name="RECemail" ng-model="RECemail" match="REemail" class="validate" required>
-                                    <label for="RECemail">Confirm Email</label>
-                                </div>
-                                <p class="alert alert-danger" ng-show="register_eng.RECemail.$error.mismatch">Email and Confirm Email must match.</p>
-
-                                <div class="input-field col s6">
-                                    <input id="REpassword" type="password" name="REpassword" ng-model="REpassword" ng-minlength='8' ng-maxlength='20' class="validate" required>
-                                    <label for="REpassword">Password</label>
-                                </div>
-                                <p class="alert alert-danger" ng-show="register_eng.REpassword.$error.maxlength || register_eng.REpassword.$error.minlength || form.REpassword.$invalid">Your password must be between 8 to 20 characters.</p>
-                                <div class="input-field col s6">
-                                    <input id="RECpassword" type="password" name="RECpassword" ng-model="RECpassword" matchpass="REpassword"  class="validate" required>
-                                    <label for="RECpassword">Confirm Password</label>
-                                </div>
-                                <p class="alert alert-danger" ng-show="register_eng.RECpassword.$error.mismatchpass">Password and Confirm Password must match.</p>
-
-                                <div class="input-field col s6">
-                                    <input id="REphone" type="text" name="REphone" ng-model="REphone" ng-pattern="/^[0-9]{1,13}$/" ng-minlength='8' ng-maxlength='15' class="validate" required>
-                                    <label for="REphone">Phone number</label>
-                                    <p class="alert alert-danger" ng-show="register_eng.REphone.$error.maxlength || register_eng.REphone.$error.minlength || form.REphone.$invalid">Your should write your phone number</p>
-                                    <p class="alert alert-danger" ng-show="register_eng.REphone.$error.pattern">Not a valid number!</p>
-
-                                </div>
-                                <div class="space-top text-center">
-                                    <button ng-disabled="register_eng.$invalid" ng-click="SendData('reg','eng')" class="waves-effect waves-light btn done">
-                                        REGISTER
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div> <!-- -->
-
-                </div>
-
-                <!--/////////////////////////////////////عربي/////////////////////////////////////-->
-                <div id="signup_ar" class="tab-pane fade">
-
-                    <div class="screen_ar">
-
-                        <div class="signUpForm">
-                            <div class="space-bot text-center">
-
-                                <div class="divider"></div>
-                            </div>
-                            <form class="form-register_ar" name="register_ar" novalidate>
-                                <div class="input-field col s6">
-                                    <input id="RAname" type="text" ng-model="Rname" class="validate" required>
-                                    <label for="RAname" style="position: absolute; left:250px; font-family:NeoSansArabic;">اسم المستخدم</label>
-                                </div>
-                                <div class="input-field col s6">
-                                    <input id="RAemail" type="email" name="Remail" ng-model="Remail" class="validate" required>
-                                    <label for="RAemail" style="position: absolute; left:240px; font-family:NeoSansArabic;">البريد الإلكتروني</label>
-                                </div>
-                                <p class="alert alert-danger" ng-show="register_ar.Remail.$error.email">البريد الاإلكتروني خاطئ</p>
-
-                                <div class="input-field col s6">
-                                    <input id="RACemail" type="email" name="RACemail" ng-model="RACemail" match="Remail" class="validate" required>
-                                    <label for="RACemail" style="position: absolute; left:240px; font-family:NeoSansArabic;">تأكيد البريد الإلكتروني</label>
-                                </div>
-                                <p class="alert alert-danger" ng-show="register_ar.RACemail.$error.mismatch">
-                                    البريد الإلكتروني وتأكيد البريد الإلكتروني يجب أن تتطابق.
-                                </p>
 
 
-                                <div class="input-field col s6">
-                                    <input id="RApassword" type="password" name="Rpassword" ng-model="Rpassword" ng-minlength='8' ng-maxlength='20' class="validate" required>
-                                    <label for="RApassword" style="position: absolute; left:260px; font-family:NeoSansArabic;">الرقم السري</label>
-                                </div>
-                                <p class="alert alert-danger" ng-show="register_ar.Rpassword.$error.maxlength || register_ar.Rpassword.$error.minlength || form.Rpassword.$invalid">كلمة المرور يجب أن تكون ما بين 8 إلى 20 خانة</p>
-
-                                <div class="input-field col s6">
-                                    <input id="RACpassword" type="password" name="RACpassword" ng-model="RACpassword" matchpass="Rpassword" class="validate" required>
-                                    <label for="RACpassword" style="position: absolute; left:260px; font-family:NeoSansArabic;">تأكيد الرقم السري</label>
-                                </div>
-                                <p class="alert alert-danger" ng-show="register_ar.RACpassword.$error.mismatchpass">الرقم السري وتأكيد الرقم السري يجب أن تتطابق.</p>
 
 
-                                <div class="input-field col s6">
-                                    <input id="RAphone" type="text" name="Rphone" ng-pattern="/^[0-9]{1,13}$/" ng-model="Rphone" ng-minlength='8' ng-maxlength='15' class="validate" required>
-                                    <label for="RAphone" style="position: absolute; left:260px;font-family:NeoSansArabic;">رقم الجوال</label>
-                                    <p class="alert alert-danger" ng-show="register_ar.Rphone.$error.maxlength || register_ar.Rphone.$error.minlength || form.Rphone.$invalid">الرجاء إدخال رقم الجوال بشكل صحيح</p>
-                                    <p class="alert alert-danger" ng-show="register_ar.Rphone.$error.pattern">الرقم المدخل غير صحيح!</p>
+                        </div> <!-- -->
 
-                                </div>
-                                <div class="space-top text-center">
-                                    <button style="font-family:NeoSansArabic;" ng-disabled="register_ar.$invalid" ng-click="SendData('reg','ar')" class="waves-effect waves-light btn done">
-                                        تسجيل
-                                    </button>
-
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="convertPage">
-                            <a data-toggle="tab" href="#login_ar" role="button" class="waves-effect waves-light btn done" id="pos_ar">
-                                تسجيل الدخول 
-                            </a>
-                        </div>
+                    </div>
+                    <!--/////////////////////////////////////عربي/////////////////////////////////////-->
 
 
-                    </div> <!-- -->
+                    <div id="login" class="tab-pane fade">
 
-                </div>
-                <!--/////////////////////////////////////عربي/////////////////////////////////////-->
+                        <div class="convertPage" style="display:inline-block; margin-top:15%; margin-left:8%; font-size:1.25vw; float:left;">
+                            <h1 style="font-size:3vw; color:white; text-shadow: 2px 2px gray; font-family:Century Gothic; font-weight: bold;">Building Station <br /> Build your own website! </h1>
+                            <p style="font-size:2vw; color:white; text-shadow: 2px 2px gray; font-family:Century Gothic;"> New to building station?</p>
 
-
-                <div id="login" class="tab-pane fade">
-                    <div class="screen2">
-
-                        <div class="convertPage">
-                            <!--<p class="label2">New to building station?</p>-->
-                            <a data-toggle="tab" href="#signup" role="button" class="waves-effect waves-light btn done" id="pos2">
+                            <a data-toggle="tab" href="#signup" role="button" class="waves-effect waves-light btn done">
                                 REGISTER
                             </a>
+
                         </div>
-                        <div class="signInForm">
 
-                            <div class="space-bot text-center">
-                                <!--<h1>Login</h1>-->
-                                <div class="divider"></div>
-                            </div>
-                            <form id="form-login" name="login_eng" novalidate>
-                 
-                                <div class="input-field col s6">
-                                    <input id="LEemail" type="email" name="LEemail" ng-model="LEemail" class="validate" required>
-                                    <label for="LEemail">Email</label>
-                                </div>
-                                <p class="alert alert-danger" ng-show="login_eng.LEemail.$error.email">Your email is invalid.</p>
+                        <div class="screen" style="float:right; margin-right:8%; margin-bottom:2%; margin-top:10%">
+                            <div align="center"><img src="/images/logoTransparent.png" style="max-width:30%; height: auto;" /></div>
 
-                                <div class="input-field col s6">
-                                    <input id="LEpassword" type="password" name="LEpassword" ng-model="LEpassword" ng-minlength='8' ng-maxlength='20' class="validate" required>
-                                    <label for="LEpassword">Password</label>
+
+                            <div class="signInForm">
+
+                                <div class="space-bot text-center">
+                                    <!--<h1>Login</h1>-->
+                                    <div class="divider"></div>
                                 </div>
-                                <p class="alert alert-danger" ng-show="login_eng.LEpassword.$error.maxlength || login_eng.LEpassword.$error.minlength || form.LEpassword.$invalid">Your password must be between 8 to 20 characters.</p>
-                                <div class="space-top text-center">
-                                    <button ng-disabled="login_eng.$invalid" ng-click="SendData('log','eng')" class="waves-effect waves-light btn done">
-                                      LOG IN
-                                    </button>
-                                </div>
-                            </form>
-                        </div><!-- -->
+                                <form name="login_eng" novalidate>
+
+                                    <div class="input-field col s6">
+                                        <input id="LEemail" type="email" name="LEemail" ng-model="LEemail" class="validate" required>
+                                        <label for="LEemail">Email</label>
+                                    </div>
+                                    <p class="alert alert-danger" ng-show="login_eng.LEemail.$error.email">Your email is invalid.</p>
+
+                                    <div class="input-field col s6">
+                                        <input id="LEpassword" type="password" name="LEpassword" ng-model="LEpassword" ng-minlength='8' ng-maxlength='20' class="validate" required>
+                                        <label for="LEpassword">Password</label>
+                                    </div>
+                                    <p class="alert alert-danger" ng-show="login_eng.LEpassword.$error.maxlength || login_eng.LEpassword.$error.minlength || form.LEpassword.$invalid">Your password must be between 8 to 20 characters.</p>
+                                    <div class="space-top text-center">
+                                        <button ng-disabled="login_eng.$invalid" ng-click="SendData('log','eng')" class="waves-effect waves-light btn done">
+                                            LOG IN
+                                        </button>
+                                    </div>
+                                </form>
+                            </div><!-- -->
+                        </div>
                     </div>
-                </div>
 
-                <!--/////////////////////////////////////عربي/////////////////////////////////////-->
-                <div id="login_ar" class="tab-pane fade">
-                    <div class="screen2_ar">
+                    <!--/////////////////////////////////////عربي/////////////////////////////////////-->
+                    <div id="login_ar" class="tab-pane fade">
 
-                        <div class="signInForm">
+                        <div class="convertPage" style="display:inline-block; margin-top:15%; margin-right:8%; font-size:1.25vw; float:right; text-align:right;">
+                            <h1 style="font-size:3vw; font-family:NeoSansArabic ; text-align:right; color:white; text-shadow: 2px 2px gray; font-family:NeoSansArabic; font-weight: bold;">محطة البناء<br /> !أنشئ موقعك بنفسك</h1>
+                            <p style="font-size:2vw; text-align:right; color:white; text-shadow: 2px 2px gray; font-family:NeoSansArabic;"> تسجيل كحساب جديد؟</p>
 
-                            <div class="space-bot text-center">
-                                <!--<h1>Login</h1>-->
-                                <div class="divider"></div>
-                            </div>
-                            <form id="form-login_ar" name="login_ar" novalidate>
-                                <div class="input-field col s6">
-                                    <input id="LAemail" type="email" name="Lemail" ng-model="Lemail" class="validate" required>
-                                    <label for="LAemail" style="position: absolute; left:240px; font-family:NeoSansArabic;">البريد الالكتروني</label>
-                                </div>
-                                <p class="alert alert-danger" ng-show="login_ar.Lemail.$error.email">البريد الالكتروني خاطئ</p>
-
-                                <div class="input-field col s6">
-                                    <input id="LApassword" type="password" name="Lpassword" ng-model="Lpassword" ng-minlength='8' ng-maxlength='20' class="validate" required>
-                                    <label for="LApassword" style="position: absolute; left:260px; font-family:NeoSansArabic;">الرقم السري</label>
-                                </div>
-                                <p class="alert alert-danger" ng-show="login_ar.Lpassword.$error.maxlength || login_ar.Lpassword.$error.minlength || form.Lpassword.$invalid">كلمة المرور يجب أن تكون ما بين 8 إلى 20 خانة</p>
-                                <div class="space-top text-center">
-                                    <button style="font-family:NeoSansArabic;" ng-disabled="login_ar.$invalid" ng-click="SendData('log','ar')" class="waves-effect waves-light btn done">
-                                    تسجيل الدخول
-                                    </button>
-                                </div>
-                            </form>
-                        </div><!-- -->
-                        <div class="convertPage">
-                            <!--<p class="label2">New to building station?</p>-->
-                            <a data-toggle="tab" href="#signup_ar" role="button" class="waves-effect waves-light btn done" id="pos2_ar">
-                             تسجيل
+                            <a data-toggle="tab" href="#signup_ar" role="button" class="waves-effect waves-light btn done">
+                                تسجيل
                             </a>
-                        </div>
-                    </div>
-                </div>
-                <!--/////////////////////////////////////عربي/////////////////////////////////////-->
 
+                        </div>
+
+                        <div class="screen" style="float:left; margin-left:8%; margin-bottom:2%;  margin-top:10%">
+                            <div align="center"><img src="/images/logoTransparent.png" style="max-width:30%; height: auto;" /></div>
+
+                                <div class="signInForm">
+
+                                    <div class="space-bot text-center">
+                                        <!--<h1>Login</h1>-->
+                                        <div class="divider"></div>
+                                    </div>
+                                    <form name="login_ar" novalidate">
+                                        <div class="input-field col s6">
+                                            <input id="LAemail" type="email" name="Lemail" ng-model="Lemail" class="validate" required>
+                                            <label for="LAemail" style="position: absolute; left:75%; text-align:right; font-family:NeoSansArabic;">البريد الالكتروني</label>
+                                        </div>
+                                        <p class="alert alert-danger" ng-show="login_ar.Lemail.$error.email">البريد الالكتروني خاطئ</p>
+
+                                        <div class="input-field col s6">
+                                            <input id="LApassword" type="password" name="Lpassword" ng-model="Lpassword" ng-minlength='8' ng-maxlength='20' class="validate" required>
+                                            <label for="LApassword" style="position: absolute; left:80%; font-family:NeoSansArabic;">الرقم السري</label>
+                                        </div>
+                                        <p class="alert alert-danger" ng-show="login_ar.Lpassword.$error.maxlength || login_ar.Lpassword.$error.minlength || form.Lpassword.$invalid">كلمة المرور يجب أن تكون ما بين 8 إلى 20 خانة</p>
+                                        <div class="space-top text-center">
+                                            <button style="font-family:NeoSansArabic;" ng-disabled="login_ar.$invalid" ng-click="SendData('log','ar')" class="waves-effect waves-light btn done">
+                                                تسجيل الدخول
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div><!-- -->
+
+                            </div>
+                        </div>
+                    <!--/////////////////////////////////////عربي/////////////////////////////////////-->
+
+                </div>
             </div>
         </div>
-
-    </div>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

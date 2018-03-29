@@ -398,8 +398,22 @@ public class TemplateData : System.Web.Services.WebService
             con.Close();
 
             store.SliderImage = slider;
-
             Context.Response.Write(js.Serialize(store));
+        }
+    }
+    [WebMethod(EnableSession = true)]
+    public void UploadAboutImage(string image)
+    {
+        JavaScriptSerializer js = new JavaScriptSerializer();
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("UPDATE Element SET Hidden = 'false', Image = '" + image + "' WHERE StoreEmail='" + Session["user"] + "' AND Type = 'About' AND Name = 'About'", con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            Context.Response.Write(js.Serialize(true));
         }
     }
 }
