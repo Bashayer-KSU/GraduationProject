@@ -163,6 +163,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 $http.get('/Published_Stores.asmx/DeleteStore').then(function (response) {
                     // logout or something , or the opposite
                     // or go to login page
+                    //  location.href = "/RegisterLogin.html";
                 }); 
             }, function () {
                 // $rootScope.status = 'You decided to keep your debt.';
@@ -382,7 +383,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         };
 
     })
-    .controller("DevelopmentEnvironmentController", function ($rootScope,$scope, $http, $filter, validLinkService) {
+    .controller("DevelopmentEnvironmentController", function ($rootScope, $scope, $http, $filter, validLinkService, $mdDialog) {
         $scope.Logout = function () {
             $rootScope.Logout();
         };
@@ -447,7 +448,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
             $scope.storeID = response.data;
             if ($scope.storeID.TemplateID === 1) {
-                $scope.template = "/Templates/Template_1/Template_1.html";
+                $scope.template = "/Templates/Template_1.html";
             }
             else if ($scope.storeID.TemplateID === 2) {
                 $scope.template = "/Templates/Template_2/Template_2.html";
@@ -726,47 +727,59 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             $scope.refreshIframe();
         };
 
-        sliderPath = $scope.imageSrc_slider;
-        filePath = $scope.imageSrc;
-        $scope.$on("fileProgress", function (e, progress) {
-            $scope.progress = progress.loaded / progress.total;
-        });
-        $scope.getColors = function () {
-            $http({
-                url: "manageWebsiteColors.asmx/GetWebsiteColors",
-                dataType: 'json',
-                method: "POST",
-                data: { path: $scope.imageSrc },
-                headers: { "Content-Type": "application/json; charset=utf-8" }
-            })
-                .then(function (response) {
-                    /*  $scope.Colors = response.data;
-                      $scope.color1 = $scope.Colors.Color1;
-                      $scope.color2 = $scope.Colors.Color2;
-                      $scope.color3 = $scope.Colors.Color3;
-                      $scope.color4 = $scope.Colors.Color4;*/
-                    // $scope.refreshMyColors = true;
-                }, function (error) {
-                    $scope.R = error.data;
+
+        $scope.ChangeLogo = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title('Do you want to Change your store Colors also?')
+                .textContent('The new colors will be taken from your new logo.')
+                .targetEvent(ev)
+                .ok('Yes')
+                .cancel('No');
+
+            $mdDialog.show(confirm).then(function () {
+                $http({
+                    url: "manageWebsiteColors.asmx/GetWebsiteColors",
+                    dataType: 'json',
+                    method: "POST",
+                    data: { path: $scope.imageSrc },
+                    headers: { "Content-Type": "application/json; charset=utf-8" }
+                })
+                    .then(function (response) {
+                    }, function (error) {
+                        $scope.R = error.data;
+                    });
+
+                $http({
+                    method: "POST",
+                    url: "CreationStage.asmx/UploadLogo",
+                    dataType: 'json',
+                    data: { logo: $scope.imageSrc },
+                    headers: { "Content-Type": "application/json" }
+                })
+                    .then(function (response) { }, function (error) { });
+
+                $scope.refreshIframe();
+                myservice.refresh();
+
+            }, function () {
+                $http({
+                    method: "POST",
+                    url: "CreationStage.asmx/UploadLogo",
+                    dataType: 'json',
+                    data: { logo: $scope.imageSrc },
+                    headers: { "Content-Type": "application/json" }
+                })
+                    .then(function (response) { }, function (error) { });
+                $scope.refreshIframe();
                 });
         };
 
-        $scope.UpdateLogo = function () {
-            var post = $http({
-                method: "POST",
-                url: "CreationStage.asmx/UploadLogo",
-                dataType: 'json',
-                data: { logo: $scope.imageSrc },
-                headers: { "Content-Type": "application/json" }
-            })
-                .then(function (response) { }, function (error) { });
-
-            //    $scope.refreshIframe();
-            //  $scope.tab.myColors = true;
-            $scope.refreshIframe();
-            myservice.refresh();
-        };
-
+      //  sliderPath = $scope.imageSrc_slider;
+      //  filePath = $scope.imageSrc;
+        $scope.$on("fileProgress", function (e, progress) {
+            $scope.progress = progress.loaded / progress.total;
+        });
+              
         $scope.UpdateSlider = function () {
             var post = $http({
                 method: "POST",
