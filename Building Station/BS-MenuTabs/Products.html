@@ -142,6 +142,9 @@
             .arb{
                 text-align:right;
             }
+        .requiredStar {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -199,70 +202,72 @@
                     </tr>
                 </tbody>
             </table>
-            <table class="table">
-                <thead style="border-collapse:collapse; table-layout:fixed;">
-                    <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
-                        <th>حذف</th>
-                        <th>تعديل</th>
-                        <th>إضافة خصم</th>
-                        <th>الكمية</th>
-                        <th>السعر</th>
-                        <th>تفاصيل المنتج</th>
-                        <th>اسم المنتج</th>
-                        <th>صورة المنتج</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-ng-repeat="product in products" class="hover">
-                        <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
-                        <td ng-hide="true">{{product.ID}}</td>
-                        <td><button class="remove" ng-click="removeproduct(product, product.ID)" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button></td>
-                        <td>
-                            <button ng-show="!product.edit" ng-click="x(); product.edit = !product.edit" style="background-color:transparent; border: none;"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;" /></button>
-                            <button ng-show="product.edit" ng-click="editProduct($index,product,product.ID,product.Image,product.Name,product.Description,product.Price,product.PriceAfterDiscount,product.Amount,product.Discount)" style="background-color:transparent; border: none;"><img src="/images/success.png" alt="" style="width:25px; height:25px;" /></button>
-                        </td>
-                        <td class="arb" ng-show="!product.edit"><label>{{product.Discount}}%</label></td>
-                        <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Discount" name="" placeholder="أدخل نسبة الخصم" required></td>
+            <form name="newProduct">
+                <table class="table">
+                    <thead style="border-collapse:collapse; table-layout:fixed;">
+                        <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
+                            <th>حذف</th>
+                            <th>تعديل</th>
+                            <th>إضافة خصم</th>
+                            <th>الكمية</th>
+                            <th>السعر</th>
+                            <th>تفاصيل المنتج</th>
+                            <th>اسم المنتج</th>
+                            <th>صورة المنتج</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="product in products" class="hover">
+                            <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
+                            <td ng-hide="true">{{product.ID}}</td>
+                            <td><button class="remove" ng-click="removeproduct(product, product.ID)" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button></td>
+                            <td>
+                                <button ng-show="!product.edit" ng-click="x(); product.edit = !product.edit" style="background-color:transparent; border: none;"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;" /></button>
+                                <button ng-show="product.edit" ng-click="editProduct($index,product,product.ID,product.Image,product.Name,product.Description,product.Price,product.PriceAfterDiscount,product.Amount,product.Discount)" style="background-color:transparent; border: none;"><img src="/images/success.png" alt="" style="width:25px; height:25px;" /></button>
+                            </td>
+                            <td class="arb" ng-show="!product.edit"><label>{{product.Discount}}%</label></td>
+                            <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Discount" name="" placeholder="أدخل نسبة الخصم" required></td>
 
-                        <td class="arb" ng-show="!product.edit"><label>{{product.Amount}}</label></td>
-                        <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Amount" name="" placeholder="أدخل الكمية" required></td>
-                        <td class="arb" ng-show="!product.edit">
-                            <label ng-show="product.Discount == 0">{{product.Price}}</label>
-                            <label><del style="color:#ff0000" ng-show="product.Discount != 0"> {{product.Price}} </del></label><br />
-                            <label ng-show="product.Discount != 0">{{product.PriceAfterDiscount}}</label>
-                        </td>
-                        <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Price" name="" placeholder="أدخل السعر " required></td>
-                        <td class="arb" ng-show="!product.edit"><label>{{product.Description}}</label></td>
-                        <td class="arb" ng-show="product.edit"><textarea ng-model="product.Description" required>Enter product description</textarea></td>
-                        <td class="arb" ng-show="!product.edit"><label>{{product.Name}}</label></td>
-                        <td class="arb" ng-show="product.edit"><input type="text" ng-model="product.Name" name="" placeholder="أدخل اسم المنتج" required></td>
-                        <td ng-show="!product.edit"><img ng-src="{{product.Image}}" alt="image" width="80" height="80" /></td>
-                        <td class="arb" ng-show="product.edit">
-                            <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
-                            <img style="width:100px; height:100px;" ng-src="{{product.Image}}" />
-                        </td>
-                    </tr>
+                            <td class="arb" ng-show="!product.edit"><label>{{product.Amount}}</label></td>
+                            <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Amount" name="" placeholder="أدخل الكمية" required></td>
+                            <td class="arb" ng-show="!product.edit">
+                                <label ng-show="product.Discount == 0">{{product.Price}}</label>
+                                <label><del style="color:#ff0000" ng-show="product.Discount != 0"> {{product.Price}} </del></label><br />
+                                <label ng-show="product.Discount != 0">{{product.PriceAfterDiscount}}</label>
+                            </td>
+                            <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Price" name="" placeholder="أدخل السعر " required></td>
+                            <td class="arb" ng-show="!product.edit"><label>{{product.Description}}</label></td>
+                            <td class="arb" ng-show="product.edit"><textarea ng-model="product.Description" required>Enter product description</textarea></td>
+                            <td class="arb" ng-show="!product.edit"><label>{{product.Name}}</label></td>
+                            <td class="arb" ng-show="product.edit"><input type="text" ng-model="product.Name" name="" placeholder="أدخل اسم المنتج" required></td>
+                            <td ng-show="!product.edit"><img ng-src="{{product.Image}}" alt="image" width="80" height="80" /></td>
+                            <td class="arb" ng-show="product.edit">
+                                <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
+                                <img style="width:100px; height:100px;" ng-src="{{product.Image}}" />
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td colspan="2">
-                           <!-- ng-click="addNewProduct(product,product.Category_ID,product.Image,product.Name,product.Description,product.Price,product.PriceAfterDiscount,product.Amount,product.Discount)"-->
-                            <button style="background-color:transparent; border: none;" ng-click="addNewProduct2(product)" style="float:right;"><img src="/images/plus.png" alt="" style="width:37px; height:37px;" /></button>
-                        </td>
+                        <tr>
+                            <td colspan="2">
+                                <!-- ng-click="addNewProduct(product,product.Category_ID,product.Image,product.Name,product.Description,product.Price,product.PriceAfterDiscount,product.Amount,product.Discount)"-->
+                                <button ng-disabled="newProduct.$invalid" ng-click="addNewProduct2(product)" style="background-color:transparent; border: none;float:right;"><img src="/images/plus.png" alt="" style="width:37px; height:37px;" /></button>
+                            </td>
 
-                        <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
-                        <td><input class="ar" type="number" ng-model="product.Discount" name="" placeholder="الخصم" required></td>
-                        <td><input class="ar" type="number" ng-model="product.Amount" name="" placeholder="الكمية" required></td>
-                        <td><input class="ar" type="number" ng-model="product.Price" name="" placeholder="السعر" required></td>
-                        <td><textarea class="ar" type="text" ng-model="product.Description" name="" placeholder="التفاصيل" required></textarea></td>
-                        <td><input class="ar" type="text" ng-model="product.Name" name="" placeholder="الإسم" required></td>
-                        <td>
-                            <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
-                            <img ng-show="product.Image" style="width:80px; height:80px;" ng-src="{{product.Image}}" />
-                        </td>
-                    </tr>
+                            <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
+                            <td class="requiredStar">* <input class="ar" type="number" ng-model="product.Discount" name="" placeholder="الخصم" required></td>
+                            <td class="requiredStar">* <input class="ar" type="number" ng-model="product.Amount" name="" placeholder="الكمية" required></td>
+                            <td class="requiredStar">* <input class="ar" type="number" ng-model="product.Price" name="" placeholder="السعر" required></td>
+                            <td class="requiredStar">* <textarea class="ar" type="text" ng-model="product.Description" name="" placeholder="التفاصيل" required></textarea></td>
+                            <td class="requiredStar">* <input class="ar" type="text" ng-model="product.Name" name="" placeholder="الإسم" required></td>
+                            <td class="requiredStar">* 
+                                <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
+                                <img ng-show="product.Image" style="width:80px; height:80px;" ng-src="{{product.Image}}" />
+                            </td>
+                        </tr>
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </form>
         </div>
         <!--\list products-->
 

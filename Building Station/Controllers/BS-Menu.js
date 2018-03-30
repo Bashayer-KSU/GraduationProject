@@ -18,8 +18,16 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 templateUrl: "BS-MenuTabs/PreviewWebsite.html",
                 controller: "PreviewWebsiteController"
             })
+            .when("/PreviewWebsiteEnglish", {
+                templateUrl: "BS-MenuTabs/PreviewWebsiteEnglish.html",
+                controller: "PreviewWebsiteController"
+            })
             .when("/Template", {
                 templateUrl: "BS-MenuTabs/Template.html",
+                controller: "TemplateController"
+            })
+            .when("/TemplateE", {
+                templateUrl: "BS-MenuTabs/TemplateEnglish.html",
                 controller: "TemplateController"
             })
             .when("/Products", {
@@ -902,33 +910,14 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         $scope.Logout = function () {
             $rootScope.Logout();
         };
-        /*$scope.EnableDesktopView = false;
-        $scope.EnableMobileView = false;
-
-        
-        */
         //Desktop View
         $scope.DesktopView = function () {
-            //alert("EnableDesktopView before");
-            $window.open('/Views/Preview.html', '_blank');
-            //$http.get("Preview.asmx/EnableDesktopView").then(function (response) {
-               // $window.open('/Views/Preview.html', '_blank');
-            //}, function (error) {
-             //   alert(error.data);
-             //   });
+                $window.open('/Views/Preview.html', '_blank');
         };
         //\Desktop View
-
-        //Mobile View
-        /*$scope.MobileView = function () {
-            alert("EnableMobileView before");
-            $http.get("Preview.asmx/EnableMobileView").then(function (response) {
-                $window.open('/Views/Preview.html', '_blank');
-            }, function (error) {
-                alert(error.data);
-            });
-        };*/
-        //\Mobile View
+        $scope.DesktopViewE = function () {
+            $window.open('/Views/PreviewEnglish.html', '_blank');
+        };
     })
     .controller("TemplateController", function ($scope, $http, $location, $rootScope) {
         $scope.tabHeader = "Template";
