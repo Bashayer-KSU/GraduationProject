@@ -182,13 +182,13 @@ var published = publishApp.config(function ($routeProvider, $locationProvider) {
         ElementsData();
 
         $scope.Checkout = function () {
-            console.log($scope.BuyerName);
+           /* console.log($scope.BuyerName);
             console.log($scope.BuyerPhone);
             console.log($scope.BuyerEmail);
             console.log($scope.BuyerLocation);
             console.log($scope.PaymentMethod);
             console.log($scope.HolName);
-            console.log($scope.OrderID);
+            console.log($scope.OrderID);*/
 
             $http.post(
                 "/BuyerOrder.asmx/CreateOrder",
@@ -220,13 +220,13 @@ var published = publishApp.config(function ($routeProvider, $locationProvider) {
 
 
         $scope.CheckoutA = function (Buyer_Name, Buyer_Phone, Buyer_Email, Buyer_Location, Payment_Method, Hol_Name, Order_ID) {
-            console.log($scope.BuyerName);
+           /* console.log($scope.BuyerName);
             console.log($scope.BuyerPhone);
             console.log($scope.BuyerEmail);
             console.log($scope.BuyerLocation);
             console.log($scope.PaymentMethod);
             console.log($scope.HolName);
-            console.log($scope.OrderID);
+            console.log($scope.OrderID);*/
 
             $http.post(
                 "/BuyerOrder.asmx/CreateOrder",

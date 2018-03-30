@@ -151,34 +151,52 @@ public class Published_Stores : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void DeleteStore() {
+    public void DeleteStore(string pass) {
 
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("DELETE FROM Element WHERE StoreEmail = '" + Session["user"] + "'", con);
-            cmd.ExecuteNonQuery();
+            SqlCommand cmd = new SqlCommand("SELECT Password FROM Store WHERE Email = '" + Session["user"] + "'", con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.Password = reader["Password"].ToString();
+            }
             con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("DELETE FROM Product WHERE StoreEmail = '" + Session["user"] + "'", con);
-            cmd.ExecuteNonQuery();
-            con.Close();
+            if (pass.Equals(store.Password))
+            {
 
-            con.Open();
-            cmd = new SqlCommand("DELETE FROM Category WHERE StoreEmail = '" + Session["user"] + "'", con);
-            cmd.ExecuteNonQuery();
-            con.Close();
+                con.Open();
+                cmd = new SqlCommand("DELETE FROM Element WHERE StoreEmail = '" + Session["user"] + "'", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("DELETE FROM Order WHERE StoreEmail = '" + Session["user"] + "'", con);
-            cmd.ExecuteNonQuery();
-            con.Close();
+                con.Open();
+                cmd = new SqlCommand("DELETE FROM Product WHERE StoreEmail = '" + Session["user"] + "'", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("DELETE FROM Store WHERE Email = '" + Session["user"] + "'", con);
-            cmd.ExecuteNonQuery();
-            con.Close();
+                con.Open();
+                cmd = new SqlCommand("DELETE FROM Category WHERE StoreEmail = '" + Session["user"] + "'", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("DELETE FROM [Order] WHERE StoreEmail = '" + Session["user"] + "'", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("DELETE FROM Store WHERE Email = '" + Session["user"] + "'", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            else
+            {
+                store.Password = "incorrect";
+            }
+            Context.Response.Write(js.Serialize(store));
         }
     }
 

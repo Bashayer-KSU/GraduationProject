@@ -152,21 +152,49 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
         $rootScope.DeleteStore = function (ev) {
             var confirm = $mdDialog.confirm()
-                .title('Are you sure you want to delete your store ?')
-                .textContent('all your data will be removed, you will need to register again.')
+                .title('Are you sure you want to delete your store?')
+                .textContent('all your data will be deleted.')
                 .targetEvent(ev)
-                .ok('Delete')
+                .ok('YES')
                 .cancel('Cancel');
 
             $mdDialog.show(confirm).then(function () {
+                // Appending dialog to document.body to cover sidenav in docs app
+                var askForPassword = $mdDialog.prompt()
+                    .title('Enter your store Password')
+                    .textContent('be aware that your store will be removed completely from our system and you will need to registr again to have a store.')
+                    .placeholder('password')
+                    // .ariaLabel('Dog name')
+                    .initialValue('')
+                    .targetEvent(ev)
+                    .required(true)
+                    .ok('Delete')
+                    .cancel('Cancel');
 
-                $http.get('/Published_Stores.asmx/DeleteStore').then(function (response) {
-                    // logout or something , or the opposite
-                    // or go to login page
-                    //  location.href = "/RegisterLogin.html";
-                }); 
+                $mdDialog.show(askForPassword).then(function (result) {
+                    $http({
+                        url: "Published_Stores.asmx/DeleteStore",
+                        params: { pass: result },
+                        method: "get"
+                    })
+                        .then(function (response) {
+                            var storePass = response.data;
+                            if (storePass.Password === 'incorrect') {
+                               var NOTdeleted = $mdDialog.alert()
+                                    .title('Incorrect Password')
+                                    .targetEvent(ev)
+                                    .ok('Close');
+                                $mdDialog.show(NOTdeleted).then(function () {
+                                }, function () {
+                                });
+                            }
+                            else {
+                                location.href = "/RegisterLogin.html";
+                            }
+                    }); 
+                }, function () {
+                });
             }, function () {
-                // $rootScope.status = 'You decided to keep your debt.';
             });
         };
     })
