@@ -114,6 +114,7 @@ public class BuyerOrder : System.Web.Services.WebService
                 ord.BuyerPhone = reader["BuyerPhone"].ToString();
                 ord.BuyerEmail = reader["BuyerEmail"].ToString();
                 ord.BuyerLocation = reader["BuyerLocation"].ToString();
+                ord.TotalPrice = Convert.ToDouble(reader["TotalPrice"]);
                 ord.PaymentMethod = reader["PaymentMethod"].ToString();
                 ord.BankAccount = reader["BankAccount"].ToString();
                 ord.OrderID = reader["OrderID"].ToString();
@@ -194,5 +195,35 @@ public class BuyerOrder : System.Web.Services.WebService
 
         else
             Context.Response.Write(js.Serialize("out of stock product"));
+    }
+
+
+    [WebMethod(EnableSession = true)]
+    public void GetAllOrderProducts(string Order_ID)
+    {
+        int orderID = Convert.ToInt32(Order_ID);
+        List<OrderProduct> OrderProductsList = new List<OrderProduct>();
+        OrderProduct orderProduct = new OrderProduct();
+
+        string StoreEmail = getStoreEmail();
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            SqlCommand cmd = new SqlCommand("SELECT Order_ID, Product_ID, ProductOrder.Amount,  Product.Image, Product.Name,  Product.Description  FROM ProductOrder INNER JOIN Product ON ProductOrder.Product_ID = Product.ID WHERE ProductOrder.Order_ID = " + orderID+" ", con);
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                orderProduct = new OrderProduct();
+                orderProduct.OrderID = orderID;
+                orderProduct.ProductID = Convert.ToInt32(reader["Product_ID"]);
+                orderProduct.Amount = Convert.ToInt32(reader["Amount"]);
+                orderProduct.Image = reader["Image"].ToString();
+                orderProduct.Name = reader["Name"].ToString();
+                orderProduct.Description = reader["Description"].ToString();
+                OrderProductsList.Add(orderProduct);
+            }
+            con.Close();
+        }
+        Context.Response.Write(js.Serialize(OrderProductsList));
     }
 }

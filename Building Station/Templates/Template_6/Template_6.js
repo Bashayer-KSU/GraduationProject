@@ -124,14 +124,6 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
     ElementsData();
 
     $scope.Checkout = function () {
-        console.log($scope.BuyerName);
-        console.log($scope.BuyerPhone);
-        console.log($scope.BuyerEmail);
-        console.log($scope.BuyerLocation);
-        console.log($scope.PaymentMethod);
-        console.log($scope.HolName);
-        console.log($scope.OrderID);
-
 
         $http.post(
             "/BuyerOrder.asmx/CreateOrder",
