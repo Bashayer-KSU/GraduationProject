@@ -39,10 +39,10 @@ public class BuyerOrder : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void CreateOrder(string BuyerName, string BuyerPhone, string BuyerEmail, string BuyerLocation, string PaymentMethod, string BankAccount, string OrderID, string TotalPrice)
+    public void CreateOrder(string StoreEmail, string BuyerName, string BuyerPhone, string BuyerEmail, string BuyerLocation, string PaymentMethod, string BankAccount, string OrderID, string TotalPrice)
     {
         SqlDataReader reader;
-        string StoreEmail = getStoreEmail();
+       // string StoreEmail = getStoreEmail();
         //double TotalPrice = getTotalPrice();
         int row = 0;
         using (SqlConnection con = new SqlConnection(cs))
