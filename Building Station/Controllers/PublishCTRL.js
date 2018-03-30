@@ -181,7 +181,52 @@ var published = publishApp.config(function ($routeProvider, $locationProvider) {
         };
         ElementsData();
 
-        $scope.Checkout = function (Buyer_Name, Buyer_Phone, Buyer_Email, Buyer_Location, Payment_Method, Hol_Name, Order_ID) {
+        $scope.Checkout = function () {
+            console.log($scope.BuyerName);
+            console.log($scope.BuyerPhone);
+            console.log($scope.BuyerEmail);
+            console.log($scope.BuyerLocation);
+            console.log($scope.PaymentMethod);
+            console.log($scope.HolName);
+            console.log($scope.OrderID);
+
+            $http.post(
+                "/BuyerOrder.asmx/CreateOrder",
+                $.param({
+                    StoreEmail: $scope.Store.Email,
+                    BuyerName: $scope.BuyerName,
+                    BuyerPhone: $scope.BuyerPhone,
+                    BuyerEmail: $scope.BuyerEmail,
+                    BuyerLocation: $scope.BuyerLocation,
+                    PaymentMethod: $scope.PaymentMethod,
+                    BankAccount: $scope.HolName,
+                    OrderID: $scope.OrderID,
+                    TotalPrice: $scope.TotalPrice
+                }),
+                {
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' }
+                })
+                .then(function (response) {
+                    $scope.result = response.data;
+                    $scope.addProductToOrder($scope.result.ID);
+                    $scope.checkout = false;
+                    $scope.payment = false;
+                    $scope.ProductsArray.length = 0;
+
+                }, function (error) {
+                    $scope.error = error.data;
+                });
+        };
+
+
+        $scope.CheckoutA = function (Buyer_Name, Buyer_Phone, Buyer_Email, Buyer_Location, Payment_Method, Hol_Name, Order_ID) {
+            console.log($scope.BuyerName);
+            console.log($scope.BuyerPhone);
+            console.log($scope.BuyerEmail);
+            console.log($scope.BuyerLocation);
+            console.log($scope.PaymentMethod);
+            console.log($scope.HolName);
+            console.log($scope.OrderID);
 
             $http.post(
                 "/BuyerOrder.asmx/CreateOrder",
@@ -210,8 +255,6 @@ var published = publishApp.config(function ($routeProvider, $locationProvider) {
                     $scope.error = error.data;
                 });
         };
-
-
             //////////////// PRODUCTS AND CATEGORIES /////////////
 
         //Initialization
