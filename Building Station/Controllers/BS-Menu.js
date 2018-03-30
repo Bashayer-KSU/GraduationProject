@@ -541,8 +541,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 $scope.TextType = [{ name: "Store Name", value: $scope.StoreName },
                 { name: "Store Description", value: $scope.desc },
                 { name: "Phone", value: $scope.Phone },
-                { name: "Address", value: $scope.address }/*,
-                { name: "Email", value: $scope.Email }*/
+                { name: "Address", value: $scope.address },
+                { name: "Menu Title", value: $scope.MenuTitle }
                 ];
                 $scope.selectedTextType = $scope.TextType[0];
                 $scope.ShopOwnerText = $scope.selectedTextType.value;
@@ -700,7 +700,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             $scope.ShopOwnerText = $scope.selectedTextType.value;
         };
         $scope.UpdateStoreInfo = function () {
-            $scope.loading = true;
+            $scope.loadingStoreInfo = true;
             if (typeof $scope.selectedTextType !== "undefined") {
                 if ($scope.selectedTextType !== null || $scope.selectedTextType !== "") {
                     DataType = $scope.selectedTextType.name;
@@ -722,7 +722,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
                             $scope.refreshIframe();
 
-                            $scope.loading = false;
+                            $scope.loadingStoreInfo = false;
 
                         }, function (error) {
                             $scope.error = error.data;
@@ -798,6 +798,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         });
               
         $scope.UpdateSlider = function () {
+            $scope.loadingCover = true;
             var post = $http({
                 method: "POST",
                 url: "TemplateData.asmx/UploadSlider",
@@ -805,12 +806,17 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 data: { slider: $scope.imageSrc_slider },
                 headers: { "Content-Type": "application/json" }
             })
-                .then(function (response) { }, function (error) { });
+                .then(function (response) {
+ }, function (error) { });
 
             $scope.refreshIframe();
+            $scope.loadingCover = false;
+
         };
 
         $scope.UpdateAboutImage = function () {
+            $scope.loadingAboutImage = true;
+
             var post = $http({
                 method: "POST",
                 url: "TemplateData.asmx/UploadAboutImage",
@@ -821,9 +827,12 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 .then(function (response) { }, function (error) { });
 
             $scope.refreshIframe();
+            $scope.loadingAboutImage = false;
+
         };
 
         $scope.UpdateLinks = function () {
+            $scope.loadingLinks = true;
         /*    var post = $http({
                 method: "POST",
                 url: "TemplateData.asmx/UpdateLinks",
@@ -849,11 +858,15 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             )
                 .then(function (response) {
                     $scope.result = response.data;
+
+                    $scope.refreshIframe();
+                    Links_service.refresh();
+
+                    $scope.loadingLinks = false;
+
                 }, function (error) {
                     $scope.error = error.data;
                 });
-            $scope.refreshIframe();
-            Links_service.refresh();
         };
     })
     .controller("PreviewWebsiteController", function ($rootScope, $scope, $http, $window) {
