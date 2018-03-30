@@ -39,10 +39,10 @@ public class BuyerOrder : System.Web.Services.WebService
     }
   
     [WebMethod(EnableSession = true)]
-    public void CreateOrder(string BuyerName, string BuyerPhone, string BuyerEmail, string BuyerLocation,string PaymentMethod, string BankAccount, string OrderID, string TotalPrice)
+    public void CreateOrder(string StoreEmail, string BuyerName, string BuyerPhone, string BuyerEmail, string BuyerLocation,string PaymentMethod, string BankAccount, string OrderID, string TotalPrice)
     {
         SqlDataReader reader;
-        string StoreEmail = getStoreEmail();
+       // string StoreEmail = getStoreEmail();
         //double TotalPrice = getTotalPrice();
         int row = 0;
         using (SqlConnection con = new SqlConnection(cs))
@@ -108,6 +108,7 @@ public class BuyerOrder : System.Web.Services.WebService
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
+                ord = new Order();
                 ord.ID = Convert.ToInt32(reader["ID"]);
                 ord.BuyerName = reader["BuyerName"].ToString();
                 ord.BuyerPhone = reader["BuyerPhone"].ToString();
