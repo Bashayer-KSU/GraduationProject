@@ -13,7 +13,7 @@ using System.Web.Services;
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
- [System.Web.Script.Services.ScriptService]
+[System.Web.Script.Services.ScriptService]
 
 
 public class BuyerOrder : System.Web.Services.WebService
@@ -37,9 +37,9 @@ public class BuyerOrder : System.Web.Services.WebService
         else
             return "test4@4";
     }
-  
+
     [WebMethod(EnableSession = true)]
-    public void CreateOrder(string StoreEmail, string BuyerName, string BuyerPhone, string BuyerEmail, string BuyerLocation,string PaymentMethod, string BankAccount, string OrderID, string TotalPrice)
+    public void CreateOrder(string StoreEmail, string BuyerName, string BuyerPhone, string BuyerEmail, string BuyerLocation, string PaymentMethod, string BankAccount, string OrderID, string TotalPrice)
     {
         SqlDataReader reader;
        // string StoreEmail = getStoreEmail();
@@ -49,22 +49,22 @@ public class BuyerOrder : System.Web.Services.WebService
         {
             con.Open();
             SqlCommand cmd;
-            if (PaymentMethod == "BankTransfer") 
-             cmd = new SqlCommand("insert into \"Order\" (BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod, BankAccount , TotalPrice, OrderID, Status , StoreEmail) values " +
-               "(N'" + BuyerName + "','" + BuyerPhone + "','" + BuyerEmail + "', N'" + BuyerLocation + "','" + PaymentMethod + "','" + BankAccount + "','" + Convert.ToDouble(TotalPrice) + "','" + OrderID + "','" + false + "','" + StoreEmail + "')", con);
+            if (PaymentMethod == "BankTransfer")
+                cmd = new SqlCommand("insert into \"Order\" (BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod, BankAccount , TotalPrice, OrderID, Status , StoreEmail) values " +
+                  "(N'" + BuyerName + "','" + BuyerPhone + "','" + BuyerEmail + "', N'" + BuyerLocation + "','" + PaymentMethod + "','" + BankAccount + "','" + Convert.ToDouble(TotalPrice) + "','" + OrderID + "','" + false + "','" + StoreEmail + "')", con);
             else
                 cmd = new SqlCommand("insert into \"Order\" (BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod , TotalPrice, OrderID, Status , StoreEmail) values " +
                "(N'" + BuyerName + "','" + BuyerPhone + "','" + BuyerEmail + "', N'" + BuyerLocation + "','" + PaymentMethod + "','" + Convert.ToDouble(TotalPrice) + "','" + OrderID + "','" + false + "','" + StoreEmail + "')", con);
 
             row = cmd.ExecuteNonQuery();
-            con.Close();            
+            con.Close();
         }
 
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("select ID from \"Order\" Where StoreEmail ='" + StoreEmail + "' AND BuyerName = '"+BuyerName+ "' AND BuyerPhone = '" + BuyerPhone + "' AND BuyerEmail = '" + BuyerEmail + "' AND BuyerLocation = '" + BuyerLocation + "' AND PaymentMethod = '" + PaymentMethod + "' AND TotalPrice = '" + Convert.ToDouble(TotalPrice) + "' AND OrderID = '" + OrderID + "' AND Status = '" + false + "'", con);
+            SqlCommand cmd = new SqlCommand("select ID from \"Order\" Where StoreEmail ='" + StoreEmail + "' AND BuyerName = '" + BuyerName + "' AND BuyerPhone = '" + BuyerPhone + "' AND BuyerEmail = '" + BuyerEmail + "' AND BuyerLocation = '" + BuyerLocation + "' AND PaymentMethod = '" + PaymentMethod + "' AND TotalPrice = '" + Convert.ToDouble(TotalPrice) + "' AND OrderID = '" + OrderID + "' AND Status = '" + false + "'", con);
             con.Open();
-             reader = cmd.ExecuteReader();
+            reader = cmd.ExecuteReader();
             while (reader.Read())
             {
                 order.ID = Convert.ToInt32(reader["ID"]);
@@ -131,7 +131,7 @@ public class BuyerOrder : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void UpdateStatus (string ID)
+    public void UpdateStatus(string ID)
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -151,20 +151,24 @@ public class BuyerOrder : System.Web.Services.WebService
         int row = 0;
         bool result1 = false;
         bool result2 = false;
+        bool error = false;
+        if ((Convert.ToInt32(PreviousAmount) - Convert.ToInt32(Amount)) < 0)
+            error = true;
 
+        if (!error) { 
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
             SqlCommand cmd;
-                cmd = new SqlCommand("insert into ProductOrder (Order_ID, Product_ID, Amount) values " +
-               "(" + Convert.ToInt32(OrderID) + "," + Convert.ToInt32(ProductID) + "," + Convert.ToInt32(Amount) + ")", con);
+            cmd = new SqlCommand("insert into ProductOrder (Order_ID, Product_ID, Amount) values " +
+           "(" + Convert.ToInt32(OrderID) + "," + Convert.ToInt32(ProductID) + "," + Convert.ToInt32(Amount) + ")", con);
 
             row = cmd.ExecuteNonQuery();
             con.Close();
         }
         if (row > 0)
             result1 = true;
-            else result1 = false;
+        else result1 = false;
 
         row = 0;
         using (SqlConnection con = new SqlConnection(cs))
@@ -173,7 +177,7 @@ public class BuyerOrder : System.Web.Services.WebService
             SqlCommand cmd;
             cmd = new SqlCommand("UPDATE Product SET Amount = '" + (Convert.ToInt32(PreviousAmount) - Convert.ToInt32(Amount)) + "' WHERE ID =" + ProductID, con);
 
-                row = cmd.ExecuteNonQuery();
+            row = cmd.ExecuteNonQuery();
             con.Close();
         }
         if (row > 0)
@@ -188,4 +192,7 @@ public class BuyerOrder : System.Web.Services.WebService
             Context.Response.Write(js.Serialize(false));
     }
 
+        else
+            Context.Response.Write(js.Serialize("out of stock product"));
+    }
 }
