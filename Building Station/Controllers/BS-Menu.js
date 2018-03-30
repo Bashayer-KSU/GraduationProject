@@ -177,7 +177,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
         $scope.tabHeader = "Manage Store";
         $scope.templatew = "";
+        $scope.transactions = true;
 
+       
         // Sample options for first chart
         $scope.chartOptions = {
             title: {
@@ -355,9 +357,23 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 method: "get"
             })
                 .then(function (response) {
-                    $scope.orders = response.data;
+                    $scope.orders = response.data; });
+        };
+
+        $scope.OrderDetails = function (OrderDetail) {
+            $scope.transactions = false;
+            $scope.OrderDetail = OrderDetail;
+            $http({
+                url: "/BuyerOrder.asmx/GetAllOrderProducts",
+                method: "get",
+                params: { Order_ID: OrderDetail.ID }
+            })
+                .then(function (response) {
+                    $scope.ProductOrders = response.data;
                 });
         };
+
+
         $scope.UpdateStatus = function (order, id) {
             $http({
                 url: "BuyerOrder.asmx/UpdateStatus",
@@ -368,6 +384,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     $scope.result = response.data;
                     var remove = $scope.orders.indexOf(order);
                     $scope.orders.splice(remove, 1);
+                    $scope.transactions = true;
                 }, function (error) { });
         };
 
@@ -1224,7 +1241,7 @@ app.directive('customOnChange', function () {
         }
     };
 });
-/*
+
 app.directive('hcChart', function () {
     return {
         restrict: 'E',
@@ -1236,4 +1253,4 @@ app.directive('hcChart', function () {
             Highcharts.chart(element[0], scope.options);
         }
     };
-})*/
+});
