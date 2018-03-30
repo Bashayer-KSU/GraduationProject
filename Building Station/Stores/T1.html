@@ -46,16 +46,16 @@
             </div>
         </section>
         <!-- store welcom -->
-        <section style="padding-top:0%; padding-bottom: 0px; " id="banner">
-            <div class="row">
-                <div class="12u">
-                    <header ng-style="{'background': Store.Color2}">
-                        <h2 ng-style="{'color': Store.Color4}">{{Store.Description}}</h2>
-                        <p ng-style="{'color': Store.Color3}">{{Store.Address}}</p>
-                    </header>
+            <section style="padding-left: 5vw; padding-right:2vw; padding-top:0%; padding-bottom: 0px;" id="banner">
+                <div class="row">
+                    <div class="11u 12u(mobile)">
+                        <header ng-style="{'background': Store.Color2}">
+                            <h2 ng-style="{'color': Store.Color4}">{{Store.Description}}</h2>
+                            <p ng-style="{'color': Store.Color3}">{{Store.Address}}</p>
+                        </header>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
         <!-- slider image -->
         <section ng-show="section.slider" style="padding-top:0px; padding-bottom:0px;" id="banner">
             <div class="12u">
@@ -293,7 +293,7 @@
                     <a ng-show="checkout&&!payment" class="button" ng-click="checkout=false; payment=false;" ng-style="{'background-color':Store.Color4, 'color':Store.Color3, 'border':Store.Color3}" style="font-size:xx-large; padding: 0px 10px 0px 10px; border-radius:40%; text-decoration:none;">&#8249;</a>
                     <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="Buyer.$invalid" ng-style="{'background-color':Store.Color1, 'color':Store.Color3, 'border':Store.Color4}" style="font-size:medium;">اختر طريقة الدفع</button>
                     <a ng-show="checkout&&payment" class="button" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color4, 'color':Store.Color3, 'border':Store.Color3}" style="font-size:xx-large; padding: 0px 10px 0px 10px; border-radius:40%; text-decoration:none;">&#8249;</a>
-                    <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'color':Store.Color3, 'border':Store.Color4}" style="font-size:medium;">الدفع</button>
+                    <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="CheckoutA(BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod, HolName, OrderID)" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'color':Store.Color3, 'border':Store.Color4}" style="font-size:medium;">الدفع</button>
 
                 </div>
             </div>

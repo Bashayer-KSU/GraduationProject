@@ -302,7 +302,7 @@ public class Products : System.Web.Services.WebService
                     statstic.ProductID = Convert.ToInt32(pro.ID);
                     statstic.ProductName = pro.Name;
                     statstic.CategoryName = GetCategoryName(Convert.ToInt32(pro.Category_ID));
-                    statstic.Image = pro.Image;
+                //    statstic.Image = pro.Image;
                     string amount = reader["amnt"].ToString();
                     if (reader["amnt"] != DBNull.Value)
                     {

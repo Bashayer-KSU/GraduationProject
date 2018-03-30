@@ -111,7 +111,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
                     $scope.AboutContent = $scope.elementInfo[i].Value;
                     $scope.AboutImage = $scope.elementInfo[i].Image;
                     if ($scope.AboutImage === "No Image" || $scope.AboutImage === null || $scope.AboutImage === undefined)
-                         $scope.AboutImage = $scope.Store.Logo;
+                        $scope.AboutImage = $scope.Store.slider;
                     if ($scope.AboutContent === null || $scope.AboutContent === "")
                         $scope.section.about = true;
                 }
@@ -124,10 +124,11 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
     ElementsData();
 
     $scope.Checkout = function () {
-        
+
         $http.post(
             "/BuyerOrder.asmx/CreateOrder",
             $.param({
+                StoreEmail: $scope.Store.Email,
                 BuyerName: $scope.BuyerName,
                 BuyerPhone: $scope.BuyerPhone,
                 BuyerEmail: $scope.BuyerEmail,

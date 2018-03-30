@@ -171,6 +171,8 @@ public class TemplateData : System.Web.Services.WebService
             DataType = "Location";
         else if (DataType.Equals("About"))
             DataType = "About";
+        else if (DataType.Equals("Menu Title"))
+            DataType = "MenuTitle";
 
         int x;
         Boolean result = false;
