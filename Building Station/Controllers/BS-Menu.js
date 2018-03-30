@@ -1224,7 +1224,7 @@ app.directive('customOnChange', function () {
         }
     };
 });
-
+/*
 app.directive('hcChart', function () {
     return {
         restrict: 'E',
@@ -1236,4 +1236,4 @@ app.directive('hcChart', function () {
             Highcharts.chart(element[0], scope.options);
         }
     };
-})
+})*/
