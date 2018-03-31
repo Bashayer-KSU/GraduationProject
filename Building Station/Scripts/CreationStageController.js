@@ -69,8 +69,28 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
                 $rootScope.login = response;
                 if (response === "false") {
                     //redirect to login page
-                    location.href = "/RegisterLogin.html";
+                    location.href = "/index.html";
                 }
+            });
+        });
+
+        window.onbeforeunload = function (event) {
+            var message = 'Important: Please click on \'Save\' button to leave this page.';
+            if (typeof event == 'undefined') {
+                event = window.event;
+            }
+            if (event) {
+                event.returnValue = message;
+            }
+            return message;
+        };
+
+        $(function () {
+            $("a").not('#lnkLogOut').click(function () {
+                window.onbeforeunload = null;
+            });
+            $(".btn").click(function () {
+                window.onbeforeunload = null;
             });
         });
     })

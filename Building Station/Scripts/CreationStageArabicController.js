@@ -73,7 +73,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 console.log("in then " + $rootScope.login);
                 if (response === "false") {
                     //redirect to login page
-                    location.href = "/RegisterLogin.html";
+                    location.href = "/index.html";
                 }
             });
         });

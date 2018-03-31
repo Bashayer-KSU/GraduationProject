@@ -14,19 +14,19 @@ BS_App.service('initialSetup', function ($http) {
 });
 
 var published = BS_App.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
-   // $routeProvider.caseInsensitiveMatch = true;
+
     $urlRouterProvider.otherwise("/BuildingStation");
     $stateProvider
         .state("Login&Register", {
-            url: "/BuildingStation", 
+            url: "/BuildingStation",
             templateUrl: "/RegisterLogin.html",
             controller: "Register_Login"
         })
         .state("Store", {
-            url: "/BuildingStation/:Domain", 
+            url: "/BuildingStation/:Domain",
             templateUrl: "Stores/Store.html",
             controller: "PublishedStoreCtrl"
-        })
+        });
        
     $locationProvider.html5Mode({
         enabled: true,
