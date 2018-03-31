@@ -87,7 +87,13 @@ public class RegisterLogin : System.Web.Services.WebService
 
                 con.Open();
                 cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
-                "('PayPal', 'Button','" + Session["user"] + "')", con);
+                "('PayPal', 'AccountEmail','" + Session["user"] + "')", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
+                "('PayPal', 'Currency','" + Session["user"] + "')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 

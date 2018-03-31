@@ -263,7 +263,36 @@
                                                 </div>
                                             </div>
                                         </form>
-
+                                        <div ng-show="PaymentMethod === 'PayPal' && payment" id="PayPalTransfer">
+                                            <form target="_blank" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                                                <!-- Identify your business so that you can collect the payments. -->
+                                                <input type="hidden" name="business" value="{{Store.PayPalEmail}}"> <!-- Add your PayPal Seller/Business email address Required-->
+                                                <!-- Specify a Buy Now button. -->
+                                                <input type="hidden" name="cmd" value="_xclick">
+                                                <!-- Specify details about the item that buyers will purchase. -->
+                                                <input type="hidden" name="item_name" value=""> <!-- Add Description e.g your room type Required-->
+                                                <input type="hidden" name="amount" value=""> <!-- Dynamically add Total Amount Required-->
+                                                <input type="hidden" name="currency_code" value="{{Store.PayPalCurrencey}}"> <!-- Update to your currency -->
+                                                <!--  <input id="invoice" type="hidden" value="" name="invoice"> <!-- Add Unique invoice for each transaction -->
+                                                <!--  <input type="hidden" name="notify_url" value="www.yourwebsite.com/ipn.php"> <!-- Please add IPN URL You can use this service to automate back-office and administrative functions, including fulfilling orders, tracking customers, and providing status and other information related to transactions. -->
+                                                <!-- <input type='hidden' name='cancel_return' value='' /> <!-- Take customers to this URL when they cancel their checkout -->
+                                                <!-- <input type='hidden' name='return' value='' /> <!-- Take customers to this URL when they finish their checkout  -->
+                                                <!-- Display the payment button. -->
+                                                <input type="image" name="submit" border="0" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">
+                                            </form>
+                                            <br />
+                                            <div class="row mb-3">
+                                                <h4 class="col-sm-12" ng-style="{'color': Store.Color3}">تأكيد الدفع</h4>
+                                                <div class="col-sm-12">
+                                                    <label for="OrderID" ng-style="{'color': Store.Color3}">رقم الفاتورة</label>
+                                                    <input type="text" class="form-control" id="OrderID" name="OrderID" ng-model="OrderID" placeholder="أدخل رقم الفاتورة" required>
+                                                    <p class="alert alert-danger" ng-show="!BuyerPayment.OrderID.$pristine && BuyerPayment.OrderID.$invalid">هذا الحقل مطلوب.</p>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <label ng-style="{'color': Store.Color3}" for="Price">مجموع المبلغ: {{TotalPrice}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>

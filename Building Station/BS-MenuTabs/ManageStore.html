@@ -274,19 +274,20 @@
 
     </script>
 </head>
- <body>
+<body>
 
     <!--Tabs-->
     <div class="container">
         <ul id="myTabs" class="nav nav-tabs nav-justified " data-tabs="tabs">
             <li class="tabStyle"><a href="#Statistic" class="hrefManage" data-toggle="tab">الإحصائيات</a></li>
             <li class="tabStyle"><a href="#TableOfProcesses" class="hrefManage" data-toggle="tab">العمليات التجارية</a></li>
-            <li class="tabStyle active"><a class="hrefManage" href="#PaymentsMethods" data-toggle="tab">طرق الدفع</a></li>
+            <li class="tabStyle"><a class="hrefManage" href="#PaymentsMethods" data-toggle="tab">طرق الدفع</a></li>
         </ul>
 
         <!--style="background: linear-gradient( #D4D8BA, #f5f6ef);"-->
         <div class="tab-content" id="tabs">
-            <div class="tab-pane fade in" role="tabpanel" id="PaymentsMethods">
+            <div class="tab-pane fade in active" role="tabpanel" id="PaymentsMethods">
+            <div id="PaymentsMethods" class="tab-pane fade in active" role="tabpanel">
 
 
                 <div class="container">
@@ -329,8 +330,9 @@
 
                     <!--Bank Transfer Form-->
                     <div class="row" style="text-align:center;">
-                        <div class="col-md-6 col-md-offset-6 center-block bankTransfer"  align="center" style="float:none; text-align:center;">
+                        <div class="col-md-6 col-md-offset-6 center-block bankTransfer" align="center" style="float:none; text-align:center;">
                             <form name="IBAN" class="check-element animate-show-hide" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()" style="display:inline; width:40%">
+                               <br />
                                 <label for="IBAN">لتسهيل عملية التحويل البنكي ، نرجو ادخال رقم الايبان الخاص بك</label>
                                 <div class="input-group">
                                     <span ng-show="!editIBAN" class="input-group-btn">
@@ -345,14 +347,36 @@
                                     يجب عليك إدخال الايبان
                                 </p>
                             </form>
-                            </div>
                         </div>
+                    </div>
+                    <div class="row" style="text-align:center;">
+                        <div class="col-md-6 col-md-offset-6 center-block bankTransfer" align="center" style="float:none; text-align:center;">
+                            <form name="PayPal" class="check-element animate-show-hide" ng-show="checkboxPayment.paypal" ng-model="PayPalInfo" ng-init="GetPayPalInfo()" style="display:inline; width:40%">
+                                <br />
+                                <label for="PayPal"> أدخل البريد الإلكتروني المستخدم لحسابك في باي بال </label>
+                                    <input dir="rtl" type="text" class="form-control validate" name="PayPalEmail" ng-model="PayPalInfo.Email" id="PayPalEmail" ng-disabled="!editPayPal" placeholder="البريد الإلكتروني" required>
+                                <p class=" alert alert-danger" ng-show="!PayPal.PayPalEmail.$valid">هذا الحقل مطلوب.</p>
+                                <br />
+                                <label for="PayPal">أدخل العملة المستخدمة عند التحويل في باي بال</label>
+                                    <input dir="rtl" type="text" class="form-control validate" name="PayPalCurrency" ng-model="PayPalInfo.Currency" id="PayPalCurrency" ng-disabled="!editPayPal" placeholder="العملة">
+                                <br />
+                                <span ng-show="!editPayPal" class="input-group-btn">
+                                    <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="editPayPal = true" class="btn" style="float:left;">تعديل</button>
+                                </span>
+                                <span ng-show="editPayPal" class="input-group-btn">
+                                    <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdatePayPalInfo()" class="btn" style="float:left;">تحديث</button>
+                                </span>
+                            </form>
+                            <!--  <div ng-bind-html='PayPalButtonCode2'> </div>
+        <div ng-bind-html='PayPalButtonCode'> </div>-->
+                        </div>
+                    </div>
                 </div>
 
 
 
             </div>
-            <div id="TableOfProcesses" class="tab-pane fade in active" role="tabpanel" >
+            <div id="TableOfProcesses" class="tab-pane fade in active" role="tabpanel">
                 <!--TableOfProcesses-->
                 <div class="container" style="margin-top:30px;">
                     <div dir="rtl">
@@ -472,9 +496,9 @@
                         <button class="addfields waves-effect waves-light btn done" ng-click="transactions=true" style="float:left;">الرجوع إلى القائمة</button>
                     </div><!-- ng-show !transactions-->
                 </div>
-                </div>
+            </div>
 
-            <div id="Statistic" class="tab-pane fade in " role="tabpanel" >
+            <div id="Statistic" class="tab-pane fade in " role="tabpanel">
                 <!--Statistic-->
                 <div class="container">
                     <hc-chart options="chartOptions">Placeholder for generic chart</hc-chart>
@@ -500,43 +524,11 @@
                         </div>
                         <h1 class="text-center">~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~</h1>
                     </div>
-
                 </div>
             </div>
-
-
         </div>
-
-
     </div>
-
 </body>
-
-     <!--PayPal
-     <div class="row">
-         <div class="col-lg-6">
-             <form name="PayPal" class="check-element animate-show-hide" ng-show="checkboxPayment.paypal" ng-model="PayPalInfo" ng-init="GetPayPalInfo()">
-                 <label for="PayPal">PayPal Button Code</label>
-                 <div class="input-group">
-                     <input type="text" class="form-control validate" name="PayPalButton" ng-model="PayPalInfo.Button" id="PayPal" placeholder="Enter your PayPal Button Code" required>
-                     <span class="input-group-btn">
-                         <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdatePayPalInfo()" class="btn">Update</button>
-                     </span>
-                 </div>
-                 <p class=" alert alert-danger" ng-show="!PayPal.PayPalButton.$valid">
-                     You must enter a VALID Code, Copy it as it is in PayPal.
-                 </p>
-             </form>
-
-             <div ng-bind-html='PayPalButtonCode2'> </div>
-             <div ng-bind-html='PayPalButtonCode'> </div>
-
-             <code>{{PayPalButtonCode}}</code>
-
-         </div>
-     </div>
-         -->
-
 
 
      <!--bootstrap(Just To Try)

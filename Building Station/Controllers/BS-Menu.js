@@ -74,21 +74,32 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 if (StoreValues.Published === true) {
                     var inform =
                         $mdDialog.alert()
-                           // .clickOutsideToClose(true)
+                            // .clickOutsideToClose(true)
                             // .parent(angular.element(document.querySelector('#popupContainer')))
                             .title('You already published your store, this is your link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
                             .textContent('Please Copy the link and save it.')
                             // .ariaLabel('Alert Dialog Demo')
                             .targetEvent(ev)
                             .ok('Close');
-                    $mdDialog.show(inform).then(function () {                       
+                    $mdDialog.show(inform).then(function () {
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
                         // $rootScope.status = 'You decided to keep your debt.';
                     });
                 }
-                else {
-                  // Appending dialog to document.body to cover sidenav in docs app
+                else if (StoreValues.PayPal === false && StoreValues.Cash === false && StoreValues.BankTransfer === false) {
+                    // Appending dialog to document.body to cover sidenav in docs app
+                    var checkPayment = $mdDialog.alert()
+                        .title('You need to select at least one payment method before Publishing.')
+                        //  .ariaLabel('Lucky day')
+                        .targetEvent(ev)
+                        .ok('OK')
+                    $mdDialog.show(checkPayment).then(function () {
+                        location.href = "/BS-MenuTabs/ManageStoreEnglish.html";
+                    }, function () {
+                    });
+                }
+                else {// Appending dialog to document.body to cover sidenav in docs app
                     var confirm = $mdDialog.confirm()
                         .title('This is your store link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + '), would you like to publish?')
                         .textContent('Please Copy the link and save it.')
@@ -106,8 +117,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
                         // $rootScope.status = 'You decided to keep your debt.';
-                    });
-                }
+                    });}
             });
         };
 
@@ -286,16 +296,21 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         };
 
         //PayPal
+        $scope.editPayPal = false;
+
         $scope.UpdatePayPalInfo = function () {
-            var buttonCode = $scope.PayPalInfo.Button;
-            if (buttonCode.includes("<form")) {
+            var PayPalEmail = $scope.PayPalInfo.Email;
+            var PayPalCurrencey = $scope.PayPalInfo.Currency
+            if (PayPalEmail.includes("@")) {
                 $http({
                     url: "PaymentMethods.asmx/UpdatePayPalInfo",
                     method: "get",
-                    params: { button: buttonCode }
+                    params: { email: PayPalEmail, currency: PayPalCurrencey }
                 })
                     .then(function (response) {
                         $scope.theresults = response.data;
+                        $scope.editPayPal = false;
+
                     }, function (error) {
                         $scope.error = error.data;
                     });
@@ -309,10 +324,10 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     params: { }
         })
                 .then(function (response) {
-        $scope.PayPalButtonCode = response.data;
+                    $scope.PayPalInfo = response.data;
 
       //  $scope.PayPalButtonCode = $sce.trustAsHtml(response.data);
-                    $scope.PayPalButtonCode2 = "<form><button type='submit'>test</button></form>";
+      //  $scope.PayPalButtonCode2 = "<form><button type='submit'>test</button></form>";
 
     }, function (error) {
         $scope.error = error.data;

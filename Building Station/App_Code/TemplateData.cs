@@ -128,6 +128,26 @@ public class TemplateData : System.Web.Services.WebService
             }
             reader.Close();
             con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'PayPal' AND Type = 'Currency'", con);
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.PayPalCurrencey = reader["Value"].ToString();
+            }
+            reader.Close();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'PayPal' AND Type = 'AccountEmail'", con);
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.PayPalEmail = reader["Value"].ToString();
+            }
+            reader.Close();
+            con.Close();
         }
         Context.Response.Write(js.Serialize(store));
     }
