@@ -35,7 +35,8 @@ public class Store
     public string BankAccount { get; set; }
     public string menuTitle { get; set; }
     public string About { get; set; }
-
+    public string PayPalEmail { get; set; }
+    public string PayPalCurrencey { get; set; }
 
     public Store()
     {

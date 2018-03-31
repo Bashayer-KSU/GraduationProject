@@ -18,8 +18,16 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 templateUrl: "BS-MenuTabs/PreviewWebsite.html",
                 controller: "PreviewWebsiteController"
             })
+            .when("/PreviewWebsiteEnglish", {
+                templateUrl: "BS-MenuTabs/PreviewWebsiteEnglish.html",
+                controller: "PreviewWebsiteController"
+            })
             .when("/Template", {
                 templateUrl: "BS-MenuTabs/Template.html",
+                controller: "TemplateController"
+            })
+            .when("/TemplateE", {
+                templateUrl: "BS-MenuTabs/TemplateEnglish.html",
                 controller: "TemplateController"
             })
             .when("/Products", {
@@ -66,21 +74,32 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 if (StoreValues.Published === true) {
                     var inform =
                         $mdDialog.alert()
-                           // .clickOutsideToClose(true)
+                            // .clickOutsideToClose(true)
                             // .parent(angular.element(document.querySelector('#popupContainer')))
                             .title('You already published your store, this is your link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
                             .textContent('Please Copy the link and save it.')
                             // .ariaLabel('Alert Dialog Demo')
                             .targetEvent(ev)
                             .ok('Close');
-                    $mdDialog.show(inform).then(function () {                       
+                    $mdDialog.show(inform).then(function () {
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
                         // $rootScope.status = 'You decided to keep your debt.';
                     });
                 }
-                else {
-                  // Appending dialog to document.body to cover sidenav in docs app
+                else if (StoreValues.PayPal === false && StoreValues.Cash === false && StoreValues.BankTransfer === false) {
+                    // Appending dialog to document.body to cover sidenav in docs app
+                    var checkPayment = $mdDialog.alert()
+                        .title('You need to select at least one payment method before Publishing.')
+                        //  .ariaLabel('Lucky day')
+                        .targetEvent(ev)
+                        .ok('OK')
+                    $mdDialog.show(checkPayment).then(function () {
+                        location.href = "/BS-MenuTabs/ManageStoreEnglish.html";
+                    }, function () {
+                    });
+                }
+                else {// Appending dialog to document.body to cover sidenav in docs app
                     var confirm = $mdDialog.confirm()
                         .title('This is your store link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + '), would you like to publish?')
                         .textContent('Please Copy the link and save it.')
@@ -98,8 +117,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
                         // $rootScope.status = 'You decided to keep your debt.';
-                    });
-                }
+                    });}
             });
         };
 
@@ -152,21 +170,49 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
         $rootScope.DeleteStore = function (ev) {
             var confirm = $mdDialog.confirm()
-                .title('Are you sure you want to delete your store ?')
-                .textContent('all your data will be removed, you will need to register again.')
+                .title('Are you sure you want to delete your store?')
+                .textContent('all your data will be deleted.')
                 .targetEvent(ev)
-                .ok('Delete')
+                .ok('YES')
                 .cancel('Cancel');
 
             $mdDialog.show(confirm).then(function () {
+                // Appending dialog to document.body to cover sidenav in docs app
+                var askForPassword = $mdDialog.prompt()
+                    .title('Enter your store Password')
+                    .textContent('be aware that your store will be removed completely from our system and you will need to registr again to have a store.')
+                    .placeholder('password')
+                    // .ariaLabel('Dog name')
+                    .initialValue('')
+                    .targetEvent(ev)
+                    .required(true)
+                    .ok('Delete')
+                    .cancel('Cancel');
 
-                $http.get('/Published_Stores.asmx/DeleteStore').then(function (response) {
-                    // logout or something , or the opposite
-                    // or go to login page
-                    //  location.href = "/RegisterLogin.html";
-                }); 
+                $mdDialog.show(askForPassword).then(function (result) {
+                    $http({
+                        url: "Published_Stores.asmx/DeleteStore",
+                        params: { pass: result },
+                        method: "get"
+                    })
+                        .then(function (response) {
+                            var storePass = response.data;
+                            if (storePass.Password === 'incorrect') {
+                               var NOTdeleted = $mdDialog.alert()
+                                    .title('Incorrect Password')
+                                    .targetEvent(ev)
+                                    .ok('Close');
+                                $mdDialog.show(NOTdeleted).then(function () {
+                                }, function () {
+                                });
+                            }
+                            else {
+                                location.href = "/RegisterLogin.html";
+                            }
+                    }); 
+                }, function () {
+                });
             }, function () {
-                // $rootScope.status = 'You decided to keep your debt.';
             });
         };
     })
@@ -177,7 +223,23 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
         $scope.tabHeader = "Manage Store";
         $scope.templatew = "";
+        $scope.transactions = true;
 
+       
+        // Sample options for first chart
+        $scope.chartOptions = {
+            title: {
+                text: 'Temperature data'
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+
+            series: [{
+                data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+            }]
+        };
         /*
         loginService.login().then(function (response) {
             $scope.login = response;
@@ -234,16 +296,21 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         };
 
         //PayPal
+        $scope.editPayPal = false;
+
         $scope.UpdatePayPalInfo = function () {
-            var buttonCode = $scope.PayPalInfo.Button;
-            if (buttonCode.includes("<form")) {
+            var PayPalEmail = $scope.PayPalInfo.Email;
+            var PayPalCurrencey = $scope.PayPalInfo.Currency
+            if (PayPalEmail.includes("@")) {
                 $http({
                     url: "PaymentMethods.asmx/UpdatePayPalInfo",
                     method: "get",
-                    params: { button: buttonCode }
+                    params: { email: PayPalEmail, currency: PayPalCurrencey }
                 })
                     .then(function (response) {
                         $scope.theresults = response.data;
+                        $scope.editPayPal = false;
+
                     }, function (error) {
                         $scope.error = error.data;
                     });
@@ -257,10 +324,10 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     params: { }
         })
                 .then(function (response) {
-        $scope.PayPalButtonCode = response.data;
+                    $scope.PayPalInfo = response.data;
 
       //  $scope.PayPalButtonCode = $sce.trustAsHtml(response.data);
-                    $scope.PayPalButtonCode2 = "<form><button type='submit'>test</button></form>";
+      //  $scope.PayPalButtonCode2 = "<form><button type='submit'>test</button></form>";
 
     }, function (error) {
         $scope.error = error.data;
@@ -341,9 +408,23 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 method: "get"
             })
                 .then(function (response) {
-                    $scope.orders = response.data;
+                    $scope.orders = response.data; });
+        };
+
+        $scope.OrderDetails = function (OrderDetail) {
+            $scope.transactions = false;
+            $scope.OrderDetail = OrderDetail;
+            $http({
+                url: "/BuyerOrder.asmx/GetAllOrderProducts",
+                method: "get",
+                params: { Order_ID: OrderDetail.ID }
+            })
+                .then(function (response) {
+                    $scope.ProductOrders = response.data;
                 });
         };
+
+
         $scope.UpdateStatus = function (order, id) {
             $http({
                 url: "BuyerOrder.asmx/UpdateStatus",
@@ -354,6 +435,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     $scope.result = response.data;
                     var remove = $scope.orders.indexOf(order);
                     $scope.orders.splice(remove, 1);
+                    $scope.transactions = true;
                 }, function (error) { });
         };
 
@@ -510,8 +592,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 $scope.TextType = [{ name: "Store Name", value: $scope.StoreName },
                 { name: "Store Description", value: $scope.desc },
                 { name: "Phone", value: $scope.Phone },
-                { name: "Address", value: $scope.address }/*,
-                { name: "Email", value: $scope.Email }*/
+                { name: "Address", value: $scope.address },
+                { name: "Menu Title", value: $scope.MenuTitle }
                 ];
                 $scope.selectedTextType = $scope.TextType[0];
                 $scope.ShopOwnerText = $scope.selectedTextType.value;
@@ -669,7 +751,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             $scope.ShopOwnerText = $scope.selectedTextType.value;
         };
         $scope.UpdateStoreInfo = function () {
-            $scope.loading = true;
+            $scope.loadingStoreInfo = true;
             if (typeof $scope.selectedTextType !== "undefined") {
                 if ($scope.selectedTextType !== null || $scope.selectedTextType !== "") {
                     DataType = $scope.selectedTextType.name;
@@ -691,7 +773,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
                             $scope.refreshIframe();
 
-                            $scope.loading = false;
+                            $scope.loadingStoreInfo = false;
 
                         }, function (error) {
                             $scope.error = error.data;
@@ -767,6 +849,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         });
               
         $scope.UpdateSlider = function () {
+            $scope.loadingCover = true;
             var post = $http({
                 method: "POST",
                 url: "TemplateData.asmx/UploadSlider",
@@ -774,12 +857,17 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 data: { slider: $scope.imageSrc_slider },
                 headers: { "Content-Type": "application/json" }
             })
-                .then(function (response) { }, function (error) { });
+                .then(function (response) {
+ }, function (error) { });
 
             $scope.refreshIframe();
+            $scope.loadingCover = false;
+
         };
 
         $scope.UpdateAboutImage = function () {
+            $scope.loadingAboutImage = true;
+
             var post = $http({
                 method: "POST",
                 url: "TemplateData.asmx/UploadAboutImage",
@@ -790,9 +878,12 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 .then(function (response) { }, function (error) { });
 
             $scope.refreshIframe();
+            $scope.loadingAboutImage = false;
+
         };
 
         $scope.UpdateLinks = function () {
+            $scope.loadingLinks = true;
         /*    var post = $http({
                 method: "POST",
                 url: "TemplateData.asmx/UpdateLinks",
@@ -818,11 +909,15 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             )
                 .then(function (response) {
                     $scope.result = response.data;
+
+                    $scope.refreshIframe();
+                    Links_service.refresh();
+
+                    $scope.loadingLinks = false;
+
                 }, function (error) {
                     $scope.error = error.data;
                 });
-            $scope.refreshIframe();
-            Links_service.refresh();
         };
     })
     .controller("PreviewWebsiteController", function ($rootScope, $scope, $http, $window) {
@@ -830,33 +925,14 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         $scope.Logout = function () {
             $rootScope.Logout();
         };
-        /*$scope.EnableDesktopView = false;
-        $scope.EnableMobileView = false;
-
-        
-        */
         //Desktop View
         $scope.DesktopView = function () {
-            //alert("EnableDesktopView before");
-            $window.open('/Views/Preview.html', '_blank');
-            //$http.get("Preview.asmx/EnableDesktopView").then(function (response) {
-               // $window.open('/Views/Preview.html', '_blank');
-            //}, function (error) {
-             //   alert(error.data);
-             //   });
+                $window.open('/Views/Preview.html', '_blank');
         };
         //\Desktop View
-
-        //Mobile View
-        /*$scope.MobileView = function () {
-            alert("EnableMobileView before");
-            $http.get("Preview.asmx/EnableMobileView").then(function (response) {
-                $window.open('/Views/Preview.html', '_blank');
-            }, function (error) {
-                alert(error.data);
-            });
-        };*/
-        //\Mobile View
+        $scope.DesktopViewE = function () {
+            $window.open('/Views/PreviewEnglish.html', '_blank');
+        };
     })
     .controller("TemplateController", function ($scope, $http, $location, $rootScope) {
         $scope.tabHeader = "Template";
@@ -1211,4 +1287,15 @@ app.directive('customOnChange', function () {
     };
 });
 
-
+app.directive('hcChart', function () {
+    return {
+        restrict: 'E',
+        template: '<div></div>',
+        scope: {
+            options: '='
+        },
+        link: function (scope, element) {
+            Highcharts.chart(element[0], scope.options);
+        }
+    };
+});

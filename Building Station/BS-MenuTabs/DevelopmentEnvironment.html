@@ -70,14 +70,21 @@
                         <button ng-disabled="!imageSrc_slider" class="btn btn-default" ng-click="UpdateSlider()" type="submit">Update</button>
                     </span>
                 </div>
+                <div ng-show="loadingCover" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
+                    <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
+                </div>
             </div>
             <div class="row">
                 <h4>change About image</h4>
                 <div class="input-group">
                     <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_about" style="width:100%;" />
                     <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="UpdateAboutImage()" type="submit">Update</button>
+                        <button ng-disabled="!imageSrc_about" class="btn btn-default" ng-click="UpdateAboutImage()" type="submit">Update</button>
                     </span>
+                </div>
+
+                <div ng-show="loadingAboutImage" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
+                    <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
                 </div>
             </div>
             <br />
@@ -90,12 +97,9 @@
                     <!--ng-show="selectedTextType.name!='Store Description'" -->
                     <input type="text" class="form-control" ng-model="ShopOwnerText" placeholder="Write new text ...">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="UpdateStoreInfo()" type="submit">Update</button>
+                        <button ng-disabled="!ShopOwnerText" class="btn btn-default" ng-click="UpdateStoreInfo()" type="submit">Update</button>
                     </span>
 
-                </div>
-                <div ng-show="loading" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
-                    <md-progress-circular md-mode="indeterminate"  md-diameter="20px"></md-progress-circular>
                 </div>
             </div>
             <br />
@@ -133,8 +137,12 @@
                     <input type="text" ng-model="myFacebookLink" class="form-control" placeholder="paste Facebook link here ..." aria-label="...">
 
                 </div><!-- /input-group -->
+
                 <button style="float:right;" class="btn btn-default" ng-click="UpdateLinks()" type="submit">Update</button>
                 <p style="font-size:x-small; color:firebrick;"> Note: your links must be valid </p>
+            </div>
+            <div ng-show="loadingLinks" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
+                <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
             </div>
             <br />
             <div class="row">
@@ -176,7 +184,7 @@
             <br />
         </div>
         <div class="col-sm-8 col-md-8">
-            <div class="embed-responsive embed-responsive-4by3" style="margin-left:4vw; width:57vw; height: 60vw;">
+            <div class="embed-responsive embed-responsive-4by3" style="margin-left:5vw; width: 51.5vw; height: 50vw;">
                 <iframe refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
                 <!--style="overflow: hidden; height: 200%; width: 100%;"-->
             </div>

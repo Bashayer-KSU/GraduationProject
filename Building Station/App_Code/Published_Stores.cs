@@ -40,12 +40,15 @@ public class Published_Stores : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             // check if it's already published 
-            SqlCommand cmd = new SqlCommand("SELECT WebsiteDomain FROM Store WHERE Email ='" + Session["user"] + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT WebsiteDomain, PayPal, Cash, BankTransfer FROM Store WHERE Email ='" + Session["user"] + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
                 store.Domain = reader["WebsiteDomain"].ToString();
+                store.PayPal = Convert.ToBoolean(reader["PayPal"]);
+                store.Cash = Convert.ToBoolean(reader["Cash"]);
+                store.BankTransfer = Convert.ToBoolean(reader["BankTransfer"]);
             }
             reader.Close();
             con.Close();
@@ -151,34 +154,52 @@ public class Published_Stores : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void DeleteStore() {
+    public void DeleteStore(string pass) {
 
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("DELETE FROM Element WHERE StoreEmail = '" + Session["user"] + "'", con);
-            cmd.ExecuteNonQuery();
+            SqlCommand cmd = new SqlCommand("SELECT Password FROM Store WHERE Email = '" + Session["user"] + "'", con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.Password = reader["Password"].ToString();
+            }
             con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("DELETE FROM Product WHERE StoreEmail = '" + Session["user"] + "'", con);
-            cmd.ExecuteNonQuery();
-            con.Close();
+            if (pass.Equals(store.Password))
+            {
 
-            con.Open();
-            cmd = new SqlCommand("DELETE FROM Category WHERE StoreEmail = '" + Session["user"] + "'", con);
-            cmd.ExecuteNonQuery();
-            con.Close();
+                con.Open();
+                cmd = new SqlCommand("DELETE FROM Element WHERE StoreEmail = '" + Session["user"] + "'", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("DELETE FROM Order WHERE StoreEmail = '" + Session["user"] + "'", con);
-            cmd.ExecuteNonQuery();
-            con.Close();
+                con.Open();
+                cmd = new SqlCommand("DELETE FROM Product WHERE StoreEmail = '" + Session["user"] + "'", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("DELETE FROM Store WHERE Email = '" + Session["user"] + "'", con);
-            cmd.ExecuteNonQuery();
-            con.Close();
+                con.Open();
+                cmd = new SqlCommand("DELETE FROM Category WHERE StoreEmail = '" + Session["user"] + "'", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("DELETE FROM [Order] WHERE StoreEmail = '" + Session["user"] + "'", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("DELETE FROM Store WHERE Email = '" + Session["user"] + "'", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            else
+            {
+                store.Password = "incorrect";
+            }
+            Context.Response.Write(js.Serialize(store));
         }
     }
 
@@ -292,40 +313,28 @@ public class Published_Stores : System.Web.Services.WebService
             }
             reader.Close();
             con.Close();
-        }
-        Context.Response.Write(js.Serialize(store));
-    }
 
-    [WebMethod] //Temp for Asmaa
-    public void GetProducts(string StoreDomain)
-    {
-        using (SqlConnection con = new SqlConnection(cs))
-        {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = '" + StoreDomain + "'", con);
-            SqlDataReader reader = cmd.ExecuteReader();
+            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + store.Email + "' AND Name = 'PayPal' AND Type = 'Currency'", con);
+            reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                store.Email = reader["Email"].ToString();
+                store.PayPalCurrencey = reader["Value"].ToString();
             }
             reader.Close();
             con.Close();
 
-            cmd = new SqlCommand("SELECT Name, Price, Description, Discount, Category_ID, StoreEmail, Image FROM Product WHERE StoreEmail = '" + store.Email + "'", con);
             con.Open();
-             reader = cmd.ExecuteReader();
+            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + store.Email + "' AND Name = 'PayPal' AND Type = 'AccountEmail'", con);
+            reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                product.Name = reader["Name"].ToString();
-                product.Price = Convert.ToDouble(reader["Price"]);
-                product.Description = reader["Description"].ToString();
-                product.Discount = Convert.ToInt32(reader["Discount"]);
-                product.Category_ID = reader["Category_ID"].ToString();
-                product.StoreEmail = reader["StoreEmail"].ToString();
-                product.Image = reader["Image"].ToString();
+                store.PayPalEmail = reader["Value"].ToString();
             }
+            reader.Close();
+            con.Close();
         }
-        Context.Response.Write(js.Serialize(product));
+        Context.Response.Write(js.Serialize(store));
     }
 
     [WebMethod]
@@ -531,4 +540,36 @@ public class Published_Stores : System.Web.Services.WebService
         else
             Context.Response.Write(js.Serialize(false));
     }
+
+    /* [WebMethod] //Temp for Asmaa
+   public void GetProducts(string StoreDomain)
+   {
+       using (SqlConnection con = new SqlConnection(cs))
+       {
+           con.Open();
+           SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = '" + StoreDomain + "'", con);
+           SqlDataReader reader = cmd.ExecuteReader();
+           while (reader.Read())
+           {
+               store.Email = reader["Email"].ToString();
+           }
+           reader.Close();
+           con.Close();
+
+           cmd = new SqlCommand("SELECT Name, Price, Description, Discount, Category_ID, StoreEmail, Image FROM Product WHERE StoreEmail = '" + store.Email + "'", con);
+           con.Open();
+            reader = cmd.ExecuteReader();
+           while (reader.Read())
+           {
+               product.Name = reader["Name"].ToString();
+               product.Price = Convert.ToDouble(reader["Price"]);
+               product.Description = reader["Description"].ToString();
+               product.Discount = Convert.ToInt32(reader["Discount"]);
+               product.Category_ID = reader["Category_ID"].ToString();
+               product.StoreEmail = reader["StoreEmail"].ToString();
+               product.Image = reader["Image"].ToString();
+           }
+       }
+       Context.Response.Write(js.Serialize(product));
+   }*/
 }

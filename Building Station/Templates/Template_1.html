@@ -27,26 +27,25 @@
                     <div class="row">
                         <div class="12u">
                             <div style="float:left; width:30%;">
-            <button ng-style="{'background': Store.Color1,'color': Store.Color3}" style="float:left; width:10vw; font-size:4vw" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS">
-                <span class="glyphicon glyphicon-shopping-cart"></span>
-                <span style="font-size:1.5vw;" class="badge badge-pill">{{ItemsInShoppingCart()}}</span>
-            </button>
-        </div>
-        <div style=" position: absolute; left: 8em; right: 8em; margin: 0px 0px 0px 0px; width:auto;">
-            <h1 ng-style="{'color': Store.Color3}" style="font-size:3vw; margin: 15px 0px 0px 0px; ">{{Store.Name}}</h1>
-        </div>
-        <div style=" float:right; margin:0vw 0vw 0vw 0vw; width:30%;">
-            <img ng-src="{{Store.Logo}}" style="width: 10vw; height: 10vw; border-radius: 50%;" alt="Cinque Terre">
-        </div>
-    </div>
+                                <button ng-style="{'background': Store.Color1,'color': Store.Color3}" style="float:left; width:10vw; font-size:4vw" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    <span style="font-size:1.5vw;" class="badge badge-pill">{{ItemsInShoppingCart()}}</span>
+                                </button>
+                            </div>
+                            <div style=" position: absolute; left: 8em; right: 8em; margin: 0px 0px 0px 0px; width:auto;">
+                                <h1 ng-style="{'color': Store.Color3}" style="font-size:3vw; margin: 15px 0px 0px 0px; ">{{Store.Name}}</h1>
+                            </div>
+                            <div style=" float:right; margin:0vw 0vw 0vw 0vw; width:30%;">
+                                <img ng-src="{{Store.Logo}}" style="width: 10vw; height: 10vw; border-radius: 50%;" alt="Cinque Terre">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
         <!-- store welcom -->
-        <section style="padding-top:0%; padding-bottom: 0%; " id="banner">
-            <div class="row">
-                <div class="12u">
+        <section style="padding-left: 0vw; padding-right:0vw; padding-top:0%; padding-bottom: 0px;" id="banner">
+                <div class="12u 12u(mobile)">
                     <header ng-style="{'background': Store.Color2}">
                         <h2 ng-style="{'color': Store.Color4}">{{Store.Description}}</h2>
                         <p ng-style="{'color': Store.Color3}">{{Store.Address}}</p>
@@ -301,7 +300,7 @@
         <!-- Footer -->
         <div ng-style="{'background': Store.Color3}">
             <div class="12u">
-                <div id="footer-wrapper" style="padding-bottom:0px; padding-top:1vw;" >
+                <div id="footer-wrapper" style="padding-bottom:0px; padding-top:1vw;">
                     <section id="footer" class="container">
                         <div class="row">
                             <div dir="rtl" class="4u 12u(mobile)">
@@ -336,7 +335,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="12u" style="padding-top:1vw;" >
+                            <div class="12u" style="padding-top:1vw;">
                                 <!-- Copyright -->
                                 <div style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:1vw;" id="copyright">
                                     <ul ng-style="{'background': Store.Color2}" class="links">

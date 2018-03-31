@@ -1,8 +1,19 @@
-﻿/// <reference path="../scripts/angular.min.js" />
-/// <reference path="../scripts/angular-route.min.js" />
+﻿
+var publishApp = angular.module("published", ["ngRoute"]);
 
-var publishApp = angular.module("published", ["ngRoute"])
-    .config(function ($routeProvider, $locationProvider) {
+publishApp.service('initialSetup', function ($http) {
+    var promise;
+    return {
+        InitialSetup: function () {
+            promise = $http.get();
+        },
+        getStoreInfo: function () {
+            return promise;
+        }
+    };
+});
+
+var published = publishApp.config(function ($routeProvider, $locationProvider) {
     $routeProvider.caseInsensitiveMatch = true;
     $routeProvider
         .when("/BuildingStation", {
@@ -16,7 +27,10 @@ var publishApp = angular.module("published", ["ngRoute"])
         .otherwise({
             redirectTo: "/BuildingStation"
         });
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
 })
     .controller("BS_HOME", function ($scope) {
 
@@ -51,7 +65,7 @@ var publishApp = angular.module("published", ["ngRoute"])
             BankTransfer: false
         };
         var init = function () {
-
+            //Store Info
             $http({
                 url: "../Published_Stores.asmx/GetStore",
                 params: { StoreDomain: $routeParams.Domain },
@@ -59,7 +73,7 @@ var publishApp = angular.module("published", ["ngRoute"])
             })
            .then(function (response) {
                 $scope.Store = response.data;
-                console.log($scope.Store);//Store Info
+           //     console.log($scope.Store);
 
 
                 //WEBSITE ICON and Title 
@@ -102,10 +116,10 @@ var publishApp = angular.module("published", ["ngRoute"])
                 */
 
                 //Menu
-                $scope.MenuTitle = $scope.Store.MenuTitle;
-            }, function (error) {
-                $scope.error = error;
-            });
+                    $scope.MenuTitle = $scope.Store.MenuTitle;
+                }, function (error) {
+                    $scope.error = error;
+                });
 
         };
         init();
@@ -129,47 +143,57 @@ var publishApp = angular.module("published", ["ngRoute"])
             })
              .then(function (response) {
                 $scope.elementInfo = response.data;
-                console.log($scope.elementInfo);
-                for (var i = 0; i < $scope.elementInfo.length; i++) {
-                    if ($scope.elementInfo[i].Name === "Snapchat") {
-                        $scope.icon.snapchat = !$scope.elementInfo[i].Hidden;
-                        $scope.Snapchat = !$scope.elementInfo[i].Hidden;
+               // console.log($scope.elementInfo);
+                    for (var i = 0; i < $scope.elementInfo.length; i++) {
+                        if ($scope.elementInfo[i].Name === "Snapchat") {
+                            $scope.icon.snapchat = !$scope.elementInfo[i].Hidden;
+                            $scope.Snapchat = !$scope.elementInfo[i].Hidden;
+                        }
+                        else if ($scope.elementInfo[i].Name === "Facebook") {
+                            $scope.icon.facebook = !$scope.elementInfo[i].Hidden;
+                            $scope.Facebook = !$scope.elementInfo[i].Hidden;
+                        }
+                        else if ($scope.elementInfo[i].Name === "Twitter") {
+                            $scope.icon.twitter = !$scope.elementInfo[i].Hidden;
+                            $scope.Twitter = !$scope.elementInfo[i].Hidden;
+                        }
+                        else if ($scope.elementInfo[i].Name === "Instagram") {
+                            $scope.icon.instagram = !$scope.elementInfo[i].Hidden;
+                            $scope.Instagram = !$scope.elementInfo[i].Hidden;
+                        }
+                        else if ($scope.elementInfo[i].Name === "Slider") {
+                            $scope.section.slider = !$scope.elementInfo[i].Hidden;
+                        }
+                        else if ($scope.elementInfo[i].Name === "About") {
+                            $scope.section.about = !$scope.elementInfo[i].Hidden;
+                            $scope.AboutContent = $scope.elementInfo[i].Value;
+                            $scope.AboutImage = $scope.elementInfo[i].Image;
+                            if ($scope.AboutImage === "No Image" || $scope.AboutImage === null || $scope.AboutImage === undefined)
+                                $scope.AboutImage = $scope.Store.slider;
+                            if ($scope.AboutContent === null || $scope.AboutContent === "")
+                                $scope.section.about = true;
+                        }
                     }
-                    else if ($scope.elementInfo[i].Name === "Facebook") {
-                        $scope.icon.facebook = !$scope.elementInfo[i].Hidden;
-                        $scope.Facebook = !$scope.elementInfo[i].Hidden;
-                    }
-                    else if ($scope.elementInfo[i].Name === "Twitter") {
-                        $scope.icon.twitter = !$scope.elementInfo[i].Hidden;
-                        $scope.Twitter = !$scope.elementInfo[i].Hidden;
-                    }
-                    else if ($scope.elementInfo[i].Name === "Instagram") {
-                        $scope.icon.instagram = !$scope.elementInfo[i].Hidden;
-                        $scope.Instagram = !$scope.elementInfo[i].Hidden;
-                    }
-                    else if ($scope.elementInfo[i].Name === "Slider") {
-                        $scope.section.slider = !$scope.elementInfo[i].Hidden;
-                        $scope.section.slider.content = $scope.elementInfo[i].Value;
-                    }
-                    else if ($scope.elementInfo[i].Name === "About") {
-                        $scope.section.about = !$scope.elementInfo[i].Hidden;
-                        $scope.AboutContent = $scope.elementInfo[i].Value;
-                        if ($scope.AboutContent === null || $scope.AboutContent === "")
-                            $scope.section.about = true;
-                    }
-                }
 
-            }, function (error) {
-                $scope.error = error;
-            });
+                }, function (error) {
+                    $scope.error = error;
+                });
         };
         ElementsData();
 
         $scope.Checkout = function () {
+           /* console.log($scope.BuyerName);
+            console.log($scope.BuyerPhone);
+            console.log($scope.BuyerEmail);
+            console.log($scope.BuyerLocation);
+            console.log($scope.PaymentMethod);
+            console.log($scope.HolName);
+            console.log($scope.OrderID);*/
 
             $http.post(
                 "/BuyerOrder.asmx/CreateOrder",
                 $.param({
+                    StoreEmail: $scope.Store.Email,
                     BuyerName: $scope.BuyerName,
                     BuyerPhone: $scope.BuyerPhone,
                     BuyerEmail: $scope.BuyerEmail,
@@ -195,8 +219,43 @@ var publishApp = angular.module("published", ["ngRoute"])
         };
 
 
+        $scope.CheckoutA = function (Buyer_Name, Buyer_Phone, Buyer_Email, Buyer_Location, Payment_Method, Hol_Name, Order_ID) {
+           /* console.log($scope.BuyerName);
+            console.log($scope.BuyerPhone);
+            console.log($scope.BuyerEmail);
+            console.log($scope.BuyerLocation);
+            console.log($scope.PaymentMethod);
+            console.log($scope.HolName);
+            console.log($scope.OrderID);*/
 
-        //////////////// PRODUCTS AND CATEGORIES /////////////
+            $http.post(
+                "/BuyerOrder.asmx/CreateOrder",
+                $.param({
+                    StoreEmail: $scope.Store.Email,
+                    BuyerName: Buyer_Name,
+                    BuyerPhone: Buyer_Phone,
+                    BuyerEmail: Buyer_Email,
+                    BuyerLocation: Buyer_Location,
+                    PaymentMethod: Payment_Method,
+                    BankAccount: Hol_Name,
+                    OrderID: Order_ID,
+                    TotalPrice: $scope.TotalPrice
+                }),
+                {
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' }
+                })
+                .then(function (response) {
+                    $scope.result = response.data;
+                    $scope.addProductToOrder($scope.result.ID);
+                    $scope.checkout = false;
+                    $scope.payment = false;
+                    $scope.ProductsArray.length = 0;
+
+                }, function (error) {
+                    $scope.error = error.data;
+                });
+        };
+            //////////////// PRODUCTS AND CATEGORIES /////////////
 
         //Initialization
         $scope.Exist = false;
@@ -256,8 +315,10 @@ var publishApp = angular.module("published", ["ngRoute"])
         $scope.removeFromCart = function (product) {
             var index = $scope.ProductsArray.indexOf(product);
             $scope.addProduct.Amount = $scope.addProduct.Amount + $scope.ProductsArray[index].Amount; //return the amount of product to the orginal amount
-            $scope.ProductsArray.splice(index, 1);
+
             $scope.TotalPrice -= product.PriceAfterDiscount * product.Amount;
+            product.Amount = product.Amount + $scope.ProductsArray[index].Amount;
+            $scope.ProductsArray.splice(index, 1);
 
         };
 
@@ -284,14 +345,14 @@ var publishApp = angular.module("published", ["ngRoute"])
 
         //////////////////////////////////
 
-        $http({
+       /* $http({
             url: "../Published_Stores.asmx/GetProducts",
             params: { StoreDomain: $routeParams.Domain },
             method: "get"
         })
             .then(function (response) {
                 $scope.Product = response.data;
-            });
+            });*/
     });
 
 publishApp.factory('CategoryService', function ($http, $routeParams) {
