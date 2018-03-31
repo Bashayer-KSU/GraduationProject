@@ -46,7 +46,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             requireBase: false
         });
     })
-    .run(function ($rootScope, $location, loginService, $http, $mdDialog) {
+    .run(function ($rootScope, $location, loginService, $http, $mdDialog, $window) {
 
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
@@ -66,6 +66,13 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 $rootScope.result = response.data;
                 location.href = $rootScope.result.substr(1, $rootScope.result.length - 2);
             });
+        };
+
+        $rootScope.DesktopView = function () {
+            $window.open('/Views/Preview.html', '_blank');
+        };
+        $rootScope.DesktopViewE = function () {
+            $window.open('/Views/PreviewEnglish.html', '_blank');
         };
 
         $rootScope.Publish = function (ev) {
@@ -920,20 +927,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 });
         };
     })
-    .controller("PreviewWebsiteController", function ($rootScope, $scope, $http, $window) {
-        $scope.tabHeader = "Previe Website";
-        $scope.Logout = function () {
-            $rootScope.Logout();
-        };
-        //Desktop View
-        $scope.DesktopView = function () {
-                $window.open('/Views/Preview.html', '_blank');
-        };
-        //\Desktop View
-        $scope.DesktopViewE = function () {
-            $window.open('/Views/PreviewEnglish.html', '_blank');
-        };
-    })
     .controller("TemplateController", function ($scope, $http, $location, $rootScope) {
         $scope.tabHeader = "Template";
 
@@ -955,7 +948,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             $location.path('/DevelopmentEnvironment');
         };
     })
-    .controller("ProductsController", function ($rootScope, $scope, $http) {
+    .controller("ProductsController", function ($rootScope, $scope, $http, $mdDialog) {
         $scope.tabHeader = "Products";
         $scope.displayCategoryTable = false;
         $scope.selectedCategory = "";
@@ -1122,16 +1115,30 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         //\to add new row
 
         //to remove row
-        $scope.removeproduct = function (product, productID) {
+        $scope.removeproduct = function (product, productID, ev, language) {
             $http({
                 url: "Products.asmx/RemoveProduct",
                 method: "get",
                 params: { product_ID: productID }
             })
                 .then(function (response) {
-                    $scope.result = response.data;
-                    var remove = $scope.products.indexOf(product);
-                    $scope.products.splice(remove, 1);
+                    $scope.Delete = response.data;
+                    if ($scope.Delete == true) {
+                        var remove = $scope.products.indexOf(product);
+                        $scope.products.splice(remove, 1);
+                    }
+                    else {
+                        var msg;
+                        if (language !== 'eng') {
+                            msg = 'You are not able to delete the product because there are purchases do not completed yet.Please complete the operations before deleting the product';
+                        } else msg = 'لاتستطيع حذف المنتج وذلك لوجود عمليات شراء لم تتم بعد. الرجاء اتمام العمليات قبل حذف المنتج';
+                        var inform =
+                            $mdDialog.alert()
+                                .textContent(msg)
+                                .targetEvent(ev)
+                                .ok('Close');
+                        $mdDialog.show(inform).then(function () { }, function () { });
+                    }
                 }, function (error) { });
         };
         //\to remove row
