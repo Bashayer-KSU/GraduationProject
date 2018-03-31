@@ -253,7 +253,7 @@
                                 <button ng-show="!product.edit" ng-click="x(); product.edit = !product.edit" style="background-color:transparent; border: none;"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;" /></button>
                                 <button ng-show="product.edit" ng-click="editProduct($index,product,product.ID,product.Image,product.Name,product.Description,product.Price,product.PriceAfterDiscount,product.Amount,product.Discount)" style="background-color:transparent; border: none;"><img src="/images/success.png" alt="" style="width:25px; height:25px;" /></button>
                             </td>
-                            <td><button class="remove" ng-click="removeproduct(product, product.ID)" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button></td>
+                            <td><button class="remove" ng-click="removeproduct(product, product.ID, $event, 'arabic')" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button></td>
                         </tr>
 
                         <tr>
