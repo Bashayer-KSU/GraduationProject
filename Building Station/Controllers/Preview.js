@@ -10,7 +10,7 @@ var ctr = app.controller("managePreview", function ($scope, $http) {
 
             $scope.storeID = response.data;
             if ($scope.storeID.TemplateID === 1) {
-                $scope.template = "/Templates/Template_1/Template_1.html";
+                $scope.template = "/Templates/Template_1.html";
             }
             else if ($scope.storeID.TemplateID === 2) {
                 $scope.template = "/Templates/Template_2/Template_2.html";
