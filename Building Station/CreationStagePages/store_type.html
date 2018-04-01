@@ -3,19 +3,25 @@
     <h2 style="line-height: 0.9; font-size:40px;"><strong>What kind of store do you want? </strong></h2>
 </header>
 <!-- Main content area -->
-<main>
-    <input id="Type" type="text" name="Type" ng-model="Type" ng-change="checkContent()" ng-keyup="complete(Type)" placeholder=" Example: Fashion  " style="width:100%;">
-    <ul style="list-style: none;" ng-model="hidethis" ng-hide="hidethis">
-        <li class="list-group-item" ng-repeat="Typedata in filterType" ng-click="fillTextbox(Typedata)" style="width:100%;">{{Typedata}}</li>
-    </ul>    <br /> <br />
+<form name="myform">
+    <main>
+        <input id="Type" type="text" name="myType" ng-model="Type" ng-change="checkContent()" ng-keyup="complete(Type)" placeholder=" Example: Fashion " style="width:98%;" required />
+        <span class="asterisk_input">  </span>
+<p style="font-size:x-small; margin-top:0px; padding-top:0px; color: darkred;" ng-show="myform.myType.$invalid"> this field is required  </p>
 
-</main>
+        <ul style="list-style: none;" ng-model="hidethis" ng-hide="hidethis || myform.myType.$invalid">
+            <li class="list-group-item" ng-repeat="Typedata in filterType" ng-click="fillTextbox(Typedata)" style="width:100%;">{{Typedata}}</li>
+        </ul>    <br /> <br />
 
-<div style="display:inline; overflow: auto;
+    </main>
+
+    <div style="display:inline; overflow: auto;
                 white-space: nowrap; padding: 0px 0px;">
 
-    <a style="float: right; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="3.1" class="button button-large" ng-click="sendType()" data-toggle="tooltip" data-placement="left" title="Next">&#8250;</a>
-    <a style="float: left; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="1" class="button button-large" data-toggle="tooltip" data-placement="right" title="Previous">&#8249;</a>
-</div>
+        <button ng-disabled="myform.myType.$invalid" style="float: right; font-size:100px;  padding: 0.05cm 0.45cm 0.45cm 0.45cm; border-radius: 50%;" href="3.1" class="button button-large" ng-click="sendType()" data-toggle="tooltip" data-placement="left" title="Next">&#8250;</button>
+        <a style="float: left; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="1" class="button button-large" data-toggle="tooltip" data-placement="right" title="Previous">&#8249;</a>
+    </div>
+</form>
+
 <!-- Footer -->
 <footer></footer>

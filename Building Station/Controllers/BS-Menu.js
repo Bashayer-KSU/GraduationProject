@@ -56,7 +56,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 //console.log("in $routeChangeStart " + $rootScope.login);
                 if (response === "false") {
                     //redirect to login page
-                    location.href = "/RegisterLogin.html";
+                    location.href = "/index.html";
                 }
             });
         });
@@ -214,7 +214,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                                 });
                             }
                             else {
-                                location.href = "/RegisterLogin.html";
+                                location.href = "/index.html";
                             }
                     }); 
                 }, function () {
@@ -253,7 +253,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             console.log("in then " + $scope.login);
             if (response === "false") {
                 //redirect to login page
-                location.href = "/RegisterLogin.html";
+                location.href = "/index.html";
             }
         });*/
 

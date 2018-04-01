@@ -31,7 +31,7 @@ public class RegisterLogin : System.Web.Services.WebService
             if (dr.HasRows == true)
             {
                 con.Close();
-                Context.Response.Write(js.Serialize("/RegisterLogin.html"));
+                Context.Response.Write(js.Serialize("/index.html"));
             }
             else
             {
@@ -151,7 +151,7 @@ public class RegisterLogin : System.Web.Services.WebService
             //Invalid login
             else
             {
-                Context.Response.Write(js.Serialize("/RegisterLogin.html"));
+                Context.Response.Write(js.Serialize("/index.html"));
             }
         }
     }
@@ -175,6 +175,6 @@ public class RegisterLogin : System.Web.Services.WebService
     {
         // Session.Clear();
         Session.Abandon();
-        Context.Response.Write(js.Serialize("/RegisterLogin.html"));
+        Context.Response.Write(js.Serialize("/index.html"));
     }
 }

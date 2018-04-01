@@ -3,8 +3,8 @@
 <head runat="sever">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <base href="/" />
     <title>Creation Stage - Building Station</title>
+    <base href="/" />
 
     <script src="Scripts/angular.min.js"></script>
     <!--<script src="Scripts/angular-route.min.js"></script>-->
@@ -30,8 +30,9 @@
         body {
             font-family: 'NeoSansArabic';
         }
+
         ul {
-            position: absolute;
+            /* position: absolute;*/
             z-index: 1000;
             cursor: default;
             padding: 0;
@@ -56,20 +57,34 @@
             li:hover {
                 background-color: #f9f9f9;
             }
+
         input::placeholder {
             font-style: italic;
             opacity: 0.4; /* Firefox */
         }
 
         .asterisk_input:after {
-            content: " *";
+            content: "*";
             color: #e32;
             position: absolute;
             margin: 0px 0px 0px -20px;
             font-size: large;
-            padding: 0 5px 0 0;
+            padding: 0px 5px 0px 0px;
         }
 
+       /* .requiredInput:after {
+            content: " *";
+            color: #e32;
+            padding-right: 25px;
+            padding-left: 0px;
+            margin-left: 0px;
+            font-size: large;
+        }
+        div.required input::after {
+            padding-right: 25px;
+            background-image: url(/images/asterisk.png);
+            background-position: right top;
+        }*/
         button {
             border: none;
         }
