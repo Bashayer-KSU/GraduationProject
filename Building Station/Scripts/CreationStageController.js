@@ -60,7 +60,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             });
         $locationProvider.html5Mode(true);
     })
-    .run(function ($rootScope, $location, loginService) {
+    .run(function ($rootScope, $location, loginService, $window) {
 
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
@@ -74,25 +74,17 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             });
         });
 
-        window.onbeforeunload = function (event) {
-            var message = 'Important: Please click on \'Save\' button to leave this page.';
-            if (typeof event == 'undefined') {
-                event = window.event;
-            }
-            if (event) {
-                event.returnValue = message;
-            }
-            return message;
-        };
-
-        $(function () {
-            $("a").not('#lnkLogOut').click(function () {
-                window.onbeforeunload = null;
-            });
-            $(".btn").click(function () {
-                window.onbeforeunload = null;
-            });
+       /* window.addEventListener("beforeunload", function (e) {
+            var confirmationMessage = "\o/";
+            alert("exit");
+            (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+            return confirmationMessage;                            //Webkit, Safari, Chrome
+        });*/
+        
+        $(window).bind("beforeunload", function (event) {
+            return "Some of your changes may not be saved.";
         });
+       
     })
     .controller("0Controller", function ($scope, $rootScope, $window) {
 

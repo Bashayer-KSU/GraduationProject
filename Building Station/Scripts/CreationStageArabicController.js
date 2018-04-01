@@ -77,6 +77,10 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 }
             });
         });
+
+        $(window).bind("beforeunload", function (event) {
+            return "Some of your changes may not be saved.";
+        });
     })
     .controller("0aController", function ($scope, $rootScope, $window) {
         $rootScope.English = function () {
