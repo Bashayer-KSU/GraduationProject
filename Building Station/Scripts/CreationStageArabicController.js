@@ -58,9 +58,11 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             .otherwise({
                 redirectTo: "/0a"
             });
-        $locationProvider.html5Mode(true);
-    })
-    .run(function ($rootScope, $location, loginService) {
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });    })
+    .run(function ($rootScope, $location, loginService, $window) {
 
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
@@ -78,6 +80,10 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             });
         });
 
+        $rootScope.English = function () {
+            $window.location.href = '../CreationStage.html';
+        };
+
         $(window).bind("beforeunload", function (event) {
             return "Some of your changes may not be saved.";
         });
@@ -88,11 +94,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         };
 
     })
-    .controller("Name_Controller", function ($scope, $rootScope, $http, $location, $window) {
-
-        $rootScope.English = function () {
-            $window.location.href = '../CreationStage.html';
-        };
+    .controller("Name_Controller", function ($scope, $http, $location) {
 
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
@@ -129,11 +131,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
               }
           } */
     })
-    .controller("Type_Controller", function ($scope, $rootScope, $http, $window) {
-
-        $rootScope.English = function () {
-            $window.location.href = '../CreationStage.html';
-        };
+    .controller("Type_Controller", function ($scope, $http) {
 
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
@@ -151,7 +149,9 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 headers: { "Content-Type": "application/json" }
             });
             post.then(function (response) { }, function (error) { $scope.R = error.data; });
+            $location.path('/3.1a');
         };
+
         $scope.Types = ["مكياج وعناية", "أشغال يدوية", "اكسسوارات", "حلويات", "موضة وملابس", "مخبز", "طبخ منزلي", "اكسسوارات جوال ولابتوب"];
         $scope.complete = function (string) {
             var output = [];
@@ -174,10 +174,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             }
         };
     })
-    .controller("InstagramController", function ($scope, $rootScope, $window, $http, $location) {
-        $rootScope.English = function () {
-            $window.location.href = '../CreationStage.html';
-        };
+    .controller("InstagramController", function ($scope, $http, $location) {
 
         $scope.$watch('search', function () {
             fetch();
@@ -241,11 +238,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $location.path('/7a');
         };
     })
-    .controller("InfoController", function ($scope, $http, $location, $rootScope, $window) {
-        $rootScope.English = function () {
-            $window.location.href = '../CreationStage.html';
-        };
-
+    .controller("InfoController", function ($scope, $http, $location) {
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
@@ -304,10 +297,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $window.location.href = '../CreationStage.html';
         };
     })*/
-    .controller("UploadLogoController", function ($scope, fileReader, $http, $rootScope, $window) {
-        $rootScope.English = function () {
-            $window.location.href = '../CreationStage.html';
-        };
+    .controller("UploadLogoController", function ($scope, fileReader, $http) {
+
         filePath = $scope.imageSrc;
         $scope.$on("fileProgress", function (e, progress) {
             $scope.progress = progress.loaded / progress.total;
@@ -359,11 +350,9 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $window.location.href = '../CreationStage.html';
         };
     })*/
-    .controller("DisplayAccountController", function ($scope, $http, $rootScope, $window) {
-        $rootScope.English = function () {
-            $window.location.href = '../CreationStage.html';
-        };
-        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+    .controller("DisplayAccountController", function ($scope, $http) {
+
+            $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
 
@@ -391,10 +380,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
 
         });
     })
-    .controller("ColorsController", function ($scope, $http, $rootScope, $window) {
-        $rootScope.English = function () {
-            $window.location.href = '../CreationStage.html';
-        };
+    .controller("ColorsController", function ($scope, $http) {
+ 
         /*   $http.get('manageWebsiteColors.asmx/chooseColors').then(function (response) {
   
               $scope.Colors = response.data;
@@ -430,11 +417,9 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             });
         };
     })
-    .controller("TemplateController", function ($scope, $http, $rootScope, $window) {
-        $rootScope.English = function () {
-            $window.location.href = '../CreationStage.html';
-        };
-        var TemplateID = 0;
+    .controller("TemplateController", function ($scope, $http, $window) {
+
+            var TemplateID = 0;
         $scope.Border1 = "none";
         $scope.Border2 = "none";
         $scope.Border3 = "none ";

@@ -58,7 +58,10 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             .otherwise({
                 redirectTo: "/0"
             });
-        $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
     })
     .run(function ($rootScope, $location, loginService, $window) {
 
@@ -74,6 +77,10 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             });
         });
 
+        $rootScope.Arabic = function () {
+            $window.location.href = '../CreationStageArabic.html';
+        };
+
        /* window.addEventListener("beforeunload", function (e) {
             var confirmationMessage = "\o/";
             alert("exit");
@@ -86,21 +93,16 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
         });
        
     })
-    .controller("0Controller", function ($scope, $rootScope, $window) {
+    .controller("0Controller", function ($scope, $window, $rootScope) {
 
         $rootScope.Arabic = function () {
             $window.location.href = '../CreationSatgeArabic.html';
         };
 
     })
-    .controller("NameController", function ($scope, $rootScope, $http, $location, $window) {
+    .controller("NameController", function ($scope, $http, $location) {
 
-        $rootScope.Arabic = function () {
-            $window.location.href = '../CreationSatgeArabic.html';
-        };
-
-        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
-
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {          
             $scope.Store = response.data;
             if ($scope.Store.Name !== ' No StoreName ') {
                 $scope.storeName = $scope.Store.Name;
@@ -143,10 +145,8 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
                 function (error) { $scope.error = error.data; });
         }*/
     })
-    .controller("TypeController", function ($scope, $rootScope, $http, $window) {
-        $rootScope.Arabic = function () {
-            $window.location.href = '../CreationStageArabic.html';
-        };
+    .controller("TypeController", function ($scope, $http, $location) {
+       
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
@@ -163,7 +163,9 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
                 headers: { "Content-Type": "application/json" }
             });
             post.then(function (response) { }, function (error) { $scope.R = error.data; });
+            $location.path('/3.1');
         };
+
         $scope.Types = ["Beauty & skin care", "Handmade", "Accessories", "Sweets", "fashion", "Bakery", "Home cook", "Phone & laptop accessories"];
         $scope.complete = function (string) {
             var output = [];
@@ -186,10 +188,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             }
         };
     })
-    .controller("InstagramController", function ($scope, $rootScope, $window, $http, $location) {
-        $rootScope.Arabic = function () {
-            $window.location.href = '../CreationStageArabic.html';
-        };
+    .controller("InstagramController", function ($scope, $http, $location) {
 
         $scope.$watch('search', function () {
             fetch();
@@ -253,10 +252,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             $location.path('/7');
         };
     })
-    .controller("InfoController", function ($scope, $rootScope, $window, $http, $location) {
-        $rootScope.Arabic = function () {
-            $window.location.href = '../CreationStageArabic.html';
-        };
+    .controller("InfoController", function ($scope, $http, $location) {
 
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
@@ -320,10 +316,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
               $window.location.href = '../CreationStageArabic.html';
           };
       })*/
-    .controller("UploadLogoController", function ($scope, fileReader, $http, $rootScope, $window) {
-        $rootScope.Arabic = function () {
-            $window.location.href = '../CreationStageArabic.html';
-        };
+    .controller("UploadLogoController", function ($scope, fileReader, $http) {
         filePath = $scope.imageSrc;
         $scope.$on("fileProgress", function (e, progress) {
             $scope.progress = progress.loaded / progress.total;
@@ -375,10 +368,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
              $window.location.href = '../CreationStageArabic.html';
          };
      })*/
-    .controller("DisplayAccountController", function ($scope, $http, $rootScope, $window) {
-        $rootScope.Arabic = function () {
-            $window.location.href = '../CreationStageArabic.html';
-        };
+    .controller("DisplayAccountController", function ($scope, $http) {
 
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
@@ -407,10 +397,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             else { $scope.Ivisible = false; }
         });
     })
-    .controller("ColorsController", function ($scope, $http, $rootScope, $window) {
-        $rootScope.Arabic = function () {
-            $window.location.href = '../CreationStageArabic.html';
-        };
+    .controller("ColorsController", function ($scope, $http) {
         $http.get('CreationStage.asmx/GetColors').then(function (response) {
 
             $scope.Colors = response.data;
@@ -429,10 +416,8 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             });
         };
     })
-    .controller("TemplateController", function ($scope, $http, $rootScope, $window) {
-        $rootScope.Arabic = function () {
-            $window.location.href = '../CreationStageArabic.html';
-        };
+    .controller("TemplateController", function ($scope, $http, $window) {
+
         var TemplateID = 0;
         $scope.Border1 = "none";
         $scope.Border2 = "none";
