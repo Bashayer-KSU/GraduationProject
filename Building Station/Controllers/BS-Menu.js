@@ -2,12 +2,12 @@
 var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
-            .when("/ManageStore", {
-                templateUrl: "BS-MenuTabs/ManageStore.html",
-                controller: "ManageStoreController"
-            })
             .when("/ManageStoreE", {
                 templateUrl: "BS-MenuTabs/ManageStoreEnglish.html",
+                controller: "ManageStoreController"
+            })
+            .when("/ManageStore", {
+                templateUrl: "BS-MenuTabs/ManageStore.html",
                 controller: "ManageStoreController"
             })
             .when("/DevelopmentEnvironment", {

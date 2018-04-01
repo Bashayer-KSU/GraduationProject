@@ -279,7 +279,7 @@
     <div class="container">
         <ul id="myTabs" class="nav nav-tabs nav-justified " data-tabs="tabs">
             <li class="tabStyle active"><a class="hrefManage" href="#PaymentsMethods" data-toggle="tab">Payment methods</a></li>
-            <li class="tabStyle"><a class="hrefManage" href="#TableOfProcesses" data-toggle="tab">Commercial Operations</a></li>
+            <li class="tabStyle"><a class="hrefManage" href="#TableOfProcesses" data-toggle="tab">Business processes</a></li>
             <li class="tabStyle"><a class="hrefManage" href="#Statistic" data-toggle="tab">Statistics</a></li>
         </ul>
 
@@ -377,47 +377,36 @@
             <div id="TableOfProcesses" class="tab-pane fade in" role="tabpanel">
                 <!--TableOfProcesses-->
                 <div class="container" style="margin-top:30px;">
-                    <div dir="rtl">
+                    <div>
 
                         <div>
-                            <h style="font-size:20px;">Commercial Operations</h>
+                            <h style="font-size:20px;">Business processes</h>
                         </div>
-                        <!--
-                        <div style="display:inline-block; margin-top:15px;">
-                            <h  style="font-size:20px;">عرض</h>
-                            <select name="singleSelect" ng-model="data.singleSelect" ng-style="{'width':'200px'}" class=" styled-select black rounded"
-                                    ng-init="data.singleSelect = 'option1'">
-                                <option value="option1">Bank Transfer Transactions</option>
-                                <option value="option2">Cash Transactions</option>
-                            </select>
-                        </div>-->
                     </div>
-                    <!--\add new category-->
                     <!--list Current Transactions-->
-                    <div class="table-responsive centered" ng-init="GetAllTransactions()" id="table" style="margin-top:15px;">
+                    <div ng-show="transactions" class="table-responsive centered" ng-init="GetAllTransactions()" id="table" style="margin-top:15px;">
                         <table class="table">
                             <thead style="border-collapse:collapse; table-layout:fixed;">
                                 <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
-                                    <th>Buyer Name</th>
+                                    <th>Buyer name</th>
                                     <th>Mobile number</th>
                                     <th>Email</th>
                                     <th>Address</th>
+                                    <th>Total price</th>
                                     <th>Payment method</th>
                                     <th>Transaction ID</th>
-                                    <th>Bank acount</th>
+                                    <th>Bank accountth>
                                     <th>Status</th>
+                                    <th>Details</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr data-ng-repeat="order in orders" class="hover">
-                                    <!--
-                                    <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
-                                    <td ng-hide="true">{{product.ID}}</td>
-                                                            -->
                                     <td class="arb"><label>{{order.BuyerName}}</label></td>
                                     <td class="arb"><label>{{order.BuyerPhone}}</label></td>
                                     <td class="arb"><label>{{order.BuyerEmail}}</label></td>
                                     <td class="arb"><label>{{order.BuyerLocation}}</label></td>
+                                    <td class="arb"><label>{{order.TotalPrice}}</label></td>
                                     <td class="arb"><label>{{order.PaymentMethod}}</label></td>
                                     <td class="arb"><label>{{order.OrderID}}</label></td>
                                     <td class="arb"><label>{{order.BankAccount}}</label></td>
@@ -425,16 +414,82 @@
                                         <small>Process not completed</small>
                                         <button class="addfields waves-effect waves-light btn done" ng-click="UpdateStatus(order, order.ID)" style="float:left;">Done</button>
                                     </td>
+                                    <td class="arb"><button class="addfields waves-effect waves-light btn done" ng-click="OrderDetails(order)">more</button></td>
 
                                 </tr>
                                 <tr ng-show="orders.length == 0">
                                     <td colspan="8">
-                                        <label style="text-align:center;">no business processes</label>
+                                        <label style="text-align:center;">No business processes</label>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+
+                    <!-- Order Details-->
+                    <div ng-show="!transactions">
+                        <div>
+                            <div>
+                                <h style="font-size:15px;">Order number{{OrderDetail.ID}}</h>
+                            </div>
+                        </div>
+                        <div class="table-responsive centered" id="table" style="margin-top:15px;">
+                            <table class="table">
+                                <thead style="border-collapse:collapse; table-layout:fixed;">
+                                    <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
+                                        <th>Buyer name</th>
+                                        <th>Mobile number</th>
+                                        <th>Email</th>
+                                        <th>Address</th>
+                                        <th>Total price</th>
+                                        <th>Payment method</th>
+                                        <th>Transaction ID</th>
+                                        <th>Bank account</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="hover"><td class="arb"><label>{{OrderDetail.BuyerName}}</label></td>
+                                        <td class="arb"><label>{{OrderDetail.BuyerPhone}}</label></td>
+                                        <td class="arb"><label>{{OrderDetail.BuyerEmail}}</label></td>
+                                        <td class="arb"><label>{{OrderDetail.BuyerLocation}}</label></td>
+                                        <td class="arb"><label>{{OrderDetail.TotalPrice}}</label></td>
+                                        <td class="arb"><label>{{OrderDetail.PaymentMethod}}</label></td>
+                                        <td class="arb"><label>{{OrderDetail.OrderID}}</label></td>
+                                        <td class="arb"><label>{{OrderDetail.BankAccount}}</label></td>
+                                        <td>
+                                            <small>Process not completed</small>
+                                            <button class="addfields waves-effect waves-light btn done" ng-click="UpdateStatus(OrderDetail, OrderDetail.ID)" style="float:left;">Done</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive centered" id="table" style="margin-top:15px;">
+                            <table class="table">
+                                <thead style="border-collapse:collapse; table-layout:fixed;">
+                                    <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
+                                        <th>Product image</th>
+                                        <th>Product name</th>
+                                        <th>Product description</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="productOrder in ProductOrders" class="hover">
+
+                                        <td class="arb">
+                                            <img style="width:100px; height:100px;" ng-src="{{productOrder.Image}}" />
+                                        </td>
+                                        <td class="arb"><label>{{productOrder.Name}}</label></td>
+                                        <td class="arb"><label>{{productOrder.Description}}</label></td>
+                                        <td class="arb"><label>{{productOrder.Amount}}</label></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button class="addfields waves-effect waves-light btn done" ng-click="transactions=true" style="float:left;">الرجوع إلى القائمة</button>
+                    </div><!-- ng-show !transactions-->
                 </div>
             </div>
 
