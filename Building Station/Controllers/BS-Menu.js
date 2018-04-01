@@ -1123,7 +1123,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             })
                 .then(function (response) {
                     $scope.Delete = response.data;
-                    if ($scope.Delete == true) {
+                    alert($scope.Delete);
+                    if ($scope.Delete == 'true') {
                         var remove = $scope.products.indexOf(product);
                         $scope.products.splice(remove, 1);
                     }
