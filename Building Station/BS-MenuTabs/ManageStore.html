@@ -286,7 +286,7 @@
 
         <!--style="background: linear-gradient( #D4D8BA, #f5f6ef);"-->
         <div class="tab-content" id="tabs">
-            <div class="tab-pane fade in " role="tabpanel" id="PaymentsMethods">
+            <div class="tab-pane fade in active" role="tabpanel" id="PaymentsMethods">
 
 
                 <div class="container">
@@ -346,6 +346,7 @@
                                     يجب عليك إدخال الايبان
                                 </p>
                             </form>
+                            <br />
                         </div>
                     </div>
                     <div class="row" style="text-align:center;">
@@ -353,11 +354,11 @@
                             <form name="PayPal" class="check-element animate-show-hide" ng-show="checkboxPayment.paypal" ng-model="PayPalInfo" ng-init="GetPayPalInfo()" style="display:inline; width:40%">
                                 <br />
                                 <label for="PayPal"> أدخل البريد الإلكتروني المستخدم لحسابك في باي بال </label>
-                                    <input dir="rtl" type="text" class="form-control validate" name="PayPalEmail" ng-model="PayPalInfo.Email" id="PayPalEmail" ng-disabled="!editPayPal" placeholder="البريد الإلكتروني" required>
+                                    <input dir="rtl" type="text" class="form-control validate" name="PayPalEmail" ng-model="PayPalInfo.PayPalEmail" id="PayPalEmail" ng-disabled="!editPayPal" placeholder="البريد الإلكتروني" required>
                                 <p class=" alert alert-danger" ng-show="!PayPal.PayPalEmail.$valid">هذا الحقل مطلوب.</p>
                                 <br />
                                 <label for="PayPal">أدخل العملة المستخدمة عند التحويل في باي بال</label>
-                                    <input dir="rtl" type="text" class="form-control validate" name="PayPalCurrency" ng-model="PayPalInfo.Currency" id="PayPalCurrency" ng-disabled="!editPayPal" placeholder="العملة">
+                                    <input dir="rtl" type="text" class="form-control validate" name="PayPalCurrency" ng-model="PayPalInfo.PayPalCurrencey" id="PayPalCurrency" ng-disabled="!editPayPal" placeholder="العملة">
                                 <br />
                                 <span ng-show="!editPayPal" class="input-group-btn">
                                     <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="editPayPal = true" class="btn" style="float:left;">تعديل</button>
@@ -375,7 +376,8 @@
 
 
             </div>
-            <div id="TableOfProcesses" class="tab-pane fade in active" role="tabpanel">
+
+            <div id="TableOfProcesses" class="tab-pane fade" role="tabpanel">
                 <!--TableOfProcesses-->
                 <div class="container" style="margin-top:30px;">
                     <div dir="rtl">
@@ -497,33 +499,25 @@
                 </div>
             </div>
 
-            <div id="Statistic" class="tab-pane fade in " role="tabpanel">
+            <div id="Statistic" class="tab-pane fade" role="tabpanel">
+
                 <!--Statistic-->
                 <div class="container">
-                    <hc-chart options="chartOptions">Placeholder for generic chart</hc-chart>
-
-                    <div class="row" ng-init="statistic()">
+                    <div class="row">
                         <div class="statbox">
-                            Statistics
+                            الأفضل مبيعًا
                             <div id="quote">
-                                <!-- Best Categories,-->  Best Products
-                            </div>
-
-                        </div>
-                        <div class="col-sm-12 statbox" data-ng-repeat="product in BestProducts | orderBy:'-Amount' | limitTo: 3" style="color:#E6293C">
-
-                            <div ng-show="product.Amount!=0">
-                                <div class="number">{{product.Amount}}</div>
-                                <div class="type" style="color:#F26F7D">
-                                    {{product.ProductName}}
-                                    <div class="details" style="color:#E6293C">{{product.CategoryName}}</div>
-                                </div>
-                                <img ng-src="{{product.Image}}" style=" height: 4vw; position: absolute; top: 30%; left: 63%;" alt="Product Image">
+                                <!-- Best Categories,-->
                             </div>
                         </div>
-                        <h1 class="text-center">~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~</h1>
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4 text-center center-block" ng-init="BestCategoriesFunction()">
+                            <hc-chart ng-if="displayChart" options="chartOptions">Products chart</hc-chart>
+                        </div>
+                        <div class="col-sm-4"></div>
+
                     </div>
-                </div>
+                    </div>
             </div>
         </div>
     </div>
