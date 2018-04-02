@@ -126,22 +126,14 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-8 col-md-8">
-            <div class="embed-responsive embed-responsive-4by3" style="margin-right:15vw; width: 55vw; height: 65vw;">
+            <div class="embed-responsive embed-responsive-4by3" style="margin-left:0vw; width: 56vw; height: 65vw;">
                 <iframe refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
                 <!--style="overflow: hidden; height: 200%; width: 100%;"-->
             </div>
         </div>
-        <div class="col-sm-4 col-md-4">
-        </div>
-        <div class="col-sm-4 col-md-4">
-        </div>
-
         <div class="col-sm-4 col-md-4 leftTab">
-            <br />
-
             <div class="row">
                 <div class="input-group">
-
                     <input type="color" class="rounded" ng-model="color1" ng-change="UpdateColors()" style="
   margin-left:5vw;
   padding: 0;
@@ -179,10 +171,10 @@
     height: 4vw;
     background-color:transparent;">
                     <!--<span class="input-group-btn">
-                       <button class="btn btn-default" ng-click="UpdateColors()" type="submit">Update</button>
-                   </span>
-                <div ng-if="refreshMyColors"
-                        ng-init="refreshColors()"></div>-->
+                           <button class="btn btn-default" ng-click="UpdateColors()" type="submit">Update</button>
+                       </span>
+                    <div ng-if="refreshMyColors"
+                            ng-init="refreshColors()"></div>-->
                 </div>
             </div>
             <br />
@@ -208,6 +200,16 @@
                     <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
                 </div>
             </div>
+            <div class="row inside">
+                <h4>تغيير صورة التذييل</h4>
+                <div class="input-group">
+                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_about" style="width:100%;" />
+                    <span class="input-group-btn">
+                        <button ng-disabled="!imageSrc_about" class="waves-effect waves-light btn done" ng-click="UpdateAboutImage()" type="submit">تحديث</button>
+                    </span>
+                </div>
+                <br />
+            </div>-->
             <div class="row inside">
                 <h4>تغيير صورة التذييل</h4>
                 <div class="input-group">

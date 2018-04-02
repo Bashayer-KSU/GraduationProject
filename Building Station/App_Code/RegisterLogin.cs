@@ -139,11 +139,11 @@ public class RegisterLogin : System.Web.Services.WebService
                 {
                     if (lang.Equals("eng"))
                     {
-                        Context.Response.Write(js.Serialize("/Basic.html"));
+                        Context.Response.Write(js.Serialize("/Views/BasicE.html"));
                     }
                     else
                     {
-                        Context.Response.Write(js.Serialize("/Basic.html#ar_menu"));
+                        Context.Response.Write(js.Serialize("/Basic.html"));
                     }
                 }
             }
