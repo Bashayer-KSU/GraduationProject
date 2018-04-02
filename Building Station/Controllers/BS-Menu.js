@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
+var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.bootstrap", "dialogs"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/ManageStoreE", {
@@ -46,7 +46,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             requireBase: false
         });
     })
-    .run(function ($rootScope, $location, loginService, $http, $mdDialog, $window) {
+    .run(function ($rootScope, $location, loginService, $http, $mdDialog, $window, $dialogs, $templateCache) {
 
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
@@ -60,6 +60,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 }
             });
         });
+
         $rootScope.Logout = function () {
             $http.get('/RegisterLogin.asmx/SignOut').then(function (response) {
 
@@ -71,12 +72,14 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         $rootScope.DesktopView = function () {
             $window.open('/Views/Preview.html', '_blank');
         };
+
         $rootScope.DesktopViewE = function () {
             $window.open('/Views/PreviewEnglish.html', '_blank');
         };
 
         $rootScope.Publish = function (ev) {
-            $http.get('/Published_Stores.asmx/PublishRequest').then(function (response) {
+            $http.get('/Published_Stores.asmx/PublishRequest')
+                .then(function (response) {
                 var StoreValues = response.data;
                 if (StoreValues.Published === true) {
                     var inform =
@@ -102,7 +105,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                         .targetEvent(ev)
                         .ok('OK')
                     $mdDialog.show(checkPayment).then(function () {
-                        location.href = "/BS-MenuTabs/ManageStoreEnglish.html";
+                        $location.path('/ManageStore');
                     }, function () {
                     });
                 }
@@ -120,7 +123,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                             url: "Published_Stores.asmx/Publish",
                             params: { storeDomainName: StoreValues.Domain },
                             method: "get"
-                        })
+                        }).then(function (response) {
+                            $window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
+                        });
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
                         // $rootScope.status = 'You decided to keep your debt.';
@@ -175,6 +180,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             });
         };
 
+        //$templateCache.put('/dialogs/StorePassword.html', '<div class="modal"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title"></span>Enter your store Password</h4></div><div class="modal-body"><ng-form name="nameDialog" novalidate role="form"><div class="form-group input-group-lg" ng-class="{true: \'has-error\'}[nameDialog.username.$dirty && nameDialog.username.$invalid]"><input type="password" class="form-control" name="username" id="username" ng-model="user.name" required><span class="help-block">Enter your full name, first &amp; last.</span></div></ng-form></div><div class="modal-footer"><button type="button" class="btn btn-default" ng-click="cancelDelete()">Cancel</button><button type="button" class="btn btn-primary" ng-click="saveDelete()" ng-disabled="(nameDialog.$dirty && nameDialog.$invalid) || nameDialog.$pristine">Delete</button></div></div></div></div>');
+  
         $rootScope.DeleteStore = function (ev) {
             var confirm = $mdDialog.confirm()
                 .title('Are you sure you want to delete your store?')
@@ -184,6 +191,32 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 .cancel('Cancel');
 
             $mdDialog.show(confirm).then(function () {
+                // Create Your Own Dialog
+              /*  var dlg = $dialogs.create('/dialogs/StorePassword.html', 'PasswordToDeleteCtrl', {}, { key: false, back: 'static' });
+                dlg.result.then(function (password) {
+                    $http({
+                        url: "Published_Stores.asmx/DeleteStore",
+                        params: { pass: password },
+                        method: "get"
+                    })
+                        .then(function (response) {
+                            var storePass = response.data;
+                            if (storePass.Password === 'incorrect') {
+                                var NOTdeleted = $mdDialog.alert()
+                                    .title('Incorrect Password')
+                                    .targetEvent(ev)
+                                    .ok('Close');
+                                $mdDialog.show(NOTdeleted).then(function () {
+                                }, function () {
+                                });
+                            }
+                            else {
+                                location.href = "/index.html";
+                            }
+                        });                 }, function () {
+                  //  $rootScope.name = 'You decided not to enter in your name, that makes me sad.';
+                    });*/
+/////////////////////////////////////////////////////////////////////
                 // Appending dialog to document.body to cover sidenav in docs app
                 var askForPassword = $mdDialog.prompt()
                     .title('Enter your store Password')
@@ -222,7 +255,22 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             }, function () {
             });
         };
-    })
+    })/*.controller('PasswordToDeleteCtrl', function ($rootScope, $modalInstance, data) {
+        //  $scope.user = { name: '' };
+
+        $rootScope.cancelDelete = function () {
+            $modalInstance.dismiss('canceled');
+        }; // end cancel
+
+        $rootScope.saveDelete = function () {
+            $modalInstance.close(/*$scope.user.name*///);
+       // }; // end save
+
+        /*$scope.hitEnter = function (evt) {
+             if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, '')))
+                 $scope.save();
+         }; // end hitEnter*/ 
+   // }) // end PasswordToDeleteCtrl */
     .controller("ManageStoreController", function ($rootScope,$scope, $http) {
         $scope.Logout = function () {
             $rootScope.Logout();

@@ -1,12 +1,12 @@
 ﻿<!--<!DOCTYPE html>
-<html>
+<html>-->
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
  <script src="RegisterLogin.js"></script>-->
 <link href="RegisterLogin.css" rel="stylesheet" />
 
@@ -20,7 +20,26 @@
         document.body.style.backgroundImage = 'url(/images/background3.png)';
     }
 </script>
-<!--</head>
+    <style>
+
+        /* LABEL ======================================= */
+        label {
+            position: absolute;
+            pointer-events: none;
+            left: 5px;
+            top: 10px;
+            transition: 0.2s ease all;
+            -moz-transition: 0.2s ease all;
+            -webkit-transition: 0.2s ease all;
+        }
+
+        /* active state */
+        input:focus ~ label, input:valid ~ label {
+            top: -30px;
+        }
+
+    </style>
+</head>
 <body ng-app="myApp" ng-controller="RegisterLoginCtrl">-->
 
 <div class="container-fluid">
@@ -206,7 +225,10 @@
                             <div class="divider"></div>
                         </div>
                         <form name="login_eng" novalidate>
-
+                            <div class="input-field col s6" ng-show="false">
+                                <input id="LEemail" type="email" name="LEemail" class="validate" required>
+                                <label for="LEemail">Email</label>
+                            </div>
                             <div class="input-field col s6">
                                 <input id="LEemail" type="email" name="LEemail" ng-model="LEemail" class="validate" required>
                                 <label for="LEemail">Email</label>
@@ -251,6 +273,10 @@
                             <div class="divider"></div>
                         </div>
                         <form name="login_ar" novalidate">
+                            <div class="input-field col s6" ng-show="false">
+                                <input id="LAemail" type="email" name="Lemail" class="validate" required>
+                                <label for="LAemail" style="position: absolute; left:75%; text-align:right; font-family:NeoSansArabic;">البريد الالكتروني</label>
+                            </div>
                             <div class="input-field col s6">
                                 <input id="LAemail" type="email" name="Lemail" ng-model="Lemail" class="validate" required>
                                 <label for="LAemail" style="position: absolute; left:75%; text-align:right; font-family:NeoSansArabic;">البريد الالكتروني</label>
@@ -281,6 +307,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!--
 </body>
-</html>-->
+<!--</html>-->

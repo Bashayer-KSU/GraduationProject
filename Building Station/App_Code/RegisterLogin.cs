@@ -143,7 +143,7 @@ public class RegisterLogin : System.Web.Services.WebService
                     }
                     else
                     {
-                        Context.Response.Write(js.Serialize("/DevelopmentEnvironment#ar_menu"));
+                        Context.Response.Write(js.Serialize("/Basic.html#ar_menu"));
                     }
                 }
             }
