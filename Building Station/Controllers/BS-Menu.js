@@ -279,31 +279,80 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
         $scope.tabHeader = "Manage Store";
         $scope.templatew = "";
         $scope.transactions = true;
+       $scope.BestCategories= [];
+        $scope.BestProducts= [];
+        $scope.BestProduct = [];
 
-       
-        // Sample options for first chart
+        $scope.displayChart = false;
+
+        $scope.BestProductsFunction = function() {
+          angular.forEach($scope.BestCategories, function (value, key) {
+         $http({
+                url: "/Products.asmx/BestProductsInCategory",
+                method: "get",
+                params: { CategoryID : value.drilldown }
+                })
+                .then(function (response) {
+                    $scope.BestProductResponse = response.data;
+
+                    angular.forEach($scope.BestProductResponse, function (value2, key)
+                    {
+                        $scope.BestProduct.push([value2.ProductName,value2.Amount]);
+                    });
+                    $scope.BestProducts.push({ id: value.drilldown, data: $scope.BestProduct });
+                    $scope.BestProduct = [];
+                  });
+
+            });
+
+          $scope.displayChart = true;
+  }
+        $scope.BestCategoriesFunction = function () {
+             $http({
+                url: "/Products.asmx/BestCategories",
+                method: "get"
+            })
+                .then(function (response) {
+                    $scope.BestCategoryResponse = response.data; 
+                    angular.forEach($scope.BestCategoryResponse, function (value, key)
+                    {
+                        $scope.BestCategories.push({ name: value.CategoryName, y: value.Amount, drilldown: value.CategoryID});
+                    });
+        $scope.BestProductsFunction();
+                });
+        };
+
         $scope.chartOptions = {
+            chart: {
+                type: 'column'
+            },
             title: {
-                text: 'Temperature data'
+                text: 'Best Category'
             },
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                type: 'category'
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
             },
 
             series: [{
-                data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-            }]
-        };
-        /*
-        loginService.login().then(function (response) {
-            $scope.login = response;
-            console.log("in then " + $scope.login);
-            if (response === "false") {
-                //redirect to login page
-                location.href = "/index.html";
+                name: 'Categories',
+                colorByPoint: true,
+                data: $scope.BestCategories
+            }],
+            drilldown: {
+                series: $scope.BestProducts
             }
-        });*/
+        };
 
         $scope.acceptPayment = function () {
             var Paypal = $scope.checkboxPayment.paypal;
@@ -391,18 +440,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
 
         $scope.UpdateBankInfo = function () {
             var IBAN = $scope.bankInfo.IBAN;
-            /*
-            $http({
-                url: "PaymentMethods.asmx/UpdateBankInfo",
-                dataType: 'json',
-                method: 'POST',
-                data: { IBAN: IBAN },
-                headers: { "Content-Type": "application/json; charset=utf-8" }
-            }).then(function (response) {
-                $scope.IBAN = response.data;
-                }, function (error) {
-                    $scope.error = error;
-            });*/
+           
             if (IBAN !== "" && IBAN !== null) {
                 $http({
                     url: "PaymentMethods.asmx/UpdateBankInfo",
@@ -425,18 +463,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
         $scope.editIBAN = false;
 
         $scope.GetBankInfo = function () {
-            /*
-            $http({
-                url: "PaymentMethods.asmx/GetBankInfo",
-                dataType: 'json',
-                method: 'POST',
-                data: {},
-                headers: { "Content-Type": "application/json; charset=utf-8" }
-            }).then(function (response) {
-                $scope.bankInfo.IBAN = response.data;
-            }, function (error) {
-                alert(error);
-            });*/
             $http({
                 url: "PaymentMethods.asmx/GetBankInfo",
                 method: "get",
@@ -492,17 +518,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
                     $scope.orders.splice(remove, 1);
                     $scope.transactions = true;
                 }, function (error) { });
-        };
-
-        $scope.statistic = function () {
-            $http({
-                url: "/Products.asmx/BestProducts",
-                method: "get",
-                params: {}
-            })
-                .then(function (response) {
-                    $scope.BestProducts = response.data;
-                });
         };
 
     })

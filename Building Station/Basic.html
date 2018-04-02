@@ -1,7 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>BS</title>
+    <title>Building Station</title>
+    <link id="icon" rel="icon" href="/images/logoTransparent.png" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -19,14 +20,15 @@
 
 
     <!-- Chart -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script type="text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
     <script type="text/javascript" src="https://code.highcharts.com/modules/exporting.js"></script>
 
-
-    <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js" type="text/javascript"></script>
+ <!--   <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js" type="text/javascript"></script>
     <script src="https://m-e-conroy.github.io/angular-dialog-service/javascripts/dialogs.min.js" type="text/javascript"></script>
-
+-->
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
     <base href="/" />
     <style>
         table, td, th {
@@ -49,11 +51,13 @@
 
 
         .md-dialog-content {
+           /* border: solid;
+            border-width: thick;*/
             background-color: #c6ba57 !important;
             border-color: #C8D9BE;
             text-align: center;
             color: #F6F8EA;
-            font-family: 'NeoSansArabic'
+            font-family: 'NeoSansArabic' 
         }
 
 
@@ -67,10 +71,6 @@
         .md-cancel-button, .md-confirm-button {
             color: #F6F8EA;
             font-family: 'NeoSansArabic';
-        }
-
-        .modal {
-            display: block;
         }
     </style>
     <link rel="stylesheet" href="light.css" type="text/css" media="screen" />
@@ -114,6 +114,76 @@
             <!--Ar+En-->
             <div class="form">
                 <div class="tab-content">
+                    <!--Ar-->
+                    <div id="ar_menu" class="tab-pane fade in active">
+                        <header class="en">
+                            <div class="head">
+                                <div class="my_account" style="float:right; font-family:'NeoSansArabic'; margin-top:7px; margin-right:-30px; margin-top:15px;"><a href="#">حسابي</a></div>
+                            </div>
+                            <div class="my_account" style="float:right; margin-top:7px; margin-right:5px; margin-top:15px;"><span>|</span></div>
+                            <div class="head">
+                                <div class="my_account" style="float:right; margin-top:7px; margin-right:5px; margin-top:15px;">
+                                    <a ng-click="Logout()" href="#">
+                                        تسجيل خروج
+                                        <i class="fa fa-sign-out" style="font-size:15px"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!--2-->
+                            <div class="logo" style="position:center;"><img ng-src="/images/logo-arabi.png" style="height:180px; width:180px; margin-top:20px; margin-left:550px;" /></div>
+                        </header>
+                        <!--3-->
+                        <header>
+
+                            <div class="lightmenu">
+
+
+                                <ul>
+                                    <li class="dropdown">
+                                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                                            <img ng-src="/images/settings.png" alt="" style="width:37px; height:37px; top:15px; margin-top:12px; margin-left:15px;" /><b class="caret"></b>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li style="background:none; font-family:'NeoSansArabic'"><a ng-click="Publish($event)" href="#">نشر الموقع</a></li>
+                                            <li class="divider"></li>
+                                            <li style="background:none; font-family:'NeoSansArabic'"><a ng-click="UnPublish($event)" href="#">إلغاء نشر الموقع</a></li>
+                                            <li class="divider"></li>
+                                            <li style="background:none; font-family:'NeoSansArabic'"><a ng-click="DeleteStore($event)" href="#">حذف الموقع</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul class="lightBlue" id="one">
+
+                                    <li>
+                                        <a href="#" ng-click="DesktopView()" style="font-family:'NeoSansArabic'">
+                                            معاينة الموقع
+                                        </a>
+                                        <!--<ul class="dropdown-menu">
+                            <li style="background:none; font-family:'NeoSansArabic'"><a ng-href="PreviewWebsite" ng-click="DesktopView()">معاينة على الحاسب &nbsp; <img ng-src="/images/imac.png" alt="" style="width:37px; height:37px;" /></a></li>
+                            <li class="divider"></li>
+                            <li style="background:none; font-family:'NeoSansArabic'"><a href="PreviewWebsite" ng-click="MobileView()">معاينة على الجوال &nbsp; <img ng-src="/images/iphone.png" alt="" style="width:37px; height:37px;" /></a></li>
+                        </ul>-->
+                                    </li>
+                                    <li><a href="/ManageStore" style="font-family:'NeoSansArabic'">إدارة المتجر</a></li>
+                                    <li><a href="/Products" style="font-family:'NeoSansArabic'">المنتجات</a></li>
+                                    <li><a href="/Template" style="font-family:'NeoSansArabic'">القالب</a></li>
+                                    <li class="current"><a href="/BS-MenuTabs/DevelopmentEnvironment" style="font-family:'NeoSansArabic'">بيئة العمل</a></li>
+
+                                </ul>
+
+
+
+                            </div>
+                        </header>
+
+                        <!--Content-->
+                        <div class="row justify-content-center" style="width:100%;">
+                            <ng-view></ng-view>
+                        </div>
+                        <!--/Content-->
+                    </div>
+
                     <!--En-->
                     <div id="en_menu" class="tab-pane fade">
                         <header class="en">
@@ -168,77 +238,6 @@
                                         </ul>
                                     </li>
                                 </ul>
-                            </div>
-                        </header>
-
-                        <!--Content-->
-                        <div class="row justify-content-center" style="width:100%;">
-                            <ng-view></ng-view>
-                        </div>
-                        <!--/Content-->
-                    </div>
-
-
-                    <!--Ar-->
-                    <div id="ar_menu" class="tab-pane fade in active">
-                        <header class="en">
-                            <div class="head">
-                                <div class="my_account" style="float:right; font-family:'NeoSansArabic'; margin-top:7px; margin-right:-30px; margin-top:15px;"><a href="#">حسابي</a></div>
-                            </div>
-                            <div class="my_account" style="float:right; margin-top:7px; margin-right:5px; margin-top:15px;"><span>|</span></div>
-                            <div class="head">
-                                <div class="my_account" style="float:right; margin-top:7px; margin-right:5px; margin-top:15px;">
-                                    <a ng-click="Logout()" href="#">
-                                        تسجيل خروج
-                                        <i class="fa fa-sign-out" style="font-size:15px"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <!--2-->
-                            <div class="logo" style="position:center;"><img ng-src="/images/logo-arabi.png" style="height:180px; width:180px; margin-top:20px; margin-left:550px;" /></div>
-                        </header>
-                        <!--3-->
-                        <header>
-
-                            <div class="lightmenu">
-
-
-                                <ul>
-                                    <li class="dropdown">
-                                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                                            <img ng-src="/images/settings.png" alt="" style="width:37px; height:37px; top:15px; margin-top:12px; margin-left:15px;" /><b class="caret"></b>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li style="background:none; font-family:'NeoSansArabic'"><a ng-click="Publish($event)" href="#">نشر الموقع</a></li>
-                                            <li class="divider"></li>
-                                            <li style="background:none; font-family:'NeoSansArabic'"><a ng-click="UnPublish($event)" href="#">إلغاء نشر الموقع</a></li>
-                                            <li class="divider"></li>
-                                            <li style="background:none; font-family:'NeoSansArabic'"><a ng-click="DeleteStore($event)" href="#">حذف الموقع</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul class="lightBlue" id="one">
-
-                                    <li>
-                                        <a  href="#" ng-click="DesktopView()"  style="font-family:'NeoSansArabic'">
-                                            معاينة الموقع
-                                        </a>
-                                        <!--<ul class="dropdown-menu">
-                                            <li style="background:none; font-family:'NeoSansArabic'"><a ng-href="PreviewWebsite" ng-click="DesktopView()">معاينة على الحاسب &nbsp; <img ng-src="/images/imac.png" alt="" style="width:37px; height:37px;" /></a></li>
-                                            <li class="divider"></li>
-                                            <li style="background:none; font-family:'NeoSansArabic'"><a href="PreviewWebsite" ng-click="MobileView()">معاينة على الجوال &nbsp; <img ng-src="/images/iphone.png" alt="" style="width:37px; height:37px;" /></a></li>
-                                        </ul>-->
-                                    </li>
-                                    <li><a href="/ManageStore" style="font-family:'NeoSansArabic'">إدارة المتجر</a></li>
-                                    <li><a href="/Products" style="font-family:'NeoSansArabic'">المنتجات</a></li>
-                                    <li><a href="/Template" style="font-family:'NeoSansArabic'">القالب</a></li>
-                                    <li class="current"><a href="/BS-MenuTabs/DevelopmentEnvironment" style="font-family:'NeoSansArabic'">بيئة العمل</a></li>
-
-                                </ul>
-
-
-
                             </div>
                         </header>
 
