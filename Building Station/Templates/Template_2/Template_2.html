@@ -1,42 +1,41 @@
-﻿<!DOCTYPE HTML>
-<!--
-	Dopetrope by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html lang="en" ng-app="Tempalat1Arabic" ng-controller="template1_arabic">
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="T6" ng-controller="T6Ctrl">
 <head>
     <title>{{Store.Name}}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <script src="../../Scripts/angular.js"></script>
-    <script src="../../Scripts/angular.min.js"></script>
-    <script src="../Template1Controller.js"></script>
-
-    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    <link rel="stylesheet" href="/Templates/assets/css/main.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="/Templates/Template_6/Template_6.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <link id="icon" rel="icon" href="" />
+    <!--NEW-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body class="homepage" ng-style="{'background': Store.Color4}">
     <div id="page-wrapper">
+
         <!-- Header -->
         <section class="box" style=" padding:0px 0px 0px 0px; margin:0px 0px 0px 0px;">
-            <div id="header-wrapper" ng-style="{'background': Store.Color1}" style=" padding:20px 0px 10px 0px;">
+
+            <div ng-style="{'background': Store.Color1}" id="header-wrapper" style=" padding:20px 0px 10px 0px;">
                 <div id="header" style="position: relative;	margin:0 auto; overflow: hidden;">
+
                     <!-- Logo -->
                     <div class="row">
                         <div class="12u">
-                            <div style=" float:left; width:33%;">
-                                <img src="../../images/shopping-cart.png" style="width:5vw; height:5vw;" href="">
+                            <div style="float:left; width:30%;">
+                                <button ng-style="{'background': Store.Color1,'color': Store.Color3}" style="float:left; width:10vw; font-size:4vw" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    <span style="font-size:1.5vw;" class="badge badge-pill">{{ItemsInShoppingCart()}}</span>
+                                </button>
                             </div>
-                            <div style=" position: absolute; left: 7em; right: 0em; margin: 0px 0px 0px 0px; width:auto;">
+                            <div style=" position: absolute; left: 8em; right: 8em; margin: 0px 0px 0px 0px; width:auto;">
                                 <h1 ng-style="{'color': Store.Color3}" style="font-size:3vw; margin: 15px 0px 0px 0px; ">{{Store.Name}}</h1>
                             </div>
-                            <div style=" float:right;  margin:0px 0px 0px 0px; width:33%;">
+                            <div style=" float:right; margin:0vw 0vw 0vw 0vw; width:30%;">
                                 <img ng-src="{{Store.Logo}}" style="width: 10vw; height: 10vw; border-radius: 50%;" alt="Cinque Terre">
                             </div>
                         </div>
@@ -54,14 +53,12 @@
             </nav>
         </div>
         <!-- store welcom -->
-        <section style="padding-top:0%; padding-bottom: 0%; " id="banner">
-            <div class="row">
-                <div class="12u">
-                    <header ng-style="{'background': Store.Color2}">
-                        <h2 ng-style="{'color': Store.Color1}">{{Store.Description}}</h2>
-                        <p ng-style="{'color': Store.Color4}">{{Store.Address}}</p>
-                    </header>
-                </div>
+        <section style="padding-left: 0vw; padding-right:0vw; padding-top:0%; padding-bottom: 0px;" id="banner">
+            <div class="12u 12u(mobile)">
+                <header ng-style="{'background': Store.Color2}">
+                    <h2 ng-style="{'color': Store.Color4}">{{Store.Description}}</h2>
+                    <p ng-style="{'color': Store.Color3}">{{Store.Address}}</p>
+                </header>
             </div>
         </section>
         <!-- slider image -->
@@ -101,101 +98,249 @@
             </div>
         </div>
     </div>
-        <div class="12u" ng-show="section.about">
-            <div id="main-wrapper" ng-style="{'background': Store.Color2}">
-                <section class="container">
-                    <div dir="rtl" style="float:right; margin-right:1vw;" class="row">
-                        <h1 ng-style="{'color': Store.Color1}"> عنا </h1><br /><br />
-                        <h4 ng-style="{'color': Store.Color1}">{{Store.About}}</h4>
+    <!--About us -->
+    <br />
+    <div class="12u" ng-show="section.about">
+        <div id="main-wrapper" ng-style="{'background': Store.Color1}">
+            <section class="container">
+                <div style="float:right;" class="row" ng-style="{'color': Store.Color4}">
+                    <header>
+                        <h1 dir="rtl"> عنا </h1>
+                        <h3>{{Store.About}}</h3>
+                    </header>
+                </div>
+            </section>
+        </div>
+    </div>
+    <br />
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div dir="rtl" class="modal-content" ng-style="{'background': Store.Color2}">
+                <div class="modal-header">
+                    <button ng-style="{'color': Store.Color3}" style="float:left;" type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 ng-style="{'color': Store.Color3}" class="modal-title">{{addProduct.Name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <article ng-style="{'background': Store.Color1}" dir="rtl" class="box post">
+                        <a href="#" class="image featured"><img ng-src="{{addProduct.Image}}" alt="" /></a>
+                        <header>
+                            <p ng-style="{'color': Store.Color3}">{{addProduct.Description}}</p>
+                            <p ng-show="addProduct.Discount == 0" ng-style="{'color': Store.Color3}"> {{addProduct.Price}} ريال</p>
+                            <p ng-show="addProduct.Discount != 0" ng-style="{'color': Store.Color3}">
+                                <del style="color:#ff0000"> {{addProduct.Price}} </del>
+                                {{addProduct.PriceAfterDiscount}} ريال
+                            </p>
+                        </header>
+                        <input class="form-control" type="number" min="1" ng-model="quantity" max="{{addProduct.Amount}}" name="quantity" placeholder="أدخل الكمية" required>
+                    </article>
+                </div>
+                <div class="modal-footer">
+                    <button style="font-size:larger;" ng-disabled="AddProduct.quantity.$invalid" type="button" class="btn btn-info btn-md" data-dismiss="modal" ng-click="addToCartlist(addProduct,quantity)" ng-style="{'background-color':Store.Color1, 'color':Store.Color3, 'border':Store.Color4}">اضف للعربة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal shopping cart -->
+    <div class="modal fade" id="shoppingCartModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div dir="rtl" class="modal-content" ng-style="{'background': Store.Color2}">
+                <div class="modal-header">
+                    <button ng-style="{'color': Store.Color3}" style="float:left;" type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 ng-show="!checkout" class="modal-title" ng-style="{'color': Store.Color3}" id="exampleModalLabel"> عربة التسوق </h4>
+                    <h4 ng-show="checkout" ng-style="{'color': Store.Color3}" class="modal-title" id="exampleModalLabel">الدفع</h4>
+                </div>
+                <div class="modal-body">
+                    <article ng-style="{'background': Store.Color1}" dir="rtl" class="box post">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <div ng-show="!checkout&&!payment" class="card-body">
+
+                                    <!----------------------->
+                                    <ul ng-show="!(ProductsArray.length==0)" class="list-group mb-3">
+                                        <li ng-repeat='x in ProductsArray' id="yourcart" class="list-group-item d-flex justify-content-between">
+                                            <div class="col-5"><img style="width:100%;" ng-src="{{x.Image}}" alt="..." class="img-fluid" /></div>
+                                            <div class="col-3">
+                                                <h5 class="my-0">{{x.Name}}</h5>
+                                                <small class="text-muted">{{x.Desc}}</small>
+                                            </div>
+                                            <h5> الكمية: {{x.Amount}}</h5>
+                                            <span>السعر:</span>
+                                            <span ng-show="x.Discount == 0">{{x.Price}} ريال</span>
+                                            <span ng-show="x.Discount != 0">
+                                                <del style="color:#ff0000"> {{x.Price}} </del>
+                                                {{x.PriceAfterDiscount}} ريال
+                                            </span>
+                                            <span>
+                                                <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </span>
+                                        </li>
+
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <span>المجموع: </span><span><strong>{{TotalPrice}} ريال </strong></span>
+                                        </li>
+                                    </ul>
+                                    <div dir="rtl" ng-show="ProductsArray.length==0" style="text-align:center;">
+                                        <span style="text-align:center;" ng-style="{'color': Store.Color3}"> عربة التسوق فارغة </span>
+                                    </div>
+
+                                </div>
+                                <!-- Checkout-->
+                                <div ng-show="checkout" class="card-body">
+                                    <!----------------------->
+                                    <form name="Buyer" ng-show="!payment" class=" text-sm-left" novalidate>
+                                        <div class="row">
+                                            <div class="col-sm-12 mb-3">
+                                                <label ng-style="{'color': Store.Color3}" for="BuyerName">الاسم الكامل</label>
+                                                <input type="text" class="form-control validate" name="BuyerName" ng-model="BuyerName" id="BuyerName" placeholder="الاسم كامل" required>
+                                                <p class="alert alert-danger" ng-show="!Buyer.BuyerName.$pristine && Buyer.BuyerName.$invalid">هذا الحقل مطلوب.</p>
+                                            </div>
+                                            <div class="col-sm-12 mb-3">
+                                                <label ng-style="{'color': Store.Color3}" for="BuyerPhone">الجوال</label>
+                                                <input type="text" class="form-control" ng-pattern="/^[0-9]{8,13}$/" id="BuyerPhone" name="BuyerPhone" ng-model="BuyerPhone" placeholder=" رقم هاتفك" required>
+                                                <p class="alert alert-danger" ng-show="Buyer.BuyerPhone.$error.pattern">الرجاء ادخال رقم صحيح.</p>
+                                                <p class="alert alert-danger" ng-show="!Buyer.BuyerPhone.$pristine && Buyer.BuyerPhone.$error.required">هذا الحقل مطلوب.</p>
+                                            </div>
+                                            <div class="col-sm-12 mb-3">
+                                                <label ng-style="{'color': Store.Color3}" for="email">البريد الاكتروني</label>
+                                                <input type="email" class="form-control" id="email" name="BuyerEmail" ng-model="BuyerEmail" placeholder="you@example.com">
+                                                <p class="alert alert-danger" ng-show="Buyer.BuyerEmail.$error.email"> الرجاء ادخال بريد إلكتروني صحيح لأجل تحديثات الشحن.</p>
+                                            </div>
+                                            <div class="col-sm-12 mb-3">
+                                                <label ng-style="{'color': Store.Color3}" for="Location">العنوان</label>
+                                                <input type="text" class="form-control" id="Location" name="BuyerLocation" ng-model="BuyerLocation" placeholder="الرياض، حي الصحافة، بيت رقم 35" required>
+                                                <p class="alert alert-danger" ng-show="!Buyer.BuyerLocation.$pristine && !Buyer.BuyerLocation.$valid">الرجاء ادخال عنوان الشحن.</p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form name="BuyerPayment" ng-model="BuyerPayment" ng-show="payment" class="text-sm-left" novalidate>
+                                        <div id="payment">
+                                            <h4 class="mb-3" ng-style="{'color': Store.Color3}">اختر طريقة الدفع</h4>
+                                            <br />
+                                            <div id="PaymentMethod" name="PaymentMethod" class="d-block my-3">
+                                                <div style="float:right;" ng-show="Store.Cash" class="custom-control custom-radio">
+                                                    <input id="cash" name="PaymentMethod" ng-model="PaymentMethod" value="Cash" type="radio" class="custom-control-input" required>
+                                                    <label class="custom-control-label" for="cash" ng-style="{'color': Store.Color3}">الدفع عند الاستلام<img style="max-width:5%;" src="/Templates/Template_6/Images/cash.png" alt="Cash"></label>
+                                                </div>
+                                                <br />
+                                                <div ng-show="Store.BankTransfer" class="custom-control custom-radio">
+                                                    <input style="float:right;" id="banktransfer" name="PaymentMethod" ng-model="PaymentMethod" value="BankTransfer" type="radio" class="custom-control-input" required>
+                                                    <label class="custom-control-label" for="banktransfer" ng-style="{'color': Store.Color3}">
+                                                        تحويل بنكي<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer">
+                                                        <span> <small ng-style="{'color': Store.Color3}">IBAN:  {{Store.BankAccount}}</small> </span>
+                                                    </label>
+                                                </div>
+                                                <br />
+                                                <div style="float:right;" ng-show="Store.PayPal" class="custom-control custom-radio">
+                                                    <input id="paypal" name="PaymentMethod" ng-model="PaymentMethod" value="PayPal" type="radio" class="custom-control-input" required>
+                                                    <label class="custom-control-label" for="paypal"><img style="max-width:20%;" src="/Templates/Template_6/Images/paypal.png" alt="paypal"></label>
+                                                </div>
+                                            </div>
+                                            <br>
+                                        </div>
+                                        <div ng-show="PaymentMethod === 'BankTransfer'" id="transfer">
+                                            <div class="row mb-3">
+                                                <h4 class="col-sm-12" ng-style="{'color': Store.Color3}">تأكيد التحويل البنكي</h4>
+                                                <div class="col-sm-12">
+                                                    <label for="OrderID" ng-style="{'color': Store.Color3}">رقم الحوالة</label>
+                                                    <input type="text" class="form-control" id="OrderID" name="OrderID" ng-model="OrderID" placeholder="أدخل رقم التحويل" required>
+                                                    <p class="alert alert-danger" ng-show="!BuyerPayment.OrderID.$pristine && BuyerPayment.OrderID.$invalid">الرجاء ادخال رقم الحوالة البنكية.</p>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <label for="HolName" ng-style="{'color': Store.Color3}">اسم صاحب الحساب</label>
+                                                    <input type="text" class="form-control" id="HolName" name="HolName" ng-model="HolName" placeholder="أدخل اسم صاحب الحساب" required>
+                                                    <p class="alert alert-danger" ng-show="!BuyerPayment.HolName.$pristine && BuyerPayment.HolName.$invalid">الرجاء ادخال اسم صاحب الحساب البنكي.</p>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <label ng-style="{'color': Store.Color3}" for="Price">مجموع المبلغ: {{TotalPrice}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button ng-show="!checkout" ng-disabled="ProductsArray.length===0" type="button" class="btn btn-info btn-md" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color1, 'color':Store.Color3, 'border':Store.Color4}" style="font-size:medium;">اتمام الدفع</button>
+                    <a ng-show="checkout&&!payment" class="button" ng-click="checkout=false; payment=false;" ng-style="{'background-color':Store.Color4, 'color':Store.Color3, 'border':Store.Color3}" style="font-size:xx-large; padding: 0px 10px 0px 10px; border-radius:40%; text-decoration:none;">&#8249;</a>
+                    <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="Buyer.$invalid" ng-style="{'background-color':Store.Color1, 'color':Store.Color3, 'border':Store.Color4}" style="font-size:medium;">اختر طريقة الدفع</button>
+                    <a ng-show="checkout&&payment" class="button" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color4, 'color':Store.Color3, 'border':Store.Color3}" style="font-size:xx-large; padding: 0px 10px 0px 10px; border-radius:40%; text-decoration:none;">&#8249;</a>
+                    <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'color':Store.Color3, 'border':Store.Color4}" style="font-size:medium;">الدفع</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <!-- Footer -->
+    <div ng-style="{'background': Store.Color3}">
+        <div class="12u">
+            <div id="footer-wrapper" style="padding-bottom:0px; padding-top:1vw;">
+                <section id="footer" class="container">
+                    <div class="row">
+                        <div dir="rtl" class="4u 12u(mobile)">
+                            <header style="padding-bottom:0px; margin-bottom:0px;">
+                                <h2 ng-style="{'color': Store.Color1}" style="font-size:2.5vw;">للتواصل</h2>
+                            </header>
+                            <div class="social">
+                                <a ng-show="Facebook" herf="{{Store.FacebookLink}}"><img style="margin-right:1vw; width:3vw;" alt="Facebook" src="../../images/Facebook4.png"></a>
+                                <a ng-show="Twitter" herf="{{Store.TwitterLink}}"><img style="margin-right:1vw; width:3vw;" alt="Twitter" src="../../images/twitter.png"></a>
+                                <a ng-show="Snapchat" herf="{{Store.SnapchatLink}}"><img style="margin-right:1vw; width:3vw;" alt="Snapchat" src="../../images/snapchat.png"></a>
+                                <a ng-show="Instagram" herf="{{Store.InstagramLink}}"><img style="margin-right:1vw; width:3vw;" alt="Instagram" src="../../images/insta.png"></a>
+                            </div>
+                        </div>
+                        <div class="2u 12u(mobile)"></div>
+                        <div class="4u 12u(mobile)">
+                            <section dir="rtl">
+                                <ul class="contact">
+                                    <li>
+                                        <h4 ng-style="{'color': Store.Color1}"> أين نحن ؟</h4>
+                                        <h3 ng-style="{'color': Store.Color1}">{{Store.Address}}</h3>
+                                    </li>
+                                    <li>
+                                        <h4 ng-style="{'color': Store.Color1}">البريد الإلكتروني</h4>
+                                        <h3 ng-style="{'color': Store.Color1}">{{Store.Email}}</h3>
+                                    </li>
+                                    <li>
+                                        <h4 ng-style="{'color': Store.Color1}">الجوال</h4>
+                                        <h3 ng-style="{'color': Store.Color1}">{{Store.Phone}}</h3>
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="12u" style="padding-top:1vw;">
+                            <!-- Copyright -->
+                            <div style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:1vw;" id="copyright">
+                                <ul ng-style="{'background': Store.Color2}" class="links">
+                                    <li><a ng-style="{'color': Store.Color3}" href=""><img style="width:5vw;" src="../../images/logo-arabi.png" />&copy; Building Station. جميع الحقوق محفوظة </a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </div>
         </div>
-        <br />
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
+    </div>
+    </div>
 
-                <!-- Modal content-->
-                <div dir="rtl" class="modal-content" ng-style="{'background': Store.Color2}">
-                    <div class="modal-header">
-                        <button ng-style="{'color': Store.Color3}" style="float:left;" type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 ng-style="{'color': Store.Color3}" class="modal-title">{{Product.Name}}</h4>
-
-                    </div>
-                    <div class="modal-body">
-                        <article ng-style="{'background': Store.Color4}" dir="rtl" class="box post">
-                            <a href="#" class="image featured"><img ng-src="{{Product.Image}}" alt="" /></a>
-                            <header>
-                                <p ng-style="{'color': Store.Color3}">{{Product.Description}}</p>
-                            </header>
-                        </article>
-                    </div>
-                    <div class="modal-footer">
-                        <a ng-style="{'color': Store.Color3, 'background': Store.Color1}" class="button"> اضف للعربة</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <!-- Footer -->
-        <div ng-style="{'background': Store.Color3}">
-            <div class="12u">
-                <div id="footer-wrapper">
-                    <section id="footer" class="container">
-                        <div class="row">
-                            <div dir="rtl" class="4u 12u(mobile)">
-                                <header>
-                                    <h2 ng-style="{'color': Store.Color1}">للتواصل</h2>
-                                </header>
-                                <div class="social">
-                                    <a ng-show="Fvisible" herf="{{Store.FacebookLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Facebook" src="../../images/Facebook4.png"></a>
-                                    <a ng-show="Tvisible" herf="{{Store.TwitterLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Twitter" src="../../images/twitter.png"></a>
-                                    <a ng-show="Svisible" herf="{{Store.SnapchatLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Snapchat" src="../../images/snapchat.png"></a>
-                                    <a ng-show="Ivisible" herf="{{Store.InstagramLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Instagram" src="../../images/insta.png"></a>
-                                </div>
-                            </div>
-                            <div class="2u 12u(mobile)"></div>
-                            <div class="4u 12u(mobile)">
-                                <section dir="rtl">
-                                    <ul class="contact">
-                                        <li>
-                                            <h4 ng-style="{'color': Store.Color1}"> أين نحن ؟</h4>
-                                            <h3 ng-style="{'color': Store.Color1}">{{Store.Address}}</h3>
-                                        </li>
-                                        <li>
-                                            <h4 ng-style="{'color': Store.Color1}">البريد</h4>
-                                            <h3 ng-style="{'color': Store.Color1}">{{Store.Email}}</h3>
-                                        </li>
-                                        <li>
-                                            <h4 ng-style="{'color': Store.Color1}">الجوال</h4>
-                                            <h3 ng-style="{'color': Store.Color1}">{{Store.Phone}}</h3>
-                                        </li>
-                                    </ul>
-                                </section>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="12u">
-                                <!-- Copyright -->
-                                <div style="margin-bottom:0px;" id="copyright">
-                                    <ul ng-style="{'background': Store.Color2}" class="links">
-                                        <li><a ng-style="{'color': Store.Color1}" href=""><img style="width:5vw;" src="../../images/logo-arabi.png" />&copy; Building Station. جميع الحقوق محفوظة </a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <!-- Scripts -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/jquery.dropotron.min.js"></script>
-        <script src="assets/js/skel.min.js"></script>
-        <script src="assets/js/skel-viewport.min.js"></script>
-        <script src="assets/js/util.js"></script>
-        <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-        <script src="assets/js/main.js"></script>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/skel-viewport.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
