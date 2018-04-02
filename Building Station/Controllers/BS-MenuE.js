@@ -3,23 +3,23 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/ManageStore", {
-                templateUrl: "BS-MenuTabs/ManageStore.html",
+                templateUrl: "BS-MenuTabs/ManageStoreEnglish.html",
                 controller: "ManageStoreController"
             })
             .when("/DevelopmentEnvironment", {
-                templateUrl: "BS-MenuTabs/DevelopmentEnvironment.html",
+                templateUrl: "BS-MenuTabs/DevelopmentEnvironmentEnglish.html",
                 controller: "DevelopmentEnvironmentController"
             })
             .when("/PreviewWebsite", {
-                templateUrl: "BS-MenuTabs/PreviewWebsite.html",
+                templateUrl: "BS-MenuTabs/PreviewWebsiteEnglish.html",
                 controller: "PreviewWebsiteController"
             })
             .when("/Template", {
-                templateUrl: "BS-MenuTabs/Template.html",
+                templateUrl: "BS-MenuTabs/TemplateEnglish.html",
                 controller: "TemplateController"
             })
-            .when("/Products", {
-                templateUrl: "BS-MenuTabs/Products.html",
+            .when("/Product", {
+                templateUrl: "BS-MenuTabs/ProductsEnglish.html",
                 controller: "ProductsController"
             })
             .otherwise({
@@ -34,7 +34,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
-            
+
             loginService.login().then(function (response) {
                 $rootScope.login = response;
                 //console.log("in $routeChangeStart " + $rootScope.login);
@@ -52,12 +52,12 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             });
         };
 
-        $rootScope.English= function(){
-            $window.location.href = "Views/BasicE.html";
-        };
+        $rootScope.Arabic = function () {
+            $window.location.href = "Basic.html";
+        }
 
         $rootScope.DesktopView = function () {
-            $window.open('/Views/Preview.html', '_blank');
+            $window.open('/Views/PreviewEnglish.html', '_blank');
         };
 
         $rootScope.Publish = function (ev) {
@@ -68,11 +68,11 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                         $mdDialog.alert()
                             // .clickOutsideToClose(true)
                             // .parent(angular.element(document.querySelector('#popupContainer')))
-                            .title('لقد قمت بالفعل بنشر متجرك ، وهذا هو الرابط الخاص بك (http://localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
-                            .textContent('يرجى نسخ الرابط وحفظه')
+                            .title('You already published your store, this is your link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
+                            .textContent('Please Copy the link and save it.')
                             // .ariaLabel('Alert Dialog Demo')
                             .targetEvent(ev)
-                            .ok('إغلاق');
+                            .ok('Close');
                     $mdDialog.show(inform).then(function () {
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
@@ -82,10 +82,10 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 else if (StoreValues.PayPal === false && StoreValues.Cash === false && StoreValues.BankTransfer === false) {
                     // Appending dialog to document.body to cover sidenav in docs app
                     var checkPayment = $mdDialog.alert()
-                        .title('يجب تحديد طريقة دفع واحدة على الأقل قبل النشر')
+                        .title('You need to select at least one payment method before Publishing.')
                         //  .ariaLabel('Lucky day')
                         .targetEvent(ev)
-                        .ok('إغلاق')
+                        .ok('OK')
                     $mdDialog.show(checkPayment).then(function () {
                         $location.path('/ManageStore');
                     }, function () {
@@ -93,12 +93,12 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 }
                 else {// Appending dialog to document.body to cover sidenav in docs app
                     var confirm = $mdDialog.confirm()
-                        .title('هذا رابط متجرك (http://localhost:50277/BuildingStation/' + StoreValues.Domain + '), هل ترغب في النشر؟')
-                        .textContent('يرجى نسخ الرابط وحفظه')
+                        .title('This is your store link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + '), would you like to publish?')
+                        .textContent('Please Copy the link and save it.')
                         //  .ariaLabel('Lucky day')
                         .targetEvent(ev)
-                        .ok('نشر')
-                        .cancel('إلغاء');
+                        .ok('Publish')
+                        .cancel('Cancel');
 
                     $mdDialog.show(confirm).then(function () {
                         $http({
@@ -109,7 +109,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
                         // $rootScope.status = 'You decided to keep your debt.';
-                    });}
+                    });
+                }
             });
         };
 
@@ -121,10 +122,10 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                         $mdDialog.alert()
                             // .clickOutsideToClose(true)
                             // .parent(angular.element(document.querySelector('#popupContainer')))
-                            .title('لم تقم بنشر متجرك بعد')
+                            .title('You have not published your store yet')
                             // .ariaLabel('Alert Dialog Demo')
                             .targetEvent(ev)
-                            .ok('إغلاق');
+                            .ok('Close');
                     $mdDialog.show(inform).then(function () {
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
@@ -133,19 +134,19 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 }
                 else {
                     var confirm = $mdDialog.confirm()
-                        .title('هل تريد بالتأكيد إلغاء نشر متجرك؟')
+                        .title('Are you sure you want to unpublish your store?')
                         //  .ariaLabel('Lucky day')
                         .targetEvent(ev)
-                        .ok('نعم')
-                        .cancel('إلغاء');
+                        .ok('YES')
+                        .cancel('Cancel');
 
                     $mdDialog.show(confirm).then(function () {
                         $http.get('/Published_Stores.asmx/UnPublish').then(function (response) {
                             var Store_values = response.data;
-                            if(Store_values.Published === false){
+                            if (Store_values.Published === false) {
                                 var Unpublished =
                                     $mdDialog.alert()
-                                        .title('تم إلغاء نشر متجرك بنجاح')
+                                        .title('Your store was unpublished successfully')
                                         .targetEvent(ev)
                                         .ok('Close');
                                 $mdDialog.show(Unpublished).then(function () {
@@ -162,24 +163,24 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
         $rootScope.DeleteStore = function (ev) {
             var confirm = $mdDialog.confirm()
-                .title('هل تريد بالتأكيد حذف متجرك؟')
-                .textContent('سيتم حذف جميع البيانات الخاصة بك')
+                .title('Are you sure you want to delete your store?')
+                .textContent('all your data will be deleted.')
                 .targetEvent(ev)
-                .ok('نعم')
-                .cancel('إلغاء');
+                .ok('YES')
+                .cancel('Cancel');
 
             $mdDialog.show(confirm).then(function () {
                 // Appending dialog to document.body to cover sidenav in docs app
                 var askForPassword = $mdDialog.prompt()
-                    .title('أدخل كلمة مرور متجرك')
-                    .textContent('ملاحظة: سيتم إزالة متجرك بالكامل من النظام وستحتاج إلى التسجيل مرة أخرى للحصول على متجر جديد')
-                    .placeholder('كلمة المرور')
+                    .title('Enter your store Password')
+                    .textContent('be aware that your store will be removed completely from our system and you will need to register again to have a new store.')
+                    .placeholder('password')
                     // .ariaLabel('Dog name')
                     .initialValue('')
                     .targetEvent(ev)
                     .required(true)
-                    .ok('حذف')
-                    .cancel('إلغاء');
+                    .ok('Delete')
+                    .cancel('Cancel');
 
                 $mdDialog.show(askForPassword).then(function (result) {
                     $http({
@@ -190,7 +191,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                         .then(function (response) {
                             var storePass = response.data;
                             if (storePass.Password === 'incorrect') {
-                               var NOTdeleted = $mdDialog.alert()
+                                var NOTdeleted = $mdDialog.alert()
                                     .title('Incorrect Password')
                                     .targetEvent(ev)
                                     .ok('Close');
@@ -201,14 +202,14 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                             else {
                                 location.href = "/index.html";
                             }
-                    }); 
+                        });
                 }, function () {
                 });
             }, function () {
             });
         };
     })
-    .controller("ManageStoreController", function ($rootScope,$scope, $http) {
+    .controller("ManageStoreController", function ($rootScope, $scope, $http) {
         $scope.Logout = function () {
             $rootScope.Logout();
         };
@@ -217,7 +218,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         $scope.templatew = "";
         $scope.transactions = true;
 
-       
+
         // Sample options for first chart
         $scope.chartOptions = {
             title: {
@@ -311,19 +312,19 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
         $scope.GetPayPalInfo = function () {
             $http({
-            url: "PaymentMethods.asmx/GetPayPalInfo",
+                url: "PaymentMethods.asmx/GetPayPalInfo",
                 method: "get",
-                    params: { }
-        })
+                params: {}
+            })
                 .then(function (response) {
                     $scope.PayPalInfo = response.data;
 
-      //  $scope.PayPalButtonCode = $sce.trustAsHtml(response.data);
-      //  $scope.PayPalButtonCode2 = "<form><button type='submit'>test</button></form>";
+                    //  $scope.PayPalButtonCode = $sce.trustAsHtml(response.data);
+                    //  $scope.PayPalButtonCode2 = "<form><button type='submit'>test</button></form>";
 
-    }, function (error) {
-        $scope.error = error.data;
-    });
+                }, function (error) {
+                    $scope.error = error.data;
+                });
         };
 
         $scope.UpdateBankInfo = function () {
@@ -347,9 +348,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     params: { IBAN: IBAN }
                 })
                     .then(function (response) {
-                            $scope.bankInfo.IBAN = response.data;
-                            $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-                            $scope.editIBAN = false;
+                        $scope.bankInfo.IBAN = response.data;
+                        $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
+                        $scope.editIBAN = false;
                     }, function (error) {
                         $scope.error = error.data;
                     });
@@ -400,7 +401,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 method: "get"
             })
                 .then(function (response) {
-                    $scope.orders = response.data; });
+                    $scope.orders = response.data;
+                });
         };
 
         $scope.OrderDetails = function (OrderDetail) {
@@ -485,20 +487,20 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
                 for (var i = 0; i < $scope.refreshed.length; i++) {
                     if ($scope.refreshed[i].Name === "Snapchat") {
-                            $scope.disableSnapchat = $scope.refreshed[i].Hidden;
-                            $scope.icon.snapchat = !$scope.refreshed[i].Hidden;
-                    }                  
+                        $scope.disableSnapchat = $scope.refreshed[i].Hidden;
+                        $scope.icon.snapchat = !$scope.refreshed[i].Hidden;
+                    }
                     else if ($scope.refreshed[i].Name === "Instagram") {
-                            $scope.disableInstagram = $scope.refreshed[i].Hidden;
-                            $scope.icon.instagram = !$scope.refreshed[i].Hidden;
+                        $scope.disableInstagram = $scope.refreshed[i].Hidden;
+                        $scope.icon.instagram = !$scope.refreshed[i].Hidden;
                     }
                     else if ($scope.refreshed[i].Name === "Twitter") {
-                            $scope.disableTwitter = $scope.refreshed[i].Hidden;
-                            $scope.icon.twitter = !$scope.refreshed[i].Hidden;
+                        $scope.disableTwitter = $scope.refreshed[i].Hidden;
+                        $scope.icon.twitter = !$scope.refreshed[i].Hidden;
                     }
                     else if ($scope.refreshed[i].Name === "Facebook") {
-                            $scope.disableFacebook = $scope.refreshed[i].Hidden;
-                            $scope.icon.facebook = !$scope.refreshed[i].Hidden;
+                        $scope.disableFacebook = $scope.refreshed[i].Hidden;
+                        $scope.icon.facebook = !$scope.refreshed[i].Hidden;
                     }
                 }
             });
@@ -559,27 +561,27 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 //Social Media Link
                 if ($scope.resultset.SnapchatLink !== 'No Value') {
                     $scope.mySnapchatLink = $scope.resultset.SnapchatLink;
-             //       mySnapchat = $scope.resultset.SnapchatLink;
+                    //       mySnapchat = $scope.resultset.SnapchatLink;
                 }
-               // else { mySnapchat = "No Link"; }
+                // else { mySnapchat = "No Link"; }
 
                 if ($scope.resultset.TwitterLink !== 'No Value') {
                     $scope.myTwitterLink = $scope.resultset.TwitterLink;
-              //      myTwitter = $scope.resultset.TwitterLink;
+                    //      myTwitter = $scope.resultset.TwitterLink;
                 }
                 //else { myTwitter = "No Link"; }
 
                 if ($scope.resultset.FacebookLink !== 'No Value') {
                     $scope.myFacebookLink = $scope.resultset.FacebookLink;
-               //     myFacebook = $scope.resultset.FacebookLink;
+                    //     myFacebook = $scope.resultset.FacebookLink;
                 }
-             //   else { myFacebook = "No Link"; }
+                //   else { myFacebook = "No Link"; }
 
-                if ($scope.resultset.InstagramLink !== 'No Value' ) {
+                if ($scope.resultset.InstagramLink !== 'No Value') {
                     $scope.myInstagramLink = $scope.resultset.InstagramLink;
-                  //  myInstagram = $scope.resultset.InstagramLink;
+                    //  myInstagram = $scope.resultset.InstagramLink;
                 }
-              //  else { myInstagram = "No Link"; }
+                //  else { myInstagram = "No Link"; }
 
                 $scope.TextType = [{ name: "Store Name", value: $scope.StoreName },
                 { name: "Store Description", value: $scope.desc },
@@ -663,7 +665,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     else if ($scope.elementInfo[i].Name === "About") {
                         $scope.section.about = !$scope.elementInfo[i].Hidden;
                         $scope.AboutContect = $scope.elementInfo[i].Value;
-                        $scope.TextType.push({ name: "About", value: $scope.elementInfo[i].Value  })
+                        $scope.TextType.push({ name: "About", value: $scope.elementInfo[i].Value })
                     }
                 }
 
@@ -831,15 +833,15 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 })
                     .then(function (response) { }, function (error) { });
                 $scope.refreshIframe();
-                });
+            });
         };
 
-      //  sliderPath = $scope.imageSrc_slider;
-      //  filePath = $scope.imageSrc;
+        //  sliderPath = $scope.imageSrc_slider;
+        //  filePath = $scope.imageSrc;
         $scope.$on("fileProgress", function (e, progress) {
             $scope.progress = progress.loaded / progress.total;
         });
-              
+
         $scope.UpdateSlider = function () {
             $scope.loadingCover = true;
             var post = $http({
@@ -850,7 +852,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 headers: { "Content-Type": "application/json" }
             })
                 .then(function (response) {
- }, function (error) { });
+                }, function (error) { });
 
             $scope.refreshIframe();
             $scope.loadingCover = false;
@@ -876,15 +878,15 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
         $scope.UpdateLinks = function () {
             $scope.loadingLinks = true;
-        /*    var post = $http({
-                method: "POST",
-                url: "TemplateData.asmx/UpdateLinks",
-                dataType: 'json',
-                data: { snapchat_link: $scope.mySnapchatLink, twitter_link: $scope.myTwitterLink, facebook_link: $scope.myFacebookLink, instagram_link: $scope.myInstagramLink },
-                headers: { "Content-Type": "application/json" }
-            });
-            post.then(function (response) { }, function (error) { });
-            */
+            /*    var post = $http({
+                    method: "POST",
+                    url: "TemplateData.asmx/UpdateLinks",
+                    dataType: 'json',
+                    data: { snapchat_link: $scope.mySnapchatLink, twitter_link: $scope.myTwitterLink, facebook_link: $scope.myFacebookLink, instagram_link: $scope.myInstagramLink },
+                    headers: { "Content-Type": "application/json" }
+                });
+                post.then(function (response) { }, function (error) { });
+                */
             $http.post(
                 "TemplateData.asmx/UpdateLinks",
                 $.param({
@@ -915,9 +917,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
     .controller("TemplateController", function ($scope, $http, $location, $rootScope) {
         $scope.tabHeader = "Template";
 
-    /*    $scope.getImageUrl = function (index) {
-            return "/images/T" + (index+1)+".png";
-        };*/
+        /*    $scope.getImageUrl = function (index) {
+                return "/images/T" + (index+1)+".png";
+            };*/
         $scope.Logout = function () {
             $rootScope.Logout();
         };
@@ -953,8 +955,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 .then(function (response) {
                     $scope.categories = response.data;
 
-                    if (newCategury == null || newCategury === 'undefined' || newCategury == "CurrentCategoryDeleted")
-                    {
+                    if (newCategury == null || newCategury === 'undefined' || newCategury == "CurrentCategoryDeleted") {
                         if ($scope.categories[0].Name != null)
                             $scope.selectedCategory = $scope.categories[0].Name;
                         else $scope.selectedCategory = "";
@@ -1051,16 +1052,16 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 headers: { "Content-Type": "application/json;charset=utf-8" },
                 dataType: 'json',
                 method: 'post',
-                data: JSON.stringify({ id: ID, cat: $scope.selectedCategory, image:Image, name:Name, des:Description, price:Price, PADs:PAD, amount:Amount, discount: Discount })
+                data: JSON.stringify({ id: ID, cat: $scope.selectedCategory, image: Image, name: Name, des: Description, price: Price, PADs: PAD, amount: Amount, discount: Discount })
             }).then(function (response) {
                 /*$scope.editP = response.data;
                 $scope.products[index] = product;
                 product.edit = false;*/
                 $scope.editCategory = false;
                 $scope.selectedCategoryChanged();
-                }, function (error) {
-                    alert(error);
-                    alert("failed edit");
+            }, function (error) {
+                alert(error);
+                alert("failed edit");
             });
         };
         //\apply edit the product
@@ -1129,7 +1130,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         };
         //\to remove row
 
-        
+
     });
 
 //to upload image
@@ -1233,7 +1234,7 @@ app.factory('loginService', function ($http) {
 });
 app.factory('validLinkService', function ($http) {
     var valid = function (name) {
-     return   $http({
+        return $http({
             url: "ShowHideElement.asmx/ValidLink",
             method: "get",
             params: {
@@ -1243,7 +1244,7 @@ app.factory('validLinkService', function ($http) {
             .then(function (response) {
                 return response.data;
             });
-        
+
     };
     return { valid: valid };
 });
