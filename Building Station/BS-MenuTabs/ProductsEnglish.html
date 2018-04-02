@@ -160,12 +160,11 @@
 
             <!--add new category-->
             <div>
-                <h style="font-size:20px;">To add a new category click here</h>
-                <button ng-click="newCat=true" style="background-color:transparent; border: none;"><img src="/images/plus.png" alt="" style="width:37px; height:37px;" /></button>
-                <input class="ar" type="text" ng-show="newCat" placeholder="Enter category" ng-model="newCategury" style="text-align:right;">
-                <span ng-show="newCat">
-                    <a href="" ng-hide="!newCategury.length" ng-click="addNewCategory(newCategury)">Add</a>
-                </span>
+                <h style="font-size:20px;">To add a new category:</h>
+                <input class="ar" type="text" placeholder="Enter category name" ng-model="newCategury" style="text-align:left;">
+
+                <button ng-disabled="!newCategury.length" ng-click="addNewCategory(newCategury)" style="background-color:transparent; border: none;"><img src="/images/plus.png" alt="" style="width:25px; height:25px;" /></button>
+
             </div>
 
             <!--add new category-->
@@ -259,12 +258,12 @@
                         <tr>
                             <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
                             <td class="requiredStar">
-                                <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image"> *
+                                <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image" required> *
                                 <img ng-show="product.Image" style="width:80px; height:80px;" ng-src="{{product.Image}}" />
                             </td>
                             <td class="requiredStar"><input class="ar" type="text" ng-model="product.Name" name="" placeholder="Name" required> *</td>
                             <td class="requiredStar"><textarea class="ar" type="text" ng-model="product.Description" name="" placeholder="Description" required></textarea> *</td>
-                            <td class="requiredStar"><input class="ar" type="number" ng-model="product.Price" name="" placeholder="Price" required> *</tdclass="requiredStar">
+                            <td class="requiredStar"><input class="ar" type="number" ng-model="product.Price" name="" placeholder="Price" required> *</td>
                             <td class="requiredStar"><input class="ar" type="number" ng-model="product.Amount" name="" placeholder="Amount" required> *</td>
                             <td class="requiredStar"><input class="ar" type="number" ng-model="product.Discount" name="" placeholder="Discount" required> *</td>
                             <td colspan="2">

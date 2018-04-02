@@ -1170,7 +1170,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
             })
                 .then(function (response) {
                     $scope.Delete = response.data;
-                    alert($scope.Delete);
                     if ($scope.Delete == 'true') {
                         var remove = $scope.products.indexOf(product);
                         $scope.products.splice(remove, 1);
