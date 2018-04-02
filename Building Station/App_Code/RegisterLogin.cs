@@ -31,7 +31,7 @@ public class RegisterLogin : System.Web.Services.WebService
             if (dr.HasRows == true)
             {
                 con.Close();
-                Context.Response.Write(js.Serialize("/RegisterLogin.html"));
+                Context.Response.Write(js.Serialize("/index.html"));
             }
             else
             {
@@ -87,7 +87,13 @@ public class RegisterLogin : System.Web.Services.WebService
 
                 con.Open();
                 cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
-                "('PayPal', 'Button','" + Session["user"] + "')", con);
+                "('PayPal', 'AccountEmail','" + Session["user"] + "')", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
+                "('PayPal', 'Currency','" + Session["user"] + "')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 
@@ -145,7 +151,7 @@ public class RegisterLogin : System.Web.Services.WebService
             //Invalid login
             else
             {
-                Context.Response.Write(js.Serialize("/RegisterLogin.html"));
+                Context.Response.Write(js.Serialize("/index.html"));
             }
         }
     }
@@ -169,6 +175,6 @@ public class RegisterLogin : System.Web.Services.WebService
     {
         // Session.Clear();
         Session.Abandon();
-        Context.Response.Write(js.Serialize("/RegisterLogin.html"));
+        Context.Response.Write(js.Serialize("/index.html"));
     }
 }

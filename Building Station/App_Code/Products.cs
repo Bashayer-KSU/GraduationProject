@@ -185,11 +185,16 @@ public class Products : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            using (SqlCommand cmd = new SqlCommand("DELETE FROM Product WHERE ID = '" + product_ID + "'; ", con))
-            {
-                int rows = cmd.ExecuteNonQuery();
-                if (rows != 0)
-                    result = true;
+            SqlCommand cmd1 = new SqlCommand("SELECT P.ID FROM Product AS P INNER JOIN ProductOrder AS PO ON P.ID = PO.Product_ID INNER JOIN \"Order\" AS O ON O.ID = PO.Order_ID WHERE P.ID = '" + product_ID + "' AND O.Status = 0", con);
+            SqlDataReader reader = cmd1.ExecuteReader();
+            if (!reader.HasRows) {
+                using (SqlCommand cmd2 = new SqlCommand("DELETE FROM ProductOrder WHERE Product_ID = '" + product_ID + "'; ", con))
+                {
+                    int rows = cmd2.ExecuteNonQuery();
+                    SqlCommand cmd3 = new SqlCommand("DELETE FROM Product WHERE ID = '" + product_ID + "' AND StoreEmail= '"+ Session["user"] + "'", con);
+                    if(cmd3.ExecuteNonQuery() == 1)
+                        result = true;
+                }
             }
         }
         JavaScriptSerializer js = new JavaScriptSerializer();
@@ -239,7 +244,6 @@ public class Products : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-
     public Product AddNewProduct(string category, string image, string name, string des, double price, int amount, int discount)
 
     {
@@ -421,6 +425,7 @@ public class Products : System.Web.Services.WebService
         }
         return category_name;
     }
+
     [WebMethod(EnableSession = true)]
     public int getCategoryID(string category)
     {

@@ -2,12 +2,12 @@
 var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
-            .when("/ManageStore", {
-                templateUrl: "BS-MenuTabs/ManageStore.html",
-                controller: "ManageStoreController"
-            })
             .when("/ManageStoreE", {
                 templateUrl: "BS-MenuTabs/ManageStoreEnglish.html",
+                controller: "ManageStoreController"
+            })
+            .when("/ManageStore", {
+                templateUrl: "BS-MenuTabs/ManageStore.html",
                 controller: "ManageStoreController"
             })
             .when("/DevelopmentEnvironment", {
@@ -18,8 +18,16 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 templateUrl: "BS-MenuTabs/PreviewWebsite.html",
                 controller: "PreviewWebsiteController"
             })
+            .when("/PreviewWebsiteEnglish", {
+                templateUrl: "BS-MenuTabs/PreviewWebsiteEnglish.html",
+                controller: "PreviewWebsiteController"
+            })
             .when("/Template", {
                 templateUrl: "BS-MenuTabs/Template.html",
+                controller: "TemplateController"
+            })
+            .when("/TemplateE", {
+                templateUrl: "BS-MenuTabs/TemplateEnglish.html",
                 controller: "TemplateController"
             })
             .when("/Products", {
@@ -38,7 +46,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             requireBase: false
         });
     })
-    .run(function ($rootScope, $location, loginService, $http, $mdDialog) {
+    .run(function ($rootScope, $location, loginService, $http, $mdDialog, $window) {
 
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
@@ -48,7 +56,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 //console.log("in $routeChangeStart " + $rootScope.login);
                 if (response === "false") {
                     //redirect to login page
-                    location.href = "/RegisterLogin.html";
+                    location.href = "/index.html";
                 }
             });
         });
@@ -60,27 +68,45 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             });
         };
 
+        $rootScope.DesktopView = function () {
+            $window.open('/Views/Preview.html', '_blank');
+        };
+        $rootScope.DesktopViewE = function () {
+            $window.open('/Views/PreviewEnglish.html', '_blank');
+        };
+
         $rootScope.Publish = function (ev) {
             $http.get('/Published_Stores.asmx/PublishRequest').then(function (response) {
                 var StoreValues = response.data;
                 if (StoreValues.Published === true) {
                     var inform =
                         $mdDialog.alert()
-                           // .clickOutsideToClose(true)
+                            // .clickOutsideToClose(true)
                             // .parent(angular.element(document.querySelector('#popupContainer')))
                             .title('You already published your store, this is your link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
                             .textContent('Please Copy the link and save it.')
                             // .ariaLabel('Alert Dialog Demo')
                             .targetEvent(ev)
                             .ok('Close');
-                    $mdDialog.show(inform).then(function () {                       
+                    $mdDialog.show(inform).then(function () {
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
                         // $rootScope.status = 'You decided to keep your debt.';
                     });
                 }
-                else {
-                  // Appending dialog to document.body to cover sidenav in docs app
+                else if (StoreValues.PayPal === false && StoreValues.Cash === false && StoreValues.BankTransfer === false) {
+                    // Appending dialog to document.body to cover sidenav in docs app
+                    var checkPayment = $mdDialog.alert()
+                        .title('You need to select at least one payment method before Publishing.')
+                        //  .ariaLabel('Lucky day')
+                        .targetEvent(ev)
+                        .ok('OK')
+                    $mdDialog.show(checkPayment).then(function () {
+                        location.href = "/BS-MenuTabs/ManageStoreEnglish.html";
+                    }, function () {
+                    });
+                }
+                else {// Appending dialog to document.body to cover sidenav in docs app
                     var confirm = $mdDialog.confirm()
                         .title('This is your store link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + '), would you like to publish?')
                         .textContent('Please Copy the link and save it.')
@@ -98,8 +124,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
                         // $rootScope.status = 'You decided to keep your debt.';
-                    });
-                }
+                    });}
             });
         };
 
@@ -152,21 +177,49 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
         $rootScope.DeleteStore = function (ev) {
             var confirm = $mdDialog.confirm()
-                .title('Are you sure you want to delete your store ?')
-                .textContent('all your data will be removed, you will need to register again.')
+                .title('Are you sure you want to delete your store?')
+                .textContent('all your data will be deleted.')
                 .targetEvent(ev)
-                .ok('Delete')
+                .ok('YES')
                 .cancel('Cancel');
 
             $mdDialog.show(confirm).then(function () {
+                // Appending dialog to document.body to cover sidenav in docs app
+                var askForPassword = $mdDialog.prompt()
+                    .title('Enter your store Password')
+                    .textContent('be aware that your store will be removed completely from our system and you will need to registr again to have a store.')
+                    .placeholder('password')
+                    // .ariaLabel('Dog name')
+                    .initialValue('')
+                    .targetEvent(ev)
+                    .required(true)
+                    .ok('Delete')
+                    .cancel('Cancel');
 
-                $http.get('/Published_Stores.asmx/DeleteStore').then(function (response) {
-                    // logout or something , or the opposite
-                    // or go to login page
-                    //  location.href = "/RegisterLogin.html";
-                }); 
+                $mdDialog.show(askForPassword).then(function (result) {
+                    $http({
+                        url: "Published_Stores.asmx/DeleteStore",
+                        params: { pass: result },
+                        method: "get"
+                    })
+                        .then(function (response) {
+                            var storePass = response.data;
+                            if (storePass.Password === 'incorrect') {
+                               var NOTdeleted = $mdDialog.alert()
+                                    .title('Incorrect Password')
+                                    .targetEvent(ev)
+                                    .ok('Close');
+                                $mdDialog.show(NOTdeleted).then(function () {
+                                }, function () {
+                                });
+                            }
+                            else {
+                                location.href = "/index.html";
+                            }
+                    }); 
+                }, function () {
+                });
             }, function () {
-                // $rootScope.status = 'You decided to keep your debt.';
             });
         };
     })
@@ -299,16 +352,21 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         };
 
         //PayPal
+        $scope.editPayPal = false;
+
         $scope.UpdatePayPalInfo = function () {
-            var buttonCode = $scope.PayPalInfo.Button;
-            if (buttonCode.includes("<form")) {
+            var PayPalEmail = $scope.PayPalInfo.Email;
+            var PayPalCurrencey = $scope.PayPalInfo.Currency
+            if (PayPalEmail.includes("@")) {
                 $http({
                     url: "PaymentMethods.asmx/UpdatePayPalInfo",
                     method: "get",
-                    params: { button: buttonCode }
+                    params: { email: PayPalEmail, currency: PayPalCurrencey }
                 })
                     .then(function (response) {
                         $scope.theresults = response.data;
+                        $scope.editPayPal = false;
+
                     }, function (error) {
                         $scope.error = error.data;
                     });
@@ -322,10 +380,10 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     params: { }
         })
                 .then(function (response) {
-        $scope.PayPalButtonCode = response.data;
+                    $scope.PayPalInfo = response.data;
 
       //  $scope.PayPalButtonCode = $sce.trustAsHtml(response.data);
-                    $scope.PayPalButtonCode2 = "<form><button type='submit'>test</button></form>";
+      //  $scope.PayPalButtonCode2 = "<form><button type='submit'>test</button></form>";
 
     }, function (error) {
         $scope.error = error.data;
@@ -884,39 +942,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 });
         };
     })
-    .controller("PreviewWebsiteController", function ($rootScope, $scope, $http, $window) {
-        $scope.tabHeader = "Previe Website";
-        $scope.Logout = function () {
-            $rootScope.Logout();
-        };
-        /*$scope.EnableDesktopView = false;
-        $scope.EnableMobileView = false;
-
-        
-        */
-        //Desktop View
-        $scope.DesktopView = function () {
-            //alert("EnableDesktopView before");
-            $window.open('/Views/Preview.html', '_blank');
-            //$http.get("Preview.asmx/EnableDesktopView").then(function (response) {
-               // $window.open('/Views/Preview.html', '_blank');
-            //}, function (error) {
-             //   alert(error.data);
-             //   });
-        };
-        //\Desktop View
-
-        //Mobile View
-        /*$scope.MobileView = function () {
-            alert("EnableMobileView before");
-            $http.get("Preview.asmx/EnableMobileView").then(function (response) {
-                $window.open('/Views/Preview.html', '_blank');
-            }, function (error) {
-                alert(error.data);
-            });
-        };*/
-        //\Mobile View
-    })
     .controller("TemplateController", function ($scope, $http, $location, $rootScope) {
         $scope.tabHeader = "Template";
 
@@ -938,7 +963,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             $location.path('/DevelopmentEnvironment');
         };
     })
-    .controller("ProductsController", function ($rootScope, $scope, $http) {
+    .controller("ProductsController", function ($rootScope, $scope, $http, $mdDialog) {
         $scope.tabHeader = "Products";
         $scope.displayCategoryTable = false;
         $scope.selectedCategory = "";
@@ -1105,16 +1130,31 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         //\to add new row
 
         //to remove row
-        $scope.removeproduct = function (product, productID) {
+        $scope.removeproduct = function (product, productID, ev, language) {
             $http({
                 url: "Products.asmx/RemoveProduct",
                 method: "get",
                 params: { product_ID: productID }
             })
                 .then(function (response) {
-                    $scope.result = response.data;
-                    var remove = $scope.products.indexOf(product);
-                    $scope.products.splice(remove, 1);
+                    $scope.Delete = response.data;
+                    alert($scope.Delete);
+                    if ($scope.Delete == 'true') {
+                        var remove = $scope.products.indexOf(product);
+                        $scope.products.splice(remove, 1);
+                    }
+                    else {
+                        var msg;
+                        if (language !== 'eng') {
+                            msg = 'You are not able to delete the product because there are purchases do not completed yet.Please complete the operations before deleting the product';
+                        } else msg = 'لاتستطيع حذف المنتج وذلك لوجود عمليات شراء لم تتم بعد. الرجاء اتمام العمليات قبل حذف المنتج';
+                        var inform =
+                            $mdDialog.alert()
+                                .textContent(msg)
+                                .targetEvent(ev)
+                                .ok('Close');
+                        $mdDialog.show(inform).then(function () { }, function () { });
+                    }
                 }, function (error) { });
         };
         //\to remove row

@@ -7,16 +7,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-    <link href="../light.css" rel="stylesheet" />
     <script src="../Controllers/Preview.js"></script>
+    <link href="../light.css" rel="stylesheet" />
 </head>
-<body ng-app="Preview" ng-controller="managePreview">
-    <div class="container-fluid" >
-        <div dir="rtl">
-            <h style="font-size:20px;">طريقة المعاينة:</h>
+<body ng-app="Preview" ng-controller="managePreviewE">
+    <div class="container-fluid">
+        <div>
+            <h style="font-size:20px;">Preview type:</h>
             <select class="styled-select black rounded"
                     ng-options="option for option in Previews"
-                    ng-init="selectedPreview = Previews[0]"
                     ng-model="selectedPreview"
                     ng-change="selectedPreviewChanged()"></select>
         </div><br />
@@ -32,16 +31,16 @@
                 <div class="col-sm-4 col-md-4"></div>
                 <div class="col-sm-4 col-md-4" style="position:relative">
                     <div style="top:0;left:0;">
-                        <img src="../images/mobile1.png" style="width:310px; height:590px;"/>
+                        <img src="../images/mobile1.png" style="width:310px; height:590px;" />
                         <!--<img src="../mobile.jpg" />-->
                     </div>
                     <div style="position:absolute;top:68px;left:35px;">
-                        <iframe style="height:455px;width:270px;" id="TemplateIframe" ng-src="{{template}}" allowfullscreen></iframe>
+                        <iframe style="height:455px;width:295px;" id="TemplateIframe" ng-src="{{template}}" allowfullscreen></iframe>
                     </div>
                 </div>
                 <div class="col-sm-4 col-md-4"></div>
             </div>
-            
+
         </div>
     </div>
 </body>

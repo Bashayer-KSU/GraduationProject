@@ -1,7 +1,7 @@
 ﻿
-var publishApp = angular.module("published", ["ngRoute"]);
+var BS_App = angular.module("published", ["ui.router"]);
 
-publishApp.service('initialSetup', function ($http) {
+BS_App.service('initialSetup', function ($http) {
     var promise;
     return {
         InitialSetup: function () {
@@ -13,34 +13,94 @@ publishApp.service('initialSetup', function ($http) {
     };
 });
 
-var published = publishApp.config(function ($routeProvider, $locationProvider) {
-    $routeProvider.caseInsensitiveMatch = true;
-    $routeProvider
-        .when("/BuildingStation", {
-            templateUrl: "Stores/HomeBS.html",
-            controller: "BS_HOME"
+var published = BS_App.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
+
+    $urlRouterProvider.otherwise("/BuildingStation");
+    $stateProvider
+        .state("Login&Register", {
+            url: "/BuildingStation",
+            templateUrl: "/RegisterLogin.html",
+            controller: "Register_Login"
         })
-        .when("/BuildingStation/:Domain", {
+        .state("Store", {
+            url: "/BuildingStation/:Domain",
             templateUrl: "Stores/Store.html",
             controller: "PublishedStoreCtrl"
-        })
-        .otherwise({
-            redirectTo: "/BuildingStation"
         });
+       
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
     });
 })
-    .controller("BS_HOME", function ($scope) {
+    .controller("Register_Login", function ($scope, $http, $window) {
 
-        $scope.test = "it works";
+        $scope.SendData = function (e, lang) {
+            // use $.param jQuery function to serialize data from JSON 
+            var url;
+            var data;
+
+            if (e === "reg") {
+                url = "RegisterLogin.asmx/Register";
+                if (lang === "eng") {
+                    data = $.param({
+                        name: $scope.REname,
+                        email: $scope.REemail,
+                        password: $scope.REpassword,
+                        phone: $scope.REphone,
+                        lang: lang
+                    });
+                }
+                else {
+                    data = $.param({
+                        name: $scope.Rname,
+                        email: $scope.Remail,
+                        password: $scope.Rpassword,
+                        phone: $scope.Rphone,
+                        lang: lang
+                    });
+                }
+            }
+            else if (e === "log") {
+                url = "RegisterLogin.asmx/Login";
+                if (lang === "eng") {
+
+                    data = $.param({
+                        email: $scope.LEemail,
+                        password: $scope.LEpassword,
+                        lang: lang
+                    });
+                }
+                else {
+                    data = $.param({
+                        email: $scope.Lemail,
+                        password: $scope.Lpassword,
+                        lang: lang
+                    });
+                }
+            }
+
+            var config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            };
+
+            $http.post(url, data, config)
+                .then(function (response) {
+                    $scope.result = response.data;
+                    //$window.location.href = response.data;
+                    location.href = $scope.result.substr(1, $scope.result.length - 2);
+                }, function (error) {
+                    $scope.error = error.data;
+                });
+        };
     })
-    .controller("PublishedStoreCtrl", function ($scope, $http, $routeParams, ProductService, CategoryService, AddProductService) {
+    .controller("PublishedStoreCtrl", function ($scope, $http, $stateParams, ProductService, CategoryService, AddProductService) {
 
         $http({
             url:"Published_Stores.asmx/GetTemplate",
-            params:{StoreDomain: $routeParams.Domain},
+            params: { StoreDomain: $stateParams.Domain},
             method: "get"
         })
             .then(function (response) {
@@ -68,7 +128,7 @@ var published = publishApp.config(function ($routeProvider, $locationProvider) {
             //Store Info
             $http({
                 url: "../Published_Stores.asmx/GetStore",
-                params: { StoreDomain: $routeParams.Domain },
+                params: { StoreDomain: $stateParams.Domain },
                 method: "get"
             })
            .then(function (response) {
@@ -138,7 +198,7 @@ var published = publishApp.config(function ($routeProvider, $locationProvider) {
 
             $http({
                 url: "../Published_Stores.asmx/GetElements",
-                params: { StoreDomain: $routeParams.Domain },
+                params: { StoreDomain: $stateParams.Domain },
                 method: "get"
             })
              .then(function (response) {
@@ -181,7 +241,52 @@ var published = publishApp.config(function ($routeProvider, $locationProvider) {
         };
         ElementsData();
 
-        $scope.Checkout = function (Buyer_Name, Buyer_Phone, Buyer_Email, Buyer_Location, Payment_Method, Hol_Name, Order_ID) {
+        $scope.Checkout = function () {
+           /* console.log($scope.BuyerName);
+            console.log($scope.BuyerPhone);
+            console.log($scope.BuyerEmail);
+            console.log($scope.BuyerLocation);
+            console.log($scope.PaymentMethod);
+            console.log($scope.HolName);
+            console.log($scope.OrderID);*/
+
+            $http.post(
+                "/BuyerOrder.asmx/CreateOrder",
+                $.param({
+                    StoreEmail: $scope.Store.Email,
+                    BuyerName: $scope.BuyerName,
+                    BuyerPhone: $scope.BuyerPhone,
+                    BuyerEmail: $scope.BuyerEmail,
+                    BuyerLocation: $scope.BuyerLocation,
+                    PaymentMethod: $scope.PaymentMethod,
+                    BankAccount: $scope.HolName,
+                    OrderID: $scope.OrderID,
+                    TotalPrice: $scope.TotalPrice
+                }),
+                {
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' }
+                })
+                .then(function (response) {
+                    $scope.result = response.data;
+                    $scope.addProductToOrder($scope.result.ID);
+                    $scope.checkout = false;
+                    $scope.payment = false;
+                    $scope.ProductsArray.length = 0;
+
+                }, function (error) {
+                    $scope.error = error.data;
+                });
+        };
+
+
+        $scope.CheckoutA = function (Buyer_Name, Buyer_Phone, Buyer_Email, Buyer_Location, Payment_Method, Hol_Name, Order_ID) {
+           /* console.log($scope.BuyerName);
+            console.log($scope.BuyerPhone);
+            console.log($scope.BuyerEmail);
+            console.log($scope.BuyerLocation);
+            console.log($scope.PaymentMethod);
+            console.log($scope.HolName);
+            console.log($scope.OrderID);*/
 
             $http.post(
                 "/BuyerOrder.asmx/CreateOrder",
@@ -210,8 +315,6 @@ var published = publishApp.config(function ($routeProvider, $locationProvider) {
                     $scope.error = error.data;
                 });
         };
-
-
             //////////////// PRODUCTS AND CATEGORIES /////////////
 
         //Initialization
@@ -304,7 +407,7 @@ var published = publishApp.config(function ($routeProvider, $locationProvider) {
 
        /* $http({
             url: "../Published_Stores.asmx/GetProducts",
-            params: { StoreDomain: $routeParams.Domain },
+            params: { StoreDomain: $stateParams.Domain },
             method: "get"
         })
             .then(function (response) {
@@ -312,11 +415,11 @@ var published = publishApp.config(function ($routeProvider, $locationProvider) {
             });*/
     });
 
-publishApp.factory('CategoryService', function ($http, $routeParams) {
+BS_App.factory('CategoryService', function ($http, $stateParams) {
     var GetAllCategories = function () {
         return $http({
             url: "../Published_Stores.asmx/GetAllCategories",
-            params: { StoreDomain: $routeParams.Domain },
+            params: { StoreDomain: $stateParams.Domain },
             method: "get"
         })
         .then(function (categories) {
@@ -327,13 +430,13 @@ publishApp.factory('CategoryService', function ($http, $routeParams) {
     return { GetAllCategories: GetAllCategories };
 });
 
-publishApp.factory('ProductService', function ($http, $routeParams) {
+BS_App.factory('ProductService', function ($http, $stateParams) {
     var GetAllProducts = function (CategoryName) {
         return $http.post(
             "/Published_Stores.asmx/GetAllProducts",
             $.param({
                 Category: CategoryName,
-                StoreDomain: $routeParams.Domain
+                StoreDomain: $stateParams.Domain
             }),
             {
                 headers: {
@@ -350,7 +453,7 @@ publishApp.factory('ProductService', function ($http, $routeParams) {
 });
 
 
-publishApp.factory('AddProductService', function ($http) {
+BS_App.factory('AddProductService', function ($http) {
     var AddProductToCart = function (OrderID, ProductID, Amount, PreviousAmount) {
         return $http.post(
             "/Published_Stores.asmx/AddProductToOrder",
@@ -367,4 +470,30 @@ publishApp.factory('AddProductService', function ($http) {
     };
     return { AddProductToCart: AddProductToCart };
 
+});
+
+BS_App.directive('match', function ($parse) {
+    return {
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ctrl) {
+            scope.$watch(function () {
+                return $parse(attrs.match)(scope) === ctrl.$modelValue;
+            }, function (currentValue) {
+                ctrl.$setValidity('mismatch', currentValue);
+            });
+        }
+    };
+});
+
+BS_App.directive('matchpass', function ($parse) {
+    return {
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ctrl) {
+            scope.$watch(function () {
+                return $parse(attrs.matchpass)(scope) === ctrl.$modelValue;
+            }, function (currentValue) {
+                ctrl.$setValidity('mismatchpass', currentValue);
+            });
+        }
+    };
 });

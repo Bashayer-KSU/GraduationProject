@@ -118,7 +118,7 @@ public class PaymentMethods : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void GetPayPalInfo()
     {
-        var PayPalButton = "";
+        // var PayPalButton = "";
 
        /* using (SqlConnection con = new SqlConnection(cs))
         {
@@ -137,24 +137,35 @@ public class PaymentMethods : System.Web.Services.WebService
         using (var conn = new SqlConnection(cs))
         using (var cmd = conn.CreateCommand())
         {
-            cmd.CommandText = "SELECT Value FROM Element Where StoreEmail = @User AND Type = 'Button' AND Name = 'PayPal'";
+            cmd.CommandText = "SELECT Value FROM Element Where StoreEmail = @User AND Type = 'Currency' AND Name = 'PayPal'";
             cmd.Parameters.AddWithValue("@User", Session["user"]);
             conn.Open();
             using (SqlDataReader oReader = cmd.ExecuteReader())
             {
                 while (oReader.Read())
                 {
-                    PayPalButton = oReader["Value"].ToString();
+                    payments.PayPalCurrencey = oReader["Value"].ToString();
                 }
+                conn.Close();
+            }
 
+            cmd.CommandText = "SELECT Value FROM Element Where StoreEmail = @User2 AND Type = 'AccountEmail' AND Name = 'PayPal'";
+            cmd.Parameters.AddWithValue("@User2", Session["user"]);
+            conn.Open();
+            using (SqlDataReader oReader = cmd.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    payments.PayPalEmail = oReader["Value"].ToString();
+                }
                 conn.Close();
             }
         }
-        Context.Response.Write(js.Serialize(PayPalButton));
+        Context.Response.Write(js.Serialize(payments));
     }
 
     [WebMethod(EnableSession = true)]
-    public void UpdatePayPalInfo(String button)
+    public void UpdatePayPalInfo(string email, string currency)
     {
      /*   using (SqlConnection con = new SqlConnection(cs))
         {
@@ -169,9 +180,16 @@ public class PaymentMethods : System.Web.Services.WebService
         using (var cmd = conn.CreateCommand())
         {
             conn.Open();
-            cmd.CommandText = "UPDATE Element SET Value = @Value Where StoreEmail = '" + Session["user"] + "' AND Type = 'Button' AND Name = 'PayPal'";
-            cmd.Parameters.AddWithValue("@Value", button);
+            cmd.CommandText = "UPDATE Element SET Value = @Value Where StoreEmail = '" + Session["user"] + "' AND Type = 'AccountEmail' AND Name = 'PayPal'";
+            cmd.Parameters.AddWithValue("@Value", email);
             cmd.ExecuteNonQuery();
+            conn.Close();
+
+            conn.Open();
+            cmd.CommandText = "UPDATE Element SET Value = @Value2 Where StoreEmail = '" + Session["user"] + "' AND Type = 'Currency' AND Name = 'PayPal'";
+            cmd.Parameters.AddWithValue("@Value2", currency);
+            cmd.ExecuteNonQuery();
+            conn.Close();
         }
     }
 }

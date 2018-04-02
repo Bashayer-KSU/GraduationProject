@@ -16,6 +16,8 @@ public class Payments
     }
 
     public Boolean Paypal { get; set; }
+    public string PayPalEmail { get; set; }
+    public string PayPalCurrencey { get; set; }
     public Boolean BankTransfer { get; set; }
     public Boolean Cash { get; set; }
 
