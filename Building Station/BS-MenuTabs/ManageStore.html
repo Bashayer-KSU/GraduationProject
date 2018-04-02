@@ -352,7 +352,7 @@
 
 
             </div>
-            <div id="TableOfProcesses" class="tab-pane fade in active" role="tabpanel" >
+            <div id="TableOfProcesses" class="tab-pane fade in" role="tabpanel">
                 <!--TableOfProcesses-->
                 <div class="container" style="margin-top:30px;">
                     <div dir="rtl">
@@ -472,36 +472,26 @@
                         <button class="addfields waves-effect waves-light btn done" ng-click="transactions=true" style="float:left;">الرجوع إلى القائمة</button>
                     </div><!-- ng-show !transactions-->
                 </div>
-                </div>
+            </div>
 
-            <div id="Statistic" class="tab-pane fade in " role="tabpanel" >
+            <div id="Statistic" class="tab-pane fade in active" role="tabpanel" >
                 <!--Statistic-->
                 <div class="container">
-                    <hc-chart options="chartOptions">Placeholder for generic chart</hc-chart>
-
-                    <div class="row" ng-init="statistic()">
+                    <div class="row">
                         <div class="statbox">
                             Statistics
                             <div id="quote">
-                                <!-- Best Categories,-->  Best Products
-                            </div>
-
-                        </div>
-                        <div class="col-sm-12 statbox" data-ng-repeat="product in BestProducts | orderBy:'-Amount' | limitTo: 3" style="color:#E6293C">
-
-                            <div ng-show="product.Amount!=0">
-                                <div class="number">{{product.Amount}}</div>
-                                <div class="type" style="color:#F26F7D">
-                                    {{product.ProductName}}
-                                    <div class="details" style="color:#E6293C">{{product.CategoryName}}</div>
-                                </div>
-                                <img ng-src="{{product.Image}}" style=" height: 4vw; position: absolute; top: 30%; left: 63%;" alt="Product Image">
+                                <!-- Best Categories,-->
                             </div>
                         </div>
-                        <h1 class="text-center">~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~</h1>
+                        <div class="container">
+                            <div ng-init="BestCategoriesFunction()">
+                                <hc-chart ng-if="displayChart" options="chartOptions">Products chart</hc-chart>
+                            </div>
+                            </div>
+                        </div>
+
                     </div>
-
-                </div>
             </div>
 
 
