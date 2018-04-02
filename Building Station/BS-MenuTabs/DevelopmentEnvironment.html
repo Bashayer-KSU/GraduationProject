@@ -125,16 +125,17 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-4 col-md-4">
-        </div>
-        <div class="col-sm-4 col-md-4">
-        </div>
         <div class="col-sm-8 col-md-8">
-            <div class="embed-responsive embed-responsive-4by3" style="margin-right:5vw; width: 55vw; height: 65vw;">
+            <div class="embed-responsive embed-responsive-4by3" style="margin-right:15vw; width: 55vw; height: 65vw;">
                 <iframe refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
                 <!--style="overflow: hidden; height: 200%; width: 100%;"-->
             </div>
         </div>
+        <div class="col-sm-4 col-md-4">
+        </div>
+        <div class="col-sm-4 col-md-4">
+        </div>
+
         <div class="col-sm-4 col-md-4 leftTab">
             <br />
 
@@ -208,7 +209,7 @@
                 </div>
             </div>
             <div class="row inside">
-                <h4>تغيير صورة التذييل</h4>
+                <h4>تغيير صورة الغلاف</h4>
                 <div class="input-group">
                     <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_about" style="width:100%;" />
                     <span class="input-group-btn">

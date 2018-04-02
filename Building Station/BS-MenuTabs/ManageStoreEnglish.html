@@ -346,6 +346,7 @@
                                     This field is required
                                 </p>
                             </form>
+                            <br />
                         </div>
                     </div>
                     <div class="row" style="text-align:center;">
@@ -353,11 +354,11 @@
                             <form name="PayPal" class="check-element animate-show-hide" ng-show="checkboxPayment.paypal" ng-model="PayPalInfo" ng-init="GetPayPalInfo()" style="display:inline; width:40%">
                                <br />
                                 <label for="PayPal">Enter your PayPal Seller/Business email address</label>
-                                    <input type="text" class="form-control validate" name="PayPalEmail" ng-model="PayPalInfo.Email" id="PayPalEmail" ng-disabled="!editPayPal" placeholder="PayPal email" required>
+                                    <input type="text" class="form-control validate" name="PayPalEmail" ng-model="PayPalInfo.PayPalEmail" id="PayPalEmail" ng-disabled="!editPayPal" placeholder="PayPal email" required>
                                     <p class=" alert alert-danger" ng-show="!PayPal.PayPalEmail.$valid">This field is required.</p>
                                 <br />    
                                 <label for="PayPal">Enter the used Currency in PayPal payment</label>
-                                    <input type="text" class="form-control validate" name="PayPalCurrency" ng-model="PayPalInfo.Currency" id="PayPalCurrency" ng-disabled="!editPayPal" placeholder="Currency">
+                                    <input type="text" class="form-control validate" name="PayPalCurrency" ng-model="PayPalInfo.PayPalCurrencey" id="PayPalCurrency" ng-disabled="!editPayPal" placeholder="Currency">
                                 <br />    
                                 <span ng-show="editPayPal" class="input-group-btn">
                                         <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdatePayPalInfo()" class="btn" style="float:right;">Update</button>

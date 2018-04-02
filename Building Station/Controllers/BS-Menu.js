@@ -46,7 +46,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
             requireBase: false
         });
     })
-    .run(function ($rootScope, $location, loginService, $http, $mdDialog, $window, $dialogs, $templateCache) {
+    .run(function ($rootScope, $location, loginService, $http, $mdDialog, $window /*, $dialogs, $templateCache*/) {
 
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
@@ -403,8 +403,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
         $scope.editPayPal = false;
 
         $scope.UpdatePayPalInfo = function () {
-            var PayPalEmail = $scope.PayPalInfo.Email;
-            var PayPalCurrencey = $scope.PayPalInfo.Currency
+            var PayPalEmail = $scope.PayPalInfo.PayPalEmail;
+            var PayPalCurrencey = $scope.PayPalInfo.PayPalCurrencey;
             if (PayPalEmail.includes("@")) {
                 $http({
                     url: "PaymentMethods.asmx/UpdatePayPalInfo",

@@ -77,7 +77,7 @@ angular.module('modalTest', ['ui.bootstrap', 'dialogs'])
                     });
 
                     break;
-            }; // end switch
+            } // end switch
         }; // end launch
 
         // for faking the progress bar in the wait dialog
