@@ -219,6 +219,7 @@
                             </div>
                             <p class="alert alert-danger" ng-show="login_eng.LEpassword.$error.maxlength || login_eng.LEpassword.$error.minlength || form.LEpassword.$invalid">Your password must be between 8 to 20 characters.</p>
                             <div class="space-top text-center">
+                                <p class="alert alert-danger" ng-show="alert">Your email or password invalid</p>
                                 <button ng-disabled="login_eng.$invalid" ng-click="SendData('log','eng')" class="waves-effect waves-light btn done">
                                     LOG IN
                                 </button>
