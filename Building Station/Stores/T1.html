@@ -17,8 +17,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body class="homepage" ng-style="{'background-color': Store.Color4}">
-    <div id="page-wrapper">
-
+    <div id="page-wrapper"  ng-style="{'background-color': Store.Color4}">
         <!-- Header -->
         <section class="box" style=" padding:0px 0px 0px 0px; margin:0px 0px 0px 0px;">
 
@@ -46,14 +45,14 @@
             </div>
         </section>
         <!-- store welcom -->
-            <section style="padding-left: 5vw; padding-right:2vw; padding-top:0%; padding-bottom: 0px;" id="banner">
-                    <div class="11u 12u(mobile)">
-                        <header ng-style="{'background': Store.Color2}">
-                            <h2 ng-style="{'color': Store.Color4}">{{Store.Description}}</h2>
-                            <p ng-style="{'color': Store.Color3}">{{Store.Address}}</p>
-                        </header>
-                    </div>
-            </section>
+        <section style="padding-left: 0vw; padding-right: 0vw; padding-top:0%; padding-bottom: 0px;" id="banner">
+                <div class="12u 12u(mobile)">
+                    <header ng-style="{'background': Store.Color2}">
+                        <h2 ng-style="{'color': Store.Color4}">{{Store.Description}}</h2>
+                        <p ng-style="{'color': Store.Color3}">{{Store.Address}}</p>
+                    </header>
+                </div>
+        </section>
         <!-- slider image -->
         <section ng-show="section.slider" style="padding-top:0px; padding-bottom:0px;" id="banner">
             <div class="12u">
@@ -333,14 +332,14 @@
                 <section id="footer" class="container">
                     <div class="row">
                         <div dir="rtl" class="4u 12u(mobile)">
-                            <header>
-                                <h2 ng-style="{'color': Store.Color1}">للتواصل</h2>
+                            <header style="padding-bottom:0px; margin-bottom:0px;">
+                                <h1 ng-style="{'color': Store.Color1}" style="font-size:2.5vw;">للتواصل</h1>
                             </header>
-                            <div class="social">
-                                <a ng-show="Facebook" herf="{{Store.FacebookLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Facebook" src="../../images/Facebook4.png"></a>
-                                <a ng-show="Twitter" herf="{{Store.TwitterLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Twitter" src="../../images/twitter.png"></a>
-                                <a ng-show="Snapchat" herf="{{Store.SnapchatLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Snapchat" src="../../images/snapchat.png"></a>
-                                <a ng-show="Instagram" herf="{{Store.InstagramLink}}"><img style="padding-bottom:13px;width:4vw;" alt="Instagram" src="../../images/insta.png"></a>
+                            <div class="social" style="padding-top:0px; margin-top:0px;">
+                                <a ng-show="Facebook" herf="{{Store.FacebookLink}}"><img style="margin-right:1vw; width:3vw;" alt="Facebook" src="../../images/Facebook4.png"></a>
+                                <a ng-show="Twitter" herf="{{Store.TwitterLink}}"><img style="margin-right:1vw; width:3vw;" alt="Twitter" src="../../images/twitter.png"></a>
+                                <a ng-show="Snapchat" herf="{{Store.SnapchatLink}}"><img style="margin-right:1vw; width:3vw;" alt="Snapchat" src="../../images/snapchat.png"></a>
+                                <a ng-show="Instagram" herf="{{Store.InstagramLink}}"><img style="margin-right:1vw; width:3vw;" alt="Instagram" src="../../images/insta.png"></a>
                             </div>
                         </div>
                         <div class="2u 12u(mobile)"></div>
@@ -364,9 +363,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="12u" style="padding-bottom:1vw; padding-top:0px; margin-top:0px;">
+                        <div class="12u" style="padding-top:1vw;">
                             <!-- Copyright -->
-                            <div style="margin-bottom:0px;" id="copyright">
+                            <div style="margin-bottom:1vw; padding-bottom:0px; padding-top:0px; margin-top:0px;" id="copyright">
                                 <ul ng-style="{'background': Store.Color2}" class="links">
                                     <li><a ng-style="{'color': Store.Color3}" href=""><img style="width:5vw;" src="../../images/logo-arabi.png" />&copy; Building Station. جميع الحقوق محفوظة </a></li>
                                 </ul>

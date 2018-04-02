@@ -898,7 +898,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
 
                 $scope.refreshIframe();
                 myservice.refresh();
-
+                $scope.imageSrc = "";
             }, function () {
                 $http({
                     method: "POST",
@@ -909,6 +909,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
                 })
                     .then(function (response) { }, function (error) { });
                 $scope.refreshIframe();
+                $scope.imageSrc = "";
                 });
         };
 
@@ -928,11 +929,11 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
                 headers: { "Content-Type": "application/json" }
             })
                 .then(function (response) {
- }, function (error) { });
+                }, function (error) { });
 
             $scope.refreshIframe();
             $scope.loadingCover = false;
-
+            $scope.imageSrc_slider = "";
         };
 
         $scope.UpdateAboutImage = function () {
@@ -949,7 +950,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
 
             $scope.refreshIframe();
             $scope.loadingAboutImage = false;
-
+            $scope.imageSrc_about = "";
         };
 
         $scope.UpdateLinks = function () {
