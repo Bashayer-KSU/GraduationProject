@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
+var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.bootstrap", "dialogs"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/ManageStore", {
@@ -30,7 +30,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             requireBase: false
         });
     })
-    .run(function ($rootScope, $location, loginService, $http, $mdDialog, $window) {
+    .run(function ($rootScope, $location, loginService, $http, $mdDialog, $window /*, $dialogs, $templateCache*/) {
 
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
@@ -44,6 +44,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 }
             });
         });
+
         $rootScope.Logout = function () {
             $http.get('/RegisterLogin.asmx/SignOut').then(function (response) {
 
@@ -61,7 +62,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         };
 
         $rootScope.Publish = function (ev) {
-            $http.get('/Published_Stores.asmx/PublishRequest').then(function (response) {
+            $http.get('/Published_Stores.asmx/PublishRequest')
+                .then(function (response) {
                 var StoreValues = response.data;
                 if (StoreValues.Published === true) {
                     var inform =
@@ -105,7 +107,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                             url: "Published_Stores.asmx/Publish",
                             params: { storeDomainName: StoreValues.Domain },
                             method: "get"
-                        })
+                        }).then(function (response) {
+                            $window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
+                        });
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
                         // $rootScope.status = 'You decided to keep your debt.';
@@ -160,6 +164,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             });
         };
 
+        //$templateCache.put('/dialogs/StorePassword.html', '<div class="modal"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title"></span>Enter your store Password</h4></div><div class="modal-body"><ng-form name="nameDialog" novalidate role="form"><div class="form-group input-group-lg" ng-class="{true: \'has-error\'}[nameDialog.username.$dirty && nameDialog.username.$invalid]"><input type="password" class="form-control" name="username" id="username" ng-model="user.name" required><span class="help-block">Enter your full name, first &amp; last.</span></div></ng-form></div><div class="modal-footer"><button type="button" class="btn btn-default" ng-click="cancelDelete()">Cancel</button><button type="button" class="btn btn-primary" ng-click="saveDelete()" ng-disabled="(nameDialog.$dirty && nameDialog.$invalid) || nameDialog.$pristine">Delete</button></div></div></div></div>');
+  
         $rootScope.DeleteStore = function (ev) {
             var confirm = $mdDialog.confirm()
                 .title('هل تريد بالتأكيد حذف متجرك؟')
@@ -169,6 +175,32 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 .cancel('إلغاء');
 
             $mdDialog.show(confirm).then(function () {
+                // Create Your Own Dialog
+              /*  var dlg = $dialogs.create('/dialogs/StorePassword.html', 'PasswordToDeleteCtrl', {}, { key: false, back: 'static' });
+                dlg.result.then(function (password) {
+                    $http({
+                        url: "Published_Stores.asmx/DeleteStore",
+                        params: { pass: password },
+                        method: "get"
+                    })
+                        .then(function (response) {
+                            var storePass = response.data;
+                            if (storePass.Password === 'incorrect') {
+                                var NOTdeleted = $mdDialog.alert()
+                                    .title('Incorrect Password')
+                                    .targetEvent(ev)
+                                    .ok('Close');
+                                $mdDialog.show(NOTdeleted).then(function () {
+                                }, function () {
+                                });
+                            }
+                            else {
+                                location.href = "/index.html";
+                            }
+                        });                 }, function () {
+                  //  $rootScope.name = 'You decided not to enter in your name, that makes me sad.';
+                    });*/
+/////////////////////////////////////////////////////////////////////
                 // Appending dialog to document.body to cover sidenav in docs app
                 var askForPassword = $mdDialog.prompt()
                     .title('أدخل كلمة مرور متجرك')
@@ -207,7 +239,22 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
             }, function () {
             });
         };
-    })
+    })/*.controller('PasswordToDeleteCtrl', function ($rootScope, $modalInstance, data) {
+        //  $scope.user = { name: '' };
+
+        $rootScope.cancelDelete = function () {
+            $modalInstance.dismiss('canceled');
+        }; // end cancel
+
+        $rootScope.saveDelete = function () {
+            $modalInstance.close(/*$scope.user.name*///);
+       // }; // end save
+
+        /*$scope.hitEnter = function (evt) {
+             if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, '')))
+                 $scope.save();
+         }; // end hitEnter*/ 
+   // }) // end PasswordToDeleteCtrl */
     .controller("ManageStoreController", function ($rootScope,$scope, $http) {
         $scope.Logout = function () {
             $rootScope.Logout();
@@ -216,31 +263,80 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         $scope.tabHeader = "Manage Store";
         $scope.templatew = "";
         $scope.transactions = true;
+       $scope.BestCategories= [];
+        $scope.BestProducts= [];
+        $scope.BestProduct = [];
 
-       
-        // Sample options for first chart
+        $scope.displayChart = false;
+
+        $scope.BestProductsFunction = function() {
+          angular.forEach($scope.BestCategories, function (value, key) {
+         $http({
+                url: "/Products.asmx/BestProductsInCategory",
+                method: "get",
+                params: { CategoryID : value.drilldown }
+                })
+                .then(function (response) {
+                    $scope.BestProductResponse = response.data;
+
+                    angular.forEach($scope.BestProductResponse, function (value2, key)
+                    {
+                        $scope.BestProduct.push([value2.ProductName,value2.Amount]);
+                    });
+                    $scope.BestProducts.push({ id: value.drilldown, data: $scope.BestProduct });
+                    $scope.BestProduct = [];
+                  });
+
+            });
+
+          $scope.displayChart = true;
+  }
+        $scope.BestCategoriesFunction = function () {
+             $http({
+                url: "/Products.asmx/BestCategories",
+                method: "get"
+            })
+                .then(function (response) {
+                    $scope.BestCategoryResponse = response.data; 
+                    angular.forEach($scope.BestCategoryResponse, function (value, key)
+                    {
+                        $scope.BestCategories.push({ name: value.CategoryName, y: value.Amount, drilldown: value.CategoryID});
+                    });
+        $scope.BestProductsFunction();
+                });
+        };
+
         $scope.chartOptions = {
+            chart: {
+                type: 'column'
+            },
             title: {
-                text: 'Temperature data'
+                text: 'Best Category'
             },
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                type: 'category'
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
             },
 
             series: [{
-                data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-            }]
-        };
-        /*
-        loginService.login().then(function (response) {
-            $scope.login = response;
-            console.log("in then " + $scope.login);
-            if (response === "false") {
-                //redirect to login page
-                location.href = "/index.html";
+                name: 'Categories',
+                colorByPoint: true,
+                data: $scope.BestCategories
+            }],
+            drilldown: {
+                series: $scope.BestProducts
             }
-        });*/
+        };
 
         $scope.acceptPayment = function () {
             var Paypal = $scope.checkboxPayment.paypal;
@@ -291,8 +387,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         $scope.editPayPal = false;
 
         $scope.UpdatePayPalInfo = function () {
-            var PayPalEmail = $scope.PayPalInfo.Email;
-            var PayPalCurrencey = $scope.PayPalInfo.Currency
+            var PayPalEmail = $scope.PayPalInfo.PayPalEmail;
+            var PayPalCurrencey = $scope.PayPalInfo.PayPalCurrencey;
             if (PayPalEmail.includes("@")) {
                 $http({
                     url: "PaymentMethods.asmx/UpdatePayPalInfo",
@@ -328,18 +424,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
         $scope.UpdateBankInfo = function () {
             var IBAN = $scope.bankInfo.IBAN;
-            /*
-            $http({
-                url: "PaymentMethods.asmx/UpdateBankInfo",
-                dataType: 'json',
-                method: 'POST',
-                data: { IBAN: IBAN },
-                headers: { "Content-Type": "application/json; charset=utf-8" }
-            }).then(function (response) {
-                $scope.IBAN = response.data;
-                }, function (error) {
-                    $scope.error = error;
-            });*/
+           
             if (IBAN !== "" && IBAN !== null) {
                 $http({
                     url: "PaymentMethods.asmx/UpdateBankInfo",
@@ -362,18 +447,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         $scope.editIBAN = false;
 
         $scope.GetBankInfo = function () {
-            /*
-            $http({
-                url: "PaymentMethods.asmx/GetBankInfo",
-                dataType: 'json',
-                method: 'POST',
-                data: {},
-                headers: { "Content-Type": "application/json; charset=utf-8" }
-            }).then(function (response) {
-                $scope.bankInfo.IBAN = response.data;
-            }, function (error) {
-                alert(error);
-            });*/
             $http({
                 url: "PaymentMethods.asmx/GetBankInfo",
                 method: "get",
@@ -429,17 +502,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                     $scope.orders.splice(remove, 1);
                     $scope.transactions = true;
                 }, function (error) { });
-        };
-
-        $scope.statistic = function () {
-            $http({
-                url: "/Products.asmx/BestProducts",
-                method: "get",
-                params: {}
-            })
-                .then(function (response) {
-                    $scope.BestProducts = response.data;
-                });
         };
 
     })

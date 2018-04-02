@@ -3,46 +3,136 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <link href="../light.css" rel="stylesheet" />
-    <script src="../Controllers/Preview.js"></script>
+    <script src="../Controllers/Preview.js"></script>    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+    <style>
+        .icon-bar {
+            position: fixed;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            background-color: #6E9F99;
+            border-radius: 30px ;         
+        }
+
+            .icon-bar a {
+                display: block;
+                text-align: center;
+                padding: 16px;
+                transition: all 0.3s ease;
+                color: white;
+                font-size: 20px;
+            }
+
+                .icon-bar a.mo:hover {
+                    background-color: #C7DFCA;
+                    border-bottom-right-radius: 20px;
+                    border-bottom-left-radius: 20px;
+                }
+
+                .icon-bar a.dt:hover {
+                    background-color: #C7DFCA;
+                    border-top-right-radius: 20px;
+                    border-top-left-radius: 20px;
+                }
+
+        .options {
+            position: fixed;
+        }
+
+    </style>
+
+    <script>
+
+
+        $(window).on("load", function () {
+            $("#mobile").hide();
+        });
+
+        function replace() {
+            $("#mobile").hide();
+            $("#deskTop").show();
+
+        }
+
+        function replace2() {
+            $("#mobile").show();
+            $("#deskTop").hide();
+
+
+        }
+    </script>
+
+
 </head>
 <body ng-app="Preview" ng-controller="managePreview">
-    <div class="container-fluid" >
-        <div dir="rtl">
-            <h style="font-size:20px;">طريقة المعاينة:</h>
-            <select class="styled-select black rounded"
-                    ng-options="option for option in Previews"
-                    ng-init="selectedPreview = Previews[0]"
-                    ng-model="selectedPreview"
-                    ng-change="selectedPreviewChanged()"></select>
-        </div><br />
-        <div ng-show="DesktopView">
+    <div class="container-fluid">
+        <!--   <div dir="rtl">
+               <h style="font-size:20px;">طريقة المعاينة:</h>
+               <select class="styled-select black rounded"
+                       ng-options="option for option in Previews"
+                       ng-init="selectedPreview = Previews[0]"
+                       ng-model="selectedPreview"
+                       ng-change="selectedPreviewChanged()"></select>
+           </div><br />-->
+        <!--<div class="btn-group-vertical options" role="group" aria-label="Basic example  ">
+            <button type="button" class="btn btn-secondary active" onclick="replace()"><img ng-src="/images/imac.png" alt="" style="width:37px; height:37px;" /></button>
+            <button type="button" class="btn btn-secondary" onclick="replace()"><img ng-src="/images/iphone.png" alt="" style="width:37px; height:37px;" /></button>
+        </div>-->
+
+
+        <div class="icon-bar" style="z-index:1;">
+            <a onclick="replace()" href="#deskTop" class="dt"><i><img ng-src="/images/imac.png" alt="" style="width:37px; height:37px;" /></i></a>
+            <a onclick="replace2()" href="#mobile" class="mo"><i><img ng-src="/images/iphone.png" alt="" style="width:37px; height:37px;" /></i></a>
+        </div>
+        <!--<a href="#deskTop" onclick="replace()"><i><img ng-src="/images/imac.png" alt="" style="width:37px; height:37px;" /></i></a>
+        <a href="#mobile" onclick="replace2()"><i><img ng-src="/images/iphone.png" alt="" style="width:37px; height:37px;" /></i></a>
+            -->
+
+        <div ng-show="DesktopView" id="deskTop">
             <div class="row">
                 <div class="col-md-12" style="top:0px;">
                     <iframe style="width:100%;height:603px;" id="TemplateIframe" ng-src="{{template}}" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
-        <div ng-show="MobileView">
-            <div class="row">
-                <div class="col-sm-4 col-md-4"></div>
-                <div class="col-sm-4 col-md-4" style="position:relative">
-                    <div style="top:0;left:0;">
-                        <img src="../images/mobile1.png" style="width:310px; height:590px;"/>
-                        <!--<img src="../mobile.jpg" />-->
+
+   
+            <div ng-show="MobileView"; id="mobile" ng-hide="false">
+                <div class="row">
+                    <div class="col-sm-4 col-md-4"></div>
+                    <div class="col-sm-4 col-md-4" style="position:relative">
+                        <div style="top:0;left:0;">
+                            <img src="../images/mobile1.png" style="width:310px; height:590px;" />
+                            <!--<img src="../mobile.jpg" />-->
+                        </div>
+                        <div style="position:absolute;top:68px;left:35px;">
+                            <iframe style="height:455px;width:270px;" id="TemplateIframe" ng-src="{{template}}" allowfullscreen></iframe>
+                        </div>
                     </div>
-                    <div style="position:absolute;top:68px;left:35px;">
-                        <iframe style="height:455px;width:270px;" id="TemplateIframe" ng-src="{{template}}" allowfullscreen></iframe>
-                    </div>
+                    <div class="col-sm-4 col-md-4"></div>
                 </div>
-                <div class="col-sm-4 col-md-4"></div>
+
             </div>
-            
-        </div>
+
+
+
+        
+
+
+
     </div>
 </body>
 </html>

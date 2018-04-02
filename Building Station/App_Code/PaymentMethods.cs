@@ -120,21 +120,30 @@ public class PaymentMethods : System.Web.Services.WebService
     {
         // var PayPalButton = "";
 
-       /* using (SqlConnection con = new SqlConnection(cs))
-        {
+         using (SqlConnection con = new SqlConnection(cs))
+         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Value FROM Element Where StoreEmail = '" + Session["user"] + "' AND Type = 'Button' AND Name = 'PayPal'", con);
-            using (SqlDataReader reader = cmd.ExecuteReader())
+            SqlCommand cmd = new SqlCommand("SELECT Value FROM Element Where StoreEmail = '" + Session["user"] + "' AND Type = 'Currency' AND Name = 'PayPal'", con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while(reader.Read()) 
             {
-                reader.Read();
-                PayPalButton = reader["Value"].ToString();
+                 payments.PayPalCurrencey = reader["Value"].ToString();
             }
+            reader.Close();
             con.Close();
 
-            Context.Response.Write(js.Serialize(PayPalButton));
-        }*/
+            con.Open();
+            cmd = new SqlCommand("SELECT Value FROM Element Where StoreEmail = '" + Session["user"] + "' AND Type = 'AccountEmail' AND Name = 'PayPal'", con);
+            reader = cmd.ExecuteReader();
+            while(reader.Read())
+            {
+                 payments.PayPalEmail = reader["Value"].ToString();
+            }
+            reader.Close();
+            con.Close();
+         }
 
-        using (var conn = new SqlConnection(cs))
+       /* using (var conn = new SqlConnection(cs))
         using (var cmd = conn.CreateCommand())
         {
             cmd.CommandText = "SELECT Value FROM Element Where StoreEmail = @User AND Type = 'Currency' AND Name = 'PayPal'";
@@ -160,7 +169,7 @@ public class PaymentMethods : System.Web.Services.WebService
                 }
                 conn.Close();
             }
-        }
+        }*/
         Context.Response.Write(js.Serialize(payments));
     }
 

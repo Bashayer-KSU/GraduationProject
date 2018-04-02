@@ -18,10 +18,12 @@ using System.Web.Services;
 public class Products : System.Web.Services.WebService
 {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    JavaScriptSerializer js = new JavaScriptSerializer();
+
     //string cs = "workstation id = BuildingStation4.mssql.somee.com; packet size = 4096; user id = BuildingStation_SQLLogin_1; pwd=fdowma8mzh;data source = BuildingStation4.mssql.somee.com; persist security info=False;initial catalog = BuildingStation4";
 
-   // string ShopEmail = "lamia@gmail.com";
-     // string ShopEmail = "lastlink@mail.com";
+    // string ShopEmail = "lamia@gmail.com";
+    // string ShopEmail = "lastlink@mail.com";
     //string ShopEmail = "star7s@msn.com";
     // string ShopEmail = "as@mail.com";
     //string ShopEmail = "test7@7";
@@ -284,43 +286,96 @@ public class Products : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void BestProducts()
+        public void BestProducts()
+        {
+            List<Product> StoreProductsList = GetAllStoreProducts();
+            List<Statstic> statsticList = new List<Statstic>();
+
+            Statstic statstic = new Statstic();
+            JavaScriptSerializer js = new JavaScriptSerializer();
+
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                foreach (var pro in StoreProductsList)
+                {
+                    int id = pro.ID;
+                    SqlCommand cmd = new SqlCommand("select SUM(Amount) AS amnt from ProductOrder Where Product_ID = '" + id + "'", con);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        statstic = new Statstic();
+                        statstic.ProductID = Convert.ToInt32(pro.ID);
+                        statstic.ProductName = pro.Name;
+                        statstic.CategoryName = GetCategoryName(Convert.ToInt32(pro.Category_ID));
+                    //    statstic.Image = pro.Image;
+                        string amount = reader["amnt"].ToString();
+                        if (reader["amnt"] != DBNull.Value)
+                        {
+                            statstic.Amount = Convert.ToInt32(reader["amnt"]);
+                        }
+
+                        statsticList.Add(statstic);
+                    }
+                    con.Close();
+
+                }
+            }
+
+            Context.Response.Write(js.Serialize(statsticList));
+        }
+        
+
+
+    [WebMethod(EnableSession = true)]
+    public void BestCategories ()
     {
-        List<Product> StoreProductsList = GetAllStoreProducts();
         List<Statstic> statsticList = new List<Statstic>();
-
         Statstic statstic = new Statstic();
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
-            foreach (var pro in StoreProductsList)
+            SqlCommand cmd = new SqlCommand("SELECT SUM(ProductOrder.Amount) AS amount, Category.ID AS CatID, Category.Name AS CatName FROM ProductOrder INNER JOIN Product ON ProductOrder.Product_ID = Product.ID INNER JOIN Category ON Product.Category_ID = Category.ID WHERE Product.StoreEmail = '" + Session["user"] + "' GROUP BY Category.ID, Category.Name", con);
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                int id = pro.ID;
-                SqlCommand cmd = new SqlCommand("select SUM(Amount) AS amnt from ProductOrder Where Product_ID = '" + id + "'", con);
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    statstic = new Statstic();
-                    statstic.ProductID = Convert.ToInt32(pro.ID);
-                    statstic.ProductName = pro.Name;
-                    statstic.CategoryName = GetCategoryName(Convert.ToInt32(pro.Category_ID));
-                //    statstic.Image = pro.Image;
-                    string amount = reader["amnt"].ToString();
-                    if (reader["amnt"] != DBNull.Value)
-                    {
-                        statstic.Amount = Convert.ToInt32(reader["amnt"]);
-                    }
-
-                    statsticList.Add(statstic);
-                }
-                con.Close();
-
+                statstic = new Statstic();
+                statstic.Amount = Convert.ToInt32(reader["amount"]);
+                statstic.CategoryID = Convert.ToInt32(reader["CatID"]);
+                statstic.CategoryName = Convert.ToString(reader["CatName"]);
+                statsticList.Add(statstic);
             }
+            con.Close();
+            Context.Response.Write(js.Serialize(statsticList));
         }
 
-        Context.Response.Write(js.Serialize(statsticList));
+
+    }
+    [WebMethod(EnableSession = true)]
+    public void BestProductsInCategory(string CategoryID)
+    {
+        int Category_ID = Convert.ToInt32(CategoryID);
+        int count = 0;
+        List<Statstic> statsticList = new List<Statstic>();
+        Statstic statstic = new Statstic();
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            SqlCommand cmd = new SqlCommand("SELECT SUM(ProductOrder.Amount) AS amount, Product.ID AS ProID, Product.Name AS ProName FROM ProductOrder INNER JOIN Product ON ProductOrder.Product_ID = Product.ID WHERE Product.StoreEmail = '" + Session["user"] + "' AND Product.Category_ID = "+ Category_ID+ "  GROUP BY Product.ID, Product.Name", con);
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                count++;
+                statstic = new Statstic();
+                statstic.Amount = Convert.ToInt32(reader["amount"]);
+                statstic.ProductID = Convert.ToInt32(reader["ProID"]);
+                statstic.ProductName = Convert.ToString(reader["ProName"]);
+                statsticList.Add(statstic);
+            }
+            con.Close();
+            Console.Write(count);
+            Context.Response.Write(js.Serialize(statsticList));
+        }
     }
 
     [WebMethod(EnableSession = true)]
