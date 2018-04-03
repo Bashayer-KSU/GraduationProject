@@ -97,14 +97,15 @@ var published = BS_App.config(function ($stateProvider, $locationProvider, $urlR
         };
     })
     .controller("PublishedStoreCtrl", function ($scope, $http, $stateParams, ProductService, CategoryService, AddProductService) {
-
+        var ID = 0;
         $http({
             url:"Published_Stores.asmx/GetTemplate",
             params: { StoreDomain: $stateParams.Domain},
             method: "get"
         })
             .then(function (response) {
-                $scope.TemplateID = "/Stores/T" + response.data + ".html";
+                ID = response.data;
+                $scope.TemplateID = "/Stores/T" + ID + ".html";
 
             });
 
@@ -413,6 +414,16 @@ var published = BS_App.config(function ($stateProvider, $locationProvider, $urlR
             .then(function (response) {
                 $scope.Product = response.data;
             });*/
+
+        $scope.goArabic = function () {
+            ID = ID - 3;
+            $scope.TemplateID = "/Stores/T" + ID + ".html";
+        };
+
+        $scope.goEnglish = function () {
+            ID = ID + 3;
+            $scope.TemplateID = "/Stores/T" + ID + ".html";
+        };
     });
 
 BS_App.factory('CategoryService', function ($http, $stateParams) {

@@ -20,7 +20,9 @@
     <div id="page-wrapper"  ng-style="{'background-color': Store.Color4}">
         <!-- Header -->
         <section class="box" style=" padding:0px 0px 0px 0px; margin:0px 0px 0px 0px;">
-
+            <div dir="rtl" style="padding-right:1vw;" ng-style="{'background-color': Store.Color1}">
+                <a class="current">العربية</a> || <a ng-click="goEnglish()">English</a>
+            </div>
             <div ng-style="{'background': Store.Color1}" id="header-wrapper" style=" padding:20px 0px 10px 0px;">
                 <div id="header" style="position: relative;	margin:0 auto; overflow: hidden;">
 
@@ -229,7 +231,7 @@
                                             </div>
                                             <div class="col-sm-12 mb-3">
                                                 <label ng-style="{'color': Store.Color3}" for="Location">العنوان</label>
-                                                <input type="text" class="form-control" id="Location" name="BuyerLocation" ng-model="BuyerLocation" placeholder="الرياض، حي الصحافة، بيت رقم 35" required>
+                                                <input type="text" class="form-control" id="Location" name="BuyerLocation" ng-model="BuyerLocation" placeholder="المدينة، الحي، رقم المنزل" required>
                                                 <p class="alert alert-danger" ng-show="!Buyer.BuyerLocation.$pristine && !Buyer.BuyerLocation.$valid">الرجاء ادخال عنوان الشحن.</p>
                                             </div>
                                         </div>

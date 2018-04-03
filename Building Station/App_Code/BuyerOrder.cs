@@ -51,7 +51,7 @@ public class BuyerOrder : System.Web.Services.WebService
             SqlCommand cmd;
             if (PaymentMethod == "BankTransfer")
                 cmd = new SqlCommand("insert into \"Order\" (BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod, BankAccount , TotalPrice, OrderID, Status , StoreEmail) values " +
-                  "(N'" + BuyerName + "','" + BuyerPhone + "','" + BuyerEmail + "', N'" + BuyerLocation + "','" + PaymentMethod + "','" + BankAccount + "','" + Convert.ToDouble(TotalPrice) + "','" + OrderID + "','" + false + "','" + StoreEmail + "')", con);
+                  "(N'" + BuyerName + "','" + BuyerPhone + "','" + BuyerEmail + "', N'" + BuyerLocation + "','" + PaymentMethod + "', N'" + BankAccount + "','" + Convert.ToDouble(TotalPrice) + "','" + OrderID + "','" + false + "','" + StoreEmail + "')", con);
             else
                 cmd = new SqlCommand("insert into \"Order\" (BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod , TotalPrice, OrderID, Status , StoreEmail) values " +
                "(N'" + BuyerName + "','" + BuyerPhone + "','" + BuyerEmail + "', N'" + BuyerLocation + "','" + PaymentMethod + "','" + Convert.ToDouble(TotalPrice) + "','" + OrderID + "','" + false + "','" + StoreEmail + "')", con);
