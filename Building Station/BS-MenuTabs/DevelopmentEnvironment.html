@@ -208,16 +208,6 @@
                         <button ng-disabled="!imageSrc_about" class="waves-effect waves-light btn done" ng-click="UpdateAboutImage()" type="submit">تحديث</button>
                     </span>
                 </div>
-                <br />
-            </div>-->
-            <div class="row inside">
-                <h4>تغيير صورة التذييل</h4>
-                <div class="input-group">
-                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_about" style="width:100%;" />
-                    <span class="input-group-btn">
-                        <button ng-disabled="!imageSrc_about" class="waves-effect waves-light btn done" ng-click="UpdateAboutImage()" type="submit">تحديث</button>
-                    </span>
-                </div>
 
                 <div ng-show="loadingAboutImage" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
                     <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>

@@ -151,7 +151,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
                                     $mdDialog.alert()
                                         .title('تم إلغاء نشر متجرك بنجاح')
                                         .targetEvent(ev)
-                                        .ok('Close');
+                                        .ok('إغلاق');
                                 $mdDialog.show(Unpublished).then(function () {
                                     //  $rootScope.status = 'You decided to get rid of your debt.';
                                 }, function () {
