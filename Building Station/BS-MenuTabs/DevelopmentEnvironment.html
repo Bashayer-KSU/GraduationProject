@@ -181,20 +181,20 @@
             <div class="row inside">
                 <h4>تغيير الشعار</h4>
                 <div class="input-group">
-                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc" style="width:100%;" /> <!-- custom-on-change="uploadFile($event)"-->
                     <span class="input-group-btn">
                         <button ng-disabled="!imageSrc" class="waves-effect waves-light btn done" ng-click="ChangeLogo($event)" type="submit">تحديث</button>
                     </span>
+                    <input type="file" dir="rtl" ng-file-select="onFileSelect($files)" ng-model="imageSrc" style="width:100%;" /> <!-- custom-on-change="uploadFile($event)"-->
                 </div>
             </div>
             <br />
             <div class="row inside">
                 <h4>تغيير صورة الرئيسية</h4>
                 <div class="input-group">
-                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_slider" style="width:100%;" />
                     <span class="input-group-btn">
                         <button ng-disabled="!imageSrc_slider" class="waves-effect waves-light btn done" ng-click="UpdateSlider()" type="submit">تحديث</button>
                     </span>
+                    <input type="file" dir="rtl" ng-file-select="onFileSelect($files)" ng-model="imageSrc_slider" style="width:100%;" />
                 </div>
                 <div ng-show="loadingCover" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
                     <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
@@ -203,20 +203,10 @@
             <div class="row inside">
                 <h4>تغيير صورة التذييل</h4>
                 <div class="input-group">
-                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_about" style="width:100%;" />
                     <span class="input-group-btn">
                         <button ng-disabled="!imageSrc_about" class="waves-effect waves-light btn done" ng-click="UpdateAboutImage()" type="submit">تحديث</button>
                     </span>
-                </div>
-                <br />
-            </div>-->
-            <div class="row inside">
-                <h4>تغيير صورة التذييل</h4>
-                <div class="input-group">
-                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_about" style="width:100%;" />
-                    <span class="input-group-btn">
-                        <button ng-disabled="!imageSrc_about" class="waves-effect waves-light btn done" ng-click="UpdateAboutImage()" type="submit">تحديث</button>
-                    </span>
+                    <input type="file" dir="rtl" ng-file-select="onFileSelect($files)" ng-model="imageSrc_about" style="width:100%;" />
                 </div>
 
                 <div ng-show="loadingAboutImage" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
@@ -225,16 +215,16 @@
             </div>
             <br />
             <div class="row inside">
-                <select style="margin-bottom:1%;" id="" class="form-control ar" ng-model="selectedTextType" ng-change="updateText()" data-live-search="true" ng-options="x.name for x in TextType">
+                <select style="margin-bottom:1%;direction:rtl;" id="" class="form-control ar" ng-model="selectedTextType" ng-change="updateText()" data-live-search="true" ng-options="x.name for x in TextType">
                     <!--  <option value="" selected>Update Text</option>--disabled-->
 
                 </select>
                 <div class="input-group">
                     <!--ng-show="selectedTextType.name!='Store Description'" -->
-                    <input style="margin-right:1%;" type="text" class="form-control ar" ng-model="ShopOwnerText" placeholder="... اكتب نصًا جديد">
                     <span class="input-group-btn">
                         <button ng-disabled="!ShopOwnerText" class="waves-effect waves-light btn done" ng-click="UpdateStoreInfo()" type="submit">تحديث</button>
                     </span>
+                    <input style="margin-right:1%;" type="text" class="form-control ar" ng-model="ShopOwnerText" placeholder="... اكتب نصًا جديد">
 
                 </div>
             </div>
@@ -277,9 +267,8 @@
                     </span>
 
                 </div><!-- /input-group -->
-
-                <button style="float:right;" class="waves-effect waves-light btn done" ng-click="UpdateLinks()" type="submit">تحديث</button>
-                <p style="font-size:x-small; color:firebrick;">ملاحظة : الروابط يجب أن تكون صالحة</p>
+                <p style="font-size:x-small; color:firebrick;float:right;">ملاحظة : الروابط يجب أن تكون صالحة</p>
+                <button  class="waves-effect waves-light btn done" ng-click="UpdateLinks()" type="submit">تحديث</button>
             </div>
             <div ng-show="loadingLinks" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
                 <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
@@ -287,25 +276,13 @@
             <br />
             <div class="row" style="text-align:center; align-content:center;">
                 <div class="col-sm-6">
-                    <md-switch ng-model="section.slider" class="md-primary" ng-change="ShowHideSection('Slider')" aria-label="SliderSection">
-                        الرئيسية
-                    </md-switch>
-                </div>
-                <div class="col-sm-6">
                     <md-switch ng-model="section.about" class="md-primary" ng-change="ShowHideSection('About')" aria-label="AboutSection">
                         حول
                     </md-switch>
                 </div>
-            </div>
-            <div class="row" style="text-align:center;">
                 <div class="col-sm-6">
-                    <md-switch ng-model="icon.snapchat" ng-disabled="disableSnapchat" ng-change="ShowHideIcon('Snapchat')" class="md-primary" aria-label="Snapchat">
-                        سناب تشات
-                    </md-switch>
-                </div>
-                <div class="col-sm-6">
-                    <md-switch ng-model="icon.facebook" ng-disabled="disableFacebook" class="md-primary" ng-change="ShowHideIcon('Facebook')" aria-label="Facebook">
-                        فيس بوك
+                    <md-switch ng-model="section.slider" class="md-primary" ng-change="ShowHideSection('Slider')" aria-label="SliderSection">
+                        الرئيسية
                     </md-switch>
                 </div>
             </div>
@@ -318,6 +295,18 @@
                 <div class="col-sm-6">
                     <md-switch ng-model="icon.instagram" ng-disabled="disableInstagram" ng-change="ShowHideIcon('Instagram')" class="md-primary" aria-label="Instagram">
                         انستقرام
+                    </md-switch>
+                </div>
+            </div>
+            <div class="row" style="text-align:center;">
+                <div class="col-sm-6">
+                    <md-switch ng-model="icon.facebook" ng-disabled="disableFacebook" class="md-primary" ng-change="ShowHideIcon('Facebook')" aria-label="Facebook">
+                        فيس بوك
+                    </md-switch>
+                </div>
+                <div class="col-sm-6">
+                    <md-switch ng-model="icon.snapchat" ng-disabled="disableSnapchat" ng-change="ShowHideIcon('Snapchat')" class="md-primary" aria-label="Snapchat">
+                        سناب تشات
                     </md-switch>
                 </div>
             </div>

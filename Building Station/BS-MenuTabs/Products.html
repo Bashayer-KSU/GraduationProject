@@ -157,7 +157,7 @@
                 <h style="font-size:20px;">لإضافة فئة</h>
                 <input class="ar" type="text" placeholder="أدخل اسم الفئة" ng-model="newCategury" style="text-align:right;">
 
-                <button ng-disabled="!newCategury.length" ng-click="addNewCategory(newCategury)" style="background-color:transparent; border: none;"><img src="/images/plus.png" alt="" style="width:25px; height:25px;" /></button>
+                <button ng-show="newCategury.length" ng-click="addNewCategory(newCategury)" style="background-color:transparent; border: none;"><img src="/images/plus.png" alt="" style="width:25px; height:25px;" /></button>
 
             </div>
 
@@ -170,7 +170,7 @@
                         ng-init="selectedCategory = categories[0].Name"
                         ng-options="option.Name as option.Name for option in categories"
                         ng-change="selectedCategoryChanged()"></select>
-                <button ng-hide="editCategory" ng-click="DeleteCategory()" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button>
+                <button ng-hide="editCategory" ng-click="DeleteCategory($event)" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button>
 
                 <h ng-show="editCategory" style="font-size:20px;">اختر الفئة التي تريد نقل المنتج لها:</h>
                 <select ng-show="editCategory" class=" styled-select black rounded"
@@ -219,7 +219,7 @@
                         <tr data-ng-repeat="product in products" class="hover">
                             <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
                             <td ng-hide="true">{{product.ID}}</td>
-                            <td><button class="remove" ng-click="removeproduct(product, product.ID, $event, 'eng')" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button></td>
+                            <td><button class="remove" ng-click="removeproduct(product, product.ID, product.Name, $event)" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button></td>
                             <td>
                                 <button ng-show="!product.edit" ng-click="x(); product.edit = !product.edit" style="background-color:transparent; border: none;"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;" /></button>
                                 <button ng-show="product.edit" ng-click="editProduct($index,product,product.ID,product.Image,product.Name,product.Description,product.Price,product.PriceAfterDiscount,product.Amount,product.Discount)" style="background-color:transparent; border: none;"><img src="/images/success.png" alt="" style="width:25px; height:25px;" /></button>
@@ -258,7 +258,7 @@
                             <td class="requiredStar">* <input class="ar" type="number" ng-model="product.Price" name="" placeholder="السعر" required></td>
                             <td class="requiredStar">* <textarea class="ar" type="text" ng-model="product.Description" name="" placeholder="التفاصيل" required></textarea></td>
                             <td class="requiredStar">* <input class="ar" type="text" ng-model="product.Name" name="" placeholder="الإسم" required></td>
-                            <td> <!--class="requiredStar"-->
+                            <td class="requiredStar"> <!--class="requiredStar"-->
                                 *
                                 <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image" required>
                                 <img ng-show="product.Image" style="width:80px; height:80px;" ng-src="{{product.Image}}" />

@@ -3,9 +3,9 @@
 var ctr = app.controller("managePreview", function ($scope, $http) {
         $scope.DesktopView = true;
         $scope.MobileView = false;
-        $scope.Previews = ["معاينة على الحاسب", "معاينة على الجوال"];
+        /*$scope.Previews = ["معاينة على الحاسب", "معاينة على الجوال"];
         $scope.template = "";
-        $scope.selectedPreview = $scope.Previews[0];
+        $scope.selectedPreview = $scope.Previews[0];*/
         $http.get('/CreationStage.asmx/GetTemplateID').then(function (response) {
 
             $scope.storeID = response.data;
@@ -32,6 +32,14 @@ var ctr = app.controller("managePreview", function ($scope, $http) {
             function (error) {
                 $scope.error = error.data;
             });
+        $scope.Desktop = function () {
+            $scope.DesktopView = true;
+            $scope.MobileView = false;
+        };
+        $scope.Mobile = function () {
+            $scope.DesktopView = false;
+            $scope.MobileView = true;
+        };
         $scope.selectedPreviewChanged = function () {
             if ($scope.selectedPreview === 'معاينة على الحاسب') {
                 $scope.DesktopView = true;

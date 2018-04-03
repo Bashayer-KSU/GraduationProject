@@ -184,20 +184,20 @@
             <div class="row inside">
                 <h4>Change logo</h4>
                 <div class="input-group">
+                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc" style="width:100%;" /> <!-- custom-on-change="uploadFile($event)"-->
                     <span class="input-group-btn">
                         <button ng-disabled="!imageSrc" class="waves-effect waves-light btn done" ng-click="ChangeLogo($event)" type="submit">Update</button>
                     </span>
-                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc" style="width:100%;direction:rtl;" /> <!-- custom-on-change="uploadFile($event)"-->
                 </div>
             </div>
             <br />
             <div class="row inside">
                 <h4>Change main image</h4>
                 <div class="input-group">
+                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_slider" style="width:100%;" />
                     <span class="input-group-btn">
                         <button ng-disabled="!imageSrc_slider" class="waves-effect waves-light btn done" ng-click="UpdateSlider()" type="submit">Update</button>
                     </span>
-                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_slider" style="width:100%;direction:rtl;" />
                 </div>
                 <div ng-show="loadingCover" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
                     <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
@@ -207,10 +207,10 @@
             <div class="row inside">
                 <h4>Change footer image</h4>
                 <div class="input-group">
+                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_about" style="width:100%;" />
                     <span class="input-group-btn">
                         <button ng-disabled="!imageSrc_about" class="waves-effect waves-light btn done" ng-click="UpdateAboutImage()" type="submit">Update</button>
                     </span>
-                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_about" style="width:100%;direction:rtl;" />
                 </div>
 
                 <div ng-show="loadingAboutImage" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
@@ -219,16 +219,16 @@
             </div>
             <br />
             <div class="row inside">
-                <select style="margin-bottom:1%;direction:rtl;" id="" class="form-control ar" ng-model="selectedTextType" ng-change="updateText()" data-live-search="true" ng-options="x.name for x in TextType">
+                <select style="margin-bottom:1%;" id="" class="form-control ar" ng-model="selectedTextType" ng-change="updateText()" data-live-search="true" ng-options="x.name for x in TextType">
                     <!--  <option value="" selected>Update Text</option>--disabled-->
 
                 </select>
                 <div class="input-group">
                     <!--ng-show="selectedTextType.name!='Store Description'" -->
+                    <input type="text" class="form-control" ng-model="ShopOwnerText" placeholder="Enter new text ...">
                     <span class="input-group-btn">
                         <button ng-disabled="!ShopOwnerText" class="waves-effect waves-light btn done" ng-click="UpdateStoreInfo()" type="submit">Update</button>
                     </span>
-                    <input type="text" class="form-control" ng-model="ShopOwnerText" placeholder="Enter new text ...">
 
                 </div>
             </div>
@@ -269,8 +269,8 @@
                     <input type="text" ng-model="myFacebookLink" class="form-control" placeholder="Paste your facebook account link here" aria-label="...">
 
                 </div><!-- /input-group -->
-                <button class="waves-effect waves-light btn done" ng-click="UpdateLinks()" type="submit">Update</button>
-                <span style="font-size:x-small; color:firebrick;float:right;">Note: Links must be valid</span>
+                <span style="font-size:x-small; color:firebrick;">Note: Links must be valid</span>
+                <button class="waves-effect waves-light btn done" style="float:right;" ng-click="UpdateLinks()" type="submit">Update</button>
 
             </div>
 
@@ -280,26 +280,13 @@
             <br />
             <div class="row" style="text-align:center; align-content:center;">
                 <div class="col-sm-6">
-                    <md-switch ng-model="section.about" class="md-primary" ng-change="ShowHideSection('About')" aria-label="AboutSection">
-                        About
-                    </md-switch>
-                </div>
-                <div class="col-sm-6">
                     <md-switch ng-model="section.slider" class="md-primary" ng-change="ShowHideSection('Slider')" aria-label="SliderSection">
                         Home
                     </md-switch>
                 </div>
-            </div>
-            <div class="row" style="text-align:center;">
-
                 <div class="col-sm-6">
-                    <md-switch ng-model="icon.facebook" ng-disabled="disableFacebook" class="md-primary" ng-change="ShowHideIcon('Facebook')" aria-label="Facebook">
-                        Facebook
-                    </md-switch>
-                </div>
-                <div class="col-sm-6">
-                    <md-switch ng-model="icon.snapchat" ng-disabled="disableSnapchat" ng-change="ShowHideIcon('Snapchat')" class="md-primary" aria-label="Snapchat">
-                        Snapchat
+                    <md-switch ng-model="section.about" class="md-primary" ng-change="ShowHideSection('About')" aria-label="AboutSection">
+                        About
                     </md-switch>
                 </div>
             </div>
@@ -313,6 +300,18 @@
                 <div class="col-sm-6">
                     <md-switch ng-model="icon.twitter" ng-disabled="disableTwitter" ng-change="ShowHideIcon('Twitter')" class="md-primary" aria-label="Twitter">
                         Twitter
+                    </md-switch>
+                </div>
+            </div>
+            <div class="row" style="text-align:center;">
+                <div class="col-sm-6">
+                    <md-switch ng-model="icon.snapchat" ng-disabled="disableSnapchat" ng-change="ShowHideIcon('Snapchat')" class="md-primary" aria-label="Snapchat">
+                        Snapchat
+                    </md-switch>
+                </div>
+                <div class="col-sm-6">
+                    <md-switch ng-model="icon.facebook" ng-disabled="disableFacebook" class="md-primary" ng-change="ShowHideIcon('Facebook')" aria-label="Facebook">
+                        Facebook
                     </md-switch>
                 </div>
             </div>

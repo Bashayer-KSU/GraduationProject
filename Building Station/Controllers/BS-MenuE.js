@@ -1001,17 +1001,25 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         }
 
         //Delete Category
-        $scope.DeleteCategory = function () {
-            $http({
-                url: "Products.asmx/DeleteCategory",
-                method: "GET",
-                params: { category: $scope.selectedCategory }
-            })
-                .then(function (response) {
-                    $scope.getCat("CurrentCategoryDeleted");
-                }, function (error) {
-                    alert("failed delete");
-                });
+        $scope.DeleteCategory = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure you want to delete category "' + $scope.selectedCategory + '"?')
+                //  .ariaLabel('Lucky day')
+                .targetEvent(ev)
+                .ok('YES')
+                .cancel('Cancel');
+            $mdDialog.show(confirm).then(function () {
+                $http({
+                    url: "Products.asmx/DeleteCategory",
+                    method: "GET",
+                    params: { category: $scope.selectedCategory }
+                })
+                    .then(function (response) {
+                        $scope.getCat("CurrentCategoryDeleted");
+                    }, function (error) {
+                        alert("failed delete");
+                    });
+            }, function () { });
         };
         //\DeleteCategory
         // change category Order
@@ -1115,32 +1123,37 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
         //\to add new row
 
         //to remove row
-        $scope.removeproduct = function (product, productID, ev, language) {
-            $http({
-                url: "Products.asmx/RemoveProduct",
-                method: "get",
-                params: { product_ID: productID }
-            })
-                .then(function (response) {
-                    $scope.Delete = response.data;
-                    alert($scope.Delete);
-                    if ($scope.Delete == 'true') {
-                        var remove = $scope.products.indexOf(product);
-                        $scope.products.splice(remove, 1);
-                    }
-                    else {
-                        var msg;
-                        if (language !== 'eng') {
+        $scope.removeproduct = function (product, productID, name, ev) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure you want to delete product "' + name + '"?')
+                //  .ariaLabel('Lucky day')
+                .targetEvent(ev)
+                .ok('YES')
+                .cancel('Cancel');
+            $mdDialog.show(confirm).then(function () {
+                $http({
+                    url: "Products.asmx/RemoveProduct",
+                    method: "get",
+                    params: { product_ID: productID }
+                })
+                    .then(function (response) {
+                        $scope.Delete = response.data;
+                        if ($scope.Delete == 'true') {
+                            var remove = $scope.products.indexOf(product);
+                            $scope.products.splice(remove, 1);
+                        }
+                        else {
+                            var msg;
                             msg = 'You are not able to delete the product because there are purchases do not completed yet.Please complete the operations before deleting the product';
-                        } else msg = 'لاتستطيع حذف المنتج وذلك لوجود عمليات شراء لم تتم بعد. الرجاء اتمام العمليات قبل حذف المنتج';
-                        var inform =
-                            $mdDialog.alert()
-                                .textContent(msg)
-                                .targetEvent(ev)
-                                .ok('Close');
-                        $mdDialog.show(inform).then(function () { }, function () { });
-                    }
-                }, function (error) { });
+                            var inform =
+                                $mdDialog.alert()
+                                    .textContent(msg)
+                                    .targetEvent(ev)
+                                    .ok('Close');
+                            $mdDialog.show(inform).then(function () { }, function () { });
+                        }
+                    }, function (error) { });
+            }, function () { });
         };
         //\to remove row
 
