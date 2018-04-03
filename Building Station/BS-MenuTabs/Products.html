@@ -154,12 +154,11 @@
 
             <!--add new category-->
             <div>
-                <h style="font-size:20px;">لإضافة فئة انقر هنا</h>
-                <button ng-click="newCat=true" style="background-color:transparent; border: none;"><img src="/images/plus.png" alt="" style="width:37px; height:37px;" /></button>
-                <input class="ar" type="text" ng-show="newCat" placeholder="أدخل الفئة" ng-model="newCategury" style="text-align:right;">
-                <span ng-show="newCat">
-                    <a href="" ng-hide="!newCategury.length" ng-click="addNewCategory(newCategury)">إضافة</a>
-                </span>
+                <h style="font-size:20px;">لإضافة فئة</h>
+                <input class="ar" type="text" placeholder="أدخل اسم الفئة" ng-model="newCategury" style="text-align:right;">
+
+                <button ng-disabled="!newCategury.length" ng-click="addNewCategory(newCategury)" style="background-color:transparent; border: none;"><img src="/images/plus.png" alt="" style="width:25px; height:25px;" /></button>
+
             </div>
 
             <!--add new category-->
@@ -178,13 +177,13 @@
                         ng-model="selectedCategory"
                         ng-init="selectedCategory = categories[0].Name"
                         ng-options="option.Name as option.Name for option in categories"></select>
-                    
+
             </div>
         </div>
         <!--\add new category-->
         <!--list products-->
         <div class="table-responsive centered" id="table" style="margin-top:15px;">
-         <p dir="rtl">لتغيير ترتيب الفئات انقر هنا <button style="background-color:transparent; border: none;" ng-click="displayCategoryTable = !displayCategoryTable"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;"  /></button></p>
+            <p dir="rtl">لتغيير ترتيب الفئات انقر هنا <button style="background-color:transparent; border: none;" ng-click="displayCategoryTable = !displayCategoryTable"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;" /></button></p>
             <table ng-show="displayCategoryTable" class="table">
                 <thead style="border-collapse:collapse; table-layout:fixed;">
                     <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
@@ -194,7 +193,7 @@
                 </thead>
                 <tbody>
                     <tr data-ng-repeat="category in categories" class="hover">
-                        <td><input type="number" ng-model="category.OrderInMenu" /></td>
+                        <td><input type="number" ng-model="category.OrderInMenu" style="text-align:right;" /></td>
                         <td>{{category.Name}}</td>
                     </tr>
                     <tr>
@@ -259,8 +258,9 @@
                             <td class="requiredStar">* <input class="ar" type="number" ng-model="product.Price" name="" placeholder="السعر" required></td>
                             <td class="requiredStar">* <textarea class="ar" type="text" ng-model="product.Description" name="" placeholder="التفاصيل" required></textarea></td>
                             <td class="requiredStar">* <input class="ar" type="text" ng-model="product.Name" name="" placeholder="الإسم" required></td>
-                            <td class="requiredStar">* 
-                                <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
+                            <td> <!--class="requiredStar"-->
+                                *
+                                <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image" required>
                                 <img ng-show="product.Image" style="width:80px; height:80px;" ng-src="{{product.Image}}" />
                             </td>
                         </tr>
