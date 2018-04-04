@@ -16,10 +16,8 @@ using System.Data.SqlClient;
 [System.Web.Script.Services.ScriptService]
 public class TemplateData : System.Web.Services.WebService
 {
-    //Session["user"]
-   // string email = "lastlink@mail.com";
-    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    //string cs = "workstation id=BuildingStation4.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BuildingStation4.mssql.somee.com;persist security info=False;initial catalog=BuildingStation4";
+    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
     JavaScriptSerializer js = new JavaScriptSerializer();
 
 

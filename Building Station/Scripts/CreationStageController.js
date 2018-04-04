@@ -469,7 +469,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
                     headers: { "Content-Type": "application/json" }
                 });
 
-                $window.location.href = '/Basic.html';
+                $window.location.href = '/Views/BasicE.html';
             }
         };
     });

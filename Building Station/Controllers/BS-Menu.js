@@ -223,9 +223,9 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
                             var storePass = response.data;
                             if (storePass.Password === 'incorrect') {
                                var NOTdeleted = $mdDialog.alert()
-                                    .title('Incorrect Password')
+                                    .title('كلمة المرور غير صحيحة')
                                     .targetEvent(ev)
-                                    .ok('Close');
+                                    .ok('إغلاق');
                                 $mdDialog.show(NOTdeleted).then(function () {
                                 }, function () {
                                 });
@@ -1001,6 +1001,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
         $scope.displayCategoryTable = false;
         $scope.selectedCategory = "";
         $scope.editCategory = false;
+        $scope.NoCategory =false;
         //logout
         $scope.Logout = function () {
             $rootScope.Logout();
@@ -1015,16 +1016,19 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
             })
                 .then(function (response) {
                     $scope.categories = response.data;
-
-                    if (newCategury == null || newCategury === 'undefined' || newCategury == "CurrentCategoryDeleted")
+                    if ($scope.categories.length != 0)
                     {
-                        if ($scope.categories[0].Name != null)
-                            $scope.selectedCategory = $scope.categories[0].Name;
-                        else $scope.selectedCategory = "";
+                        if (newCategury == null || newCategury === 'undefined' || newCategury == "CurrentCategoryDeleted") {
+                                $scope.selectedCategory = $scope.categories[0].Name;
+                        }
+                        else { $scope.selectedCategory = newCategury; }
+                        $scope.selectedCategoryChanged();
                     }
-                    else { $scope.selectedCategory = newCategury; }
-                    $scope.selectedCategoryChanged();
-                });
+                    else {
+                        $scope.NoCategory = true;
+                    }
+                }, function () { });
+
         };
         //\to retrieve all categories
 
@@ -1041,6 +1045,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
                 });
             $scope.newCategury = "";
             $scope.newCat = false;
+            $scope.NoCategory = false;
         };
         //\to add category
 
@@ -1049,17 +1054,25 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
         }
 
         //Delete Category
-        $scope.DeleteCategory = function () {
-            $http({
-                url: "Products.asmx/DeleteCategory",
-                method: "GET",
-                params: { category: $scope.selectedCategory }
-            })
-                .then(function (response) {
-                    $scope.getCat("CurrentCategoryDeleted");
-                }, function (error) {
-                    alert("failed delete");
-                });
+        $scope.DeleteCategory = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title(' هل تريد بالتأكيد حذف الفئة "' + $scope.selectedCategory+'" ؟')
+                //  .ariaLabel('Lucky day')
+                .targetEvent(ev)
+                .ok('نعم')
+                .cancel('إلغاء');
+            $mdDialog.show(confirm).then(function () {
+                $http({
+                    url: "Products.asmx/DeleteCategory",
+                    method: "GET",
+                    params: { category: $scope.selectedCategory }
+                })
+                    .then(function (response) {
+                        $scope.getCat("CurrentCategoryDeleted");
+                    }, function (error) {
+                        alert("failed delete");
+                    });
+            }, function () { });
         };
         //\DeleteCategory
         // change category Order
@@ -1096,14 +1109,16 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
 
         //list all products for specific category
         $scope.selectedCategoryChanged = function () {
-            $http({
-                url: "Products.asmx/GetAllProducts",
-                method: "get",
-                params: { category: $scope.selectedCategory }
-            })
-                .then(function (response) {
-                    $scope.products = response.data;
-                });
+            if ($scope.selectedCategory != null) {
+                $http({
+                    url: "Products.asmx/GetAllProducts",
+                    method: "get",
+                    params: { category: $scope.selectedCategory }
+                })
+                    .then(function (response) {
+                        $scope.products = response.data;
+                    }, function (error) { alert(error.data); });
+            }
         };
         //\list all products for specific category
 
@@ -1163,31 +1178,36 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
         //\to add new row
 
         //to remove row
-        $scope.removeproduct = function (product, productID, ev, language) {
-            $http({
-                url: "Products.asmx/RemoveProduct",
-                method: "get",
-                params: { product_ID: productID }
-            })
-                .then(function (response) {
-                    $scope.Delete = response.data;
-                    if ($scope.Delete == 'true') {
-                        var remove = $scope.products.indexOf(product);
-                        $scope.products.splice(remove, 1);
-                    }
-                    else {
-                        var msg;
-                        if (language !== 'eng') {
-                            msg = 'You are not able to delete the product because there are purchases do not completed yet.Please complete the operations before deleting the product';
-                        } else msg = 'لاتستطيع حذف المنتج وذلك لوجود عمليات شراء لم تتم بعد. الرجاء اتمام العمليات قبل حذف المنتج';
-                        var inform =
-                            $mdDialog.alert()
-                                .textContent(msg)
-                                .targetEvent(ev)
-                                .ok('Close');
-                        $mdDialog.show(inform).then(function () { }, function () { });
-                    }
-                }, function (error) { });
+        $scope.removeproduct = function (product, productID, name, ev) {
+            var confirm = $mdDialog.confirm()
+                .title(' هل تريد بالتأكيد حذف المنتج " ' + name + '" ؟')
+                //  .ariaLabel('Lucky day')
+                .targetEvent(ev)
+                .ok('نعم')
+                .cancel('إلغاء');
+            $mdDialog.show(confirm).then(function () {
+                $http({
+                    url: "Products.asmx/RemoveProduct",
+                    method: "get",
+                    params: { product_ID: productID }
+                })
+                    .then(function (response) {
+                        $scope.Delete = response.data;
+                        if ($scope.Delete == 'true') {
+                            var remove = $scope.products.indexOf(product);
+                            $scope.products.splice(remove, 1);
+                        }
+                        else {
+                            msg = 'لاتستطيع حذف المنتج وذلك لوجود عمليات شراء لم تتم بعد. الرجاء اتمام العمليات قبل حذف المنتج';
+                            var inform =
+                                $mdDialog.alert()
+                                    .textContent(msg)
+                                    .targetEvent(ev)
+                                    .ok('إغلاق');
+                            $mdDialog.show(inform).then(function () { }, function () { });
+                        }
+                    }, function (error) { });
+            }, function () { });
         };
         //\to remove row
 
