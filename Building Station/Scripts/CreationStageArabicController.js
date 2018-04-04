@@ -1,5 +1,4 @@
 ﻿
-
 var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
@@ -131,7 +130,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
               }
           } */
     })
-    .controller("Type_Controller", function ($scope, $http) {
+    .controller("Type_Controller", function ($scope, $http, $location) {
 
         $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 

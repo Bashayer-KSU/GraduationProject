@@ -1001,6 +1001,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
         $scope.displayCategoryTable = false;
         $scope.selectedCategory = "";
         $scope.editCategory = false;
+        $scope.NoCategory =false;
         //logout
         $scope.Logout = function () {
             $rootScope.Logout();
@@ -1015,16 +1016,19 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
             })
                 .then(function (response) {
                     $scope.categories = response.data;
-
-                    if (newCategury == null || newCategury === 'undefined' || newCategury == "CurrentCategoryDeleted")
+                    if ($scope.categories.length != 0)
                     {
-                        if ($scope.categories[0].Name != null)
-                            $scope.selectedCategory = $scope.categories[0].Name;
-                        else $scope.selectedCategory = "";
+                        if (newCategury == null || newCategury === 'undefined' || newCategury == "CurrentCategoryDeleted") {
+                                $scope.selectedCategory = $scope.categories[0].Name;
+                        }
+                        else { $scope.selectedCategory = newCategury; }
+                        $scope.selectedCategoryChanged();
                     }
-                    else { $scope.selectedCategory = newCategury; }
-                    $scope.selectedCategoryChanged();
-                });
+                    else {
+                        $scope.NoCategory = true;
+                    }
+                }, function () { });
+
         };
         //\to retrieve all categories
 
@@ -1041,6 +1045,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
                 });
             $scope.newCategury = "";
             $scope.newCat = false;
+            $scope.NoCategory = false;
         };
         //\to add category
 
@@ -1104,14 +1109,16 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
 
         //list all products for specific category
         $scope.selectedCategoryChanged = function () {
-            $http({
-                url: "Products.asmx/GetAllProducts",
-                method: "get",
-                params: { category: $scope.selectedCategory }
-            })
-                .then(function (response) {
-                    $scope.products = response.data;
-                });
+            if ($scope.selectedCategory != null) {
+                $http({
+                    url: "Products.asmx/GetAllProducts",
+                    method: "get",
+                    params: { category: $scope.selectedCategory }
+                })
+                    .then(function (response) {
+                        $scope.products = response.data;
+                    }, function (error) { alert(error.data); });
+            }
         };
         //\list all products for specific category
 

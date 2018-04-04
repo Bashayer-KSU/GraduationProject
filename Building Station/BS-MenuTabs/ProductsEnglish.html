@@ -176,7 +176,7 @@
                         ng-init="selectedCategory = categories[0].Name"
                         ng-options="option.Name as option.Name for option in categories"
                         ng-change="selectedCategoryChanged()"></select>
-                <button ng-hide="editCategory" ng-click="DeleteCategory($event)" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button>
+                <button ng-hide="editCategory || NoCategory" ng-click="DeleteCategory($event)" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button>
 
                 <h ng-show="editCategory" style="font-size:20px;">Edit category:</h>
                 <select ng-show="editCategory" class=" styled-select black rounded"
@@ -189,7 +189,7 @@
         <!--\add new category-->
         <!--list products-->
         <div class="table-responsive centered" id="table" style="margin-top:15px;">
-            <p>To change the order of categories click here <button style="background-color:transparent; border: none;" ng-click="displayCategoryTable = !displayCategoryTable"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;" /></button></p>
+            <p>To change the order of categories click here <button ng-disabled="NoCategory" style="background-color:transparent; border: none;" ng-click="displayCategoryTable = !displayCategoryTable"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;" /></button></p>
             <table ng-show="displayCategoryTable" class="table">
                 <thead style="border-collapse:collapse; table-layout:fixed;">
                     <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
@@ -208,7 +208,7 @@
                 </tbody>
             </table>
             <form name="newProduct">
-                <table class="table">
+                <table class="table" ng-hide="NoCategory">
                     <thead style="border-collapse:collapse; table-layout:fixed;">
                         <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
                             <th>Image</th>
