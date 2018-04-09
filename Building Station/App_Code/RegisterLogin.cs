@@ -14,7 +14,7 @@ using System.Web.Services;
 [System.Web.Script.Services.ScriptService]
 public class RegisterLogin : System.Web.Services.WebService
 {
-    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+   // string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
     JavaScriptSerializer js = new JavaScriptSerializer();
     [WebMethod(EnableSession = true)]
@@ -94,6 +94,12 @@ public class RegisterLogin : System.Web.Services.WebService
                 con.Open();
                 cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
                 "('PayPal', 'Currency','" + Session["user"] + "')", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("INSERT INTO Category (StoreEmail, Name, OrderInMenu) values('" +
+                    Session["user"] + "', 'Category example', 1)", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 
