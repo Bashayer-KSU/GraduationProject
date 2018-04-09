@@ -1,6 +1,6 @@
 ﻿var myApp = angular.module("myApp", []);
 
-var Register = myApp.controller("RegisterLoginCtrl", function ($scope, $http, $window) {
+var Register = myApp.controller("RegisterLoginCtrl", function ($scope, $http, $window, $location) {
 
     $scope.SendData = function (e,lang) {
         // use $.param jQuery function to serialize data from JSON 
@@ -8,7 +8,7 @@ var Register = myApp.controller("RegisterLoginCtrl", function ($scope, $http, $w
         var data;
 
         if (e === "reg") {
-            url = "RegisterLogin.asmx/Register";
+            url = "http://www.bsapplogic.somee.com/RegisterLogin.asmx/Register";
             if (lang === "eng") {
                 data = $.param({
                     name: $scope.REname,
@@ -29,7 +29,7 @@ var Register = myApp.controller("RegisterLoginCtrl", function ($scope, $http, $w
             }
         }
         else if (e === "log") {
-            url = "RegisterLogin.asmx/Login";
+            url = "http://www.bsapplogic.somee.com/RegisterLogin.asmx/Login";
             if (lang === "eng") {
 
                 data = $.param({
@@ -58,7 +58,7 @@ var Register = myApp.controller("RegisterLoginCtrl", function ($scope, $http, $w
             .then(function (response) {
                 $scope.result = response.data;
                 //$window.location.href = response.data;
-                location.href = $scope.result.substr(1, $scope.result.length - 2);
+                $location.href = $scope.result.substr(1, $scope.result.length - 2);
             }, function (error) {
                 $scope.error = error.data;
             });
