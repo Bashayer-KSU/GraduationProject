@@ -11,38 +11,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="/Templates/Template_6/Template_6.js"></script>
     <link id="icon" rel="icon" href=""/>
-    <style>
-        .scrollbar {
-            margin-left: 30px;
-            float: left;
-            height: 500px;
-            width: 100%;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            margin-bottom: 25px;
-        }
-
-        .force-overflow {
-            min-height: 450px;
-        }
-        #style-1::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-            border-radius: 10px;
-            background-color: #F5F5F5;
-        }
-
-        #style-1::-webkit-scrollbar {
-            width: 12px;
-            background-color: #F5F5F5;
-        }
-
-        #style-1::-webkit-scrollbar-thumb {
-            border-radius: 10px;
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-            background-color: #555;
-        }
-
-    </style>
 </head>
 <body ng-app="T6" ng-controller="T6Ctrl" data-spy="scroll" data-target=".navbar" data-offset="50" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">
     <header>
@@ -55,41 +23,48 @@
 -->
         <nav id="header" ng-style="{'background-color':Store.Color1}" class="navbar navbar-expand-md navbar-dark fixed-top">
             <a class="navbar-brand" href="#"><img id="StoreLogo" ng-src="{{Store.Logo}}" alt="Store Logo">{{Store.Name}}</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse" >
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item ">
-                        <a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>
-                    </li>
+            <div class="d-flex flex-row-reverse">
+
+                <button class="navbar-toggler p-2" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <ul id="ShoppingCart" class="navbar-nav mr-auto p-2">
                     <li class="nav-item">
-                        <a class="nav-link" href="#products">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact us</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                            <label class="form-check-label nav-link" for="inlineRadio1">English</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                            <label class="form-check-label nav-link" for="inlineRadio2">Arabic</label>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <!--data-toggle="collapse" data-target="#checkoutS"-->
-                        <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS"><span class="hidden-xs">Shopping Cart </span><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
+                        <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS"><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
                     </li>
                 </ul>
             </div>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#products">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact us</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                                <label class="form-check-label nav-link" for="inlineRadio1">English</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                <label class="form-check-label nav-link" for="inlineRadio2">Arabic</label>
+                            </div>
+                        </li>
+                        <li id="ShoppingCart2" class="nav-item">
+                            <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS"><span class="hidden-xs">Shopping Cart </span><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
+                        </li>
+                    </ul>
+                </div>
         </nav>
     </header>
     <main role="main">
@@ -136,7 +111,7 @@
         </section>
         <!----- carousel ---->
         <!-- Modal shopping cart -->
-        <div class="modal fade col-xs-6 col-md-12" id="shoppingCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade col-12 col-md-12" id="shoppingCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -150,43 +125,45 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="row">
-                                <div class="col-xs-12 text-center">
+                                <div class="col-12 text-center">
                                     <div ng-show="!checkout&&!payment" class="card-body">
 
                                         <!----------------------->
-                                        <ul ng-show="!(ProductsArray.length==0)" class="list-group mb-3">
-                                            <li id="yourcart" class="list-group-item d-flex justify-content-between">
-                                                <div class="col-5 my-0">Product Image</div>
-                                                <div class="col-3">
-                                                    <h6 class="my-0">Product</h6>
-                                                </div>
-                                                <span class="my-0">Amount</span>
-                                                <span class="my-0">Price</span>
-                                                <div class="my-0"></div>
-                                            </li>
-                                            <li ng-repeat='x in ProductsArray' id="yourcart" class="list-group-item d-flex justify-content-between">
-                                                <div class="col-5"><img ng-src="{{x.Image}}" alt="..." class="img-fluid" /></div>
-                                                <div class="col-3">
-                                                    <h6 class="my-0">{{x.Name}}</h6>
-                                                    <small class="text-muted">{{x.Desc}}</small>
-                                                </div>
-                                                <span>{{x.Amount}}</span>
-                                                <span ng-show="x.Discount == 0">{{x.Price}} SR</span>
-                                                <span ng-show="x.Discount != 0">
-                                                    <del style="color:#ff0000"> {{x.Price}} </del>
-                                                    {{x.PriceAfterDiscount}} SR
-                                                </span>
-                                                <span>
-                                                    <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </span>
-                                            </li>
+                                        <div class="row">
+                                            <ul ng-show="!(ProductsArray.length==0)" class="list-group mb-3">
+                                                <li id="yourcart" class="list-group-item d-flex justify-content-between">
+                                                    <div class="col-5 my-0">Product Image</div>
+                                                    <div class="col-3">
+                                                        <h6 class="my-0">Product</h6>
+                                                    </div>
+                                                    <span class="my-0">Amount</span>
+                                                    <span class="my-0">Price</span>
+                                                    <div class="my-0"></div>
+                                                </li>
+                                                <li ng-repeat='x in ProductsArray' id="yourcart" class="list-group-item d-flex justify-content-between">
+                                                    <div class="col-5"><img ng-src="{{x.Image}}" alt="..." class="img-fluid" /></div>
+                                                    <div class="col-3">
+                                                        <h6 class="my-0">{{x.Name}}</h6>
+                                                        <small class="text-muted">{{x.Desc}}</small>
+                                                    </div>
+                                                    <span>{{x.Amount}}</span>
+                                                    <span ng-show="x.Discount == 0">{{x.Price}} SR</span>
+                                                    <span ng-show="x.Discount != 0">
+                                                        <del style="color:#ff0000"> {{x.Price}} </del>
+                                                        {{x.PriceAfterDiscount}} SR
+                                                    </span>
+                                                    <span>
+                                                        <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </span>
+                                                </li>
 
-                                            <li  class="list-group-item d-flex justify-content-between">
-                                                <span>Total</span><span><strong>{{TotalPrice}} SR</strong></span>
-                                            </li>
+                                                <li class="list-group-item d-flex justify-content-between">
+                                                    <span>Total</span><span><strong>{{TotalPrice}} SR</strong></span>
+                                                </li>
                                             </ul>
+                                        </div>
                                             <div ng-show="ProductsArray.length==0" style="text-align:center;">
                                                 <span style="text-align:center;">Shopping Cart Empty</span>
                                             </div>
@@ -311,7 +288,7 @@
             </div>
         </div>
         <!-- Modal product-->
-        <div class="modal fade col-xs-6 col-md-12" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade col-12 col-md-12" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -324,7 +301,7 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="row">
-                                <div class="col-xs-12 ">
+                                <div class="col-12 ">
                                     <div class=" text-center">
                                         <form name="AddProduct">
                                             <img class="card-img-top" ng-src="{{addProduct.Image}}" alt="product image">
@@ -336,7 +313,7 @@
                                                     <del style="color:#ff0000"> {{addProduct.Price}} </del>
                                                     {{addProduct.PriceAfterDiscount}} SR
                                                 </p>
-                                                <div class="col-xs-12  col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-12  col-sm-12 col-md-12 col-lg-12">
                                                     <input class="form-control" type="number" min="1" ng-model="quantity" max="{{addProduct.Amount}}" name="quantity" placeholder="enter quantity" required>
                                                     <!--
         <div class="input-group mb-3">
@@ -372,44 +349,48 @@
             <!------------  Product ------------>
                 <section id="products">
                     <div class="row featurette">
-                        <div class="col-md-12">
+                        <div class="col-12 col-md-12">
                             <h2 class="featurette-heading text-center">Our Products</h2>
                         </div>
                         <!-- Tabs -->
-                        <div class="tabs">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li ng-repeat="category in categories" ng-init="setTabItem(categories[0])" class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#{{currentTab}}" role="tab" ng-click="setTabItem(category)" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">{{category.Name}}</a>
-                                </li>
-                            </ul>
-                            <!-- Tab panes -->
-                            <div>
-                            <div id="{{currentTab}}" class="tab-content">
-                                <!-- - -->
-                                <div id="style-1" class="tab-pane fade show active scrollbar" role="tabpanel">
-                                    <div class="row force-overflow">
-                                        <div ng-repeat="product in products" class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
-                                            <div class="card text-center">
-                                                <img class="card-img-top" ng-src="{{product.Image}}" alt="Card image cap">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">{{product.Name}}</h5>
-                                                    <p class="card-text">{{product.Description}}</p>
-                                                    <p ng-show="product.Discount == 0">{{product.Price}} SR</p>
-                                                    <p ng-show="product.Discount != 0">
-                                                        <del style="color:#ff0000"> {{product.Price}} </del>
-                                                        {{product.PriceAfterDiscount}} SR
-                                                    </p>
-                                                    <p style="color:#ff0000" ng-show="product.Amount == 0">Out of stock</p>
-                                                    <button type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
+                        <div class="col-12">
+                            <div class="tabs">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li ng-repeat="category in categories" ng-init="setTabItem(categories[0])" class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#{{currentTab}}" role="tab" ng-click="setTabItem(category)" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">{{category.Name}}</a>
+                                    </li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div>
+                                    <div id="{{currentTab}}" class="tab-content">
+                                        <!-- - -->
+                                        <div id="style-1" class="tab-pane fade show active scrollbar" role="tabpanel">
+                                            <div class="row force-overflow">
+                                                <div ng-repeat="product in products" class="col-6 col-sm-6 col-md-4 col-lg-3">
+                                                    <div class="card text-center">
+                                                        <img class="card-img-top" ng-src="{{product.Image}}" alt="Card image cap">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">{{product.Name}}</h5>
+                                                            <p class="card-text">{{product.Description}}</p>
+                                                            <p ng-show="product.Discount == 0">{{product.Price}} SR</p>
+                                                            <p ng-show="product.Discount != 0">
+                                                                <del style="color:#ff0000"> {{product.Price}} </del>
+                                                                {{product.PriceAfterDiscount}} SR
+                                                            </p>
+                                                            <p style="color:#ff0000" ng-show="product.Amount == 0">Out of stock</p>
+                                                            <button id="addToButton" type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}" style="width:100%;">Add To Cart</button>
+                                                            <button id="addButton" type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}" style="width:100%;">Add</button>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> <!-- tabs -->
                         </div>
-                        </div> <!-- tabs -->
                     </div>
                 </section>
                 <!---- Products ---->
@@ -451,17 +432,17 @@
                     </div>
                     <div class="col-sm-6">
                         <h5 class="text-md-left">Contact Us</h5>
-                        <hr><div class ="row">
-    <h6 class="col-sm-4"><i class="fa fa-send"></i>                {{Store.Email}}</h6>
+                        <div class ="row">
+    <h6 style="word-wrap:break-word;" class="col-sm-4"><i class="fa fa-send"></i>                {{Store.Email}}</h6>
     <h6 class="col-sm-4"><i class="fa fa-location-arrow"></i>                {{Store.Address}}</h6>
     <h6 class="col-sm-4"><i class="fa fa-phone"></i>                {{Store.Phone}}</h6>
                         </div>
                     </div>
+                <div class="col-sm-12">
+                    <p><img ng-src="/images/BuildingStationEn.png" style="width: 5vw; height: 5vw;" alt="BuildingStation Logo" />&copy; 2018  &middot; <a ng-style="{'color':Store.Color4}" href="/RegisterLogin.html" target="_blank"> Desined By Building Station</a> </p>
                 </div>
-                <div class="row">
-                    <p><img ng-src="/images/BuildingStationEn.png" style="width: 5vw; height: 5vw;" alt="BuildingStation Logo" />&copy; 2018  &middot; <a ng-style="{'color':Store.Color4}" href="/RegisterLogin.html"> Desined By Building Station</a> </p>
+                <br />
                 </div>
-                <br /><br />
             </div>
         </footer>
     </main>
