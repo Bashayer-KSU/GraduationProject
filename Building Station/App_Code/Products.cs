@@ -180,8 +180,11 @@ public class Products : System.Web.Services.WebService
             SqlCommand cmd1 = new SqlCommand("SELECT P.ID FROM Product AS P INNER JOIN ProductOrder AS PO ON P.ID = PO.Product_ID INNER JOIN \"Order\" AS O ON O.ID = PO.Order_ID WHERE P.ID = '" + product_ID + "' AND O.Status = 0", con);
             SqlDataReader reader = cmd1.ExecuteReader();
             if (!reader.HasRows) {
+                con.Close();
                 using (SqlCommand cmd2 = new SqlCommand("DELETE FROM ProductOrder WHERE Product_ID = '" + product_ID + "'; ", con))
                 {
+                    con.Open();
+
                     int rows = cmd2.ExecuteNonQuery();
                     SqlCommand cmd3 = new SqlCommand("DELETE FROM Product WHERE ID = '" + product_ID + "' AND StoreEmail= '"+ Session["user"] + "'", con);
                     if(cmd3.ExecuteNonQuery() == 1)

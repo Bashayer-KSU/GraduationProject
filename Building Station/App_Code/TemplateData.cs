@@ -182,21 +182,24 @@ public class TemplateData : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void UpdatStoreData(String DataType, String NewValue)
     {
-        if (DataType.Equals("Store Name"))
+        if (DataType.Equals("Store Name") || DataType.Equals("اسم المتجر"))
             DataType = "StoreName";
-        else if(DataType.Equals("Store Description"))
+        else if (DataType.Equals("Store Description") || DataType.Equals("وصف المتجر"))
             DataType = "StoreDescription";
-        else if (DataType.Equals("Address"))
+        else if (DataType.Equals("Address") || DataType.Equals("العنوان"))
             DataType = "Location";
-        else if (DataType.Equals("About"))
+        else if (DataType.Equals("Phone") || DataType.Equals("رقم التواصل"))
+            DataType = "Phone";
+        else if (DataType.Equals("About") || DataType.Equals("عن الموقع"))
             DataType = "About";
-        else if (DataType.Equals("Menu Title"))
+        else if (DataType.Equals("Menu Title") || DataType.Equals("عنوان القائمة"))
             DataType = "MenuTitle";
+        else DataType = "";
 
         int x;
         Boolean result = false;
 
-        if (NewValue!= null && DataType!="About") {
+        if (NewValue!= null && DataType!="About" && DataType != "") {
 
             using (SqlConnection con = new SqlConnection(cs))
             {

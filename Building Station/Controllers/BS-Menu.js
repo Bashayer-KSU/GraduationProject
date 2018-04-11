@@ -647,11 +647,11 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
                 }
               //  else { myInstagram = "No Link"; }
 
-                $scope.TextType = [{ name: "Store Name", value: $scope.StoreName },
-                { name: "Store Description", value: $scope.desc },
-                { name: "Phone", value: $scope.Phone },
-                { name: "Address", value: $scope.address },
-                { name: "Menu Title", value: $scope.MenuTitle }
+                $scope.TextType = [{ name: "اسم المتجر", value: $scope.StoreName },
+                { name: "وصف المتجر", value: $scope.desc },
+                { name: "رقم التواصل", value: $scope.Phone },
+                { name: "العنوان", value: $scope.address },
+                { name: "عنوان القائمة", value: $scope.MenuTitle }
                 ];
                 $scope.selectedTextType = $scope.TextType[0];
                 $scope.ShopOwnerText = $scope.selectedTextType.value;
@@ -729,7 +729,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
                     else if ($scope.elementInfo[i].Name === "About") {
                         $scope.section.about = !$scope.elementInfo[i].Hidden;
                         $scope.AboutContect = $scope.elementInfo[i].Value;
-                        $scope.TextType.push({ name: "About", value: $scope.elementInfo[i].Value  })
+                        $scope.TextType.push({ name: "عن الموقع", value: $scope.elementInfo[i].Value  })
                     }
                 }
 

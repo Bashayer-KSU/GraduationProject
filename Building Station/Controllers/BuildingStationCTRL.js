@@ -56,6 +56,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             var data;
 
             if (e === "reg") {
+                //url = "http://www.bsapplogic.somee.com/RegisterLogin.asmx/Register";
                 url = "RegisterLogin.asmx/Register";
                 if (lang === "eng") {
                     data = $.param({
@@ -77,6 +78,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 }
             }
             else if (e === "log") {
+                //url = "http://www.bsapplogic.somee.com/RegisterLogin.asmx/Login";
                 url = "RegisterLogin.asmx/Login";
                 if (lang === "eng") {
 
@@ -104,8 +106,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $http.post(url, data, config)
                 .then(function (response) {
                     $scope.result = response.data;
-                    //$window.location.href = response.data;
-                    location.href = $scope.result.substr(1, $scope.result.length - 2);
+                    //$window.open = ("http://www.buildingstation.somee.com/" + $scope.result.substr(76, $scope.result.length - 9 - 76), "_self");
+                    location.href = "http://localhost:50277/" + $scope.result.substr(76, $scope.result.length - 9 - 76);
                 }, function (error) {
                     $scope.error = error.data;
                 });
@@ -114,7 +116,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
     .controller("PublishedStoreCtrl", function ($scope, $http, $stateParams, ProductService, CategoryService, AddProductService) {
         var ID = 0;
         $http({
-            url:"Published_Stores.asmx/GetTemplate",
+            //url:"http://www.bsapplogic.somee.com/Published_Stores.asmx/GetTemplate",
+            url: "/Published_Stores.asmx/GetTemplate",
             params: { StoreDomain: $stateParams.Domain},
             method: "get"
         })
@@ -143,6 +146,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         var init = function () {
             //Store Info
             $http({
+                //url: "http://www.bsapplogic.somee.com/../Published_Stores.asmx/GetStore",
                 url: "../Published_Stores.asmx/GetStore",
                 params: { StoreDomain: $stateParams.Domain },
                 method: "get"
@@ -213,6 +217,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             };
 
             $http({
+                //url: "http://www.bsapplogic.somee.com/../Published_Stores.asmx/GetElements",
                 url: "../Published_Stores.asmx/GetElements",
                 params: { StoreDomain: $stateParams.Domain },
                 method: "get"
@@ -267,6 +272,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             console.log($scope.OrderID);*/
 
             $http.post(
+                //"http://www.bsapplogic.somee.com/BuyerOrder.asmx/CreateOrder",
                 "/BuyerOrder.asmx/CreateOrder",
                 $.param({
                     StoreEmail: $scope.Store.Email,
@@ -306,6 +312,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
             $http.post(
                 "/BuyerOrder.asmx/CreateOrder",
+//                "http://www.bsapplogic.somee.com/BuyerOrder.asmx/CreateOrder",
                 $.param({
                     StoreEmail: $scope.Store.Email,
                     BuyerName: Buyer_Name,
@@ -444,6 +451,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 BS_App.factory('CategoryService', function ($http, $stateParams) {
     var GetAllCategories = function () {
         return $http({
+            //url: "http://www.bsapplogic.somee.com/../Published_Stores.asmx/GetAllCategories",
             url: "../Published_Stores.asmx/GetAllCategories",
             params: { StoreDomain: $stateParams.Domain },
             method: "get"
@@ -459,6 +467,7 @@ BS_App.factory('CategoryService', function ($http, $stateParams) {
 BS_App.factory('ProductService', function ($http, $stateParams) {
     var GetAllProducts = function (CategoryName) {
         return $http.post(
+            //"http://www.bsapplogic.somee.com//Published_Stores.asmx/GetAllProducts",
             "/Published_Stores.asmx/GetAllProducts",
             $.param({
                 Category: CategoryName,
@@ -482,6 +491,7 @@ BS_App.factory('ProductService', function ($http, $stateParams) {
 BS_App.factory('AddProductService', function ($http) {
     var AddProductToCart = function (OrderID, ProductID, Amount, PreviousAmount) {
         return $http.post(
+            //"http://www.bsapplogic.somee.com/Published_Stores.asmx/AddProductToOrder",
             "/Published_Stores.asmx/AddProductToOrder",
             $.param({
                 OrderID: OrderID,

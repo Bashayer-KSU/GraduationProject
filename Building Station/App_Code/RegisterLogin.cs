@@ -15,13 +15,13 @@ using System.Web.Services;
 public class RegisterLogin : System.Web.Services.WebService
 {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-   // string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+    //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+
     JavaScriptSerializer js = new JavaScriptSerializer();
     [WebMethod(EnableSession = true)]
-    public void Register(String name, String email, String password, String phone, String lang)
+    public string Register(String name, String email, String password, String phone, String lang)
     {
-
-
+        string value = "";
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -31,7 +31,7 @@ public class RegisterLogin : System.Web.Services.WebService
             if (dr.HasRows == true)
             {
                 con.Close();
-                Context.Response.Write(js.Serialize("/index.html"));
+                value = "/index.html";
             }
             else
             {
@@ -109,15 +109,16 @@ public class RegisterLogin : System.Web.Services.WebService
                 }
                 else if(lang.Equals("ar"))
                 {
-                    Context.Response.Write(js.Serialize("/CreationSatgeArabic.html"));
+                    value = "/CreationSatgeArabic.html";
                 }
             }
         }
+        return value;
     }
     [WebMethod(EnableSession = true)]
-    public void Login(String email, String password, String lang)
+    public string Login(String email, String password, String lang)
     {
-
+        string value = "";
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -134,22 +135,22 @@ public class RegisterLogin : System.Web.Services.WebService
 
                     if (lang.Equals("eng"))
                     {
-                        Context.Response.Write(js.Serialize("/CreationStage.html"));
+                        value = "/CreationStage.html";
                     }
                     else
                     {
-                        Context.Response.Write(js.Serialize("/CreationSatgeArabic.html"));
+                        value = "/CreationSatgeArabic.html";
                     }
                 }
                 else //If user already has template 
                 {
                     if (lang.Equals("eng"))
                     {
-                        Context.Response.Write(js.Serialize("/Views/BasicE.html"));
+                        value = "/Views/BasicE.html";
                     }
                     else
                     {
-                        Context.Response.Write(js.Serialize("/Basic.html"));
+                        value = "/Basic.html";
                     }
                 }
             }
@@ -157,30 +158,31 @@ public class RegisterLogin : System.Web.Services.WebService
             //Invalid login
             else
             {
-                Context.Response.Write(js.Serialize("/index.html"));
+                value = "/index.html";
             }
         }
+        return value;
     }
 
     [WebMethod(EnableSession = true)]
-    public void CheckUser()
+    public string CheckUser()
     {
         if (Session["user"] == null)
         {
-            Context.Response.Write(js.Serialize(false));
+            return "false";
         }
         else
         {
-            Context.Response.Write(js.Serialize(true));
+            return "true";
         }
     }
 
 
     [WebMethod(EnableSession = true)]
-    public void SignOut()
+    public string SignOut()
     {
         // Session.Clear();
         Session.Abandon();
-        Context.Response.Write(js.Serialize("/index.html"));
+        return "/index.html";
     }
 }
