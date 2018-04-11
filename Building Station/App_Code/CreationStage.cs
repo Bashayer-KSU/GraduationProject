@@ -462,7 +462,7 @@ public class CreationStage : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Category (StoreEmail, Name, OrderInMenu) values('" + Session["user"] + "', 'Category example', 1)", con);
+                SqlCommand cmd = new SqlCommand("UPDATE Category SET Name = 'Category example' WHERE StoreEmail ='" + Session["user"] + "'", con);
                 cmd.ExecuteNonQuery(); con.Close();
             }
             using (SqlConnection con = new SqlConnection(cs))
@@ -488,7 +488,7 @@ public class CreationStage : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Category (StoreEmail, Name, OrderInMenu) values('" + Session["user"] + "', N'"+"تصنيف مؤقت"+"', 1)", con);
+                SqlCommand cmd = new SqlCommand("UPDATE Category SET Name = N'" + "تصنيف مؤقت" + "' WHERE StoreEmail = '" + Session["user"] + "'", con);
                 cmd.ExecuteNonQuery(); con.Close();
             }
             using (SqlConnection con = new SqlConnection(cs))

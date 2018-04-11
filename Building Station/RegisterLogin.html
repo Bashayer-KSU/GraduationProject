@@ -40,13 +40,13 @@
 
     </style>
 </head>
-<body ng-app="myApp" ng-controller="RegisterLoginCtrl">
+<body ng-app="BuildingStationAPP" ng-controller="RegisterLoginCtrl">
 
 <div class="container-fluid">
     <div class="language">
 
         <ul class="tab-group" align="right" style="margin-top:1%;">
-            <li class="=active"><a onclick="replace2()" data-toggle="tab" href="#signup" class="eng">English</a></li>
+            <li class="active"><a onclick="replace2()" data-toggle="tab" href="#signup" class="eng">English</a></li>
             <li>  |  </li>
             <li><a onclick="replace()" data-toggle="tab" href="#signup_ar" style="font-family:NeoSansArabic;" class="arb">عربي</a></li>
             <li>  <img src="/images/language.png" alt="" style="width:35px; height:35px; font-family:'Neo Sans Arabic';">  </li>
@@ -147,7 +147,7 @@
                         <form name="register_ar" novalidate>
                             <div class="input-field col s6">
                                 <input id="RAname" type="text" ng-model="Rname" class="validate" required style="text-align:right;">
-                                <label for="RAname" style="position: absolute; left:77%; font-family:NeoSansArabic;">اسم المستخدم</label>
+                                <label for="RAname" style="position: absolute; left:88%; font-family:NeoSansArabic;">الاسم</label>
                             </div>
                             <div class="input-field col s6">
                                 <input id="RAemail" type="email" name="Remail" ng-model="Remail" class="validate" required>
@@ -227,7 +227,8 @@
                         <form name="login_eng" novalidate>
                             <div class="input-field col s6" ng-show="false">
                                 <input id="LEemailH" name="LEemailH">
-                                <input id="LEemailH" name="LEemailH">
+                                <input id="LEemailH2" name="LEemailH">
+
                                 <label for="LEemailH">Email</label>
                             </div>
                             <div class="input-field col s6">
@@ -277,7 +278,7 @@
                         <form name="login_ar" novalidate">
                             <div class="input-field col s6" ng-show="false">
                                 <input id="LAemailH" name="LemailH" required>
-                                <input id="LAemailH" name="LemailH" required>
+                                <input id="LAemailH2" name="LemailH" required>
                                 <label for="LAemailH" style="position: absolute; left:75%; text-align:right; font-family:NeoSansArabic;">البريد الالكتروني</label>
                             </div>
                             <div class="input-field col s6">

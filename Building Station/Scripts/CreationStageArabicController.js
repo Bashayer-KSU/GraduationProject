@@ -176,7 +176,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     .controller("InstagramController", function ($scope, $http, $location) {
 
         $scope.$watch('search', function () {
-            fetch();
+            fetchUserFromInstagram();
         });
 
         //http://rest-service.guides.spring.io/greeting
@@ -185,7 +185,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         //https://www.instagram.com/therock/?__a=1
         //  $scope.search = "asmaa.ru";
 
-        function fetch() {
+        function fetchUserFromInstagram() {
 
             $http.get("https://www.instagram.com/" + $scope.search + "/?__a=1")
 

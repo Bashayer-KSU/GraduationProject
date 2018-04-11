@@ -1,5 +1,5 @@
 ﻿
-var BS_App = angular.module("published", ["ui.router"]);
+var BS_App = angular.module("BuildingStationAPP", ["ui.router"]);
 
 BS_App.service('initialSetup', function ($http) {
     var promise;
@@ -13,27 +13,42 @@ BS_App.service('initialSetup', function ($http) {
     };
 });
 
-var published = BS_App.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
+var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise("/BuildingStation");
     $stateProvider
         .state("Login&Register", {
             url: "/BuildingStation",
             templateUrl: "/RegisterLogin.html",
-            controller: "Register_Login"
+            controller: "RegisterLoginCtrl"
         })
         .state("Store", {
             url: "/BuildingStation/:Domain",
             templateUrl: "Stores/Store.html",
             controller: "PublishedStoreCtrl"
-        });
+        })
+        /*.state("CreationStage", {
+            url: "/BuildingStation/CreationStage",
+            templateUrl: "Stores/Store.html",
+            controller: "PublishedStoreCtrl"
+        })
+        .state("CreationStage", {
+            url: "/BuildingStation/:Domain",
+            templateUrl: "Stores/Store.html",
+            controller: "PublishedStoreCtrl"
+        })
+        .state("CreationStage", {
+            url: "/BuildingStation/:Domain",
+            templateUrl: "Stores/Store.html",
+            controller: "PublishedStoreCtrl"
+        })*/;
        
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
     });
 })
-    .controller("Register_Login", function ($scope, $http, $window) {
+    .controller("RegisterLoginCtrl", function ($scope, $http, $window) {
 
         $scope.SendData = function (e, lang) {
             // use $.param jQuery function to serialize data from JSON 
