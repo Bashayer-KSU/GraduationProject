@@ -14,8 +14,8 @@ using System.Web.Services;
 [System.Web.Script.Services.ScriptService]
 public class RegisterLogin : System.Web.Services.WebService
 {
-   // string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+   // string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
     JavaScriptSerializer js = new JavaScriptSerializer();
     [WebMethod(EnableSession = true)]
     public void Register(String name, String email, String password, String phone, String lang)

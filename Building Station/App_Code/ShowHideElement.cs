@@ -18,8 +18,8 @@ public class ShowHideElement : System.Web.Services.WebService
 {
     JavaScriptSerializer js = new JavaScriptSerializer();
 
-    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
 
     List<Element> ElementsList = new List<Element>();
     public Element e = new Element();

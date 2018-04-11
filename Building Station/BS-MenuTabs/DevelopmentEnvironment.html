@@ -177,20 +177,24 @@
                 <h4>تغيير الشعار</h4>
                 <div class="input-group">
                     <span class="input-group-btn">
-                        <button ng-disabled="!imageSrc" class="waves-effect waves-light btn done" ng-click="ChangeLogo($event)" type="submit">تحديث</button>
+                        <button ng-disabled="!imageSrc || BigImage || NotImage" class="waves-effect waves-light btn done" ng-click="ChangeLogo($event)" type="submit">تحديث</button>
                     </span>
                     <input type="file" dir="rtl" ng-file-select="onFileSelect($files)" ng-model="imageSrc" style="width:100%;" /> <!-- custom-on-change="uploadFile($event)"-->
                 </div>
+                <span ng-show="imageSrc && BigImage" style="float:right; font-size:smaller;" class="alert-danger">حجم الصورة يجب أن يكون واحد ميغا أو أقل</span>
+                <span ng-show="imageSrc && NotImage" style="float:right; font-size:smaller;" class="alert-danger">.jpeg أو .png أو .jpg أو .gif يجب أن يكون الملف من نوع</span>
             </div>
             <br />
             <div class="row inside">
                 <h4>تغيير صورة الرئيسية</h4>
                 <div class="input-group">
                     <span class="input-group-btn">
-                        <button ng-disabled="!imageSrc_slider" class="waves-effect waves-light btn done" ng-click="UpdateSlider()" type="submit">تحديث</button>
+                        <button ng-disabled="!imageSrc_slider || BigImage || NotImage" class="waves-effect waves-light btn done" ng-click="UpdateSlider()" type="submit">تحديث</button>
                     </span>
                     <input type="file" dir="rtl" ng-file-select="onFileSelect($files)" ng-model="imageSrc_slider" style="width:100%;" />
                 </div>
+                <span ng-show="imageSrc_slider && BigImage" style="float:right; font-size:smaller;" class="alert-danger">حجم الصورة يجب أن يكون واحد ميغا أو أقل</span>
+                <span ng-show="imageSrc_slider && NotImage" style="float:right; font-size:smaller;" class="alert-danger">.jpeg أو .png أو .jpg أو .gif يجب أن يكون الملف من نوع</span>
                 <div ng-show="loadingCover" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
                     <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
                 </div>
@@ -200,11 +204,12 @@
                 <h4>تغيير صورة التذييل</h4>
                 <div class="input-group">
                     <span class="input-group-btn">
-                        <button ng-disabled="!imageSrc_about" class="waves-effect waves-light btn done" ng-click="UpdateAboutImage()" type="submit">تحديث</button>
+                        <button ng-disabled="!imageSrc_about || BigImage || NotImage" class="waves-effect waves-light btn done" ng-click="UpdateAboutImage()" type="submit">تحديث</button>
                     </span>
                     <input type="file" dir="rtl" ng-file-select="onFileSelect($files)" ng-model="imageSrc_about" style="width:100%;" />
                 </div>
-
+                <span ng-show="imageSrc_about && BigImage" style="float:right; font-size:smaller;" class="alert-danger">حجم الصورة يجب أن يكون واحد ميغا أو أقل</span>
+                <span ng-show="imageSrc_about && NotImage" style="float:right; font-size:smaller;" class="alert-danger">.jpeg أو .png أو .jpg أو .gif يجب أن يكون الملف من نوع</span>
                 <div ng-show="loadingAboutImage" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
                     <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
                 </div>

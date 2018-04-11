@@ -17,8 +17,8 @@ using System.Text;
 public class CreationStage : System.Web.Services.WebService
 {
 
-    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
 
     public Store store = new Store();
     List<Element> ElementsList = new List<Element>();
