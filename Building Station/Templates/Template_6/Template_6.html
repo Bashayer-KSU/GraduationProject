@@ -130,45 +130,49 @@
 
                                         <!----------------------->
                                         <div class="row">
-                                            <ul ng-show="!(ProductsArray.length==0)" class="list-group mb-3">
-                                                <li id="yourcart" class="list-group-item d-flex justify-content-between">
-                                                    <div class="col-5 my-0">Product Image</div>
-                                                    <div class="col-3">
-                                                        <h6 class="my-0">Product</h6>
-                                                    </div>
-                                                    <span class="my-0">Amount</span>
-                                                    <span class="my-0">Price</span>
-                                                    <div class="my-0"></div>
-                                                </li>
-                                                <li ng-repeat='x in ProductsArray' id="yourcart" class="list-group-item d-flex justify-content-between">
-                                                    <div class="col-5"><img ng-src="{{x.Image}}" alt="..." class="img-fluid" /></div>
-                                                    <div class="col-3">
-                                                        <h6 class="my-0">{{x.Name}}</h6>
-                                                        <small class="text-muted">{{x.Desc}}</small>
-                                                    </div>
-                                                    <span>{{x.Amount}}</span>
-                                                    <span ng-show="x.Discount == 0">{{x.Price}} SR</span>
-                                                    <span ng-show="x.Discount != 0">
-                                                        <del style="color:#ff0000"> {{x.Price}} </del>
-                                                        {{x.PriceAfterDiscount}} SR
-                                                    </span>
-                                                    <span>
-                                                        <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </span>
-                                                </li>
+                                            <div class="col">
+                                                <ul ng-show="!(ProductsArray.length==0)" class="list-group mb-3">
+                                                    <li id="yourcart" class="list-group-item d-flex justify-content-between">
+                                                        <div class="row">
+                                                            <div class="col my-0">Product Image</div>
+                                                            <div class="col">
+                                                                <h6 class=" my-0">Product</h6>
+                                                            </div>
+                                                            <span class="col my-0">Amount</span>
+                                                            <span class="col my-0">Price</span>
+                                                            </div>
+                                                    </li>
+                                                    <li ng-repeat='x in ProductsArray' id="yourcart" class="list-group-item d-flex justify-content-between">
+                                                        <div class="row">
+                                                            <div class="col"><img ng-src="{{x.Image}}" alt="..." class="img-fluid" /></div>
+                                                            <div class="col">
+                                                                <h6 class="my-0">{{x.Name}}</h6>
+                                                                <small class="text-muted">{{x.Desc}}</small>
+                                                            </div>
+                                                            <span class="col">{{x.Amount}}</span>
+                                                            <span class="col" ng-show="x.Discount == 0">{{x.Price}} SR</span>
+                                                            <span class="col" ng-show="x.Discount != 0">
+                                                                <del style="color:#ff0000"> {{x.Price}} </del>
+                                                                {{x.PriceAfterDiscount}} SR
+                                                            </span>
+                                                            <span>
+                                                                <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </li>
 
-                                                <li class="list-group-item d-flex justify-content-between">
-                                                    <span>Total</span><span><strong>{{TotalPrice}} SR</strong></span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                            <div ng-show="ProductsArray.length==0" style="text-align:center;">
-                                                <span style="text-align:center;">Shopping Cart Empty</span>
+                                                    <li class="list-group-item d-flex justify-content-between">
+                                                        <span>Total</span><span><strong>{{TotalPrice}} SR</strong></span>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                           
-</div>
+                                        </div>
+                                        <div ng-show="ProductsArray.length==0" style="text-align:center;">
+                                            <span style="text-align:center;">Shopping Cart Empty</span>
+                                        </div>
+                                    </div>
                                     <!-- Checkout-->
                                     <div ng-show="checkout" class="card-body">
                                         <!----------------------->
