@@ -19,22 +19,13 @@ public class TemplateData : System.Web.Services.WebService
 {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
-    JavaScriptSerializer js = new JavaScriptSerializer();
-
 
     public Store store = new Store();
    // public Product Product = new Product();
     List<Element> ElementsList = new List<Element>();
-
-    public TemplateData()
-    {
-
-        //Uncomment the following line if using designed components 
-        //InitializeComponent(); 
-    }
-
+    
     [WebMethod(EnableSession = true)]
-    public void StoreData()
+    public Store StoreData()
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -148,11 +139,11 @@ public class TemplateData : System.Web.Services.WebService
             reader.Close();
             con.Close();
         }
-        Context.Response.Write(js.Serialize(store));
+        return store;
     }
 
     [WebMethod(EnableSession = true)]
-    public void ProductData()
+    public List<Product> ProductData()
     {
         List<Product> ProductsList = new List<Product>();
 
@@ -176,11 +167,11 @@ public class TemplateData : System.Web.Services.WebService
                 ProductsList.Add(product);
             }
         }
-        Context.Response.Write(js.Serialize(ProductsList));
+        return ProductsList;
     }
 
     [WebMethod(EnableSession = true)]
-    public void UpdatStoreData(String DataType, String NewValue)
+    public string UpdatStoreData(String DataType, String NewValue)
     {
         if (DataType.Equals("Store Name") || DataType.Equals("اسم المتجر"))
             DataType = "StoreName";
@@ -213,10 +204,7 @@ public class TemplateData : System.Web.Services.WebService
                 con.Close();
             }
             if(result)
-        Context.Response.Write(js.Serialize(NewValue));
-            else
-                Context.Response.Write(js.Serialize("Error"));
-
+                return NewValue;
         }
         else if(DataType == "About")
         {
@@ -233,18 +221,14 @@ public class TemplateData : System.Web.Services.WebService
                 con.Close();
 
             }
-            if (result)
-                Context.Response.Write(js.Serialize(NewValue));
-            else
-                Context.Response.Write(js.Serialize("Error"));
+            if (result) return NewValue;
         }
+        return "Error";
     }
 
     [WebMethod(EnableSession = true)]
-    public void UpdateLinks(string snapchat_link, string twitter_link, string facebook_link, string instagram_link)
+    public List<Element> UpdateLinks(string snapchat_link, string twitter_link, string facebook_link, string instagram_link)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             /* con.Open();
@@ -385,13 +369,13 @@ public class TemplateData : System.Web.Services.WebService
             cmd.ExecuteNonQuery();
 
             con.Close();
-
-            Context.Response.Write(js.Serialize(ElementsList));
+            return ElementsList;
         }
+        return null;
     }
 
     [WebMethod(EnableSession = true)]
-    public void UploadLogo(string logo)
+    public Store UploadLogo(string logo)
     {
 /*
         // our account in cloudinary 
@@ -416,16 +400,14 @@ public class TemplateData : System.Web.Services.WebService
             con.Close();
 
             store.Logo = logo;
-            Context.Response.Write(js.Serialize(store));
+            return store;
         }
-
+        return null;
     }
 
     [WebMethod(EnableSession = true)]
-    public void UploadSlider(string slider)
+    public Store UploadSlider(string slider)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -434,22 +416,21 @@ public class TemplateData : System.Web.Services.WebService
             con.Close();
 
             store.SliderImage = slider;
-            Context.Response.Write(js.Serialize(store));
+            return store;
         }
+        return null;
     }
-    [WebMethod(EnableSession = true)]
-    public void UploadAboutImage(string image)
-    {
-        JavaScriptSerializer js = new JavaScriptSerializer();
 
+    [WebMethod(EnableSession = true)]
+    public Boolean UploadAboutImage(string image)
+    {
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
             SqlCommand cmd = new SqlCommand("UPDATE Element SET Hidden = 'false', Image = '" + image + "' WHERE StoreEmail='" + Session["user"] + "' AND Type = 'About' AND Name = 'About'", con);
             cmd.ExecuteNonQuery();
             con.Close();
-
-            Context.Response.Write(js.Serialize(true));
+            return true;
         }
     }
 }
