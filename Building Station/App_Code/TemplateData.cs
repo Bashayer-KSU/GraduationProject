@@ -6,6 +6,7 @@ using System.Web.Services;
 using System.Web.Script.Serialization;
 using System.Configuration;
 using System.Data.SqlClient;
+using CloudinaryDotNet;
 
 /// <summary>
 /// Summary description for TemplateData
@@ -16,8 +17,8 @@ using System.Data.SqlClient;
 [System.Web.Script.Services.ScriptService]
 public class TemplateData : System.Web.Services.WebService
 {
-    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
     JavaScriptSerializer js = new JavaScriptSerializer();
 
 
@@ -392,6 +393,18 @@ public class TemplateData : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void UploadLogo(string logo)
     {
+/*
+        // our account in cloudinary 
+        CloudinaryDotNet.Account account =
+                            new CloudinaryDotNet.Account("dkejtwcc6", "799652649934124", "N6eQmnp7-66vxt3IMIpC-z0ijDw");
+
+        CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
+        //\our account in cloudinary
+       //string ImageURL = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(200).Crop("scale")).BuildImageTag(logo);
+       string ImageURL = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(200).Crop("scale")).BuildImageTag(@"C:\Users\star7\OneDrive\Desktop\ONLINE SHOPS PIC's\-2- Sweets");
+        //C: \Users\star7\OneDrive\Desktop\ONLINE SHOPS PIC's\-1- HAND MADE
+        // cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(200).Crop("scale")).BuildImageTag("turtles.jpg")
+        */
 
         JavaScriptSerializer js = new JavaScriptSerializer();
 

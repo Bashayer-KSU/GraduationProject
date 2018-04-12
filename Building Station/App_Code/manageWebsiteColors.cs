@@ -24,6 +24,7 @@ public class manageWebsiteColors : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public Colors GetWebsiteColors(string path)
     {
+
         Colors selectedColors = new Colors();
         // our account in cloudinary 
         CloudinaryDotNet.Account account =

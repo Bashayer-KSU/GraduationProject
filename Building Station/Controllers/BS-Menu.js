@@ -412,12 +412,16 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
                     params: { }
         })
                 .then(function (response) {
-                    $scope.PayPalInfo = response.data;
+                    if (!response.data.includes("No Value")) {
+                        $scope.PayPalInfo = response.data;
+                    }
+                    else {
+                        $scope.PayPalInfo = "";
+                    }
 
-      //  $scope.PayPalButtonCode = $sce.trustAsHtml(response.data);
-      //  $scope.PayPalButtonCode2 = "<form><button type='submit'>test</button></form>";
-
-    }, function (error) {
+                    //  $scope.PayPalButtonCode = $sce.trustAsHtml(response.data);
+                    //  $scope.PayPalButtonCode2 = "<form><button type='submit'>test</button></form>"; 
+                }, function (error) {
         $scope.error = error.data;
     });
         };
@@ -1215,7 +1219,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize", "ui.boots
     });
 
 //to upload image
-app.directive("ngFileSelect", function (fileReader, $timeout) {
+app.directive("ngFileSelect", function (fileReader, $timeout, $rootScope) {
     return {
         scope: {
             ngModel: '='
@@ -1232,7 +1236,24 @@ app.directive("ngFileSelect", function (fileReader, $timeout) {
             }
 
             el.bind("change", function (e) {
+
+                var fileSize = this.files[0].size;
+                var checkSize = fileSize > 1100000;
+
+                $rootScope.BigImage = checkSize;
+
                 var file = (e.srcElement || e.target).files[0];
+
+                var allowed = ["jpeg", "png", "gif", "jpg"];
+                var found = false;
+                var fileType = this.files[0].type;
+                allowed.forEach(function (extension) {
+
+                    if (fileType === ("image/" + extension)) {
+                        found = true;
+                    }
+                });
+                $rootScope.NotImage = !found;
                 getFile(file);
             });
         }

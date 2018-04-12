@@ -104,7 +104,7 @@ public class RegisterLogin : System.Web.Services.WebService
 
                 if (lang.Equals("eng"))
                 {
-                    Context.Response.Write(js.Serialize("/CreationStage.html"));
+                    value = "/CreationStage.html";
                 }
                 else if(lang.Equals("ar"))
                 {

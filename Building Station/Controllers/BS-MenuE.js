@@ -365,11 +365,12 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 params: {}
             })
                 .then(function (response) {
-                    $scope.PayPalInfo = response.data;
-
-                    //  $scope.PayPalButtonCode = $sce.trustAsHtml(response.data);
-                    //  $scope.PayPalButtonCode2 = "<form><button type='submit'>test</button></form>";
-
+                    if (!response.data.includes("No Value")) {
+                        $scope.PayPalInfo = response.data;
+                    }
+                    else {
+                        $scope.PayPalInfo = "";
+                    }
                 }, function (error) {
                     $scope.error = error.data;
                 });
@@ -792,6 +793,12 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
         };
 
+        //  sliderPath = $scope.imageSrc_slider;
+        //filePath = $scope.imageSrc;
+        $scope.$on("fileProgress", function (e, progress) {
+            $scope.progress = progress.loaded / progress.total;
+        }); 
+
         $scope.UpdateColors = function () {
             var post = $http({
                 method: "POST",
@@ -805,6 +812,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
 
 
         $scope.ChangeLogo = function (ev) {
+            //var logoPath = $scope.imageSrc; 
+
             var confirm = $mdDialog.confirm()
                 .title('Do you want to Change your store Colors also?')
                 .textContent('The new colors will be taken from your new logo.')
@@ -812,11 +821,12 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 .ok('Yes')
                 .cancel('No');
 
-            $mdDialog.show(confirm).then(function () {
+            $mdDialog.show(confirm)
+                .then(function () {
                 $http({
                     url: "manageWebsiteColors.asmx/GetWebsiteColors",
                     dataType: 'json',
-                    method: "POST",
+                        method: "POST",
                     data: { path: $scope.imageSrc },
                     headers: { "Content-Type": "application/json; charset=utf-8" }
                 })
@@ -837,7 +847,8 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 $scope.refreshIframe();
                 myservice.refresh();
 
-            }, function () {
+                },
+                function () {
                 $http({
                     method: "POST",
                     url: "CreationStage.asmx/UploadLogo",
@@ -849,12 +860,6 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
                 $scope.refreshIframe();
             });
         };
-
-        //  sliderPath = $scope.imageSrc_slider;
-        //  filePath = $scope.imageSrc;
-        $scope.$on("fileProgress", function (e, progress) {
-            $scope.progress = progress.loaded / progress.total;
-        });
 
         $scope.UpdateSlider = function () {
             $scope.loadingCover = true;
@@ -1168,7 +1173,7 @@ var app = angular.module("BS", ["ngRoute", "ngMaterial", "ngSanitize"])
     });
 
 //to upload image
-app.directive("ngFileSelect", function (fileReader, $timeout) {
+app.directive("ngFileSelect", function (fileReader, $timeout, $rootScope) {
     return {
         scope: {
             ngModel: '='
@@ -1178,15 +1183,44 @@ app.directive("ngFileSelect", function (fileReader, $timeout) {
                 fileReader.readAsDataUrl(file, $scope)
                     .then(function (result) {
                         $timeout(function () {
-                            $scope.ngModel = result;
-
+                            $scope.ngModel = result;  
                         });
                     });
             }
 
             el.bind("change", function (e) {
+               
+            //    alert('File size: ' + this.files[0].size);
+                //  alert('Max size:' + 1e+6);
+
+                var fileSize = this.files[0].size;
+                var checkSize = fileSize > 1100000;
+
+              //  alert('bigger than 1000000 bytes: ' + checkSize);
+                $rootScope.BigImage = checkSize;
+
                 var file = (e.srcElement || e.target).files[0];
+
+               //  alert('file type: ' + this.files[0].type)
+
+                //application/vnd.openxmlformats-officedocument.presentationml.presentation
+                //image/jpeg
+                var allowed = ["jpeg", "png", "gif", "jpg"];
+                var found = false;
+                var fileType = this.files[0].type;
+                allowed.forEach(function (extension) {
+
+                        if (fileType === ("image/" + extension)) {
+                        found = true;
+                    }
+                });
+               // if (!found) {
+                //    return;
+                //}
+                $rootScope.NotImage = !found;
+
                 getFile(file);
+
             });
         }
     };

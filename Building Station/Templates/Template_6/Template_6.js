@@ -54,7 +54,9 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
                 $scope.PaymentMethod = "Cash";
             else if ($scope.Store.BankTransfer)
                 $scope.PaymentMethod = "BankTransfer";
-            else $scope.PaymentMethod = "PayPal";
+            else if ($scope.Store.PayPal)
+                $scope.PaymentMethod = "PayPal";
+            else "";
 
             //Social Media Link
           //  $scope.Facebook = $scope.Store.FacebookLink.toLowerCase().includes("https://www.facebook.com/");
