@@ -20,8 +20,6 @@ public class PaymentMethods : System.Web.Services.WebService
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
 
-    JavaScriptSerializer js = new JavaScriptSerializer();
-
     private Payments payments;
 
 
@@ -31,7 +29,7 @@ public class PaymentMethods : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void AcceptPaymentMethods(Boolean paypal, Boolean bankTransfer, Boolean cash )
+    public Payments AcceptPaymentMethods(Boolean paypal, Boolean bankTransfer, Boolean cash )
     {
 
         using (SqlConnection con = new SqlConnection(cs))
@@ -45,13 +43,13 @@ public class PaymentMethods : System.Web.Services.WebService
             payments.BankTransfer = bankTransfer;
             payments.Cash = cash;
 
-            Context.Response.Write(js.Serialize(payments));
+            return payments;
             
         }
     }
 
     [WebMethod(EnableSession = true)]
-    public void GetPaymentMethods()
+    public Payments GetPaymentMethods()
     {
         if (Session["user"] != null)
         {
@@ -68,13 +66,11 @@ public class PaymentMethods : System.Web.Services.WebService
 
                 }
                 con.Close();
-
-                Context.Response.Write(js.Serialize(payments));
-
+                return payments;
             }
         }
+        return null;
     }
-
 
     [WebMethod(EnableSession = true)]
     public void UpdateBankInfo(String IBAN)
@@ -83,20 +79,17 @@ public class PaymentMethods : System.Web.Services.WebService
         {
             con.Open();
             SqlCommand cmd = new SqlCommand("UPDATE Store SET ShopOwnerBank = '" + IBAN + "' Where Email = '" + Session["user"] + "'", con);
-
             cmd.ExecuteNonQuery();
             con.Close();
-
-            Context.Response.Write(js.Serialize(IBAN));
         }
     }
 
     [WebMethod(EnableSession = true)]
-    public void GetBankInfo()
+    public string GetBankInfo()
     {
         if (Session["user"] != null)
         {
-            var IBAN = "";
+            string IBAN = "";
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
@@ -105,21 +98,18 @@ public class PaymentMethods : System.Web.Services.WebService
                 {
                     reader.Read();
                     IBAN = Convert.ToString(reader["ShopOwnerBank"]);
-
                 }
                 con.Close();
-
-                Context.Response.Write(js.Serialize(IBAN));
-
+                return IBAN;
             }
         }
+        return "";
     }
 
     [WebMethod(EnableSession = true)]
-    public void GetPayPalInfo()
+    public Payments GetPayPalInfo()
     {
         // var PayPalButton = "";
-
          using (SqlConnection con = new SqlConnection(cs))
          {
             con.Open();
@@ -170,7 +160,7 @@ public class PaymentMethods : System.Web.Services.WebService
                 conn.Close();
             }
         }*/
-        Context.Response.Write(js.Serialize(payments));
+        return payments;
     }
 
     [WebMethod(EnableSession = true)]

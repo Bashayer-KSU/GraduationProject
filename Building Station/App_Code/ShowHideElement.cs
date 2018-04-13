@@ -16,21 +16,14 @@ using System.Web.Services;
 // [System.Web.Script.Services.ScriptService]
 public class ShowHideElement : System.Web.Services.WebService
 {
-    JavaScriptSerializer js = new JavaScriptSerializer();
-
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
 
     List<Element> ElementsList = new List<Element>();
     public Element e = new Element();
 
-    public ShowHideElement()
-    {
-       
-    }
-
     [WebMethod(EnableSession = true)]
-    public void GetElementsInfo()
+    public List<Element> GetElementsInfo()
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -57,13 +50,12 @@ public class ShowHideElement : System.Web.Services.WebService
                 ElementsList.Add(e);
             }
         }
-
-        Context.Response.Write(js.Serialize(ElementsList));
+        return ElementsList;
 
     }
 
     [WebMethod(EnableSession = true)]
-    public void VisibleElement()
+    public List<Element> VisibleElement()
     {
         List<Element> ElementsList = new List<Element>();
 
@@ -80,11 +72,11 @@ public class ShowHideElement : System.Web.Services.WebService
                 ElementsList.Add(e);
             }
         }
-        Context.Response.Write(js.Serialize(ElementsList));
+        return ElementsList;
     }
 
     [WebMethod(EnableSession = true)]
-    public void ValidLink(string name)
+    public Boolean ValidLink(string name)
     {
         string link = "";
         if (name.ToLower() == "snapchat")
@@ -106,18 +98,17 @@ public class ShowHideElement : System.Web.Services.WebService
 
                 if (dr.HasRows == true)
                 {
-                    Context.Response.Write(js.Serialize(true));
+                    return true;
                 }
-                else
-                Context.Response.Write(js.Serialize(false));
             }
+            return false;
         }
         else
-        Context.Response.Write(js.Serialize(false));
+        return false;
     }
 
     [WebMethod(EnableSession = true)]
-    public void ShowHideSection(string section, string action)
+    public Boolean ShowHideSection(string section, string action)
     {
         string sectionName = "";
         if (section.ToLower() == "slider")
@@ -128,7 +119,6 @@ public class ShowHideElement : System.Web.Services.WebService
         {
             sectionName = "About";
         }
-        
 
         if (sectionName != "" && action == "Show")
         {
@@ -138,9 +128,9 @@ public class ShowHideElement : System.Web.Services.WebService
                 con.Open();
                 int x = cmd.ExecuteNonQuery();
                 if (x != 0)
-                    Context.Response.Write(js.Serialize(true));
-                else Context.Response.Write(js.Serialize(false));
+                    return true;
             }
+            return false;
         }
         else if(sectionName != "" && action == "Hide")
         {
@@ -150,16 +140,14 @@ public class ShowHideElement : System.Web.Services.WebService
                 con.Open();
                 int x = cmd.ExecuteNonQuery();
                 if (x != 0)
-                    Context.Response.Write(js.Serialize(true));
-                else Context.Response.Write(js.Serialize(false));
+                    return true;
             }
-        }
-        else
-            Context.Response.Write(js.Serialize(false));
+            return false;
+        }return false;
     }
 
     [WebMethod(EnableSession = true)]
-    public void ShowHideIcon(string icon, string action)
+    public Boolean ShowHideIcon(string icon, string action)
     {
         if (action == "Show")
         {
@@ -187,11 +175,11 @@ public class ShowHideElement : System.Web.Services.WebService
                     con.Open();
                     int x = cmd.ExecuteNonQuery();
                     if (x != 0)
-                        Context.Response.Write(js.Serialize(true));
-                    else Context.Response.Write(js.Serialize(false));
+                        return true;
                 }
+                return false;
             }
         }
-        else Context.Response.Write(js.Serialize(false));
+        return false;
     }
 }
