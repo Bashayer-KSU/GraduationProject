@@ -1,0 +1,182 @@
+﻿<head>
+    <title>BS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/Controllers/BuildingStationCTRL.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+
+    <!-- Chart -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script type="text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <base href="/" />
+    <style>
+        table, td, th {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 15px;
+        }
+
+        input {
+            width: 100px;
+        }
+
+
+        .md-dialog-content {
+            background-color: #c6ba57 !important;
+            border-color: #C8D9BE;
+            text-align: center;
+            color: #F6F8EA;
+            font-family: 'NeoSansArabic'
+        }
+
+
+        /*فيه md-button غير اللي في الدايلوق؟*/
+        .md-button {
+            border-radius: 2px;
+            background-color: #c6ba57;
+            text-align: center;
+        }
+
+        .md-cancel-button, .md-confirm-button {
+            color: #F6F8EA;
+            font-family: 'NeoSansArabic';
+        }
+    </style>
+    <link rel="stylesheet" href="light.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="js/jquery-1.4.min.js"></script>
+    <script type="text/javascript" src="js/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="js/jquery.lavalamp.min.js"></script>
+    <script type="text/javascript" src="js/myriad.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#one,#two,#three,#four,#five,#six,#seven,#eight").lavaLamp({
+                fx: "backout",
+                speed: 700
+            });
+        });
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.9/angular-sanitize.min.js"></script>
+</head>
+<body ng-app="BuildingStationAPP">
+
+    <!--All-->
+    <div>
+        <!--1-->
+        <header class="en">
+            <div class="head">
+
+                <div class="language" style="float:right;">
+                    <ul class="tab-group" style="margin-right:20px; margin-top:10px;">
+                        <li>|</li>
+                        <li><a href="">English</a></li>
+                        <li>  |  </li>
+                        <li><a ng-click="Arabic()" href="" style="font-family:NeoSansArabic;">عربي</a></li>
+                        <li>  <img ng-src="/images/language.png" alt="" style="width:35px; height:35px;" /></li>
+
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+
+        <!--Ar+En-->
+        <div class="form">
+            <div class="tab-content">
+
+                <!--En-->
+                <div>
+                    <header class="en">
+                        <div class="head">
+                            <div class="my_account" style="float:right; margin-top:7px; margin-right:-30px; margin-top:15px;"><a href="#">My account</a></div>
+                        </div>
+                        <div class="my_account" style="float:right; margin-top:7px; margin-right:5px; margin-top:15px;"><span>|</span></div>
+                        <div class="head">
+                            <div class="my_account" style="float:right; margin-top:7px; margin-right:5px; margin-top:15px;">
+                                <a ng-click="Logout()" href="#">
+                                    Logout  <i class="fa fa-sign-out" style="font-size:15px"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!--2-->
+                        <div class="logo" style="position:center;"><img ng-src="/images/bulding-logoo.png" style="height:180px; width:180px; margin-top:20px; margin-left:550px;" /></div>
+                    </header>
+                    <!--3-->
+                    <header>
+
+                        <div class="lightmenu">
+                            <ul class="lightBlue" id="one">
+                                <li class="current"><a href="/BS-MenuTabs/DevelopmentEnvironment">Development Environment</a></li>
+                                <li><a href="/Template">Template</a></li>
+                                <li><a href="/Product">Products</a></li>
+                                <li><a href="/ManageStore">Manage Store</a></li>
+
+                                <li>
+                                    <a href="#" ng-click="DesktopView()">
+                                        Preview Website
+                                    </a>
+                                    <!--<ul class="dropdown-menu">
+                                        <li style="background:none;"><a href="#">Desktop view &nbsp; <img ng-src="/images/imac.png" alt="" style="width:37px; height:37px;" /></a></li>
+                                        <li class="divider"></li>
+                                        <li style="background:none;"><a href="#">Mobile view &nbsp; <img ng-src="/images/iphone.png" alt="" style="width:37px; height:37px;" /></a></li>
+                                    </ul>-->
+                                </li>
+
+                            </ul>
+                            <ul>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                                        <img ng-src="/images/settings.png" alt="" style="width:37px; height:37px; margin-top:12px; margin-left:15px;" /><b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li style="background:none;"><a ng-click="Publish($event)" href="#">Publish website</a></li>
+                                        <li class="divider"></li>
+                                        <li style="background:none;"><a ng-click="UnPublish($event)" href="#">Unpublish website</a></li>
+                                        <li class="divider"></li>
+                                        <li style="background:none;"><a ng-click="DeleteStore($event)" href="#">Delete website</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </header>
+
+                    <!--Content-->
+                    <div class="row justify-content-center" style="width:100%;">
+                        <ui-view></ui-view>
+                    </div>
+                    <!--/Content-->
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="/Scripts/angular-animate.min.js"></script>
+    <script src="/Scripts/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+    <!-- Angular Material Library -->
+    <script src="/Scripts/angular-material.min.js"></script>
+</body>

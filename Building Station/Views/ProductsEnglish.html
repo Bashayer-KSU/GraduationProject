@@ -1,0 +1,282 @@
+﻿<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+    <style>
+        @font-face {
+            font-family: "NeoSansArabic";
+            src: url('NeoSansArabic.ttf'); /* IE9 */
+        }
+
+        body {
+            font-family: 'NeoSansArabic';
+            background-image: url(images/background.png);
+            background-attachment: fixed;
+            height: auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        /*@media only screen and (max-width:620px) {
+            #table
+
+        {
+            overflow-x: scroll;
+        }
+
+        }*/
+
+        table {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            color: #454545;
+            background: #F6F8EA;
+            border-radius: 0px 0px 30px 30px;
+            border: hidden;
+        }
+
+        tr.hover:hover {
+            background-color: #dcdda2;
+            border: hidden;
+            border-radius: 0px 0px 30px 30px;
+        }
+
+        .btn {
+            border-radius: 2px;
+        }
+
+        .done {
+            background-color: #c6ba57;
+        }
+
+            .done:hover {
+                background-color: #d3ca7d;
+            }
+
+            .done:focus {
+                background-color: #d3ca7d;
+            }
+
+        .btn, .btn-large, .btn-floating {
+            box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)
+        }
+
+            .btn:hover, .btn-large:hover, .btn-floating:hover {
+                box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15)
+            }
+
+        .btn, .btn-large, .btn-flat {
+            border: none;
+            border-radius: 2px;
+            display: inline-block;
+            height: 36px;
+            line-height: 36px;
+            outline: 0;
+            padding: 0 2rem;
+            text-transform: uppercase;
+            vertical-align: middle;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        .btn, .btn-large {
+            text-decoration: none;
+            color: #fff;
+            text-align: center;
+            letter-spacing: .5px;
+            -webkit-transition: .2s ease-out;
+            -moz-transition: .2s ease-out;
+            -o-transition: .2s ease-out;
+            transition: .2s ease-out;
+            cursor: pointer
+        }
+
+        th, td {
+            text-align: center;
+        }
+
+        input.ar, textarea.ar {
+            text-align: right;
+        }
+
+        .ar {
+            border: none;
+            border-radius: 20px;
+            padding: 5px 8px;
+            color: #333;
+            box-shadow: inset 0 2px 0 rgba(0,0,0,.2), 0 0 4px rgba(0,0,0,0.1);
+        }
+
+            .ar:focus {
+                outline: none;
+                box-shadow: inset 0 2px 0 rgba(0,0,0,.2), 0 0 4px rgba(0,0,0,0.1), 0 0 2px .5px #969595;
+            }
+
+        .styled-select {
+            height: 35px;
+            overflow: hidden;
+            width: 140px;
+        }
+
+            .styled-select select {
+                background: transparent;
+                border: none;
+                font-size: 14px;
+                height: 29px;
+                padding: 5px; /* If you add too much padding here, the options won't show in IE */
+                width: 268px;
+            }
+
+        .rounded {
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+        }
+
+        .black {
+            background-color: #fff;
+        }
+
+            .black select {
+                color: #fff;
+            }
+
+        .arb {
+            text-align: right;
+        }
+        .requiredStar{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" style="margin-top:30px;">
+        <div>
+
+            <!--add new category-->
+            <div>
+                <h style="font-size:20px;">To add a new category:</h>
+                <input class="ar" type="text" placeholder="Enter category name" ng-model="newCategury" style="text-align:left;">
+
+                <button ng-show="newCategury.length" ng-click="addNewCategory(newCategury)" style="background-color:transparent; border: none;"><img src="/images/plus.png" alt="" style="width:25px; height:25px;" /></button>
+
+            </div>
+
+            <!--add new category-->
+            <!--to display categories-->
+            <div ng-init="getCat()" style="display:inline-block; margin-top:15px;">
+                <h ng-hide="editCategory" style="font-size:20px;">Category:</h>
+                <select ng-hide="editCategory" class=" styled-select black rounded"
+                        ng-model="selectedCategory"
+                        ng-init="selectedCategory = categories[0].Name"
+                        ng-options="option.Name as option.Name for option in categories"
+                        ng-change="selectedCategoryChanged()"></select>
+                <button ng-hide="editCategory || NoCategory" ng-click="DeleteCategory($event)" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button>
+
+                <h ng-show="editCategory" style="font-size:20px;">Edit category:</h>
+                <select ng-show="editCategory" class=" styled-select black rounded"
+                        ng-model="selectedCategory"
+                        ng-init="selectedCategory = categories[0].Name"
+                        ng-options="option.Name as option.Name for option in categories"></select>
+
+            </div>
+        </div>
+        <!--\add new category-->
+        <!--list products-->
+        <div class="table-responsive centered" id="table" style="margin-top:15px;">
+            <p>To change the order of categories click here <button ng-disabled="NoCategory" style="background-color:transparent; border: none;" ng-click="displayCategoryTable = !displayCategoryTable"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;" /></button></p>
+            <table ng-show="displayCategoryTable" class="table">
+                <thead style="border-collapse:collapse; table-layout:fixed;">
+                    <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
+                        <th>Category</th>
+                        <th>Order</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="category in categories" class="hover">
+                        <td>{{category.Name}}</td>
+                        <td><input type="number" ng-model="category.OrderInMenu" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button class="addfields waves-effect waves-light btn done" ng-click="ChangeOrder(categories)">Submit</button> {{resultoforder}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <form name="newProduct">
+                <table class="table" ng-hide="NoCategory">
+                    <thead style="border-collapse:collapse; table-layout:fixed;">
+                        <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Amount</th>
+                            <th>Discount</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="product in products" class="hover">
+                            <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
+                            <td ng-hide="true">{{product.ID}}</td>
+
+                            <td class="arb" ng-show="product.edit">
+                                <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
+                                <img style="width:100px; height:100px;" ng-src="{{product.Image}}" />
+                            </td>
+                            <td ng-show="!product.edit"><img ng-src="{{product.Image}}" alt="image" width="80" height="80" /></td>
+
+                            <td class="arb" ng-show="product.edit"><input type="text" ng-model="product.Name" name="" placeholder="Enter product name" required></td>
+                            <td class="arb" ng-show="!product.edit"><label>{{product.Name}}</label></td>
+
+                            <td class="arb" ng-show="product.edit"><textarea ng-model="product.Description" required>Enter product description</textarea></td>
+                            <td class="arb" ng-show="!product.edit"><label>{{product.Description}}</label></td>
+
+                            <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Price" name="" placeholder="Enter product price" required></td>
+                            <td class="arb" ng-show="!product.edit">
+                                <label ng-show="product.Discount == 0">{{product.Price}}</label>
+                                <label><del style="color:#ff0000" ng-show="product.Discount != 0"> {{product.Price}} </del></label><br />
+                                <label ng-show="product.Discount != 0">{{product.PriceAfterDiscount}}</label>
+                            </td>
+                            <td class="arb" ng-show="!product.edit"><label>{{product.Amount}}</label></td>
+                            <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Amount" name="" placeholder="Enter product amount" required></td>
+                            <td class="arb" ng-show="!product.edit"><label>{{product.Discount}}%</label></td>
+                            <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Discount" name="" placeholder="Enter product discount" required></td>
+                            <td>
+                                <button ng-show="!product.edit" ng-click="x(); product.edit = !product.edit" style="background-color:transparent; border: none;"><img src="/images/pencil.png" alt="" style="width:25px; height:25px;" /></button>
+                                <button ng-show="product.edit" ng-click="editProduct($index,product,product.ID,product.Image,product.Name,product.Description,product.Price,product.PriceAfterDiscount,product.Amount,product.Discount)" style="background-color:transparent; border: none;"><img src="/images/success.png" alt="" style="width:25px; height:25px;" /></button>
+                            </td>
+                            <td><button class="remove" ng-click="removeproduct(product, product.ID, product.Name, $event, 'arabic')" style="background-color:transparent; border: none;"><img src="/images/delete.png" alt="" style="width:25px; height:25px;" /></button></td>
+                        </tr>
+
+                        <tr>
+                            <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
+                            <td class="requiredStar">
+                                <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image" required> *
+                                <img ng-show="product.Image" style="width:80px; height:80px;" ng-src="{{product.Image}}" />
+                            </td>
+                            <td class="requiredStar"><input class="ar" type="text" ng-model="product.Name" name="" placeholder="Name" required> *</td>
+                            <td class="requiredStar"><textarea class="ar" type="text" ng-model="product.Description" name="" placeholder="Description" required></textarea> *</td>
+                            <td class="requiredStar"><input class="ar" type="number" ng-model="product.Price" name="" placeholder="Price" required> *</td>
+                            <td class="requiredStar"><input class="ar" type="number" ng-model="product.Amount" name="" placeholder="Amount" required> *</td>
+                            <td class="requiredStar"><input class="ar" type="number" ng-model="product.Discount" name="" placeholder="Discount" required> *</td>
+                            <td colspan="2">
+                                <!-- ng-click="addNewProduct(product,product.Category_ID,product.Image,product.Name,product.Description,product.Price,product.PriceAfterDiscount,product.Amount,product.Discount)"-->
+                                <button ng-disabled="newProduct.$invalid" ng-click="addNewProduct2(product)" style="background-color:transparent; border: none;float:left;"><img src="/images/plus.png" alt="" style="width:37px; height:37px;" /></button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <!--\list products-->
+
+    </div>
+
+
+</body>

@@ -147,10 +147,13 @@ public class RegisterLogin : System.Web.Services.WebService
                     if (lang.Equals("eng"))
                     {
                         value = "/Views/BasicE.html";
+                       // value = "EDITandINFO-English/DevelopmentEnvironmentEnglish";
+
                     }
                     else
                     {
-                        value = "/Basic.html";
+                        value = "/Views/Basic.html";
+                        //value = "EDITandINFO/DevelopmentEnvironment";
                     }
                 }
             }

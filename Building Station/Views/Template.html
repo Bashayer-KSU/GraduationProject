@@ -1,0 +1,71 @@
+﻿<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+        </div>
+
+        <!--  <div class="row">
+            <div class="col-md-6" ng-repeat-start="n in [] | range:5">
+                <div class="card text-center">
+                    <img class="card-img-top" ng-src="{{getImageUrl($index)}}" alt="Card image cap" />
+                    <div class="card-body">
+                        <a href="#" class="btn" ng-style={'background-color':'#C6BA57','color':'White'}>Choose Template</a>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix" ng-if="($index+1)%2==0"></div>
+            <br ng-repeat-end/>
+        </div>-->
+        <div class="row">
+            <div class="col-md-4" style="margin-bottom:15px; margin-top:15px;">
+                <div class="card text-center" style="display: table-cell; width:250px; height:430px; vertical-align: middle; text-align:center;">
+                    <img class="card-img-top" style="width:95%; height:95%;" src="../images/T1.jpg" alt="Card image cap" />
+                    <div class="card-body">
+                        <a href="#" ng-click="Template(1)" class="btn" ng-style={'background-color':'#C6BA57','color':'White'}>تغيير القالب</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-bottom:15px; margin-top:15px;">
+                <div class="card text-center" style="display: table-cell; width:250px; height:430px; vertical-align: middle; text-align:center;">
+                    <img class="card-img-top" style="width:95%; height:95%;" src="../images/T2.jpg" alt="Card image cap" />
+                    <div class="card-body">
+                        <a href="#" ng-click="Template(2)" class="btn" ng-style={'background-color':'#C6BA57','color':'White'}>تغيير القالب</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-bottom:15px; margin-top:15px;">
+                <div class="card text-center" style="display: table-cell; width:250px; height:430px; vertical-align: middle; text-align:center;">
+                    <img class="card-img-top" style="width:95%; height:95%;" src="../images/T4.jpg" alt="Card image cap" />
+                    <div class="card-body">
+                        <a href="#" ng-click="Template(4)" class="btn" ng-style={'background-color':'#C6BA57','color':'White'}>تغيير القالب</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-bottom:15px; margin-top:15px;">
+                <div class="card text-center" style="display: table-cell; width:250px; height:430px; vertical-align: middle; text-align:center;">
+                    <img class="card-img-top" style="width:95%; height:95%;" src="../images/T5.jpg" alt="Card image cap" />
+                    <div class="card-body">
+                        <a href="#" ng-click="Template(5)" class="btn" ng-style={'background-color':'#C6BA57','color':'White'}>تغيير القالب</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-bottom:15px; margin-top:15px;">
+                <div class="card text-center" style="display: table-cell; width:250px; height:430px; vertical-align: middle; text-align:center;">
+                    <img class="card-img-top" style="width:95%; height:95%;" src="../images/T6.png" alt="Card image cap" />
+                    <div class="card-body">
+                        <a href="#" ng-click="Template(6)" class="btn" ng-style={'background-color':'#C6BA57','color':'White'}>تغيير القالب</a>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+
+</body>

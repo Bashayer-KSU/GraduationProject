@@ -1,0 +1,324 @@
+﻿<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+    @font-face {
+        font-family: "NeoSansArabic";
+        src: url('NeoSansArabic.ttf'); /* IE9 */
+    }
+
+    body {
+        font-family: 'NeoSansArabic';
+        background-image: url(images/background.png);
+        background-attachment: fixed;
+        height: auto;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .leftTab {
+        background-color: #D4D8BA;
+        -moz-box-shadow: inset 0 0 10px white;
+        -webkit-box-shadow: inset 0 0 10px white;
+        box-shadow: inset 0 0 10px white;
+        padding: 2%;
+    }
+
+    h4 {
+        text-align: center;
+        text-shadow: 1px 1px 2px gray;
+        color: #2c2c2c;
+    }
+
+
+    .btn {
+        border-radius: 2px;
+    }
+
+    .done {
+        background-color: #c6ba57;
+    }
+
+        .done:hover {
+            background-color: #d3ca7d;
+        }
+
+        .done:focus {
+            background-color: #d3ca7d;
+        }
+
+    .btn, .btn-large, .btn-floating {
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)
+    }
+
+        .btn:hover, .btn-large:hover, .btn-floating:hover {
+            box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15)
+        }
+
+    .btn, .btn-large, .btn-flat {
+        border: none;
+        border-radius: 2px;
+        display: inline-block;
+        height: 36px;
+        line-height: 36px;
+        outline: 0;
+        padding: 0 2rem;
+        text-transform: uppercase;
+        vertical-align: middle;
+        -webkit-tap-highlight-color: transparent
+    }
+
+    .btn, .btn-large {
+        text-decoration: none;
+        color: #fff;
+        text-align: center;
+        letter-spacing: .5px;
+        -webkit-transition: .2s ease-out;
+        -moz-transition: .2s ease-out;
+        -o-transition: .2s ease-out;
+        transition: .2s ease-out;
+        cursor: pointer
+    }
+
+    input.ar, textarea.ar {
+        text-align: right;
+    }
+
+    .ar {
+        border: none;
+        border-radius: 20px;
+        padding: 5px 8px;
+        color: #333;
+        box-shadow: inset 0 2px 0 rgba(0,0,0,.2), 0 0 4px rgba(0,0,0,0.1);
+    }
+
+        .ar:focus {
+            outline: none;
+            box-shadow: inset 0 2px 0 rgba(0,0,0,.2), 0 0 4px rgba(0,0,0,0.1), 0 0 2px .5px #969595;
+        }
+
+    .inside:hover {
+        display: block;
+        background-color: #f5f6ef;
+        border-color: black;
+        border: 1px solid #C8D9BE;
+        border-radius: 10px;
+        padding: 3%;
+    }
+
+    md-switch.md-default-theme.md-checked.md-primary .md-bar, md-switch.md-checked.md-primary .md-bar {
+        background-color: #c6ba57 !important;
+    }
+
+    md-switch.md-default-theme.md-checked.md-primary .md-thumb, md-switch.md-checked.md-primary .md-thumb {
+        background-color: #808080 !important;
+    }
+
+    md-switch.md-default-theme.md-checked.md-primary .md-ink-ripple, md-switch.md-checked.md-primary .md-ink-ripple {
+        background-color: #808080 !important;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 col-md-4 leftTab">
+            
+            <div class="row">
+                <div class="input-group">
+                    <input type="color" class="rounded" ng-model="color4" ng-change="UpdateColors()" style="
+    margin-left:5vw;
+    margin-right:1vw;
+    padding: 0;
+    border-radius: 10px;
+    border: none;
+    -webkit-border-radius: 50%;
+    width: 4vw;
+    height: 4vw;
+    background-color:transparent;">
+                    <input type="color" class="rounded" ng-model="color3" ng-change="UpdateColors()" style="
+    margin-right:1vw;
+    padding: 0;
+    border-radius: 10px;
+    border: none;
+    -webkit-border-radius: 50%;
+    width: 4vw;
+    height: 4vw;
+    background-color:transparent;">
+                    <input type="color" class="rounded" ng-model="color2" ng-change="UpdateColors()" style="
+      margin-right:1vw;
+      padding: 0;
+      border-radius: 10px;
+      border: none;
+      -webkit-border-radius: 50%;
+      width: 4vw;
+      height: 4vw;
+      background-color:transparent;">
+                    <input type="color" class="rounded" ng-model="color1" ng-change="UpdateColors()" style="
+  
+  margin-right:1vw;
+  padding: 0;
+  border-radius: 10px;
+  border: none;
+  -webkit-border-radius: 50%;
+  width: 4vw;
+  height: 4vw;
+  background-color:transparent;">
+                    <!--<span class="input-group-btn">
+                           <button class="btn btn-default" ng-click="UpdateColors()" type="submit">Update</button>
+                       </span>
+                    <div ng-if="refreshMyColors"
+                            ng-init="refreshColors()"></div>-->
+                </div>
+            </div> <br />
+                   <div class="row inside">
+                       <h4>Change logo</h4>
+                       <div class="input-group">
+                           <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc" accept=".jpg,.png,.gif,.jpeg" style="width:100%;" required /> <!-- custom-on-change="uploadFile($event)"-->
+                           <span class="input-group-btn">
+                               <button ng-disabled="!imageSrc || BigImage || NotImage" class="waves-effect waves-light btn done" ng-click="ChangeLogo($event)" type="submit">Update</button>
+                           </span>
+                       </div>
+                       <span ng-show="imageSrc && BigImage" style="font-size:smaller;" class="alert-danger">image size must be 1MB or lise</span>
+                       <span ng-show="imageSrc && NotImage" style="font-size:smaller;" class="alert-danger">file type should be .jpeg, .png, .jpg, .gif</span>
+                   </div>
+            <br />
+            <div class="row inside">
+                <h4>Change main image</h4>
+                <div class="input-group">
+                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_slider" style="width:100%;" />
+                    <span class="input-group-btn">
+                        <button ng-disabled="!imageSrc_slider || BigImage || NotImage" class="waves-effect waves-light btn done" ng-click="UpdateSlider()" type="submit">Update</button>
+                    </span>
+                </div>
+                <span ng-show="imageSrc_slider && BigImage" style="font-size:smaller;" class="alert-danger">image size must be 1MB or lise</span>
+                <span ng-show="imageSrc_slider && NotImage" style="font-size:smaller;" class="alert-danger">file type should be .jpeg, .png, .jpg, .gif</span>
+                <div ng-show="loadingCover" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
+                    <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
+                </div>
+            </div>
+            <br />
+            <div class="row inside">
+                <h4>Change footer image</h4>
+                <div class="input-group">
+                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc_about" style="width:100%;" />
+                    <span class="input-group-btn">
+                        <button ng-disabled="!imageSrc_about || BigImage" class="waves-effect waves-light btn done" ng-click="UpdateAboutImage()" type="submit">Update</button>
+                    </span>
+                </div>
+                <span ng-show="imageSrc_about && BigImage" style="font-size:smaller;" class="alert-danger">image size must be 1MB or lise</span>
+                <span ng-show="imageSrc_about && NotImage" style="font-size:smaller;" class="alert-danger">file type should be .jpeg, .png, .jpg, .gif</span>
+                <div ng-show="loadingAboutImage" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
+                    <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
+                </div>
+            </div>
+            <br />
+            <div class="row inside">
+                <select style="margin-bottom:1%;" id="" class="form-control ar" ng-model="selectedTextType" ng-change="updateText()" data-live-search="true" ng-options="x.name for x in TextType">
+                    <!--  <option value="" selected>Update Text</option>--disabled-->
+
+                </select>
+                <div class="input-group">
+                    <!--ng-show="selectedTextType.name!='Store Description'" -->
+                    <input type="text" class="form-control" ng-model="ShopOwnerText" placeholder="Enter new text ...">
+                    <span class="input-group-btn">
+                        <button ng-disabled="!ShopOwnerText" class="waves-effect waves-light btn done" ng-click="UpdateStoreInfo()" type="submit">Update</button>
+                    </span>
+
+                </div>
+            </div>
+            <br />
+            <div class="row inside">
+                <div class="input-group input-group-sm" style="margin-bottom:1%;">
+                    <span class="input-group-addon ">
+                        <!--   <input ng-model="checkInstagram" type="checkbox" aria-label=""> ng-disabled="!checkInstagram"-->
+                        <img src="../images/instagram.png" style="width:1.5vw;" />
+                    </span>
+                    <input type="text" ng-model="myInstagramLink" class="form-control" placeholder="Paste your instagram account link here" aria-label="...">
+
+                </div><!-- /input-group -->
+
+                <div class="input-group input-group-sm" style="margin-bottom:1%;">
+                    <span class="input-group-addon">
+                        <!--<input type="checkbox" aria-label="...">-->
+                        <img src="../images/twitter (2).png" style="width:1.5vw;" />
+
+                    </span>
+                    <input type="text" ng-model="myTwitterLink" class="form-control" placeholder="Paste your twitter account link here" aria-label="...">
+
+                </div><!-- /input-group -->
+
+                <div class="input-group input-group-sm" style="margin-bottom:1%;">
+                    <span class="input-group-addon">
+                        <!--   <input type="checkbox" aria-label="..."> ng-disabled="!checkSnapchat" -->
+                        <img src="../images/snapchat (2).png" style="width:1.5vw;" />
+                    </span>
+                    <input type="text" ng-model="mySnapchatLink" class="form-control" placeholder="Paste your snapchat account link here" aria-label="...">
+                </div><!-- /input-group -->
+
+                <div class="input-group input-group-sm" style="margin-bottom:1%;">
+                    <span class="input-group-addon">
+                        <!--<input type="checkbox" aria-label="..."> ng-disabled="!checkFacebook" -->
+                        <img src="../images/facebook (3).png" style="width:1.5vw;" />
+                    </span>
+                    <input type="text" ng-model="myFacebookLink" class="form-control" placeholder="Paste your facebook account link here" aria-label="...">
+
+                </div><!-- /input-group -->
+                <span style="font-size:x-small; color:firebrick;">Note: Links must be valid</span>
+                <button class="waves-effect waves-light btn done" style="float:right;" ng-click="UpdateLinks()" type="submit">Update</button>
+
+            </div>
+
+            <div ng-show="loadingLinks" style="float:right" layout="row" layout-sm="column" layout-align="space-around">
+                <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
+            </div>
+            <br />
+            <div class="row" style="text-align:center; align-content:center;">
+                <div class="col-sm-6">
+                    <md-switch ng-model="section.slider" class="md-primary" ng-change="ShowHideSection('Slider')" aria-label="SliderSection">
+                        Home
+                    </md-switch>
+                </div>
+                <div class="col-sm-6">
+                    <md-switch ng-model="section.about" class="md-primary" ng-change="ShowHideSection('About')" aria-label="AboutSection">
+                        About
+                    </md-switch>
+                </div>
+            </div>
+            <div class="row" style="text-align:center;">
+
+                <div class="col-sm-6">
+                    <md-switch ng-model="icon.instagram" ng-disabled="disableInstagram" ng-change="ShowHideIcon('Instagram')" class="md-primary" aria-label="Instagram">
+                        Instagram
+                    </md-switch>
+                </div>
+                <div class="col-sm-6">
+                    <md-switch ng-model="icon.twitter" ng-disabled="disableTwitter" ng-change="ShowHideIcon('Twitter')" class="md-primary" aria-label="Twitter">
+                        Twitter
+                    </md-switch>
+                </div>
+            </div>
+            <div class="row" style="text-align:center;">
+                <div class="col-sm-6">
+                    <md-switch ng-model="icon.snapchat" ng-disabled="disableSnapchat" ng-change="ShowHideIcon('Snapchat')" class="md-primary" aria-label="Snapchat">
+                        Snapchat
+                    </md-switch>
+                </div>
+                <div class="col-sm-6">
+                    <md-switch ng-model="icon.facebook" ng-disabled="disableFacebook" class="md-primary" ng-change="ShowHideIcon('Facebook')" aria-label="Facebook">
+                        Facebook
+                    </md-switch>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-8 col-md-8">
+            <div class="embed-responsive embed-responsive-4by3" style="margin-left:0vw; width: 56vw; height: 65vw;">
+                <iframe refreshable="tab.refresh" id="TemplateIframe" class="embed-responsive-item " ng-src="{{template}}" allowfullscreen></iframe>
+                <!--style="overflow: hidden; height: 200%; width: 100%;"-->
+            </div>
+        </div>
+    </div>
+</div>
