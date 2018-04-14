@@ -14,7 +14,6 @@ public class Order
         //
     }
 
-
     public int ID { get; set; }
     public double TotalPrice { get; set; }
     public string PaymentMethod { get; set; }

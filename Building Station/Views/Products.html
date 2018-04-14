@@ -241,13 +241,15 @@
                             <td class="arb" ng-show="product.edit">
                                 <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
                                 <img style="width:100px; height:100px;" ng-src="{{product.Image}}" />
+                                <span ng-show="product.Image && BigImage" style="float:right; font-size:smaller;" class="alert-danger">حجم الصورة يجب أن يكون واحد ميغا أو أقل</span>
+                                <span ng-show="product.Image && NotImage" style="float:right; font-size:smaller;" class="alert-danger">.jpeg أو .png أو .jpg أو .gif يجب أن يكون الملف من نوع</span>
                             </td>
                         </tr>
 
                         <tr>
                             <td colspan="2">
                                 <!-- ng-click="addNewProduct(product,product.Category_ID,product.Image,product.Name,product.Description,product.Price,product.PriceAfterDiscount,product.Amount,product.Discount)"-->
-                                <button ng-disabled="newProduct.$invalid" ng-click="addNewProduct2(product)" style="background-color:transparent; border: none;float:right;"><img src="/images/plus.png" alt="" style="width:37px; height:37px;" /></button>
+                                <button ng-disabled="newProduct.$invalid || BigImage || NotImage" ng-click="addNewProduct2(product)" style="background-color:transparent; border: none;float:right;"><img src="/images/plus.png" alt="" style="width:37px; height:37px;" /></button>
                             </td>
 
                             <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>

@@ -17,8 +17,10 @@ public class RegisterLogin : System.Web.Services.WebService
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
 
+    JavaScriptSerializer js = new JavaScriptSerializer();
+
     [WebMethod(EnableSession = true)]
-    public string Register(String name, String email, String password, String phone, String lang)
+    public void Register(String name, String email, String password, String phone, String lang)
     {
         string value = "";
         using (SqlConnection con = new SqlConnection(cs))
@@ -112,11 +114,13 @@ public class RegisterLogin : System.Web.Services.WebService
                 }
             }
         }
-        return value;
+        Context.Response.Write(js.Serialize(value));
+
+     //   return value;
     }
 
     [WebMethod(EnableSession = true)]
-    public string Login(String email, String password, String lang)
+    public void Login(String email, String password, String lang)
     {
         string value = "";
         using (SqlConnection con = new SqlConnection(cs))
@@ -146,14 +150,14 @@ public class RegisterLogin : System.Web.Services.WebService
                 {
                     if (lang.Equals("eng"))
                     {
-                        value = "/Views/BasicE.html";
-                       // value = "EDITandINFO-English/DevelopmentEnvironmentEnglish";
+                      //  value = "/Views/BasicE.html";
+                        value = "EDITandINFO-English";
 
                     }
                     else
                     {
-                        value = "/Views/Basic.html";
-                        //value = "EDITandINFO/DevelopmentEnvironment";
+                       // value = "/Views/Basic.html";
+                        value = "EDITandINFO";
                     }
                 }
             }
@@ -164,28 +168,36 @@ public class RegisterLogin : System.Web.Services.WebService
                 value = "/index.html";
             }
         }
-        return value;
+        Context.Response.Write(js.Serialize(value));
+
+        //return value;
     }
 
     [WebMethod(EnableSession = true)]
-    public string CheckUser()
+    public void CheckUser()
     {
         if (Session["user"] == null)
         {
-            return "false";
+            Context.Response.Write(js.Serialize("false"));
+
+     //       return "false";
         }
         else
         {
-            return "true";
+            Context.Response.Write(js.Serialize("true"));
+
+            //return "true";
         }
     }
 
 
     [WebMethod(EnableSession = true)]
-    public string SignOut()
+    public void SignOut()
     {
         // Session.Clear();
         Session.Abandon();
-        return "/index.html";
+        Context.Response.Write(js.Serialize("/BuildingStation"));
+
+      //  return "/index.html";
     }
 }

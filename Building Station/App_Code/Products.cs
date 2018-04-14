@@ -18,11 +18,13 @@ using System.Web.Services;
 public class Products : System.Web.Services.WebService
 {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-   // string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
-   
+    // string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+
+    JavaScriptSerializer js = new JavaScriptSerializer();
+
     [WebMethod(EnableSession = true)]
-    public List<Categories> GetAllCategories()
-    {
+    public void GetAllCategories()
+    { // List<Categories> 
         List<Categories> categories = new List<Categories>();
         //insert selected colors to database
         using (SqlConnection con = new SqlConnection(cs))
@@ -42,7 +44,10 @@ public class Products : System.Web.Services.WebService
             }
         }
         //\insert selected colors to database
-        return categories;
+
+        Context.Response.Write(js.Serialize(categories));
+
+        // return categories;
 
     }
 
@@ -85,8 +90,8 @@ public class Products : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public List<Categories> ChangeOrder(string categoriesOrders)
-    {
+    public void ChangeOrder(string categoriesOrders)
+    { //List<Categories>
         List<Categories> categories = new List<Categories>();
         string[] Orders = categoriesOrders.Split(',');
         SqlConnection con = new SqlConnection(cs);
@@ -112,12 +117,13 @@ public class Products : System.Web.Services.WebService
             int x = cmd2.ExecuteNonQuery();
             categories[i].OrderInMenu = Convert.ToInt32(Orders[i]);
         }
-        return categories;
+        Context.Response.Write(js.Serialize(categories));
+      //  return categories;
     }
 
     [WebMethod(EnableSession = true)]
-    public List<Product> GetAllProducts(string category)
-    {
+    public void GetAllProducts(string category)
+    { // List<Product>
         List<Product> ProductsList = new List<Product>();
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -155,11 +161,12 @@ public class Products : System.Web.Services.WebService
                 }
             }
         }
-        return ProductsList;
+        Context.Response.Write(js.Serialize(ProductsList));
+       // return ProductsList;
     }
 
     [WebMethod(EnableSession = true)]
-    public Boolean RemoveProduct(int product_ID)
+    public void RemoveProduct(int product_ID)
     {
         Boolean result = false;
         using (SqlConnection con = new SqlConnection(cs))
@@ -180,11 +187,13 @@ public class Products : System.Web.Services.WebService
                 }
             }
         }
-        return result;
+        Context.Response.Write(js.Serialize(result));
+
+       // return result;
     }
 
     [WebMethod(EnableSession = true)]
-    public Product EditProduct(int id, string cat, string image, string name, string des, double price, double PADs, int amount, int discount)
+    public void EditProduct(int id, string cat, string image, string name, string des, double price, double PADs, int amount, int discount)
     {
         int x;
         Product product = new Product();
@@ -222,11 +231,12 @@ public class Products : System.Web.Services.WebService
                 }
             }
         }
-        return product;
+        Context.Response.Write(js.Serialize(product));
+       // return product;
     }
 
     [WebMethod(EnableSession = true)]
-    public Product AddNewProduct(string category, string image, string name, string des, double price, int amount, int discount)
+    public void AddNewProduct(string category, string image, string name, string des, double price, int amount, int discount)
 
     {
         int catID = getCategoryID(category);
@@ -264,17 +274,17 @@ public class Products : System.Web.Services.WebService
                 else { product.PriceAfterDiscount = 0; }
             }
         }
-        return product;
+        Context.Response.Write(js.Serialize(product));
+    //    return product;
     }
 
     [WebMethod(EnableSession = true)]
-        public List<Statstic> BestProducts()
-        {
-            List<Product> StoreProductsList = GetAllStoreProducts();
+        public void BestProducts()
+    { // List<Statstic>
+        List<Product> StoreProductsList = GetAllStoreProducts();
             List<Statstic> statsticList = new List<Statstic>();
 
             Statstic statstic = new Statstic();
-            JavaScriptSerializer js = new JavaScriptSerializer();
 
             using (SqlConnection con = new SqlConnection(cs))
             {
@@ -300,15 +310,15 @@ public class Products : System.Web.Services.WebService
                         statsticList.Add(statstic);
                     }
                     con.Close();
-
                 }
             }
-            return statsticList;
+        Context.Response.Write(js.Serialize(statsticList));
+       // return statsticList;
         }
 
     [WebMethod(EnableSession = true)]
-    public List<Statstic> BestCategories ()
-    {
+    public void BestCategories ()
+    { //  List<Statstic>
         List<Statstic> statsticList = new List<Statstic>();
         Statstic statstic = new Statstic();
         using (SqlConnection con = new SqlConnection(cs))
@@ -325,15 +335,14 @@ public class Products : System.Web.Services.WebService
                 statsticList.Add(statstic);
             }
             con.Close();
-            return statsticList;
+            Context.Response.Write(js.Serialize(statsticList));
+            //     return statsticList;
         }
-
-
     }
 
     [WebMethod(EnableSession = true)]
-    public List<Statstic> BestProductsInCategory(string CategoryID)
-    {
+    public void BestProductsInCategory(string CategoryID)
+    { // List<Statstic>
         int Category_ID = Convert.ToInt32(CategoryID);
         int count = 0;
         List<Statstic> statsticList = new List<Statstic>();
@@ -353,16 +362,17 @@ public class Products : System.Web.Services.WebService
                 statsticList.Add(statstic);
             }
             con.Close();
-            return statsticList;
+
+            Context.Response.Write(js.Serialize(statsticList));
+        //    return statsticList;
         }
     }
 
     [WebMethod(EnableSession = true)]
     public List<Product> GetAllStoreProducts()
-    {
+    { 
         List<Product> ProductsList = new List<Product>();
         Product product = new Product();
-        JavaScriptSerializer js = new JavaScriptSerializer();
 
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -395,7 +405,7 @@ public class Products : System.Web.Services.WebService
             SqlDataReader R = cmd.ExecuteReader();
             if (R.Read())
             {
-                return R["Name"].ToString();
+              return R["Name"].ToString();
             }
         }
         return category_name;

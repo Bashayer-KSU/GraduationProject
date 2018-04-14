@@ -20,6 +20,8 @@ public class CreationStage : System.Web.Services.WebService
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
 
+    JavaScriptSerializer js = new JavaScriptSerializer();
+
     public Store store = new Store();
     List<Element> ElementsList = new List<Element>();
 
@@ -30,10 +32,8 @@ public class CreationStage : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public Store StoreInfo()
+    public void StoreInfo()
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             //, SnapchatLink, TwitterLink, FacebookLink, InstagramLink
@@ -96,14 +96,15 @@ public class CreationStage : System.Web.Services.WebService
             reader.Close();
             con.Close(); 
         }
-        return store;
+
+        Context.Response.Write(js.Serialize(store));
+
+//        return store;
     }
 
     [WebMethod(EnableSession = true)]
-    public Store AddStoreName(string name)
+    public void AddStoreName(string name)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -113,19 +114,20 @@ public class CreationStage : System.Web.Services.WebService
             cmd.ExecuteNonQuery();
             con.Close();
             store.Name = name;
-            return store;
+
+            Context.Response.Write(js.Serialize(store));
+
+//            return store;
         }
     }
 
     [WebMethod(EnableSession = true)]
-    public Store AddStoreType(string type, string language)
+    public void AddStoreType(string type, string language)
     {
         string Slider_Image = " ";
         string Description_Text = " ";
         string Product_Image = " ";
         string Product_Description = " ";
-
-        JavaScriptSerializer js = new JavaScriptSerializer();
 
         if (language.Equals("Arabic"))
         {
@@ -531,14 +533,16 @@ public class CreationStage : System.Web.Services.WebService
             store.SliderImage = Slider_Image;
             store.Description = Description_Text;
             store.Type = type;
-            return store;
+
+            Context.Response.Write(js.Serialize(store));
+
+ //           return store;
         }
     }
 
     [WebMethod(EnableSession = true)]
-    public Store ConnectInstagram(string link, string logo, string descripton, string name)
+    public void ConnectInstagram(string link, string logo, string descripton, string name)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -560,9 +564,11 @@ public class CreationStage : System.Web.Services.WebService
             store.Logo = logo;
             store.Address = descripton;
             con.Close();
-
         }
-        return store;
+
+        Context.Response.Write(js.Serialize(store));
+
+        //return store;
     }
 
     [WebMethod(EnableSession = true)]
@@ -580,7 +586,7 @@ public class CreationStage : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public Store GetTemplateID()
+    public void GetTemplateID()
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -592,11 +598,14 @@ public class CreationStage : System.Web.Services.WebService
                 store.TemplateID = Convert.ToInt32(reader["TemplateID"]);
             }
         }
-        return store;
+
+        Context.Response.Write(js.Serialize(store));
+
+        //return store;
     }
 
     [WebMethod(EnableSession = true)]
-    public Store GetColors()
+    public void GetColors()
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -611,11 +620,12 @@ public class CreationStage : System.Web.Services.WebService
                 store.Color4 = reader["Color4"].ToString();
             }
         }
-        return store;
+        Context.Response.Write(js.Serialize(store));
+//        return store;
     }
 
     [WebMethod(EnableSession = true)]
-    public Store UpdateColors(string color1, string color2, string color3, string color4)
+    public void UpdateColors(string color1, string color2, string color3, string color4)
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -628,12 +638,15 @@ public class CreationStage : System.Web.Services.WebService
             store.Color2 = color2;
             store.Color3 = color3;
             store.Color4 = color4;
-            return store;
+
+            Context.Response.Write(js.Serialize(store));
+
+          //  return store;
         }
     }
 
     [WebMethod(EnableSession = true)]
-    public Store UpdateData(string address, string snapchat_link, string twitter_link, string facebook_link, string instagram_link)
+    public void UpdateData(string address, string snapchat_link, string twitter_link, string facebook_link, string instagram_link)
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -754,16 +767,15 @@ public class CreationStage : System.Web.Services.WebService
             cmd = new SqlCommand("UPDATE Element SET Value = '" + element.Value + "', Hidden = '" + element.Hidden + "' WHERE NAME = 'Instagram' AND Type = 'Link' AND StoreEmail = '" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
 
-            return store;
+            Context.Response.Write(js.Serialize(store));
+
+           // return store;
         }
     }
 
     [WebMethod(EnableSession = true)]
-    public Store UploadLogo(string logo)
+    public void UploadLogo(string logo)
     {
-
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -772,12 +784,15 @@ public class CreationStage : System.Web.Services.WebService
             con.Close();
 
             store.Logo = logo;
-            return store;
+
+            Context.Response.Write(js.Serialize(store));
+
+            //return store;
         }
     }
 
     [WebMethod(EnableSession = true)]
-    public Store UpdateType(string type, string language)
+    public void UpdateType(string type, string language)
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -787,7 +802,10 @@ public class CreationStage : System.Web.Services.WebService
             con.Close();
 
             store.Type = type;
-            return store;
+
+            Context.Response.Write(js.Serialize(store));
+
+//            return store;
         }
     }
 

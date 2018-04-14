@@ -20,7 +20,8 @@ public class BuyerOrder : System.Web.Services.WebService
 {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
-    //JavaScriptSerializer js = new JavaScriptSerializer();
+
+    JavaScriptSerializer js = new JavaScriptSerializer();
 
     List<Order> OrdersList = new List<Order>();
     Order order = new Order();
@@ -29,13 +30,13 @@ public class BuyerOrder : System.Web.Services.WebService
     public string getStoreEmail()
     {
         if (Session["user"] != null)
-            return Session["user"].ToString();
+         return Session["user"].ToString();
         else
-            return "test4@4";
+         return "test4@4";
     }
 
     [WebMethod(EnableSession = true)]
-    public Order CreateOrder(string StoreEmail, string BuyerName, string BuyerPhone, string BuyerEmail, string BuyerLocation, string PaymentMethod, string BankAccount, string OrderID, string TotalPrice)
+    public void CreateOrder(string StoreEmail, string BuyerName, string BuyerPhone, string BuyerEmail, string BuyerLocation, string PaymentMethod, string BankAccount, string OrderID, string TotalPrice)
     {
         SqlDataReader reader;
        // string StoreEmail = getStoreEmail();
@@ -78,17 +79,21 @@ public class BuyerOrder : System.Web.Services.WebService
             order.TotalPrice = Convert.ToDouble(TotalPrice);
             order.StoreEmail = StoreEmail;
             order.OrderID = OrderID;
-            return order;
+
+            Context.Response.Write(js.Serialize(order));
+          //  return order;
 
         }
         else
-            return null;
+            Context.Response.Write(js.Serialize(null));
+        //return null;
+
             //return "Failed to make order";
     }
 
     [WebMethod(EnableSession = true)]
-    public List<Order> GetAllTransactions()
-    {
+    public void GetAllTransactions()
+    { // List<Order>
         Order ord = new Order();
         string StoreEmail = getStoreEmail();
         using (SqlConnection con = new SqlConnection(cs))
@@ -118,11 +123,13 @@ public class BuyerOrder : System.Web.Services.WebService
             }
         }
 
-        return OrdersList;
+        Context.Response.Write(js.Serialize(OrdersList));
+
+//        return OrdersList;
     }
 
     [WebMethod(EnableSession = true)]
-    public Boolean UpdateStatus(string ID)
+    public void UpdateStatus(string ID)
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -130,13 +137,17 @@ public class BuyerOrder : System.Web.Services.WebService
             con.Open();
             int x = cmd.ExecuteNonQuery();
             if (x != 0)
-                return true;
-            else return false;
+                Context.Response.Write(js.Serialize(true));
+
+           // return true;
+            else
+                Context.Response.Write(js.Serialize(false));
+            //return false;
         }
     }
 
     [WebMethod(EnableSession = true)]
-    public string AddProductToOrder(string OrderID, string ProductID, string Amount, string PreviousAmount)
+    public void AddProductToOrder(string OrderID, string ProductID, string Amount, string PreviousAmount)
     {
         string StoreEmail = getStoreEmail();
         int row = 0;
@@ -175,22 +186,29 @@ public class BuyerOrder : System.Web.Services.WebService
             result2 = true;
         else result2 = false;
 
-        if (result1 && result2)
-        {
-                return "true";
-        }
-        else
-                return "false";
+            if (result1 && result2)
+            {
+                Context.Response.Write(js.Serialize("true"));
+
+                //      return "true";
+            }
+            else
+            {
+                Context.Response.Write(js.Serialize("false"));
+
+                //return "false";
+            }
     }
 
         else
-            return  "out of stock product";
+            Context.Response.Write(js.Serialize("out of stock product"));
+   //     return "out of stock product";
     }
 
 
     [WebMethod(EnableSession = true)]
-    public List<OrderProduct> GetAllOrderProducts(string Order_ID)
-    {
+    public void GetAllOrderProducts(string Order_ID)
+    { // List<OrderProduct>
         int orderID = Convert.ToInt32(Order_ID);
         List<OrderProduct> OrderProductsList = new List<OrderProduct>();
         OrderProduct orderProduct = new OrderProduct();
@@ -214,6 +232,8 @@ public class BuyerOrder : System.Web.Services.WebService
             }
             con.Close();
         }
-        return OrderProductsList;
+        Context.Response.Write(js.Serialize(OrderProductsList));
+
+        //return OrderProductsList;
     }
 }

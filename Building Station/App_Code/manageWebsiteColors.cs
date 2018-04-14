@@ -21,8 +21,10 @@ public class manageWebsiteColors : System.Web.Services.WebService
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
 
+    JavaScriptSerializer js = new JavaScriptSerializer();
+
     [WebMethod(EnableSession = true)]
-    public Colors GetWebsiteColors(string path)
+    public void GetWebsiteColors(string path)
     {
 
         Colors selectedColors = new Colors();
@@ -71,11 +73,13 @@ public class manageWebsiteColors : System.Web.Services.WebService
             cmdee.ExecuteNonQuery();
             con.Close();
         }
-        return selectedColors;
+        Context.Response.Write(js.Serialize(selectedColors));
+
+       // return selectedColors;
     }
 
     [WebMethod]
-    public Colors chooseColors()
+    public void chooseColors()
     {
         Colors c = new Colors();
         using (SqlConnection con = new SqlConnection(cs))
@@ -92,7 +96,8 @@ public class manageWebsiteColors : System.Web.Services.WebService
                 c.color4 = reader["Color4"].ToString();
             }
         }
-        return c;
+        Context.Response.Write(js.Serialize(c));
+//        return c;
     }
 
 }

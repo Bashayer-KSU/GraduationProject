@@ -16,6 +16,8 @@ BS_App.service('initialSetup', function ($http) {
 var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
     $urlMatcherFactoryProvider.caseInsensitive(true);
     $urlRouterProvider.when('/EDITandINFO', '/EDITandINFO/DevelopmentEnvironment');
+    $urlRouterProvider.when('/EDITandINFO-English', '/EDITandINFO-English/DevelopmentEnvironmentEnglish');
+
     $urlRouterProvider.otherwise("/BuildingStation");
     $stateProvider
         .state("Login&Register", {
@@ -31,7 +33,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         //Basic English (Parent)
         .state("BS-Menu-English", {
             url: "/EDITandINFO-English",
-            templateUrl: "/Views/BasicArabic.html",
+            templateUrl: "/Views/BasicEnglish.html",
             controller: "BS-Menu-EnglishCTRL",
             //  resolve: {},
             abstract: true
@@ -46,11 +48,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             templateUrl: "/Views/DevelopmentEnvironmentEnglish.html",
             controller: "DevelopmentEnvironmentControllerEnglish"
         })
-        .state("BS-Menu-English.PreviewWebsite", {
-            url: "/PreviewWebsiteEnglish",
-            templateUrl: "/Views/PreviewWebsiteEnglish.html",
-            controller: "PreviewWebsiteControllerEnglish"
-        })
         .state("BS-Menu-English.Template", {
             url: "/Templates",
             templateUrl: "/Views/TemplateEnglish.html",
@@ -61,10 +58,15 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             templateUrl: "/Views/ProductsEnglish.html",
             controller: "ProductsControllerEnglish"
         })
+        .state("PreviewWebsiteEnglish", {
+            url: "/PreviewWebsiteEnglish",
+            templateUrl: "/Views/PreviewEnglish.html",
+            controller: "PreviewWebsiteControllerEnglish"
+        })
         //Basic Arabic (Parent)
         .state("BS-Menu-Arabic", {
             url: "/EDITandINFO",
-            templateUrl: "/Views/BasicEnglish.html",
+            templateUrl: "/Views/BasicArabic.html",
             controller: "BS-Menu-ArabicCTRL",
           //  resolve: {},
             abstract: true
@@ -79,11 +81,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             templateUrl: "/Views/DevelopmentEnvironment.html",
             controller: "DevelopmentEnvironmentController"
         })
-        .state("BS-Menu-Arabic.PreviewWebsite", {
-            url: "/PreviewWebsite",
-            templateUrl: "/Views/PreviewWebsite.html",
-            controller: "PreviewWebsiteController"
-        })
         .state("BS-Menu-Arabic.Template", {
             url: "/Templates",
             templateUrl: "/Views/Template.html",
@@ -93,6 +90,11 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             url: "/Products",
             templateUrl: "/Views/Products.html",
             controller: "ProductsController"
+        })
+        .state("PreviewWebsite", {
+            url: "/PreviewWebsite",
+            templateUrl: "/Views/Preview.html",
+            controller: "PreviewWebsiteController"
         })
         /*.state("CreationStage", {
             url: "/BuildingStation/CreationStage",
@@ -132,10 +134,10 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             //    console.log($state);
                
                 $rootScope.login = response;
-                var notLoged = response === 'false';
-               //     alert("t or f ? " + checking);
+                var notLoged = response === "\"false\"";
+            //    alert("t or f ? " + response);
                 //console.log("in $routeChangeStart " + $rootScope.login);
-            // alert(" ?? " + notLoged);
+             //alert(" not Loged ? " + notLoged);
                 var url = $location.absUrl().split('?')[0]
                 var pulishedStore;
                 //alert(" ?? " + url);
@@ -144,15 +146,21 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 else
                     pulishedStore = false;
                // alert(" " + response);
+             /*   var preview;
+                if (url.includes("Preview"))
+                    preview = true;
+                else
+                    preview = false;
+                              alert("preview: " + preview);*/
 
-                if (notLoged === true && pulishedStore === false) {
-                    //redirect to login page
+                if (notLoged === true && pulishedStore === false)
+                {
                     // location.href = "/index.html";
                  //   event.preventDefault();
                    // location.href = "http://localhost:50277/BuildingStation"; looooping for ever
                      $location.path("/BuildingStation");
-                   // $state.go("Login&Register ");
-               }
+                    // $state.go("Login&Register ");
+                }
             });
         });
     })
@@ -214,8 +222,10 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $http.post(url, data, config)
                 .then(function (response) {
                     $scope.result = response.data;
+                  //  alert(response.data)
                     //$window.open = ("http://www.buildingstation.somee.com/" + $scope.result.substr(76, $scope.result.length - 9 - 76), "_self");
-                    location.href = "http://localhost:50277/" + $scope.result.substr(76, $scope.result.length - 9 - 76);
+                  //  location.href = "http://localhost:50277/" + $scope.result.substr(76, $scope.result.length - 9 - 76);
+                    location.href = "http://localhost:50277/" + $scope.result.slice(1, -1);
 
                 }, function (error) {
                     $scope.error = error.data;
@@ -556,7 +566,175 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $scope.TemplateID = "/Stores/T" + ID + ".html";
         };
     })
-    .controller("BS-Menu-EnglishCTRL", function ($http, $scope) { })
+    .controller("BS-Menu-EnglishCTRL", function ($http, $scope, $location, $rootScope, $mdDialog, $window) {
+        $rootScope.Logout = function () {
+            $http.get('/RegisterLogin.asmx/SignOut').then(function (response) {
+
+                $rootScope.result = response.data;
+                location.href = $rootScope.result.substr(1, $rootScope.result.length - 2);
+            });
+        };
+
+        $rootScope.Arabic = function () {
+            $location.path('/EDITandINFO');
+        };
+
+        $rootScope.DesktopView = function () {
+            $location.path('/PreviewWebsiteEnglish');
+           // $window.open('/Views/Preview.html', '_blank');
+        };
+
+        $rootScope.Publish = function (ev) {
+            $http.get('/Published_Stores.asmx/PublishRequest').then(function (response) {
+                var StoreValues = response.data;
+                if (StoreValues.Published === true) {
+                    var inform =
+                        $mdDialog.alert()
+                            // .clickOutsideToClose(true)
+                            // .parent(angular.element(document.querySelector('#popupContainer')))
+                            .title('You already published your store, this is your link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
+                            .textContent('Please Copy the link and save it.')
+                            // .ariaLabel('Alert Dialog Demo')
+                            .targetEvent(ev)
+                            .ok('Close');
+                    $mdDialog.show(inform).then(function () {
+                        //  $rootScope.status = 'You decided to get rid of your debt.';
+                    }, function () {
+                        // $rootScope.status = 'You decided to keep your debt.';
+                    });
+                }
+                else if (StoreValues.PayPal === false && StoreValues.Cash === false && StoreValues.BankTransfer === false) {
+                    // Appending dialog to document.body to cover sidenav in docs app
+                    var checkPayment = $mdDialog.alert()
+                        .title('You need to select at least one payment method before Publishing.')
+                        //  .ariaLabel('Lucky day')
+                        .targetEvent(ev)
+                        .ok('OK')
+                    $mdDialog.show(checkPayment).then(function () {
+                        $location.path('/EDITandINFO-English/ManageStore');
+                    }, function () {
+                    });
+                }
+                else {// Appending dialog to document.body to cover sidenav in docs app
+                    var confirm = $mdDialog.confirm()
+                        .title('This is your store link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + '), would you like to publish?')
+                        .textContent('Please Copy the link and save it.')
+                        //  .ariaLabel('Lucky day')
+                        .targetEvent(ev)
+                        .ok('Publish')
+                        .cancel('Cancel');
+
+                    $mdDialog.show(confirm).then(function () {
+                        $http({
+                            url: "Published_Stores.asmx/Publish",
+                            params: { storeDomainName: StoreValues.Domain },
+                            method: "get"
+                        }).then(function (response) {
+                            $window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
+                        });
+                        //  $rootScope.status = 'You decided to get rid of your debt.';
+                    }, function () {
+                        // $rootScope.status = 'You decided to keep your debt.';
+                    });
+                }
+            });
+        };
+
+        $rootScope.UnPublish = function (ev) {
+            $http.get('/Published_Stores.asmx/UnPublishRequest').then(function (response) {
+                var StoreValues = response.data;
+                if (StoreValues.Published === false) {
+                    var inform =
+                        $mdDialog.alert()
+                            // .clickOutsideToClose(true)
+                            // .parent(angular.element(document.querySelector('#popupContainer')))
+                            .title('You have not published your store yet')
+                            // .ariaLabel('Alert Dialog Demo')
+                            .targetEvent(ev)
+                            .ok('Close');
+                    $mdDialog.show(inform).then(function () {
+                        //  $rootScope.status = 'You decided to get rid of your debt.';
+                    }, function () {
+                        // $rootScope.status = 'You decided to keep your debt.';
+                    });
+                }
+                else {
+                    var confirm = $mdDialog.confirm()
+                        .title('Are you sure you want to unpublish your store?')
+                        //  .ariaLabel('Lucky day')
+                        .targetEvent(ev)
+                        .ok('YES')
+                        .cancel('Cancel');
+
+                    $mdDialog.show(confirm).then(function () {
+                        $http.get('/Published_Stores.asmx/UnPublish').then(function (response) {
+                            var Store_values = response.data;
+                            if (Store_values.Published === false) {
+                                var Unpublished =
+                                    $mdDialog.alert()
+                                        .title('Your store was unpublished successfully')
+                                        .targetEvent(ev)
+                                        .ok('Close');
+                                $mdDialog.show(Unpublished).then(function () {
+                                    //  $rootScope.status = 'You decided to get rid of your debt.';
+                                }, function () {
+                                    // $rootScope.status = 'You decided to keep your debt.';
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        };
+
+        $rootScope.DeleteStore = function (ev) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure you want to delete your store?')
+                .textContent('all your data will be deleted.')
+                .targetEvent(ev)
+                .ok('YES')
+                .cancel('Cancel');
+
+            $mdDialog.show(confirm).then(function () {
+                // Appending dialog to document.body to cover sidenav in docs app
+                var askForPassword = $mdDialog.prompt()
+                    .title('Enter your store Password')
+                    .textContent('be aware that your store will be removed completely from our system and you will need to register again to have a new store.')
+                    .placeholder('password')
+                    // .ariaLabel('Dog name')
+                    .initialValue('')
+                    .targetEvent(ev)
+                    .required(true)
+                    .ok('Delete')
+                    .cancel('Cancel');
+
+                $mdDialog.show(askForPassword).then(function (result) {
+                    $http({
+                        url: "Published_Stores.asmx/DeleteStore",
+                        params: { pass: result },
+                        method: "get"
+                    })
+                        .then(function (response) {
+                            var storePass = response.data;
+                            if (storePass.Password === 'incorrect') {
+                                var NOTdeleted = $mdDialog.alert()
+                                    .title('Incorrect Password')
+                                    .targetEvent(ev)
+                                    .ok('Close');
+                                $mdDialog.show(NOTdeleted).then(function () {
+                                }, function () {
+                                });
+                            }
+                            else {
+                                location.href = "/index.html";
+                            }
+                        });
+                }, function () {
+                });
+            }, function () {
+            });
+        };
+    })
     .controller("ManageStoreControllerEnglish", function ($rootScope, $scope, $http) {
         $scope.Logout = function () {
             $rootScope.Logout();
@@ -1338,7 +1516,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 headers: { "Content-Type": "application/json" }
             });
             post.then(function (response) { }, function (error) { });
-            $location.path('/DevelopmentEnvironmentEnglish');
+            $location.path('EDITandINFO-English/DevelopmentEnvironmentEnglish');
         };
     })
     .controller("ProductsControllerEnglish", function ($rootScope, $scope, $http, $mdDialog) {
@@ -1562,7 +1740,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $http.get('/RegisterLogin.asmx/SignOut').then(function (response) {
 
                 $rootScope.result = response.data;
-                location.href = $rootScope.result.substr(1, $rootScope.result.length - 2);
+                location.path = $rootScope.result.substr(1, $rootScope.result.length - 2);
             });
         };
 
@@ -1572,8 +1750,10 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
 
         $rootScope.DesktopView = function () {
-           // $location.path('/PreviewWebsite');
-            $window.open('/Views/Preview.html', '_blank');
+            $location.path('/PreviewWebsite');
+           // $window.open('localhost:50277/EDITandINFO/PreviewWebsite', '_blank');
+            //$window.open('localhost:50277/Viewa/Preview.html', '_blank');
+
         };
 
         $rootScope.Publish = function (ev) {
@@ -1604,7 +1784,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                             .targetEvent(ev)
                             .ok('إغلاق');
                         $mdDialog.show(checkPayment).then(function () {
-                            $location.path('/ManageStore');
+                            $location.path('/EDITandINFO/ManageStore');
                         }, function () {
                         });
                     }
@@ -2083,7 +2263,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
 
         $http.post('/CreationStage.asmx/GetTemplateID').then(function (response) {
-            alert("gooo " + response.data);
 
             $scope.storeID = response.data;
             if ($scope.storeID.TemplateID === 1) {
@@ -2503,7 +2682,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $scope.storeID = response.data;
             if ($scope.storeID.TemplateID === 1) {
                 $scope.template = "/Templates/Template_1.html";
-
             }
             else if ($scope.storeID.TemplateID === 2) {
                 $scope.template = "/Templates/Template_2/Template_2.html";
@@ -2560,7 +2738,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 headers: { "Content-Type": "application/json" }
             });
             post.then(function (response) { }, function (error) { });
-            $location.path('/DevelopmentEnvironment');
+            $location.path('/EDITandINFO/DevelopmentEnvironment');
         };
     })
     .controller("ProductsController", function ($rootScope, $scope, $http, $mdDialog) {
@@ -2973,11 +3151,11 @@ BS_App.filter('range', function () {
 BS_App.factory('loginService', function ($http) {
     var login = function () {
         return $http.post('/RegisterLogin.asmx/CheckUser').then(function (msg) {
-            if (msg.data.includes("false"))
+         /*   if (msg.data.includes("false"))
                 return "false";
             else
-                return "true";
-            //return msg.data;
+                return "true";*/
+           return msg.data;
         });
         /*$http({
         method: 'POST',

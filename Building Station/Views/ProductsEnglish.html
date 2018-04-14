@@ -227,6 +227,8 @@
                             <td class="arb" ng-show="product.edit">
                                 <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image">
                                 <img style="width:100px; height:100px;" ng-src="{{product.Image}}" />
+                                <span ng-show="product.Image && BigImage" style="font-size:smaller;" class="alert-danger">image size must be 1MB or lise</span>
+                                <span ng-show="product.Image && NotImage" style="font-size:smaller;" class="alert-danger">file type should be .jpeg, .png, .jpg, .gif</span>
                             </td>
                             <td ng-show="!product.edit"><img ng-src="{{product.Image}}" alt="image" width="80" height="80" /></td>
 
@@ -266,7 +268,7 @@
                             <td class="requiredStar"><input class="ar" type="number" ng-model="product.Discount" name="" placeholder="Discount" required> *</td>
                             <td colspan="2">
                                 <!-- ng-click="addNewProduct(product,product.Category_ID,product.Image,product.Name,product.Description,product.Price,product.PriceAfterDiscount,product.Amount,product.Discount)"-->
-                                <button ng-disabled="newProduct.$invalid" ng-click="addNewProduct2(product)" style="background-color:transparent; border: none;float:left;"><img src="/images/plus.png" alt="" style="width:37px; height:37px;" /></button>
+                                <button ng-disabled="newProduct.$invalid || BigImage || NotImage" ng-click="addNewProduct2(product)" style="background-color:transparent; border: none;float:left;"><img src="/images/plus.png" alt="" style="width:37px; height:37px;" /></button>
                             </td>
                         </tr>
 

@@ -18,7 +18,9 @@ public class Published_Stores : System.Web.Services.WebService
 {
     string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
     //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
-    
+
+    JavaScriptSerializer js = new JavaScriptSerializer();
+
     public Store store = new Store();
     public Product product = new Product();
 
@@ -26,7 +28,7 @@ public class Published_Stores : System.Web.Services.WebService
     public Element e = new Element();
     
     [WebMethod(EnableSession = true)]
-    public Store PublishRequest()
+    public void PublishRequest()
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -85,7 +87,9 @@ public class Published_Stores : System.Web.Services.WebService
                 store.Published = true;
             }
         }
-        return store;
+        Context.Response.Write(js.Serialize(store));
+
+       // return store;
     }
 
     [WebMethod(EnableSession = true)]
@@ -101,7 +105,7 @@ public class Published_Stores : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public Store UnPublishRequest()
+    public void UnPublishRequest()
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -124,11 +128,12 @@ public class Published_Stores : System.Web.Services.WebService
                 store.Published = true;
             }
         }
-        return store;
+        Context.Response.Write(js.Serialize(store));
+//        return store;
     }
 
     [WebMethod(EnableSession = true)]
-    public Store UnPublish()
+    public void UnPublish()
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -140,11 +145,12 @@ public class Published_Stores : System.Web.Services.WebService
             store.Domain = "No WebsiteDomain";
             store.Published = false;
         }
-        return store;
+        Context.Response.Write(js.Serialize(store));
+//        return store;
     }
 
     [WebMethod(EnableSession = true)]
-    public Store DeleteStore(string pass) {
+    public void DeleteStore(string pass) {
 
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -189,13 +195,17 @@ public class Published_Stores : System.Web.Services.WebService
             {
                 store.Password = "incorrect";
             }
-            return store;
+            Context.Response.Write(js.Serialize(store));
+
+         //   return store;
         }
-        return null;
+        Context.Response.Write(js.Serialize(null));
+
+      //  return null;
     }
 
     [WebMethod]
-    public int GetTemplate(string StoreDomain)
+    public void GetTemplate(string StoreDomain)
     {
         int TID = 0;
         using (SqlConnection con = new SqlConnection(cs))
@@ -211,11 +221,12 @@ public class Published_Stores : System.Web.Services.WebService
             con.Close();
         }
         //  HttpContext.Current.Response.Write(js.Serialize(store));
-        return TID;
+        Context.Response.Write(js.Serialize(TID));
+        //return TID;
     }
 
     [WebMethod]
-    public Store GetStore(string StoreDomain)
+    public void GetStore(string StoreDomain)
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -325,12 +336,13 @@ public class Published_Stores : System.Web.Services.WebService
             reader.Close();
             con.Close();
         }
-        return store;
+        Context.Response.Write(js.Serialize(store));
+//        return store;
     }
 
     [WebMethod]
-    public List<Element> GetElements(string StoreDomain)
-    {
+    public void GetElements(string StoreDomain)
+    { // List<Element
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -367,12 +379,14 @@ public class Published_Stores : System.Web.Services.WebService
                 ElementsList.Add(e);
             }
         }
-        return ElementsList;
+        Context.Response.Write(js.Serialize(ElementsList));
+
+        //return ElementsList;
     }
 
     [WebMethod]
-    public List<Categories> GetAllCategories(string StoreDomain)
-    {
+    public void GetAllCategories(string StoreDomain)
+    { // List<Categories> 
         List<Categories> categories = new List<Categories>();
         //insert selected colors to database
         using (SqlConnection con = new SqlConnection(cs))
@@ -402,12 +416,14 @@ public class Published_Stores : System.Web.Services.WebService
             }
         }
         //\insert selected colors to database
-        return categories;
+
+        Context.Response.Write(js.Serialize(categories));
+        //return categories;
     }
 
     [WebMethod]
-    public List<Product> GetAllProducts(string category, string StoreDomain)
-    {
+    public void GetAllProducts(string category, string StoreDomain)
+    { // List<Product>
         List<Product> ProductsList = new List<Product>();
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -455,7 +471,8 @@ public class Published_Stores : System.Web.Services.WebService
                 }
             }
         }
-        return ProductsList;
+        Context.Response.Write(js.Serialize(ProductsList));
+//        return ProductsList;
     }
 
     [WebMethod]
@@ -487,7 +504,7 @@ public class Published_Stores : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public Boolean AddProductToOrder(string OrderID, string ProductID, string Amount, string PreviousAmount)
+    public void AddProductToOrder(string OrderID, string ProductID, string Amount, string PreviousAmount)
     {
       //  string StoreEmail = getStoreEmail();
         int row = 0;
@@ -524,10 +541,13 @@ public class Published_Stores : System.Web.Services.WebService
 
         if (result1 && result2)
         {
-            return true;
+            Context.Response.Write(js.Serialize(true));
+
+            //return true;
         }
         else
-            return false;
+            Context.Response.Write(js.Serialize(false));
+        //return false;
     }
 
     /* [WebMethod] //Temp for Asmaa
