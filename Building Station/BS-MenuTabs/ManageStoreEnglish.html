@@ -236,9 +236,7 @@
             background-color: #f5f6ef;
             border: 1px solid #C8D9BE;
             border-radius: 10px;
-            width: 50%;
-            margin-bottom: 10%;
-            height: auto;
+            margin-bottom: 1%;
         }
 
         .tabStyle.active a {
@@ -329,7 +327,8 @@
 
                     <!--Bank Transfer Form-->
                     <div class="row" style="text-align:center;">
-                        <div class="col-md-6 col-md-offset-6 center-block bankTransfer" align="center" style="float:none; text-align:center;">
+                        <div class="col-md-6 col-md-offset-6 center-block bankTransfer " align="center" style="float:none; text-align:center;" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()">
+
                             <form name="IBAN" class="check-element animate-show-hide" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()" style="display:inline; width:40%">
                              <br />
                                 <label for="IBAN">To facilitate bank transfer, please enter your IBAN number</label>
@@ -350,7 +349,7 @@
                         </div>
                     </div>
                     <div class="row" style="text-align:center;">
-                        <div class="col-md-6 col-md-offset-6 center-block bankTransfer" align="center" style="float:none; text-align:center;">
+                        <div class="col-md-6 col-md-offset-6 center-block bankTransfer" align="center" style="float:none; text-align:center;"  ng-show="checkboxPayment.paypal" ng-model="PayPalInfo" ng-init="GetPayPalInfo()">
                             <form name="PayPal" class="check-element animate-show-hide" ng-show="checkboxPayment.paypal" ng-model="PayPalInfo" ng-init="GetPayPalInfo()" style="display:inline; width:40%">
                                <br />
                                 <label for="PayPal">Enter your PayPal Seller/Business email address</label>
