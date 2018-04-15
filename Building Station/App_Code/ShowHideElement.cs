@@ -16,22 +16,17 @@ using System.Web.Services;
 // [System.Web.Script.Services.ScriptService]
 public class ShowHideElement : System.Web.Services.WebService
 {
-    JavaScriptSerializer js = new JavaScriptSerializer();
+    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
 
-    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+    JavaScriptSerializer js = new JavaScriptSerializer();
 
     List<Element> ElementsList = new List<Element>();
     public Element e = new Element();
 
-    public ShowHideElement()
-    {
-       
-    }
-
     [WebMethod(EnableSession = true)]
     public void GetElementsInfo()
-    {
+    { // List<Element>
         using (SqlConnection con = new SqlConnection(cs))
         {
             SqlCommand cmd = new SqlCommand("select * from Element Where StoreEmail ='" + Session["user"] + "'", con);
@@ -57,14 +52,14 @@ public class ShowHideElement : System.Web.Services.WebService
                 ElementsList.Add(e);
             }
         }
-
         Context.Response.Write(js.Serialize(ElementsList));
+        //return ElementsList;
 
     }
 
     [WebMethod(EnableSession = true)]
     public void VisibleElement()
-    {
+    { // List<Element> 
         List<Element> ElementsList = new List<Element>();
 
         using (SqlConnection con = new SqlConnection(cs))
@@ -81,6 +76,7 @@ public class ShowHideElement : System.Web.Services.WebService
             }
         }
         Context.Response.Write(js.Serialize(ElementsList));
+        //return ElementsList;
     }
 
     [WebMethod(EnableSession = true)]
@@ -107,13 +103,15 @@ public class ShowHideElement : System.Web.Services.WebService
                 if (dr.HasRows == true)
                 {
                     Context.Response.Write(js.Serialize(true));
+                   // return true;
                 }
-                else
-                Context.Response.Write(js.Serialize(false));
             }
+            Context.Response.Write(js.Serialize(false));
+           // return false;
         }
         else
-        Context.Response.Write(js.Serialize(false));
+            Context.Response.Write(js.Serialize(false));
+       // return false;
     }
 
     [WebMethod(EnableSession = true)]
@@ -128,7 +126,6 @@ public class ShowHideElement : System.Web.Services.WebService
         {
             sectionName = "About";
         }
-        
 
         if (sectionName != "" && action == "Show")
         {
@@ -139,8 +136,10 @@ public class ShowHideElement : System.Web.Services.WebService
                 int x = cmd.ExecuteNonQuery();
                 if (x != 0)
                     Context.Response.Write(js.Serialize(true));
-                else Context.Response.Write(js.Serialize(false));
+             //   return true;
             }
+            Context.Response.Write(js.Serialize(false));
+           // return false;
         }
         else if(sectionName != "" && action == "Hide")
         {
@@ -151,11 +150,13 @@ public class ShowHideElement : System.Web.Services.WebService
                 int x = cmd.ExecuteNonQuery();
                 if (x != 0)
                     Context.Response.Write(js.Serialize(true));
-                else Context.Response.Write(js.Serialize(false));
+               // return true;
             }
-        }
-        else
             Context.Response.Write(js.Serialize(false));
+          //  return false;
+        }
+        Context.Response.Write(js.Serialize(false));
+        //return false;
     }
 
     [WebMethod(EnableSession = true)]
@@ -188,10 +189,13 @@ public class ShowHideElement : System.Web.Services.WebService
                     int x = cmd.ExecuteNonQuery();
                     if (x != 0)
                         Context.Response.Write(js.Serialize(true));
-                    else Context.Response.Write(js.Serialize(false));
+//                    return true;
                 }
+                Context.Response.Write(js.Serialize(false));
+//                return false;
             }
         }
-        else Context.Response.Write(js.Serialize(false));
+        Context.Response.Write(js.Serialize(false));
+//        return false;
     }
 }

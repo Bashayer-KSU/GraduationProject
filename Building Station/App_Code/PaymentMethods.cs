@@ -17,8 +17,8 @@ using System.Web.Services;
 
 public class PaymentMethods : System.Web.Services.WebService
 {
-    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
 
     JavaScriptSerializer js = new JavaScriptSerializer();
 
@@ -46,7 +46,9 @@ public class PaymentMethods : System.Web.Services.WebService
             payments.Cash = cash;
 
             Context.Response.Write(js.Serialize(payments));
-            
+
+            // return payments;
+
         }
     }
 
@@ -68,13 +70,13 @@ public class PaymentMethods : System.Web.Services.WebService
 
                 }
                 con.Close();
-
                 Context.Response.Write(js.Serialize(payments));
-
+                //return payments;
             }
         }
+        Context.Response.Write(js.Serialize(null));
+       // return null;
     }
-
 
     [WebMethod(EnableSession = true)]
     public void UpdateBankInfo(String IBAN)
@@ -83,11 +85,8 @@ public class PaymentMethods : System.Web.Services.WebService
         {
             con.Open();
             SqlCommand cmd = new SqlCommand("UPDATE Store SET ShopOwnerBank = '" + IBAN + "' Where Email = '" + Session["user"] + "'", con);
-
             cmd.ExecuteNonQuery();
             con.Close();
-
-            Context.Response.Write(js.Serialize(IBAN));
         }
     }
 
@@ -96,7 +95,7 @@ public class PaymentMethods : System.Web.Services.WebService
     {
         if (Session["user"] != null)
         {
-            var IBAN = "";
+            string IBAN = "";
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
@@ -105,21 +104,20 @@ public class PaymentMethods : System.Web.Services.WebService
                 {
                     reader.Read();
                     IBAN = Convert.ToString(reader["ShopOwnerBank"]);
-
                 }
                 con.Close();
-
                 Context.Response.Write(js.Serialize(IBAN));
-
+                //return IBAN;
             }
         }
+        Context.Response.Write(js.Serialize(""));
+        //return "";
     }
 
     [WebMethod(EnableSession = true)]
     public void GetPayPalInfo()
     {
         // var PayPalButton = "";
-
          using (SqlConnection con = new SqlConnection(cs))
          {
             con.Open();
@@ -143,34 +141,36 @@ public class PaymentMethods : System.Web.Services.WebService
             con.Close();
          }
 
-       /* using (var conn = new SqlConnection(cs))
-        using (var cmd = conn.CreateCommand())
-        {
-            cmd.CommandText = "SELECT Value FROM Element Where StoreEmail = @User AND Type = 'Currency' AND Name = 'PayPal'";
-            cmd.Parameters.AddWithValue("@User", Session["user"]);
-            conn.Open();
-            using (SqlDataReader oReader = cmd.ExecuteReader())
-            {
-                while (oReader.Read())
-                {
-                    payments.PayPalCurrencey = oReader["Value"].ToString();
-                }
-                conn.Close();
-            }
+        /* using (var conn = new SqlConnection(cs))
+         using (var cmd = conn.CreateCommand())
+         {
+             cmd.CommandText = "SELECT Value FROM Element Where StoreEmail = @User AND Type = 'Currency' AND Name = 'PayPal'";
+             cmd.Parameters.AddWithValue("@User", Session["user"]);
+             conn.Open();
+             using (SqlDataReader oReader = cmd.ExecuteReader())
+             {
+                 while (oReader.Read())
+                 {
+                     payments.PayPalCurrencey = oReader["Value"].ToString();
+                 }
+                 conn.Close();
+             }
 
-            cmd.CommandText = "SELECT Value FROM Element Where StoreEmail = @User2 AND Type = 'AccountEmail' AND Name = 'PayPal'";
-            cmd.Parameters.AddWithValue("@User2", Session["user"]);
-            conn.Open();
-            using (SqlDataReader oReader = cmd.ExecuteReader())
-            {
-                while (oReader.Read())
-                {
-                    payments.PayPalEmail = oReader["Value"].ToString();
-                }
-                conn.Close();
-            }
-        }*/
+             cmd.CommandText = "SELECT Value FROM Element Where StoreEmail = @User2 AND Type = 'AccountEmail' AND Name = 'PayPal'";
+             cmd.Parameters.AddWithValue("@User2", Session["user"]);
+             conn.Open();
+             using (SqlDataReader oReader = cmd.ExecuteReader())
+             {
+                 while (oReader.Read())
+                 {
+                     payments.PayPalEmail = oReader["Value"].ToString();
+                 }
+                 conn.Close();
+             }
+         }*/
         Context.Response.Write(js.Serialize(payments));
+
+        //return payments;
     }
 
     [WebMethod(EnableSession = true)]

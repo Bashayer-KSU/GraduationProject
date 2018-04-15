@@ -14,14 +14,15 @@ using System.Web.Services;
 [System.Web.Script.Services.ScriptService]
 public class RegisterLogin : System.Web.Services.WebService
 {
-   // string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+
     JavaScriptSerializer js = new JavaScriptSerializer();
+
     [WebMethod(EnableSession = true)]
     public void Register(String name, String email, String password, String phone, String lang)
     {
-
-
+        string value = "";
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -31,7 +32,7 @@ public class RegisterLogin : System.Web.Services.WebService
             if (dr.HasRows == true)
             {
                 con.Close();
-                Context.Response.Write(js.Serialize("/index.html"));
+                value = "/index.html";
             }
             else
             {
@@ -105,19 +106,23 @@ public class RegisterLogin : System.Web.Services.WebService
 
                 if (lang.Equals("eng"))
                 {
-                    Context.Response.Write(js.Serialize("/CreationStage.html"));
+                    value = "/CreationStage.html";
                 }
                 else if(lang.Equals("ar"))
                 {
-                    Context.Response.Write(js.Serialize("/CreationSatgeArabic.html"));
+                    value = "/CreationSatgeArabic.html";
                 }
             }
         }
+        Context.Response.Write(js.Serialize(value));
+
+     //   return value;
     }
+
     [WebMethod(EnableSession = true)]
     public void Login(String email, String password, String lang)
     {
-
+        string value = "";
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -134,22 +139,25 @@ public class RegisterLogin : System.Web.Services.WebService
 
                     if (lang.Equals("eng"))
                     {
-                        Context.Response.Write(js.Serialize("/CreationStage.html"));
+                        value = "/CreationStage.html";
                     }
                     else
                     {
-                        Context.Response.Write(js.Serialize("/CreationSatgeArabic.html"));
+                        value = "/CreationSatgeArabic.html";
                     }
                 }
                 else //If user already has template 
                 {
                     if (lang.Equals("eng"))
                     {
-                        Context.Response.Write(js.Serialize("/Views/BasicE.html"));
+                      //  value = "/Views/BasicE.html";
+                        value = "EDITandINFO-English";
+
                     }
                     else
                     {
-                        Context.Response.Write(js.Serialize("/Basic.html"));
+                       // value = "/Views/Basic.html";
+                        value = "EDITandINFO";
                     }
                 }
             }
@@ -157,9 +165,12 @@ public class RegisterLogin : System.Web.Services.WebService
             //Invalid login
             else
             {
-                Context.Response.Write(js.Serialize("/index.html"));
+                value = "/index.html";
             }
         }
+        Context.Response.Write(js.Serialize(value));
+
+        //return value;
     }
 
     [WebMethod(EnableSession = true)]
@@ -167,11 +178,15 @@ public class RegisterLogin : System.Web.Services.WebService
     {
         if (Session["user"] == null)
         {
-            Context.Response.Write(js.Serialize(false));
+            Context.Response.Write(js.Serialize("false"));
+
+     //       return "false";
         }
         else
         {
-            Context.Response.Write(js.Serialize(true));
+            Context.Response.Write(js.Serialize("true"));
+
+            //return "true";
         }
     }
 
@@ -181,6 +196,8 @@ public class RegisterLogin : System.Web.Services.WebService
     {
         // Session.Clear();
         Session.Abandon();
-        Context.Response.Write(js.Serialize("/index.html"));
+        Context.Response.Write(js.Serialize("/BuildingStation"));
+
+      //  return "/index.html";
     }
 }

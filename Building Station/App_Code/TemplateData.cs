@@ -6,6 +6,7 @@ using System.Web.Services;
 using System.Web.Script.Serialization;
 using System.Configuration;
 using System.Data.SqlClient;
+using CloudinaryDotNet;
 
 /// <summary>
 /// Summary description for TemplateData
@@ -16,22 +17,15 @@ using System.Data.SqlClient;
 [System.Web.Script.Services.ScriptService]
 public class TemplateData : System.Web.Services.WebService
 {
-    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
-    JavaScriptSerializer js = new JavaScriptSerializer();
+    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
 
+    JavaScriptSerializer js = new JavaScriptSerializer();
 
     public Store store = new Store();
    // public Product Product = new Product();
     List<Element> ElementsList = new List<Element>();
-
-    public TemplateData()
-    {
-
-        //Uncomment the following line if using designed components 
-        //InitializeComponent(); 
-    }
-
+    
     [WebMethod(EnableSession = true)]
     public void StoreData()
     {
@@ -148,11 +142,13 @@ public class TemplateData : System.Web.Services.WebService
             con.Close();
         }
         Context.Response.Write(js.Serialize(store));
+
+//        return store;
     }
 
     [WebMethod(EnableSession = true)]
     public void ProductData()
-    {
+    { //List<Product>
         List<Product> ProductsList = new List<Product>();
 
         using (SqlConnection con = new SqlConnection(cs))
@@ -176,26 +172,31 @@ public class TemplateData : System.Web.Services.WebService
             }
         }
         Context.Response.Write(js.Serialize(ProductsList));
+
+      //  return ProductsList;
     }
 
     [WebMethod(EnableSession = true)]
     public void UpdatStoreData(String DataType, String NewValue)
     {
-        if (DataType.Equals("Store Name"))
+        if (DataType.Equals("Store Name") || DataType.Equals("اسم المتجر"))
             DataType = "StoreName";
-        else if(DataType.Equals("Store Description"))
+        else if (DataType.Equals("Store Description") || DataType.Equals("وصف المتجر"))
             DataType = "StoreDescription";
-        else if (DataType.Equals("Address"))
+        else if (DataType.Equals("Address") || DataType.Equals("العنوان"))
             DataType = "Location";
-        else if (DataType.Equals("About"))
+        else if (DataType.Equals("Phone") || DataType.Equals("رقم التواصل"))
+            DataType = "Phone";
+        else if (DataType.Equals("About") || DataType.Equals("عن الموقع"))
             DataType = "About";
-        else if (DataType.Equals("Menu Title"))
+        else if (DataType.Equals("Menu Title") || DataType.Equals("عنوان القائمة"))
             DataType = "MenuTitle";
+        else DataType = "";
 
         int x;
         Boolean result = false;
 
-        if (NewValue!= null && DataType!="About") {
+        if (NewValue!= null && DataType!="About" && DataType != "") {
 
             using (SqlConnection con = new SqlConnection(cs))
             {
@@ -209,10 +210,9 @@ public class TemplateData : System.Web.Services.WebService
                 con.Close();
             }
             if(result)
-        Context.Response.Write(js.Serialize(NewValue));
-            else
-                Context.Response.Write(js.Serialize("Error"));
+                Context.Response.Write(js.Serialize(NewValue));
 
+           // return NewValue;
         }
         else if(DataType == "About")
         {
@@ -231,16 +231,18 @@ public class TemplateData : System.Web.Services.WebService
             }
             if (result)
                 Context.Response.Write(js.Serialize(NewValue));
-            else
-                Context.Response.Write(js.Serialize("Error"));
+
+          //  return NewValue;
         }
+
+        Context.Response.Write(js.Serialize("Error"));
+
+     //   return "Error";
     }
 
     [WebMethod(EnableSession = true)]
     public void UpdateLinks(string snapchat_link, string twitter_link, string facebook_link, string instagram_link)
-    {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
+    { //List<Element>
         using (SqlConnection con = new SqlConnection(cs))
         {
             /* con.Open();
@@ -381,16 +383,30 @@ public class TemplateData : System.Web.Services.WebService
             cmd.ExecuteNonQuery();
 
             con.Close();
-
             Context.Response.Write(js.Serialize(ElementsList));
+
+          //  return ElementsList;
         }
+        Context.Response.Write(js.Serialize(null));
+
+        //return null;
     }
 
     [WebMethod(EnableSession = true)]
     public void UploadLogo(string logo)
     {
+/*
+        // our account in cloudinary 
+        CloudinaryDotNet.Account account =
+                            new CloudinaryDotNet.Account("dkejtwcc6", "799652649934124", "N6eQmnp7-66vxt3IMIpC-z0ijDw");
 
-        JavaScriptSerializer js = new JavaScriptSerializer();
+        CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
+        //\our account in cloudinary
+       //string ImageURL = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(200).Crop("scale")).BuildImageTag(logo);
+       string ImageURL = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(200).Crop("scale")).BuildImageTag(@"C:\Users\star7\OneDrive\Desktop\ONLINE SHOPS PIC's\-2- Sweets");
+        //C: \Users\star7\OneDrive\Desktop\ONLINE SHOPS PIC's\-1- HAND MADE
+        // cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(200).Crop("scale")).BuildImageTag("turtles.jpg")
+        */
 
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -401,15 +417,17 @@ public class TemplateData : System.Web.Services.WebService
 
             store.Logo = logo;
             Context.Response.Write(js.Serialize(store));
-        }
 
+    //        return store;
+        }
+        Context.Response.Write(js.Serialize(null));
+
+       // return null;
     }
 
     [WebMethod(EnableSession = true)]
     public void UploadSlider(string slider)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -419,13 +437,17 @@ public class TemplateData : System.Web.Services.WebService
 
             store.SliderImage = slider;
             Context.Response.Write(js.Serialize(store));
+
+        //    return store;
         }
+        Context.Response.Write(js.Serialize(null));
+
+   //     return null;
     }
+
     [WebMethod(EnableSession = true)]
     public void UploadAboutImage(string image)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -434,6 +456,8 @@ public class TemplateData : System.Web.Services.WebService
             con.Close();
 
             Context.Response.Write(js.Serialize(true));
+
+         //   return true;
         }
     }
 }

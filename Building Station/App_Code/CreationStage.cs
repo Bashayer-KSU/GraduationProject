@@ -17,8 +17,10 @@ using System.Text;
 public class CreationStage : System.Web.Services.WebService
 {
 
-    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+
+    JavaScriptSerializer js = new JavaScriptSerializer();
 
     public Store store = new Store();
     List<Element> ElementsList = new List<Element>();
@@ -32,8 +34,6 @@ public class CreationStage : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void StoreInfo()
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             //, SnapchatLink, TwitterLink, FacebookLink, InstagramLink
@@ -96,14 +96,15 @@ public class CreationStage : System.Web.Services.WebService
             reader.Close();
             con.Close(); 
         }
+
         Context.Response.Write(js.Serialize(store));
+
+//        return store;
     }
 
     [WebMethod(EnableSession = true)]
     public void AddStoreName(string name)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -113,7 +114,10 @@ public class CreationStage : System.Web.Services.WebService
             cmd.ExecuteNonQuery();
             con.Close();
             store.Name = name;
+
             Context.Response.Write(js.Serialize(store));
+
+//            return store;
         }
     }
 
@@ -124,8 +128,6 @@ public class CreationStage : System.Web.Services.WebService
         string Description_Text = " ";
         string Product_Image = " ";
         string Product_Description = " ";
-
-        JavaScriptSerializer js = new JavaScriptSerializer();
 
         if (language.Equals("Arabic"))
         {
@@ -531,14 +533,16 @@ public class CreationStage : System.Web.Services.WebService
             store.SliderImage = Slider_Image;
             store.Description = Description_Text;
             store.Type = type;
+
             Context.Response.Write(js.Serialize(store));
+
+ //           return store;
         }
     }
 
     [WebMethod(EnableSession = true)]
     public void ConnectInstagram(string link, string logo, string descripton, string name)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -560,16 +564,16 @@ public class CreationStage : System.Web.Services.WebService
             store.Logo = logo;
             store.Address = descripton;
             con.Close();
-
         }
+
         Context.Response.Write(js.Serialize(store));
+
+        //return store;
     }
 
     [WebMethod(EnableSession = true)]
     public void AddTemplate(int id)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -578,149 +582,12 @@ public class CreationStage : System.Web.Services.WebService
             con.Close();
 
             store.TemplateID = id;
-            //Create Elements of shop owner template
-         /*   con.Open();
-            //Link Elements
-
-            //Snapchat Link
-            Element element = new Element();
-            element.StoreEmail = Session["user"].ToString();
-            if (store.SnapchatLink != null)
-            {
-                element.Value = store.SnapchatLink;
-                if (store.SnapchatLink.ToLower().Contains("snapchat"))
-                {
-                    element.Hidden = false;
-                }
-                else
-                    element.Hidden = true;
-            }
-            else
-            {
-                element.Hidden = true;
-                element.Value = "No Value";
-            }
-
-            element.Name = "Snapchat";
-                element.Type = "Link";
-                ElementsList.Add(element);
-                cmd = new SqlCommand("insert into Element (Name, Type, Value, Hidden, StoreEmail) values " +
-               "('"+element.Name+"','"+ element.Type + "','" + element.Value + "','" + element.Hidden + "','" + element.StoreEmail + "')", con);
-            cmd.ExecuteNonQuery();
-
-
-            //Twitter Link
-             element = new Element();
-            element.StoreEmail = Session["user"].ToString();
-            if (store.TwitterLink != null)
-            {
-                element.Value = store.TwitterLink;
-                if (store.TwitterLink.ToLower().Contains("https://twitter.com/"))
-                    element.Hidden = false;
-                else
-                    element.Hidden = true;
-            }
-            else {
-                element.Hidden = true;
-                element.Value = "No Value";
-            }
-
-            element.Name = "Twitter";
-                element.Type = "Link";
-                ElementsList.Add(element);
-            cmd = new SqlCommand("insert into Element (Name, Type, Value, Hidden, StoreEmail) values " +
-               "('" + element.Name + "','" + element.Type + "','" + element.Value + "','" + element.Hidden + "','" + element.StoreEmail + "')", con);
-            cmd.ExecuteNonQuery();
-
-
-            //Facebook Link
-            element = new Element();
-            element.StoreEmail = Session["user"].ToString();
-            if (store.FacebookLink != null)
-            {
-                element.Value = store.FacebookLink;
-                if (store.FacebookLink.ToLower().Contains("https://www.facebook.com/"))
-                    element.Hidden = false;
-                else
-                    element.Hidden = true;
-            }
-            else
-            {
-                element.Hidden = true;
-                element.Value = "No Value";
-            }
-
-            element.Name = "Facebook";
-                element.Type = "Link";
-                ElementsList.Add(element);
-            cmd = new SqlCommand("insert into Element (Name, Type, Value, Hidden, StoreEmail) values " +
-           "('" + element.Name + "','" + element.Type + "','" + element.Value + "','" + element.Hidden + "','" + element.StoreEmail + "')", con);
-            cmd.ExecuteNonQuery();
-
-
-            //Instagram Link
-            element = new Element();
-            element.StoreEmail = Session["user"].ToString();
-            if (store.InstagramLink != null)
-            {
-                element.Value = store.InstagramLink;
-                if (store.InstagramLink.ToLower().Contains("https://www.instagram.com/"))
-                    element.Hidden = false;
-                else
-                    element.Hidden = true;
-            }
-            else
-            {
-                element.Hidden = true;
-                element.Value = "No Value";
-            }
-
-            element.Name = "Instagram";
-            element.Type = "Link";
-            ElementsList.Add(element);
-            cmd = new SqlCommand("insert into Element (Name, Type, Value, Hidden, StoreEmail) values " +
-               "('" + element.Name + "','" + element.Type + "','" + element.Value + "','" + element.Hidden + "','" + element.StoreEmail + "')", con);
-            cmd.ExecuteNonQuery();
-
-
-            //Slider Element
-            element = new Element();
-            element.StoreEmail = Session["user"].ToString();
-            element.Name = "Slider";
-            element.Type = "Slider";
-            element.Value = store.Description;
-            element.Hidden = false;
-            element.Image = store.SliderImage;
-            ElementsList.Add(element);
-
-            cmd = new SqlCommand("insert into Element (Name, Type, Value, Hidden, StoreEmail, Image) values " +
-               "('"+element.Name+"','"+element.Type+"','" + element.Value + "','"+ element.Hidden +"','" + element.StoreEmail + "','" + element.Image + "')", con);
-            cmd.ExecuteNonQuery();
-
-            //About Element
-            element = new Element();
-            element.StoreEmail = Session["user"].ToString();
-            element.Name = "About";
-            element.Type = "About";
-            element.Value = store.Description;
-            element.Hidden = false;
-            element.Image = store.Logo;
-            ElementsList.Add(element);
-            cmd = new SqlCommand("insert into Element (Name, Type, Value, Hidden, StoreEmail, Image) values " +
-              "('" + element.Name + "','" + element.Type + "','" + element.Value + "','" + element.Hidden + "','" + element.StoreEmail + "','" + element.Image + "')", con);
-            cmd.ExecuteNonQuery();
-            con.Close();
-
-            Context.Response.Write(js.Serialize(store));
-            */
         }
     }
 
     [WebMethod(EnableSession = true)]
     public void GetTemplateID()
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -731,14 +598,15 @@ public class CreationStage : System.Web.Services.WebService
                 store.TemplateID = Convert.ToInt32(reader["TemplateID"]);
             }
         }
+
         Context.Response.Write(js.Serialize(store));
+
+        //return store;
     }
 
     [WebMethod(EnableSession = true)]
     public void GetColors()
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -753,13 +621,12 @@ public class CreationStage : System.Web.Services.WebService
             }
         }
         Context.Response.Write(js.Serialize(store));
+//        return store;
     }
 
     [WebMethod(EnableSession = true)]
     public void UpdateColors(string color1, string color2, string color3, string color4)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -771,15 +638,16 @@ public class CreationStage : System.Web.Services.WebService
             store.Color2 = color2;
             store.Color3 = color3;
             store.Color4 = color4;
+
             Context.Response.Write(js.Serialize(store));
+
+          //  return store;
         }
     }
 
     [WebMethod(EnableSession = true)]
     public void UpdateData(string address, string snapchat_link, string twitter_link, string facebook_link, string instagram_link)
     {
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -900,15 +768,14 @@ public class CreationStage : System.Web.Services.WebService
             cmd.ExecuteNonQuery();
 
             Context.Response.Write(js.Serialize(store));
+
+           // return store;
         }
     }
 
     [WebMethod(EnableSession = true)]
     public void UploadLogo(string logo)
     {
-
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -917,16 +784,16 @@ public class CreationStage : System.Web.Services.WebService
             con.Close();
 
             store.Logo = logo;
+
             Context.Response.Write(js.Serialize(store));
+
+            //return store;
         }
     }
 
     [WebMethod(EnableSession = true)]
     public void UpdateType(string type, string language)
     {
-
-        JavaScriptSerializer js = new JavaScriptSerializer();
-
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -935,7 +802,10 @@ public class CreationStage : System.Web.Services.WebService
             con.Close();
 
             store.Type = type;
+
             Context.Response.Write(js.Serialize(store));
+
+//            return store;
         }
     }
 

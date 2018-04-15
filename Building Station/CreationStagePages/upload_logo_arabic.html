@@ -12,15 +12,17 @@
     <!-- to display logo -->
     <img style="width:150px; height:auto;" ng-src="{{imageSrc}}" />
 
-    <div
-         ng-if="imageSrc"
+    <div ng-if="imageSrc"
          ng-init="getColors()">
     </div>
+    <span ng-show="imageSrc && BigImage" style="float:right; font-size:smaller;" class="alert-danger">حجم الصورة يجب أن يكون واحد ميغا أو أقل</span>
+    <span ng-show="imageSrc && NotImage" style="float:right; font-size:smaller;" class="alert-danger">.jpeg أو .png أو .jpg أو .gif يجب أن يكون الملف من نوع</span>
+
 </main>
 
     <div style="display:inline; overflow: auto;
                     white-space: nowrap; padding: 0px 0px;">
-        <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="7a" class="button button-large" data-toggle="tooltip" data-placement="right" title="التالي" ng-click="sendLogo()">&#8250;</a>
+        <button ng-disabled="NotImage || !imageSrc || BigImage" style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="7a" class="button button-large" data-toggle="tooltip" data-placement="right" title="التالي" ng-click="sendLogo()">&#8250;</button>
         <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="3.2a" class="button button-large" data-toggle="tooltip" data-placement="left" title="السابق">&#8249;</a>
     </div>
     <br>

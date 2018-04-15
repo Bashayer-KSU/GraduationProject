@@ -1,6 +1,4 @@
-﻿
-
-var app = angular.module("CraetionStageApp", ["ngRoute"])
+﻿var app = angular.module("CraetionStageApp", ["ngRoute"])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/0", {
@@ -72,12 +70,14 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
                 $rootScope.login = response;
                 if (response === "false") {
                     //redirect to login page
+                    //$window.open = ("http://www.buildingstation.somee.com/index.html", "_self");
                     location.href = "/index.html";
                 }
             });
         });
 
         $rootScope.Arabic = function () {
+            //$window.location.href = 'http://www.buildingstation.somee.com/CreationStageArabic.html';
             $window.location.href = '../CreationStageArabic.html';
         };
 
@@ -96,13 +96,14 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
     .controller("0Controller", function ($scope, $window, $rootScope) {
 
         $rootScope.Arabic = function () {
+            //$window.location.href = 'http://www.buildingstation.somee.com/CreationStageArabic.html';
             $window.location.href = '../CreationSatgeArabic.html';
         };
 
     })
     .controller("NameController", function ($scope, $http, $location) {
 
-        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {          
+        $http.get(/*'http://www.bsapplogic.somee.com/CreationStage.asmx/StoreInfo' */'CreationStage.asmx/StoreInfo').then(function (response) {          
             $scope.Store = response.data;
             if ($scope.Store.Name !== ' No StoreName ') {
                 $scope.storeName = $scope.Store.Name;
@@ -113,6 +114,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
 
             var post = $http({
                 method: "POST",
+                //url: "http://www.bsapplogic.somee.com/CreationStage.asmx/AddStoreName",
                 url: "CreationStage.asmx/AddStoreName",
                 dataType: 'json',
                 data: { name: $scope.storeName },
@@ -147,7 +149,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
     })
     .controller("TypeController", function ($scope, $http, $location) {
        
-        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+        $http.get('CreationStage.asmx/StoreInfo'/*'http://www.bsapplogic.somee.com/CreationStage.asmx/StoreInfo'*/).then(function (response) {
 
             $scope.Store = response.data;
             if ($scope.Store.Type !== 'No StoreType ') {
@@ -158,6 +160,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             var post = $http({
                 method: "POST",
                 url: "CreationStage.asmx/AddStoreType",
+                //url: "http://www.bsapplogic.somee.com/CreationStage.asmx/AddStoreType",
                 dataType: 'json',
                 data: { type: $scope.Type, language: 'English' },
                 headers: { "Content-Type": "application/json" }
@@ -223,6 +226,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
         $scope.savedata = function () {
             var post = $http({
                 method: "POST",
+                //url: "http://www.bsapplogic.somee.com/CreationStage.asmx/ConnectInstagram",
                 url: "CreationStage.asmx/ConnectInstagram",
                 dataType: 'json',
                 data: { link: 'https://www.instagram.com/'+ $scope.search + '/', logo: $scope.details.graphql.user.profile_pic_url, descripton: $scope.details.graphql.user.biography, name: $scope.details.graphql.user.full_name },
@@ -235,6 +239,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             //var File_Path = $scope.imageSrc;
             //    alert($scope.imageSrc);
             $http({
+                //url: "http://www.bsapplogic.somee.com/manageWebsiteColors.asmx/GetWebsiteColors",
                 url: "manageWebsiteColors.asmx/GetWebsiteColors",
                 dataType: 'json',
                 method: "POST",
@@ -254,7 +259,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
     })
     .controller("InfoController", function ($scope, $http, $location) {
 
-        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+        $http.get('CreationStage.asmx/StoreInfo'/*'http://www.bsapplogic.somee.com/CreationStage.asmx/StoreInfo'*/).then(function (response) {
 
             $scope.Store = response.data;
             if ($scope.Store.Address !== 'No  Location ') {
@@ -289,6 +294,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
                 post.then(function (response) { }, function (error) { });*/
 
             $http.post(
+                //"http://www.bsapplogic.somee.com/CreationStage.asmx/UpdateData",
                 "CreationStage.asmx/UpdateData",
                 $.param({
                     address: $scope.Address,
@@ -316,7 +322,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
               $window.location.href = '../CreationStageArabic.html';
           };
       })*/
-    .controller("UploadLogoController", function ($scope, fileReader, $http) {
+    .controller("UploadLogoController", function ($scope, fileReader, $http, $location) {
         filePath = $scope.imageSrc;
         $scope.$on("fileProgress", function (e, progress) {
             $scope.progress = progress.loaded / progress.total;
@@ -325,6 +331,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
             //var File_Path = $scope.imageSrc;
             //    alert($scope.imageSrc);
             $http({
+                //url: "http://www.bsapplogic.somee.com/manageWebsiteColors.asmx/GetWebsiteColors",
                 url: "manageWebsiteColors.asmx/GetWebsiteColors",
                 dataType: 'json',
                 method: "POST",
@@ -350,12 +357,14 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
         $scope.sendLogo = function () {
             var post = $http({
                 method: "POST",
+               // url: "http://www.bsapplogic.somee.com/CreationStage.asmx/UploadLogo",
                 url: "CreationStage.asmx/UploadLogo",
                 dataType: 'json',
                 data: { logo: $scope.imageSrc },
                 headers: { "Content-Type": "application/json" }
             })
                 .then(function (response) { }, function (error) { });
+            $location.path('/7');
         };
     })
     /* .controller("5Controller", function ($scope, $rootScope, $window) {
@@ -370,7 +379,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
      })*/
     .controller("DisplayAccountController", function ($scope, $http) {
 
-        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+        $http.get('CreationStage.asmx/StoreInfo'/*'http://www.bsapplogic.somee.com/CreationStage.asmx/StoreInfo'*/).then(function (response) {
 
             $scope.Store = response.data;
 
@@ -398,7 +407,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
         });
     })
     .controller("ColorsController", function ($scope, $http) {
-        $http.get('CreationStage.asmx/GetColors').then(function (response) {
+        $http.get('CreationStage.asmx/GetColors'/*'http://www.bsapplogic.somee.com/CreationStage.asmx/GetColors'*/).then(function (response) {
 
             $scope.Colors = response.data;
         }, function (error) {
@@ -409,6 +418,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
 
             var post = $http({
                 method: "POST",
+                //url: "http://www.bsapplogic.somee.com/CreationStage.asmx/UpdateColors",
                 url: "CreationStage.asmx/UpdateColors",
                 dataType: 'json',
                 data: { color1: $scope.Colors.Color1, color2: $scope.Colors.Color2, color3: $scope.Colors.Color3, color4: $scope.Colors.Color4 },
@@ -464,6 +474,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
                 var post = $http({
                     method: "POST",
                     url: "CreationStage.asmx/AddTemplate",
+                    //url: "http://www.bsapplogic.somee.com/CreationStage.asmx/AddTemplate",
                     dataType: 'json',
                     data: { id: TemplateID },
                     headers: { "Content-Type": "application/json" }
@@ -480,7 +491,7 @@ var app = angular.module("CraetionStageApp", ["ngRoute"])
     });*/
 
 //to upload image
-app.directive("ngFileSelect", function (fileReader, $timeout) {
+app.directive("ngFileSelect", function (fileReader, $timeout, $rootScope) {
     return {
         scope: {
             ngModel: '='
@@ -498,7 +509,23 @@ app.directive("ngFileSelect", function (fileReader, $timeout) {
             }
 
             el.bind("change", function (e) {
+                var fileSize = this.files[0].size;
+                var checkSize = fileSize > 1100000;
+
+                $rootScope.BigImage = checkSize;
+
                 var file = (e.srcElement || e.target).files[0];
+
+                var allowed = ["jpeg", "png", "gif", "jpg"];
+                var found = false;
+                var fileType = this.files[0].type;
+                allowed.forEach(function (extension) {
+
+                    if (fileType === ("image/" + extension)) {
+                        found = true;
+                    }
+                });
+                $rootScope.NotImage = !found;
                 getFile(file);
             });
         }
@@ -554,7 +581,7 @@ app.factory("fileReader", function ($q, $log) {
 });
 app.factory('loginService', function ($http) {
     var login = function () {
-        return $http.post('/RegisterLogin.asmx/CheckUser').then(function (msg) {
+        return $http.post('RegisterLogin.asmx/CheckUser'/*'http://www.bsapplogic.somee.com/RegisterLogin.asmx/CheckUser'*/).then(function (msg) {
             return msg.data;
         });
     };

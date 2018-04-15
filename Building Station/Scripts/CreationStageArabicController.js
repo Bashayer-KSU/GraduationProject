@@ -296,7 +296,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $window.location.href = '../CreationStage.html';
         };
     })*/
-    .controller("UploadLogoController", function ($scope, fileReader, $http) {
+    .controller("UploadLogoController", function ($scope, fileReader, $http, $location) {
 
         filePath = $scope.imageSrc;
         $scope.$on("fileProgress", function (e, progress) {
@@ -337,6 +337,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 headers: { "Content-Type": "application/json" }
             })
                 .then(function (response) { }, function (error) { });
+            $location.path("/7a");
         };
     })
  /*   .controller("5aController", function ($scope, $rootScope, $window) {
@@ -480,7 +481,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })*/
 
 //to upload image
-app.directive("ngFileSelect", function (fileReader, $timeout) {
+app.directive("ngFileSelect", function (fileReader, $timeout, $rootScope) {
     return {
         scope: {
             ngModel: '='
@@ -498,7 +499,23 @@ app.directive("ngFileSelect", function (fileReader, $timeout) {
             }
 
             el.bind("change", function (e) {
+                var fileSize = this.files[0].size;
+                var checkSize = fileSize > 1100000;
+
+                $rootScope.BigImage = checkSize;
+
                 var file = (e.srcElement || e.target).files[0];
+
+                var allowed = ["jpeg", "png", "gif", "jpg"];
+                var found = false;
+                var fileType = this.files[0].type;
+                allowed.forEach(function (extension) {
+
+                    if (fileType === ("image/" + extension)) {
+                        found = true;
+                    }
+                });
+                $rootScope.NotImage = !found;
                 getFile(file);
             });
         }

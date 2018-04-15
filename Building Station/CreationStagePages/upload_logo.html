@@ -12,15 +12,16 @@
     <!-- to display logo -->
     <img style="width:150px; height:auto;" ng-src="{{imageSrc}}" />
 
-    <div 
-         ng-if="imageSrc"
+    <div ng-if="imageSrc"
          ng-init="getColors()">
     </div>
+    <span ng-show="imageSrc && BigImage" style="font-size:smaller;" class="alert-danger">image size must be 1MB or lise</span>
+    <span ng-show="imageSrc && NotImage" style="font-size:smaller;" class="alert-danger">file type should be .jpeg, .png, .jpg, .gif</span>
 </main>
 
 <div style="display:inline; overflow: auto;
                 white-space: nowrap; padding: 0px 0px;">
-    <a style="float: right; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="7" class="button button-large" data-toggle="tooltip" data-placement="right" title="Next" ng-click="sendLogo()">&#8250;</a>
+    <button ng-disabled="NotImage || !imageSrc || BigImage" style="float: right; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="7" class="button button-large" data-toggle="tooltip" data-placement="right" title="Next" ng-click="sendLogo()">&#8250;</button>
     <a style="float: left; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="3.2" class="button button-large" data-toggle="tooltip" data-placement="left" title="Previous">&#8249;</a>
 </div>
 <br>

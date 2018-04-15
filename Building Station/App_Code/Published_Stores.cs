@@ -16,8 +16,8 @@ using System.Web.Services;
 [System.Web.Script.Services.ScriptService]
 public class Published_Stores : System.Web.Services.WebService
 {
-    //string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-    string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
+    string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+    //string cs = "workstation id=BS-Database.mssql.somee.com;packet size=4096;user id=BuildingStation_SQLLogin_1;pwd=fdowma8mzh;data source=BS-Database.mssql.somee.com;persist security info=False;initial catalog=BS-Database";
 
     JavaScriptSerializer js = new JavaScriptSerializer();
 
@@ -26,14 +26,7 @@ public class Published_Stores : System.Web.Services.WebService
 
     List<Element> ElementsList = new List<Element>();
     public Element e = new Element();
-
-    public Published_Stores()
-    {
-
-        //Uncomment the following line if using designed components 
-        //InitializeComponent(); 
-    }
-
+    
     [WebMethod(EnableSession = true)]
     public void PublishRequest()
     {
@@ -95,6 +88,8 @@ public class Published_Stores : System.Web.Services.WebService
             }
         }
         Context.Response.Write(js.Serialize(store));
+
+       // return store;
     }
 
     [WebMethod(EnableSession = true)]
@@ -114,7 +109,6 @@ public class Published_Stores : System.Web.Services.WebService
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
-
             SqlCommand cmd = new SqlCommand("SELECT WebsiteDomain FROM Store WHERE Email ='" + Session["user"] + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
@@ -135,6 +129,7 @@ public class Published_Stores : System.Web.Services.WebService
             }
         }
         Context.Response.Write(js.Serialize(store));
+//        return store;
     }
 
     [WebMethod(EnableSession = true)]
@@ -151,6 +146,7 @@ public class Published_Stores : System.Web.Services.WebService
             store.Published = false;
         }
         Context.Response.Write(js.Serialize(store));
+//        return store;
     }
 
     [WebMethod(EnableSession = true)]
@@ -200,7 +196,12 @@ public class Published_Stores : System.Web.Services.WebService
                 store.Password = "incorrect";
             }
             Context.Response.Write(js.Serialize(store));
+
+         //   return store;
         }
+        Context.Response.Write(js.Serialize(null));
+
+      //  return null;
     }
 
     [WebMethod]
@@ -221,6 +222,7 @@ public class Published_Stores : System.Web.Services.WebService
         }
         //  HttpContext.Current.Response.Write(js.Serialize(store));
         Context.Response.Write(js.Serialize(TID));
+        //return TID;
     }
 
     [WebMethod]
@@ -335,11 +337,12 @@ public class Published_Stores : System.Web.Services.WebService
             con.Close();
         }
         Context.Response.Write(js.Serialize(store));
+//        return store;
     }
 
     [WebMethod]
     public void GetElements(string StoreDomain)
-    {
+    { // List<Element
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -377,11 +380,13 @@ public class Published_Stores : System.Web.Services.WebService
             }
         }
         Context.Response.Write(js.Serialize(ElementsList));
+
+        //return ElementsList;
     }
 
     [WebMethod]
     public void GetAllCategories(string StoreDomain)
-    {
+    { // List<Categories> 
         List<Categories> categories = new List<Categories>();
         //insert selected colors to database
         using (SqlConnection con = new SqlConnection(cs))
@@ -411,13 +416,14 @@ public class Published_Stores : System.Web.Services.WebService
             }
         }
         //\insert selected colors to database
-        JavaScriptSerializer js = new JavaScriptSerializer();
+
         Context.Response.Write(js.Serialize(categories));
+        //return categories;
     }
 
     [WebMethod]
     public void GetAllProducts(string category, string StoreDomain)
-    {
+    { // List<Product>
         List<Product> ProductsList = new List<Product>();
         using (SqlConnection con = new SqlConnection(cs))
         {
@@ -465,8 +471,8 @@ public class Published_Stores : System.Web.Services.WebService
                 }
             }
         }
-        JavaScriptSerializer js = new JavaScriptSerializer();
         Context.Response.Write(js.Serialize(ProductsList));
+//        return ProductsList;
     }
 
     [WebMethod]
@@ -536,9 +542,12 @@ public class Published_Stores : System.Web.Services.WebService
         if (result1 && result2)
         {
             Context.Response.Write(js.Serialize(true));
+
+            //return true;
         }
         else
             Context.Response.Write(js.Serialize(false));
+        //return false;
     }
 
     /* [WebMethod] //Temp for Asmaa
