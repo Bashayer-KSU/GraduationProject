@@ -19,5 +19,35 @@ namespace UnitTestBuildingStation
             //Assert
             Assert.AreEqual(expected, actual);
         }
+
+
+        [TestMethod]
+        public void Test_PublishRequest()
+        {
+            //Arrange
+            string expected = "No Payment Methods";
+            string email = "asmaa@mail.com";
+
+            //Act
+            string actual = BuildingStationLClassLibrary.Published_Stores.PublishRequest(email);
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Test_Publish()
+        {
+            //Arrange
+            string expected = "SarahSweets";
+            string email = "asmaa@mail.com";
+
+            //Act
+            string actual = BuildingStationLClassLibrary.Published_Stores.Publish(email);
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
     }
 }

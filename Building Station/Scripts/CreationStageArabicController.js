@@ -470,7 +470,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                     headers: { "Content-Type": "application/json" }
                 });
 
-                $window.location.href = '/Basic.html';
+                $window.location.href = 'http://localhost:50277/EDITandINFO';
             }
         };
     });

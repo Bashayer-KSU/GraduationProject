@@ -480,7 +480,7 @@
                     headers: { "Content-Type": "application/json" }
                 });
 
-                $window.location.href = '/Views/BasicE.html';
+                $window.location.href = 'http://localhost:50277/EDITandINFO-English';
             }
         };
     });

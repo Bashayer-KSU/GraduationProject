@@ -55,9 +55,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\BuildingStationLClassLibrary\BuildingStationLClassLibrary.csproj">
       <Project>{415e1d67-0215-4be5-8a34-328ac891c67d}</Project>
       <Name>BuildingStationLClassLibrary</Name>
