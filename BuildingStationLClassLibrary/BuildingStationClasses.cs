@@ -30,10 +30,9 @@ namespace BuildingStationLClassLibrary
         {
             string Published = "false";
             string paymentmethods = "No Payment Methods";
-            string domain = "SarahSweets";
-          
+            string domain = "asmaaStore";
 
-             return paymentmethods;
+            return paymentmethods;
         }
 
         public static string Publish(string email)
@@ -42,6 +41,27 @@ namespace BuildingStationLClassLibrary
             string domain = "SarahSweets";
 
             return domain;
+        }
+
+        public static Boolean UnPublishRequest(string email)
+        {
+            bool Published = false;
+
+            return Published;
+        }
+
+        public static Boolean UnPublish(string email)
+        {
+            bool Published = false;
+
+            return Published;
+        }
+
+        public static string DeleteStore(string email, string password)
+        {
+            string pass = "incorrect password";
+
+            return pass;
         }
     }
 }
