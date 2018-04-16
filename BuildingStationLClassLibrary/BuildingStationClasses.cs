@@ -1,4 +1,6 @@
 ﻿using System;
+//using CloudinaryDotNet;
+//using CloudinaryDotNet.Actions;
 
 namespace BuildingStationLClassLibrary
 {
@@ -62,6 +64,56 @@ namespace BuildingStationLClassLibrary
             string pass = "incorrect password";
 
             return pass;
+        }        
+    }
+
+    public class LogoColors
+    {
+        public static Colors GetLogoColors(string logoPath)
+        {
+
+            Colors selectedColors = new Colors();
+            // our account in cloudinary 
+            CloudinaryDotNet.Account account =
+                                new CloudinaryDotNet.Account("dkejtwcc6", "799652649934124", "N6eQmnp7-66vxt3IMIpC-z0ijDw");
+
+            CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
+            //\our account in cloudinary
+
+            // to upload logo
+            var uploadParams = new ImageUploadParams()
+            {
+                File = new FileDescription(path),//file path
+                Colors = true
+            };
+            var uploadResult = cloudinary.Upload(uploadParams);
+            //\to upload logo
+
+            //extract colors
+            var s = uploadResult.Colors;
+            if (s.Length >= 4)
+            {
+                selectedColors.color1 = s[0][0];
+                selectedColors.color2 = s[1][0];
+                selectedColors.color3 = s[2][0];
+                selectedColors.color4 = s[3][0];
+            }
+            else if (s.Length == 3)
+            {
+                selectedColors.color1 = s[0][0];
+                selectedColors.color2 = s[1][0];
+                selectedColors.color3 = selectedColors.color4 = s[2][0];
+            }
+            else if (s.Length == 2)
+            {
+                selectedColors.color1 = selectedColors.color3 = s[0][0];
+                selectedColors.color2 = selectedColors.color4 = s[1][0];
+            }
+            else if (s.Length == 1)
+                selectedColors.color1 = selectedColors.color3 = selectedColors.color2 = selectedColors.color4 = s[0][0];
+            //\extract colors
+
+            return selectedColors;
         }
     }
 }

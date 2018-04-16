@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestBuildingStation
@@ -88,6 +89,24 @@ namespace UnitTestBuildingStation
 
             //Assert
             Assert.AreEqual(expected, actual);
+        }
+
+        public void Test_getLogoColors()
+        {
+            //Arrange
+            List<string> ExpectedColors = new List<string>();
+             ExpectedColors[0] = "#DACDC3";
+             ExpectedColors[1] = "#D29B74";
+             ExpectedColors[2] = "#7D8B90";
+             ExpectedColors[3] = "#E0BE73";
+            string Logo = @"C:\Users\star7\OneDrive\Desktop\ONLINE SHOPS PIC's\-2- Sweets";
+
+
+            //Act
+             string[] actual = BuildingStationLClassLibrary.LogoColors.GetLogoColors(Logo);
+
+            //Assert
+            Assert.AreEqual(ExpectedColors, actual);
         }
     }
 }

@@ -193,7 +193,7 @@ public class Products : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void EditProduct(int id, string cat, string image, string name, string des, double price, double PADs, int amount, int discount)
+    public Product EditProduct(int id, string cat, string image, string name, string des, double price, double PADs, int amount, int discount)
     {
         int x;
         Product product = new Product();
@@ -231,19 +231,18 @@ public class Products : System.Web.Services.WebService
                 }
             }
         }
-        Context.Response.Write(js.Serialize(product));
-       // return product;
+      //  Context.Response.Write(js.Serialize(product));
+       return product;
     }
 
     [WebMethod(EnableSession = true)]
-    public void AddNewProduct(string category, string image, string name, string des, double price, int amount, int discount)
+    public Product AddNewProduct(string category, string image, string name, string des, double price, int amount, int discount)
 
     {
         int catID = getCategoryID(category);
         Product product = new Product();
         if (catID != -1)
         {
-
             int rows;
             using (SqlConnection con = new SqlConnection(cs))
             {
@@ -274,8 +273,8 @@ public class Products : System.Web.Services.WebService
                 else { product.PriceAfterDiscount = 0; }
             }
         }
-        Context.Response.Write(js.Serialize(product));
-    //    return product;
+        //Context.Response.Write(js.Serialize(product));
+        return product;
     }
 
     [WebMethod(EnableSession = true)]
