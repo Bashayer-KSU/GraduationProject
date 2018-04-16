@@ -329,9 +329,9 @@
 
                     <!--Bank Transfer Form-->
                     <div class="row" style="text-align:center;">
-                        <div class="col-md-6 col-md-offset-6 center-block bankTransfer" align="center" style="float:none; text-align:center;">
+                        <div class="col-md-6 col-md-offset-6 center-block bankTransfer" align="center" style="float:none; text-align:center;" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()">
                             <form name="IBAN" class="check-element animate-show-hide" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()" style="display:inline; width:40%">
-                               <br />
+                                <br />
                                 <label for="IBAN">لتسهيل عملية التحويل البنكي ، نرجو ادخال رقم الايبان الخاص بك</label>
                                 <div class="input-group">
                                     <span ng-show="!editIBAN" class="input-group-btn">
@@ -350,15 +350,15 @@
                         </div>
                     </div>
                     <div class="row" style="text-align:center;">
-                        <div class="col-md-6 col-md-offset-6 center-block bankTransfer" align="center" style="float:none; text-align:center;">
+                        <div class="col-md-6 col-md-offset-6 center-block bankTransfer" align="center" style="float:none; text-align:center;" ng-show="checkboxPayment.paypal" ng-model="PayPalInfo" ng-init="GetPayPalInfo()">
                             <form name="PayPal" class="check-element animate-show-hide" ng-show="checkboxPayment.paypal" ng-model="PayPalInfo" ng-init="GetPayPalInfo()" style="display:inline; width:40%">
                                 <br />
                                 <label for="PayPal"> أدخل البريد الإلكتروني المستخدم لحسابك في باي بال </label>
-                                    <input dir="rtl" type="text" class="form-control validate" name="PayPalEmail" ng-model="PayPalInfo.PayPalEmail" id="PayPalEmail" ng-disabled="!editPayPal" placeholder="البريد الإلكتروني" required>
+                                <input dir="rtl" type="text" class="form-control validate" name="PayPalEmail" ng-model="PayPalInfo.PayPalEmail" id="PayPalEmail" ng-disabled="!editPayPal" placeholder="البريد الإلكتروني" required>
                                 <p class=" alert alert-danger" ng-show="!PayPal.PayPalEmail.$valid">هذا الحقل مطلوب.</p>
                                 <br />
                                 <label for="PayPal">أدخل العملة المستخدمة عند التحويل في باي بال</label>
-                                    <input dir="rtl" type="text" class="form-control validate" name="PayPalCurrency" ng-model="PayPalInfo.PayPalCurrencey" id="PayPalCurrency" ng-disabled="!editPayPal" placeholder="العملة">
+                                <input dir="rtl" type="text" class="form-control validate" name="PayPalCurrency" ng-model="PayPalInfo.PayPalCurrencey" id="PayPalCurrency" ng-disabled="!editPayPal" placeholder="العملة">
                                 <br />
                                 <span ng-show="!editPayPal" class="input-group-btn">
                                     <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="editPayPal = true" class="btn" style="float:left;">تعديل</button>
