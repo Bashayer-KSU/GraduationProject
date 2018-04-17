@@ -5,6 +5,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <COMReference Include="TxDataConvert.dll">
+      <Guid>6865bb41-06e6-42a5-9738-e5b7780667ee</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+    </COMReference>
+    <COMReference Include="TxGroupDups.dll">
+      <Guid>ba2f002e-d82e-4458-b4ef-d43a67c79a53</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="PeinearyDevelopment.Framework.Data" Version="1.0.4" />
   </ItemGroup>
 

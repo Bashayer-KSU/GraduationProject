@@ -129,6 +129,13 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 alert(" ?? " + currentState);
             }
         )*/
+        $rootScope.Logout = function () {
+            $http.get('/RegisterLogin.asmx/SignOut').then(function (response) {
+
+                $rootScope.result = response.data;
+                location.href = $rootScope.result.substr(1, $rootScope.result.length - 2);
+            });
+        };
         $rootScope.$on("$locationChangeSuccess", function () {
             loginService.login().then(function (response) {
             //    console.log($state);
@@ -567,12 +574,9 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
     })
     .controller("BS-Menu-EnglishCTRL", function ($http, $scope, $location, $rootScope, $mdDialog, $window) {
-        $rootScope.Logout = function () {
-            $http.get('/RegisterLogin.asmx/SignOut').then(function (response) {
-
-                $rootScope.result = response.data;
-                location.href = $rootScope.result.substr(1, $rootScope.result.length - 2);
-            });
+       
+        $scope.Logout = function () {
+            $rootScope.Logout();
         };
 
         $rootScope.Arabic = function () {
@@ -919,7 +923,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                         $scope.PayPalInfo = response.data;
                     }
                     else {
-                        $scope.PayPalInfo = "";
+                        $scope.PayPalInfo = {};
                     }
                 }, function (error) {
                     $scope.error = error.data;
@@ -929,7 +933,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.UpdateBankInfo = function () {
             var IBAN = $scope.bankInfo.IBAN;
 
-            if (IBAN !== "" && IBAN !== null) {
+            if (IBAN !== {} && IBAN !== null) {
                 $http({
                     url: "/PaymentMethods.asmx/UpdateBankInfo",
                     method: "get",
@@ -962,7 +966,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                         $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
                     }
                     else {
-                        $scope.bankInfo.IBAN = "";
+                        $scope.bankInfo.IBAN = {};
                     }
 
                 }, function (error) {
@@ -1760,15 +1764,9 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         //\to remove row
     })
     .controller("BS-Menu-ArabicCTRL", function ($http, $scope, $rootScope, $location, loginService, $mdDialog, $window /*, $dialogs, $templateCache*/) {
-
-        $rootScope.Logout = function () {
-            $http.get('/RegisterLogin.asmx/SignOut').then(function (response) {
-
-                $rootScope.result = response.data;
-                location.path = $rootScope.result.substr(1, $rootScope.result.length - 2);
-            });
+        $scope.Logout = function () {
+            $rootScope.Logout();
         };
-
         $rootScope.English = function () {
             $location.path('/EDITandINFO-English');
           //  $window.location.href = "Views/BasicE.html";
@@ -2155,7 +2153,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                         $scope.PayPalInfo = response.data;
                     }
                     else {
-                        $scope.PayPalInfo = "";
+                        $scope.PayPalInfo = {};
                     }
                 }, function (error) {
                     $scope.error = error.data;
@@ -2165,7 +2163,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.UpdateBankInfo = function () {
             var IBAN = $scope.bankInfo.IBAN;
 
-            if (IBAN !== "" && IBAN !== null) {
+            if (IBAN !== {} && IBAN !== null) {
                 $http({
                     url: "/PaymentMethods.asmx/UpdateBankInfo",
                     method: "get",
@@ -2198,7 +2196,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                         $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
                     }
                     else {
-                        $scope.bankInfo.IBAN = "";
+                        $scope.bankInfo.IBAN = {};
                     }
 
                 }, function (error) {
