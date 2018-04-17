@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BuildingStationLClassLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestBuildingStation
@@ -103,7 +104,7 @@ namespace UnitTestBuildingStation
 
 
             //Act
-             string[] actual = BuildingStationLClassLibrary.LogoColors.GetLogoColors(Logo);
+             Colors actual = BuildingStationLClassLibrary.LogoColors.GetLogoColors(Logo);
 
             //Assert
             Assert.AreEqual(ExpectedColors, actual);

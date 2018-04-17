@@ -1,6 +1,14 @@
-﻿using System;
-//using CloudinaryDotNet;
-//using CloudinaryDotNet.Actions;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using System;
+using System.Linq;
+using System.Text;
+using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Configuration;
+using System.Data.Entity;
+using System.Data.SqlClient;
+
 
 namespace BuildingStationLClassLibrary
 {
@@ -28,6 +36,8 @@ namespace BuildingStationLClassLibrary
     // ادري انه غباء وما يشبه الاصل بس لازم لانه ما يشوف الداتابيس
     public class Published_Stores
     {
+        string cs = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+
         public static string PublishRequest(string email)
         {
             string Published = "false";
@@ -47,8 +57,29 @@ namespace BuildingStationLClassLibrary
 
         public static Boolean UnPublishRequest(string email)
         {
-            bool Published = false;
+            Store store = new Store();
+            bool Published;
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT WebsiteDomain FROM Store WHERE Email ='" + email + "'", con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    store.Domain = reader["WebsiteDomain"].ToString();
+                }
+                reader.Close();
+                con.Close();
 
+                if (store.Domain.Equals("No WebsiteDomain"))
+                {
+                    Published = false;
+                }
+                else
+                {
+                    Published = true;
+                }
+            }
             return Published;
         }
 
@@ -74,8 +105,7 @@ namespace BuildingStationLClassLibrary
 
             Colors selectedColors = new Colors();
             // our account in cloudinary 
-            CloudinaryDotNet.Account account =
-                                new CloudinaryDotNet.Account("dkejtwcc6", "799652649934124", "N6eQmnp7-66vxt3IMIpC-z0ijDw");
+            CloudinaryDotNet.Account account = new CloudinaryDotNet.Account("dkejtwcc6", "799652649934124", "N6eQmnp7-66vxt3IMIpC-z0ijDw");
 
             CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
             //\our account in cloudinary
@@ -83,7 +113,7 @@ namespace BuildingStationLClassLibrary
             // to upload logo
             var uploadParams = new ImageUploadParams()
             {
-                File = new FileDescription(path),//file path
+                File = new FileDescription(logoPath),//file path
                 Colors = true
             };
             var uploadResult = cloudinary.Upload(uploadParams);
