@@ -745,7 +745,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
 
         $scope.tabHeader = "Manage Store";
-        $scope.templatew = "";
         $scope.transactions = true;
         $scope.BestCategories = [];
         $scope.BestProducts = [];
@@ -819,51 +818,18 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 series: $scope.BestProducts
             }
         };
-
         $scope.acceptPayment = function () {
             var Paypal = $scope.checkboxPayment.paypal;
             var BankTransfer = $scope.checkboxPayment.bankTransfer;
             var Cash = $scope.checkboxPayment.cash;
-          /*  var data = {
-                paypal: Paypal, bankTransfer: BankTransfer,
-                cash: Cash
-            };*/
-
-            var data = { 'paypal': Paypal, 'bankTransfer': BankTransfer, 'cash': Cash };
-
-             /*  $http({
-                url: "/PaymentMethods.asmx/AcceptPaymentMethods",
-                method: "get",
-                params: { paypal: Paypal, bankTransfer: BankTransfer, cash: Cash }
-            })*/
-            /*
-            $http.post(
-                "/PaymentMethods.asmx/AcceptPaymentMethods",
-                $.param({
-                    paypal: Paypal,
-                    bankTransfer: BankTransfer,
-                    cash: Cash
-                }),
-                {
-                    headers: {
-                        'Content-Type': 'application/json; charset=utf-8;'
-                    }
-                })*/
 
             $http({
-                url: "/PaymentMethods.asmx/AcceptPaymentMethods",
-                data: "json=" + JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
+                url: "PaymentMethods.asmx/AcceptPaymentMethods",
+                method: "get",
+                params: { paypal: Paypal, bankTransfer: BankTransfer, cash: Cash }
             })
                 .then(function (response) {
                     $scope.result = response.data;
-                    if (response.data.paypal === true)
-                        alert("paypal " + response.data.paypal);
-                    if (response.data.bankTransfer === true)
-                        alert("bankTransfer " + response.data.bankTransfer);
-                    if (response.data.cash === true)
-                        alert("cash " + response.data.cash);
                 }, function (error) {
                     $scope.error = error.data;
                 });
@@ -876,7 +842,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.checkedPayment = function () {
             $http({
-                url: "/PaymentMethods.asmx/GetPaymentMethods",
+                url: "PaymentMethods.asmx/GetPaymentMethods",
                 method: "get",
                 params: {}
             })
@@ -884,12 +850,11 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     $scope.checkboxPayment.paypal = response.data.Paypal;
                     $scope.checkboxPayment.cash = response.data.Cash;
                     $scope.checkboxPayment.bankTransfer = response.data.BankTransfer;
-
                 }, function (error) {
                     $scope.error = error.data;
                 });
         };
-
+        
         //PayPal
         $scope.editPayPal = false;
 
@@ -919,11 +884,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 params: {}
             })
                 .then(function (response) {
-                    if (!response.data === "No Value") {
+                    if (!(response.data.PayPalEmail.includes("No Value"))) {
                         $scope.PayPalInfo = response.data;
-                    }
-                    else {
-                        $scope.PayPalInfo = {};
                     }
                 }, function (error) {
                     $scope.error = error.data;
@@ -932,7 +894,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.UpdateBankInfo = function () {
             var IBAN = $scope.bankInfo.IBAN;
-
             if (IBAN !== {} && IBAN !== null) {
                 $http({
                     url: "/PaymentMethods.asmx/UpdateBankInfo",
@@ -942,7 +903,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     .then(function (response) {
                         $scope.bankInfo.IBAN = response.data;
                         $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-                        $scope.editIBAN = false;
+                       $scope.editIBAN = false;
                     }, function (error) {
                         $scope.error = error.data;
                     });
@@ -964,9 +925,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     if (!response.data.includes("No ShopOwnerBank")) {
                         $scope.bankInfo.IBAN = response.data;
                         $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-                    }
-                    else {
-                        $scope.bankInfo.IBAN = {};
                     }
 
                 }, function (error) {
@@ -1981,7 +1939,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
 
         $scope.tabHeader = "Manage Store";
-        $scope.templatew = "";
         $scope.transactions = true;
         $scope.BestCategories = [];
         $scope.BestProducts = [];
@@ -2061,39 +2018,13 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             var BankTransfer = $scope.checkboxPayment.bankTransfer;
             var Cash = $scope.checkboxPayment.cash;
 
-            var data = { 'paypal': Paypal, 'bankTransfer': BankTransfer, 'cash': Cash };
-
-          /*  $http({
-                url: "/PaymentMethods.asmx/AcceptPaymentMethods",
-                method: "post",
-                params: { paypal: Paypal, bankTransfer: BankTransfer, cash: Cash }
-            })*/
             $http({
-                url: "/PaymentMethods.asmx/AcceptPaymentMethods",
-                data: "json=" + JSON.stringify(data),
-                    contentType: "application/json; charset=utf-8",
-                dataType: "json",
+                url: "PaymentMethods.asmx/AcceptPaymentMethods",
+                method: "get",
+                params: { paypal: Paypal, bankTransfer: BankTransfer, cash: Cash }
             })
-          /*  $http.post(
-                "/PaymentMethods.asmx/AcceptPaymentMethods",
-                $.param({
-                    paypal: Paypal,
-                    bankTransfer: BankTransfer,
-                    cash: Cash
-                }),
-                {
-                    headers: {
-                        'Content-Type': 'application/json; charset=utf-8;'
-                    }
-                })*/
                 .then(function (response) {
                     $scope.result = response.data;
-                    if (response.data.paypal === true)
-                        alert("paypal " + response.data.paypal);
-                    if (response.data.bankTransfer === true)
-                        alert("bankTransfer " + response.data.bankTransfer);
-                    if (response.data.cash === true)
-                        alert("cash " + response.data.cash);
                 }, function (error) {
                     $scope.error = error.data;
                 });
@@ -2106,7 +2037,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.checkedPayment = function () {
             $http({
-                url: "/PaymentMethods.asmx/GetPaymentMethods",
+                url: "PaymentMethods.asmx/GetPaymentMethods",
                 method: "get",
                 params: {}
             })
@@ -2114,7 +2045,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     $scope.checkboxPayment.paypal = response.data.Paypal;
                     $scope.checkboxPayment.cash = response.data.Cash;
                     $scope.checkboxPayment.bankTransfer = response.data.BankTransfer;
-
                 }, function (error) {
                     $scope.error = error.data;
                 });
@@ -2149,11 +2079,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 params: {}
             })
                 .then(function (response) {
-                    if (!response.data === "No Value") {
+                    if (!(response.data.PayPalEmail.includes("No Value"))) {
                         $scope.PayPalInfo = response.data;
-                    }
-                    else {
-                        $scope.PayPalInfo = {};
                     }
                 }, function (error) {
                     $scope.error = error.data;
@@ -2162,7 +2089,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.UpdateBankInfo = function () {
             var IBAN = $scope.bankInfo.IBAN;
-
             if (IBAN !== {} && IBAN !== null) {
                 $http({
                     url: "/PaymentMethods.asmx/UpdateBankInfo",
@@ -2194,9 +2120,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     if (!response.data.includes("No ShopOwnerBank")) {
                         $scope.bankInfo.IBAN = response.data;
                         $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-                    }
-                    else {
-                        $scope.bankInfo.IBAN = {};
                     }
 
                 }, function (error) {

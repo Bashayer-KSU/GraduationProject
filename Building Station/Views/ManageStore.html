@@ -338,7 +338,7 @@
                                         <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="editIBAN = true" class="btn"> تعديل</button>
                                     </span>
                                     <span ng-show="editIBAN" class="input-group-btn">
-                                        <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdateBankInfo()" class="btn">إضافة</button>
+                                        <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdateBankInfo()" class="btn">تحديث</button>
                                     </span>
                                     <input type="text" class="form-control validate" name="bankInfoIBAN" ng-model="bankInfo.IBAN" id="IBAN" ng-disabled="!editIBAN" placeholder="أدخل الايبان" required style="text-align:right;">
                                 </div>
@@ -355,7 +355,7 @@
                                 <br />
                                 <label for="PayPal"> أدخل البريد الإلكتروني المستخدم لحسابك في باي بال </label>
                                 <input dir="rtl" type="text" class="form-control validate" name="PayPalEmail" ng-model="PayPalInfo.PayPalEmail" id="PayPalEmail" ng-disabled="!editPayPal" placeholder="البريد الإلكتروني" required>
-                                <p class=" alert alert-danger" ng-show="!PayPal.PayPalEmail.$valid">هذا الحقل مطلوب.</p>
+                                <p class=" alert alert-danger" ng-show="!PayPal.PayPalEmail.$pristine && !PayPal.PayPalEmail.$valid">هذا الحقل مطلوب.</p>
                                 <br />
                                 <label for="PayPal">أدخل العملة المستخدمة عند التحويل في باي بال</label>
                                 <input dir="rtl" type="text" class="form-control validate" name="PayPalCurrency" ng-model="PayPalInfo.PayPalCurrencey" id="PayPalCurrency" ng-disabled="!editPayPal" placeholder="العملة">
@@ -393,8 +393,8 @@
                                 <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
                                     <th>التفاصيل</th>
                                     <th>الحالة</th>
+                                    <th>رقم التحويل البنكي</th>
                                     <th>اسم الحساب</th>
-                                    <th>رقم التعريف الخاص بالطلب</th>
                                     <th>طريقة الدفع</th>
                                     <th>السعر الإجمالي</th>
                                     <th>العنوان</th>
@@ -413,8 +413,8 @@
 
                                     </td>
 
-                                    <td class="arb"><label>{{order.BankAccount}}</label></td>
                                     <td class="arb"><label>{{order.OrderID}}</label></td>
+                                    <td class="arb"><label>{{order.BankAccount}}</label></td>
                                     <td class="arb"><label>{{order.PaymentMethod}}</label></td>
                                     <td class="arb"><label>{{order.TotalPrice}}</label></td>
                                     <td class="arb"><label>{{order.BuyerLocation}}</label></td>
@@ -423,7 +423,7 @@
                                     <td class="arb"><label>{{order.BuyerName}}</label></td>
                                 </tr>
                                 <tr ng-show="orders.length == 0">
-                                    <td colspan="8">
+                                    <td colspan="10">
                                         <label style="text-align:center;">لا يوجد أي عمليات تجارية</label>
                                     </td>
                                 </tr>
@@ -443,8 +443,8 @@
                                 <thead style="border-collapse:collapse; table-layout:fixed;">
                                     <tr style="background:#c6ba57; color:#F6F8EA; border:none;">
                                         <th>الحالة</th>
+                                        <th>رقم التحويل البنكي</th>
                                         <th>اسم الحساب</th>
-                                        <th>رقم التعريف الخاص بالتحويل</th>
                                         <th>طريقة الدفع</th>
                                         <th>السعر الإجمالي</th>
                                         <th>العنوان</th>
@@ -459,9 +459,8 @@
                                             <small>لم تتم العملية بعد</small>
                                             <button class="addfields waves-effect waves-light btn done" ng-click="UpdateStatus(OrderDetail, OrderDetail.ID)" style="float:left;">تم</button>
                                         </td>
-
-                                        <td class="arb"><label>{{OrderDetail.BankAccount}}</label></td>
                                         <td class="arb"><label>{{OrderDetail.OrderID}}</label></td>
+                                        <td class="arb"><label>{{OrderDetail.BankAccount}}</label></td>
                                         <td class="arb"><label>{{OrderDetail.PaymentMethod}}</label></td>
                                         <td class="arb"><label>{{OrderDetail.TotalPrice}}</label></td>
                                         <td class="arb"><label>{{OrderDetail.BuyerLocation}}</label></td>

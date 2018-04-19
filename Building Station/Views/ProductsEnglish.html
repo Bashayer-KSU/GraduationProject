@@ -257,8 +257,9 @@
 
                         <tr>
                             <td ng-hide="true">{{product.Category_ID = selectedCategory}}</td>
-                            <td class="requiredStar">
-                                <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image" required> *
+                            <td>
+                                <input style="width:100%;" type="file" ng-file-select="onFileSelect($files)" ng-model="product.Image" required>
+                                <span class="requiredStar"> * </span>
                                 <img ng-show="product.Image" style="width:80px; height:80px;" ng-src="{{product.Image}}" />
                             </td>
                             <td class="requiredStar"><input class="ar" type="text" ng-model="product.Name" name="" placeholder="Name" required> *</td>

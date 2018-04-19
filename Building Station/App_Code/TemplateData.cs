@@ -234,8 +234,8 @@ public class TemplateData : System.Web.Services.WebService
 
           //  return NewValue;
         }
-
-        Context.Response.Write(js.Serialize("Error"));
+        else
+        Context.Response.Write(js.Serialize(""));
 
      //   return "Error";
     }

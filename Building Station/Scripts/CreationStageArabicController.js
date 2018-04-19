@@ -71,7 +71,6 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             };
             loginService.login().then(function (response) {
                 $rootScope.login = response;
-                console.log("in then " + $rootScope.login);
                 if (response === "false") {
                     //redirect to login page
                     location.href = "/index.html";
@@ -573,7 +572,6 @@ app.factory("fileReader", function ($q, $log) {
 app.factory('loginService', function ($http) {
     var login = function () {
         return $http.post('/RegisterLogin.asmx/CheckUser').then(function (msg) {
-            console.log(msg.data);
             return msg.data;
         });
     };
