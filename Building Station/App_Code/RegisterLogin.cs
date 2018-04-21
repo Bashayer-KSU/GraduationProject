@@ -20,7 +20,7 @@ public class RegisterLogin : System.Web.Services.WebService
     JavaScriptSerializer js = new JavaScriptSerializer();
 
     [WebMethod(EnableSession = true)]
-    public void Register(String name, String email, String password, String phone, String lang)
+    public void Register(string name, string email, string password, string phone, string lang)
     {
         string value = "";
         using (SqlConnection con = new SqlConnection(cs))
@@ -120,7 +120,7 @@ public class RegisterLogin : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void Login(String email, String password, String lang)
+    public void Login(string email, string password, string lang)
     {
         string value = "";
         using (SqlConnection con = new SqlConnection(cs))
