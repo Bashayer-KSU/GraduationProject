@@ -105,9 +105,11 @@ public class ShowHideElement : System.Web.Services.WebService
                     Context.Response.Write(js.Serialize(true));
                    // return true;
                 }
+                else
+                    Context.Response.Write(js.Serialize(false));
+
             }
-            Context.Response.Write(js.Serialize(false));
-           // return false;
+            // return false;
         }
         else
             Context.Response.Write(js.Serialize(false));
@@ -136,9 +138,10 @@ public class ShowHideElement : System.Web.Services.WebService
                 int x = cmd.ExecuteNonQuery();
                 if (x != 0)
                     Context.Response.Write(js.Serialize(true));
-             //   return true;
+                //   return true;
+                else if(x == 0)
+                    Context.Response.Write(js.Serialize(false));
             }
-            Context.Response.Write(js.Serialize(false));
            // return false;
         }
         else if(sectionName != "" && action == "Hide")
@@ -150,12 +153,13 @@ public class ShowHideElement : System.Web.Services.WebService
                 int x = cmd.ExecuteNonQuery();
                 if (x != 0)
                     Context.Response.Write(js.Serialize(true));
-               // return true;
+                // return true;
+                else if (x == 0)
+                    Context.Response.Write(js.Serialize(false));
             }
-            Context.Response.Write(js.Serialize(false));
           //  return false;
         }
-        Context.Response.Write(js.Serialize(false));
+        //Context.Response.Write(js.Serialize(false));
         //return false;
     }
 
@@ -189,13 +193,14 @@ public class ShowHideElement : System.Web.Services.WebService
                     int x = cmd.ExecuteNonQuery();
                     if (x != 0)
                         Context.Response.Write(js.Serialize(true));
-//                    return true;
+                    //                    return true;
+                    else Context.Response.Write(js.Serialize(false));
+
                 }
-                Context.Response.Write(js.Serialize(false));
-//                return false;
+                //                return false;
             }
         }
-        Context.Response.Write(js.Serialize(false));
+      else  Context.Response.Write(js.Serialize(false));
 //        return false;
     }
 }
