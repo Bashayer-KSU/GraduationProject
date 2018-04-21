@@ -83,16 +83,20 @@ public class PaymentMethods : System.Web.Services.WebService
     public void UpdateBankInfo(String IBAN)
     {
         int success = 0;
-        using (SqlConnection con = new SqlConnection(cs))
+        if (IBAN.Length > 14 && IBAN.Length < 35)
         {
-            con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE Store SET ShopOwnerBank = '" + IBAN + "' Where Email = '" + Session["user"] + "'", con);
-            success = cmd.ExecuteNonQuery();
-            con.Close();
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("UPDATE Store SET ShopOwnerBank = '" + IBAN + "' Where Email = '" + Session["user"] + "'", con);
+                success = cmd.ExecuteNonQuery();
+                con.Close();
+            }
         }
-
         if (success != 0)
             Context.Response.Write(js.Serialize(IBAN));
+        else
+            Context.Response.Write(js.Serialize("IBAN length must be between 15 and 34"));
     }
 
     [WebMethod(EnableSession = true)]

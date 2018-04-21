@@ -24,10 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="PeinearyDevelopment.Framework.Data" Version="1.0.4" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="Cloudinary">
       <HintPath>..\Building Station\Bin\Cloudinary.dll</HintPath>
     </Reference>
