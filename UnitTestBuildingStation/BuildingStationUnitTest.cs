@@ -26,6 +26,24 @@ namespace UnitTestBuildingStation
         }
 
         [TestMethod]
+        public void Test_AddStoreType()
+        {
+            //Arrange
+            Store expected = new Store();
+            expected.Description = "Sweets made with love and passion 🎂💓";
+            expected.Type = "desserts";
+            string enteredType = "Desserts";
+            string language = "English";
+
+            //Act
+            Store actual = BuildingStationLClassLibrary.CreationStage.AddStoreType(enteredType, language);
+
+            //Assert
+            Assert.AreEqual(expected.Description, actual.Description);
+            Assert.AreEqual(expected.Type, actual.Type);
+        }
+
+        [TestMethod]
         public void Test_ValidLink()
         {
             //Arrange

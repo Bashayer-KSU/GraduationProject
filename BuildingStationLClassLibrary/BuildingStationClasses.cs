@@ -22,8 +22,82 @@ namespace BuildingStationLClassLibrary
             }
               return false;
         }
-
     }
+
+    public class CreationStage
+    {
+        public static Store AddStoreType(string type, string language)
+        {
+            Store store = new Store();
+            string Description_Text = " ";
+
+            if (language.Equals("Arabic"))
+            {
+                if ((type.Contains("أشغال يدوية")) || (type.Contains("أعمال يدوية")) || (type.Contains("كروشيه")) || (type.Contains("صوف")) || (type.Contains("تريكو")) || (type.Contains("حياكة")))
+                    Description_Text = "صناعة يدوية عالية الجودة بتصاميم مميزة 🎁";
+
+                else if ((type.Contains("حلويات")) || (type.Contains("كيك")))
+                    Description_Text = "حلويات صنعت بكل حب وشغف 🎂💓";
+
+                else if ((type.Contains("مخبز")) || (type.Contains("معجنات")) || (type.Contains("مخبوزات")))
+                    Description_Text = "مخبوزات ومعجنات لحفلات الشاي ☕️🥐";
+
+                else if ((type.Contains("ساعات")) || (type.Contains("اكسسوار")) || (type.Contains("اكسسوارات")))
+                    Description_Text = "نتميز بجودة عالية وخيارات متعددة 💎";
+
+                else if ((type.Contains("موضة")) || (type.Contains("موضة وملابس")) || (type.Contains("ملابس")) || (type.Contains("فساتين")))
+                    Description_Text = "قطع منتقاة بعناية لتتناسب مع ذوقك الراقي 🎀🛍";
+
+                else if ((type.Contains("أغطية جوال")) || (type.Contains("اكسسوارات جوال ولابتوب")) || (type.Contains("حقائب لابتوب")))
+                    Description_Text = "كل ما هو جديد في عالم الإكسسوارات الإلكترونيات 📱🖥";
+
+                else if ((type.Contains("طبخ")) || (type.Contains("طبخ منزلي")) || (type.Contains("ورق عنب")) || (type.Contains("محاشي")) || (type.Contains("أطعمة شرقية")) || (type.Contains("طعام")) || (type.Contains("غذاء")))
+                    Description_Text = "طبخات لذيذة ودافئة لإرضاء ذائقتكم 🥘😋";
+
+                else if ((type.Contains("جمال")) || (type.Contains("عناية")) || (type.Contains("مكياج")) || (type.Contains("بشرة")) || (type.Contains("تجميل")) || (type.Contains("كريم")))
+                    Description_Text = "المكان المناسب لتدللي نفسك 💁🏻‍♀️";
+                
+                else
+                    Description_Text = "أسعار منافسة، ومنتجات رائعة ✨";
+            }
+            else if (language.Equals("English"))
+            {
+                type = type.ToLower();
+
+                if ((type.Contains("handmade")) || (type.Contains("crochet")) || (type.Contains("knitwear")) || (type.Contains("yarn")) || (type.Contains("wool")))
+                    Description_Text = "High quality handmade with special designs 🎁";
+                
+                else if ((type.Contains("sweets")) || (type.Contains("dessert")) || (type.Contains("sugar")) || (type.Contains("cake")))
+                    Description_Text = "Sweets made with love and passion 🎂💓";
+
+                else if ((type.Contains("bakery")) || (type.Contains("pastries")) || (type.Contains("pastry")) || (type.Contains("baking")))
+                    Description_Text = "Bakery and pastry for tea parties ☕️🥐";
+
+                else if ((type.Contains("watches")) || (type.Contains("jewelery")) || (type.Contains("accessories")))
+                    Description_Text = "High quality and multiple options 💎";
+
+                else if ((type.Contains("fashion")) || (type.Contains("cloths")) || (type.Contains("dresses")))
+                    Description_Text = "Carefully selected pieces to suit your taste 🎀🛍";
+                
+                else if ((type.Contains("mobile covers")) || (type.Contains("phone & laptop accessories")) || (type.Contains("laptop bags")) || (type.Contains("cases")) || (type.Contains("sleeve")))
+                    Description_Text = "Everything new in the world of electronics' accessories 📱🖥";
+
+                else if ((type.Contains("cooking")) || (type.Contains("home cook")) || (type.Contains("grape leaves")) || (type.Contains("mahashi")) || (type.Contains("eastern food")) || (type.Contains("food")))
+                    Description_Text = "Delicious and warm dishes to satisfy your taste 🥘😋";
+
+                else if ((type.Contains("beauty")) || (type.Contains("skin care")) || (type.Contains("makeup")) || (type.Contains("skin")) || (type.Contains("beauty & skin care")) || (type.Contains("lotion")) || (type.Contains("cream")))
+                    Description_Text = "♀️ The right place to take care of your skin 💁🏻";
+
+                else
+                    Description_Text = "Competitive prices, great products ✨";
+            }
+                store.Description = Description_Text;
+                store.Type = type;
+
+            return store;
+        }
+    }
+
     public class ShowHideElement
     {
         public static Boolean ShowHideSection(string section, string action)
