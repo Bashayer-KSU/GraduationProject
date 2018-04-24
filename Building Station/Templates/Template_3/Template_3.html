@@ -384,7 +384,7 @@
                                                                 <del style="color:#ff0000"> {{product.Price}} </del>
                                                                 {{product.PriceAfterDiscount}} SR
                                                             </p>
-                                                            <p style="color:#ff0000" ng-show="product.Amount == 0">انتهت الكمية</p>
+                                                            <p style="color:#ff0000" ng-show="product.Amount == 0">نفدت الكمية</p>
                                                             <button id="addToButton" type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}" style="width:100%;">إضافة المنتج</button>
                                                             <button id="addButton" type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}" style="width:100%;">إضافة</button>
 

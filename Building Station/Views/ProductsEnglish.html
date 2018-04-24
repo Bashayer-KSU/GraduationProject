@@ -244,7 +244,8 @@
                                 <label><del style="color:#ff0000" ng-show="product.Discount != 0"> {{product.Price}} </del></label><br />
                                 <label ng-show="product.Discount != 0">{{product.PriceAfterDiscount}}</label>
                             </td>
-                            <td class="arb" ng-show="!product.edit"><label>{{product.Amount}}</label></td>
+                            <td class="arb" ng-show="!product.edit"><label ng-show="product.Amount!=0">{{product.Amount}}</label>
+                            <label ng-show="product.Amount==0">Out of stock</label></td>
                             <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Amount" name="" placeholder="Enter product amount" required></td>
                             <td class="arb" ng-show="!product.edit"><label>{{product.Discount}}%</label></td>
                             <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Discount" name="" placeholder="Enter product discount" required></td>
