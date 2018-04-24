@@ -158,6 +158,8 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, $window, ProductSer
                 $scope.payment = false;
                 $scope.ProductsArray.length = 0;
 
+
+
             }, function (error) {
                 $scope.error = error.data;
             });
