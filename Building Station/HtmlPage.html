@@ -1,0 +1,283 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>Menu</title>
+
+    <!--Responsive-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    
+    <link rel="stylesheet" href="light.css" type="text/css" media="screen" />
+    <!--<script type="text/javascript" src="js/jquery-1.4.min.js"></script>-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="js/jquery.easing.min.js"></script>
+    <!--<script src="" type="text/javascript"></script>-->
+
+    <script type="text/javascript" src="js/jquery.lavalamp.min.js"></script>
+    <script type="text/javascript" src="js/extrarDesign.js"></script>
+
+
+
+ 
+
+    <style>
+        @font-face {
+            font-family: "NeoSansArabic";
+            src: url('NeoSansArabic.ttf'); /* IE9 */
+        }
+
+        header.en {
+            background-image: url(images/header.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        body {
+            background-image: url(images/background.png);
+            background-attachment: fixed;
+            /* The image used */
+            /* Full height */
+            height: auto;
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .tab_menu {
+            margin-top: 15px;
+            position: center;
+            width: inherit;
+        }
+
+        .lightmenu {
+            width: 100%;
+            height: 62px;
+            background: transparent;
+            background-image: url(images/menu.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            margin-top: 30px;
+        }
+
+        .lightBlue {
+            position: relative;
+            width: inherit;
+            overflow: visible;
+            float: left;
+            height: auto;
+        }
+
+            .lightBlue li {
+                width: 200px;
+                height: 62px;
+                background-image: url(images/sep.png);
+                background-position: right;
+                background-repeat: no-repeat;
+                position: relative;
+                top: 0px;
+                font-family: "Century Gothic";
+            }
+
+
+
+            .lightBlue li.back {
+                background-image: url(images/blue.png);
+                background-repeat: no-repeat;
+                background-position: center;
+                width: 45px;
+                margin-left: -3px;
+                height: 20px;
+                z-index: 8;
+                top: 0px;
+                position: absolute;
+            }
+
+                .lightBlue li a {
+                    color: #575757;
+                    outline: none;
+                    text-align: center;
+                    letter-spacing: 0;
+                    z-index: 10;
+                    display: block;
+                    top: 19px;
+                    height: 45px;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                    .lightBlue li a:hover {
+                        color: #2c2c2c;
+                    }
+
+        .tab-group {
+            display: inline-block;
+        }
+
+        ol, ul, li {
+            list-style: none;
+            display: inline-block;
+        }
+
+        .dropdown:hover ul {
+            display: block;
+        }
+
+        .dropdown li a {
+            top: 1px;
+        }
+
+        .dropdown-menu li {
+            width: 190px;
+            height: 62px;
+            background-image: url(images/sep.png);
+            background-position: right;
+            background-repeat: no-repeat;
+            position: relative;
+            top: 0px;
+            font-family: "Century Gothic";
+        }
+
+            .dropdown-menu li.back {
+                background-image: url(images/blue.png);
+                background-repeat: no-repeat;
+                background-position: center;
+                width: 45px;
+                margin-left: -3px;
+                height: 20px;
+                z-index: 8;
+                top: 0px;
+                position: absolute;
+            }
+
+            .dropdown-menu li a {
+                color: #575757;
+                outline: none;
+                text-align: center;
+                letter-spacing: 0;
+                z-index: 10;
+                display: block;
+                top: 19px;
+                height: 45px;
+                position: relative;
+                overflow: hidden;
+            }
+
+                .dropdown-menu li a:hover {
+                    color: #2c2c2c;
+                }
+
+    </style>
+
+
+    <!--To remove triangle on small screens
+    <script>
+        $(function () {
+
+            $(window).bind("resize", function () {
+                console.log($(this).width())
+                if ($(this).width() < 992) {
+                    $('#navbarSupportedContent').removeClass('lightmenu')
+                    $('ul').removeClass('lightBlue')
+                }
+                else {
+                    if ($(this).width() > 992) {
+                        $('#navbarSupportedContent').addClass('lightmenu')
+                        $('ul').addClass('lightBlue')
+
+                    }
+                }
+            })
+        })  
+    </script>-->
+
+</head>
+<body>
+
+    <!--Responsive_Orig
+    <nav class="navbar navbar-expand-lg navbar-light" >-->
+        <!--Nav for small screens
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse lightmenu" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto lightBlue" id="one">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="/images/settings.png" alt="" style="width:20%; height:85%;" /><b class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="noo">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>-->
+
+    <!--Responsive-->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <!--Nav for small screens-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse lightmenu" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto lightBlue" id="one">
+                <li class="nav-item active">
+                    <a class="nav-link" href="EDITandINFO-English/DevelopmentEnvironmentEnglish">Development Environment <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="EDITandINFO-English/Templates">Template</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="EDITandINFO-English/Products">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="EDITandINFO-English/ManageStore">Manage Store</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" ng-click="DesktopView()">Preview Website</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="/images/settings.png" alt="" style="width:20%; height:85%;" /><b class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="noo">
+                        <a class="dropdown-item" ng-click="Publish($event)" href="#">Publish website</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" ng-click="UnPublish($event)" href="#">Unpublish website</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" ng-click="DeleteStore($event)" href="#">Delete website</a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,4 +1,5 @@
-﻿<head>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
     <title>Building Station</title>
     <link id="icon" rel="icon" href="/images/logoTransparent.png" />
     <meta charset="utf-8">
@@ -52,7 +53,6 @@
         }
 
 
-        /*فيه md-button غير اللي في الدايلوق؟*/
         .md-button {
             border-radius: 2px;
             background-color: #c6ba57;
@@ -63,25 +63,131 @@
             color: #F6F8EA;
             font-family: 'NeoSansArabic';
         }
-    </style>
-    <link rel="stylesheet" href="light.css" type="text/css" media="screen" />
-    <script type="text/javascript" src="js/jquery-1.4.min.js"></script>
-    <script type="text/javascript" src="js/jquery.easing.min.js"></script>
-    <script type="text/javascript" src="js/jquery.lavalamp.min.js"></script>
-    <script type="text/javascript" src="js/myriad.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $("#one,#two,#three,#four,#five,#six,#seven,#eight").lavaLamp({
-                fx: "backout",
-                speed: 700
-            });
-        });
 
-    </script>
+        .dropdown-menu li:hover {
+            background-color:transparent;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-position-y: top;
+            transition: .3s ease-in-out;
+        }
+        .navbar {
+            background-color: #D4D8BA;
+            -moz-box-shadow: inset 0 0 10px white;
+            -webkit-box-shadow: inset 0 0 10px white;
+            box-shadow: inset 0 0 10px white;
+        }
+            .navbar .nav > li > a {
+                float: none;
+                padding: 10px 15px 10px;
+                text-decoration: none;
+                text-shadow: none;
+            }
+            .navbar .nav li.nav-item a {
+                color: #545454;
+                font-weight: 500;
+            }
+
+            .navbar .nav li.nav-item:hover {
+                background-image: url(images/blue.png);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-position-y: top;
+                transition: .3s ease-in-out;
+                color: #C6BA57;
+                font-weight: 600;
+            }
+            .navbar .nav li.nav-item a:focus {
+                background-image: url(images/blue.png);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-position-y: top;
+                color: #C6BA57;
+                font-weight: 600;
+                margin-top: -20px;
+                padding-top: 20px;
+            }
+
+            .navbar-header li{
+                width:220px;
+            }
+
+            .navbar .brand {
+                display: block;
+                float: left;
+                padding: 10px 20px 10px;
+                margin-left: -20px;
+                font-size: 20px;
+                font-weight: 200;
+                color: #777;
+                text-shadow: 0 1px 0 #FFF;
+            }
+           .navbar-collapse .nav li{
+               width:200px;
+              
+}
+        .navbar-collapse .nav li a{
+            height:90px;
+            margin-top:-10px;
+        }
+
+
+
+
+        @media (min-width:992px) {
+            .navbar-header {
+                float: left
+            }
+        }
+        @media (min-width:992px) {
+            .container-fluid > .navbar-collapse, .container-fluid > .navbar-header, .container > .navbar-collapse, .container > .navbar-header {
+                margin-right: 0;
+                margin-left: 0
+            }
+        }
+        @media (min-width:992px) {
+            .container-fluid > .navbar-collapse, .container-fluid > .navbar-header, .container > .navbar-collapse, .container > .navbar-header {
+                margin-right: 0;
+                margin-left: 0
+            }
+        }
+
+        .navbar-static-top {
+            z-index: 1000;
+            border-width: 0 0 1px
+        }
+        .dropdown .dropdown-menu > li > a:hover {
+            color: #262626;
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+    </style>
+
+
+    <!--StartMenu-->
+    <!--Responsive
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        -->
+
+    <link rel="stylesheet" href="/light.css" type="text/css" media="screen" />
+    <!--<script type="text/javascript" src="js/jquery-1.4.min.js"></script>-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="/js/jquery.easing.min.js"></script>
+    <!--<script src="" type="text/javascript"></script>-->
+
+    <script type="text/javascript" src="/js/jquery.lavalamp.min.js"></script>
+    <script type="text/javascript" src="/js/myriad.js"></script>
+    <script type="text/javascript" src="/js/extrarDesign.js"></script>
+    <!--EndMenu-->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.9/angular-sanitize.min.js"></script>
 </head>
 <body ng-app="BuildingStationAPP">
-
     <!--All-->
     <div>
         <!--1-->
@@ -126,40 +232,66 @@
                     <!--3-->
                     <header>
 
-                        <div class="lightmenu">
-                            <ul class="lightBlue" id="one">
-                                <li class="current"><a href="EDITandINFO-English/DevelopmentEnvironmentEnglish">Development Environment</a></li>
-                                <li><a href="EDITandINFO-English/Templates">Template</a></li>
-                                <li><a href="EDITandINFO-English/Products">Products</a></li>
-                                <li><a href="EDITandINFO-English/ManageStore">Manage Store</a></li>
+                        <!--Responsive-->
+                        <nav class="navbar navbar-default" style="
+            background-color: #D4D8BA;
+            -moz-box-shadow: inset 0 0 10px white;
+            -webkit-box-shadow: inset 0 0 10px white;
+            box-shadow: inset 0 0 10px white;
+            margin-top:10px;">
+                            <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <!-- <a class="navbar-brand" href="#">Brand</a>-->
+                                </div>
+                                
+                                
 
-                                <li>
-                                    <a href="#" ng-click="DesktopView()">
-                                        Preview Website
-                                    </a>
-                                    <!--<ul class="dropdown-menu">
-                                        <li style="background:none;"><a href="#">Desktop view &nbsp; <img ng-src="/images/imac.png" alt="" style="width:37px; height:37px;" /></a></li>
-                                        <li class="divider"></li>
-                                        <li style="background:none;"><a href="#">Mobile view &nbsp; <img ng-src="/images/iphone.png" alt="" style="width:37px; height:37px;" /></a></li>
-                                    </ul>-->
-                                </li>
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav mr-auto lightBlue " id="one">
+                                        <li class="nav-item sep" style="width:220px;">
+                                            <a class="nav-link" href="EDITandINFO-English/DevelopmentEnvironmentEnglish">Development Environment <span class="sr-only">(current)</span></a>
+                                        </li>
+                                        <li class="nav-item sep">
+                                            <a class="nav-link" href="EDITandINFO-English/Templates">Template</a>
+                                        </li>
+                                        <li class="nav-item sep">
+                                            <a class="nav-link" href="EDITandINFO-English/Products">Products</a>
+                                        </li>
+                                        <li class="nav-item sep">
+                                            <a class="nav-link" href="EDITandINFO-English/ManageStore">Manage Store</a>
+                                        </li>
+                                        <li class="nav-item sep">
+                                            <a class="nav-link" href="#" ng-click="DesktopView()">Preview Website</a>
+                                        </li>
+                                        <li class="nav-item dropdown" style="background-image:none">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <img src="/images/settings.png" alt="" style="width:20%; height:50%; margin-top:-8px;" />
+                                            <span class="caret"></span></a>
+                                            
+                                            <ul class="dropdown-menu">
+                                                <li style="background-image:none"><a ng-click="Publish($event)" href="#">Publish website</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li style="background-image:none"><a ng-click="UnPublish($event)" href="#">Unpublish website</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li style="background-image:none"><a ng-click="DeleteStore($event)" href="#">Delete website</a></li>
+                                            </ul>
+                                        </li>
 
-                            </ul>
-                            <ul>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                                        <img ng-src="/images/settings.png" alt="" style="width:37px; height:37px; margin-top:12px; margin-left:15px;" /><b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li style="background:none;"><a ng-click="Publish($event)" href="#">Publish website</a></li>
-                                        <li class="divider"></li>
-                                        <li style="background:none;"><a ng-click="UnPublish($event)" href="#">Unpublish website</a></li>
-                                        <li class="divider"></li>
-                                        <li style="background:none;"><a ng-click="DeleteStore($event)" href="#">Delete website</a></li>
                                     </ul>
-                                </li>
-                            </ul>
-                        </div>
+
+                                </div>
+                            </div>
+                        
+                        </nav>
+                        <!---->
+
                     </header>
 
                     <!--Content-->
@@ -173,6 +305,8 @@
             </div>
         </div>
     </div>
+
+
     <!-- Angular Material requires Angular.js Libraries -->
     <script src="/Scripts/angular-animate.min.js"></script>
     <script src="/Scripts/angular-aria.min.js"></script>
