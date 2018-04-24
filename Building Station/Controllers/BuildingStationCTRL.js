@@ -920,8 +920,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.UpdateBankInfo = function () {
             var IBAN = $scope.bankInfo.IBAN;
-            console.log(IBAN);
-
             if (IBAN !== {} && IBAN !== null) {
                 $http({
                     //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/UpdateBankInfo",
@@ -930,10 +928,15 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     params: { IBAN: IBAN }
                 })
                     .then(function (response) {
-                        console.log(response);
-                        $scope.bankInfo.IBAN = response.data;
-                        $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-                        $scope.editIBAN = false;
+
+                        if (response.data.includes("IBAN length")) {//Nothing
+                        }
+                        else {
+                            $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
+                            $scope.editIBAN = false;
+
+                        }
+                            
                     }, function (error) {
                         $scope.error = error.data;
                     });
