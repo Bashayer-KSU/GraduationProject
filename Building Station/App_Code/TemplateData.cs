@@ -293,7 +293,7 @@ public class TemplateData : System.Web.Services.WebService
             element.StoreEmail = Session["user"].ToString();
             if (twitter_link != null)
             {
-                if (twitter_link.ToLower().Contains("https://www.twitter.com/"))
+                if ((twitter_link.ToLower().Contains("https://www.twitter.com/"))|| (twitter_link.ToLower().Contains("https://twitter.com/")))
                 {
                     store.TwitterLink = twitter_link;
                     element.Hidden = false;
@@ -387,7 +387,7 @@ public class TemplateData : System.Web.Services.WebService
 
           //  return ElementsList;
         }
-        Context.Response.Write(js.Serialize(null));
+      //  Context.Response.Write(js.Serialize(null));
 
         //return null;
     }
@@ -420,7 +420,7 @@ public class TemplateData : System.Web.Services.WebService
 
     //        return store;
         }
-        Context.Response.Write(js.Serialize(null));
+      //  Context.Response.Write(js.Serialize(null));
 
        // return null;
     }
@@ -440,7 +440,7 @@ public class TemplateData : System.Web.Services.WebService
 
         //    return store;
         }
-        Context.Response.Write(js.Serialize(null));
+      //  Context.Response.Write(js.Serialize(null));
 
    //     return null;
     }

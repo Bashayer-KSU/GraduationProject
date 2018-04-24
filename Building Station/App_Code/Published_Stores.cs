@@ -199,7 +199,7 @@ public class Published_Stores : System.Web.Services.WebService
 
          //   return store;
         }
-        Context.Response.Write(js.Serialize(null));
+       // Context.Response.Write(js.Serialize(null));
 
       //  return null;
     }
