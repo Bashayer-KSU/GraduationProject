@@ -295,30 +295,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     $scope.PaymentMethod = "BankTransfer";
                 else $scope.PaymentMethod = "PayPal";
 
-                //Social Media Link
-              /*  if ($scope.Store.SnapchatLink !== 'No Value') {
-                    $scope.Snapchat = true;
-                }
-                else { $scope.Snapchat = false; }
-
-                if ($scope.Store.TwitterLink !== 'No Value') {
-                    $scope.Twitter = true;
-                }
-                else {
-                    $scope.Twitter = false;
-                }
-
-                if ($scope.Store.FacebookLink !== 'No Value') {
-                    $scope.Facebook = true;
-                }
-                else { $scope.Facebook = false; }
-
-                if ($scope.Store.InstagramLink !== 'No Value') {
-                    $scope.Instagram = true;
-                }
-                else { $scope.Instagram = false; }
-                */
-
                 //Menu
                     $scope.MenuTitle = $scope.Store.MenuTitle;
                 }, function (error) {

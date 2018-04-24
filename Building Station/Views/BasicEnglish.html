@@ -16,7 +16,6 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 
-
     <!-- Chart -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script type="text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
@@ -65,19 +64,10 @@
         }
     </style>
     <link rel="stylesheet" href="light.css" type="text/css" media="screen" />
-    <script type="text/javascript" src="js/jquery-1.4.min.js"></script>
-    <script type="text/javascript" src="js/jquery.easing.min.js"></script>
-    <script type="text/javascript" src="js/jquery.lavalamp.min.js"></script>
-    <script type="text/javascript" src="js/myriad.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $("#one,#two,#three,#four,#five,#six,#seven,#eight").lavaLamp({
-                fx: "backout",
-                speed: 700
-            });
-        });
-
-    </script>
+    <script type="text/javascript" src="/js/jquery-1.4.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.lavalamp.min.js"></script>
+    <script type="text/javascript" src="/js/extrarDesign.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.9/angular-sanitize.min.js"></script>
 </head>
 <body ng-app="BuildingStationAPP">
@@ -122,16 +112,22 @@
                         </div>
 
                         <!--2-->
-                        <div class="logo" style="text-align:center; position:center;" align="center"><img ng-src="/images/bulding-logoo.png" style="height:13%; width:13%; margin-top:2%; margin-left:10%" /></div>                    </header>
+                        <div class="logo" style="text-align:center; position:center;" align="center"><img ng-src="/images/bulding-logoo.png" style="height:13%; width:13%; margin-top:2%; margin-left:10%" /></div>
+                    </header>
                     <!--3-->
                     <header>
 
                         <div class="lightmenu">
                             <ul class="lightBlue" id="one">
-                                <li class="current"><a href="EDITandINFO-English/DevelopmentEnvironmentEnglish">Development Environment</a></li>
-                                <li><a href="EDITandINFO-English/Templates">Template</a></li>
-                                <li><a href="EDITandINFO-English/Products">Products</a></li>
-                                <li><a href="EDITandINFO-English/ManageStore">Manage Store</a></li>
+                                <!--     <li class="current"><a href="EDITandINFO-English/DevelopmentEnvironmentEnglish">Development Environment</a></li>
+                                     <li><a href="EDITandINFO-English/Templates">Template</a></li>
+                                     <li><a href="EDITandINFO-English/Products">Products</a></li>
+                                     <li><a href="EDITandINFO-English/ManageStore">Manage Store</a></li>
+                                     -->
+                                <li ui-sref-active="lightBlue"><a ui-sref="BS-Menu-English.DevelopmentEnvironment">Development Environment</a></li>
+                                <li ui-sref-active="current"><a ui-sref="BS-Menu-English.Template">Template</a></li>
+                                <li ui-sref-active="current"><a ui-sref="BS-Menu-English.Products">Products</a></li>
+                                <li ui-sref-active="current"><a ui-sref="BS-Menu-English.ManageStore">Manage Store</a></li>
 
                                 <li>
                                     <a href="#" ng-click="DesktopView()">
@@ -173,6 +169,10 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        a();
+    </script>
     <!-- Angular Material requires Angular.js Libraries -->
     <script src="/Scripts/angular-animate.min.js"></script>
     <script src="/Scripts/angular-aria.min.js"></script>

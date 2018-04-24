@@ -2,6 +2,7 @@
 using CloudinaryDotNet.Actions;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 
 namespace BuildingStationLClassLibrary
@@ -10,7 +11,7 @@ namespace BuildingStationLClassLibrary
     {
         public static Boolean Register(string name, string email, string password, string phone)
         {
-            if (password.Length > 7 && password.Length < 21 && phone.Length > 7 && phone.Length < 16)
+            if (password.Length > 7 && password.Length < 21 && phone.Length > 7 && phone.Length < 16 && !Regex.IsMatch(phone,"[a-zA-Z]"))
             {
                 Store store = new Store();
                 store.ShopOwner = name;
@@ -114,19 +115,11 @@ namespace BuildingStationLClassLibrary
 
             if (sectionName != "" && action == "Show")
             {
-                int x = 1;
-                if (x != 0)
                     return true;
-                else
-                    return false;
             }
             else if (sectionName != "" && action == "Hide")
             {
-                int x = 1;
-                if (x != 0)
                     return true;
-                else
-                    return false;
             }
             return false;
         }
@@ -194,7 +187,6 @@ namespace BuildingStationLClassLibrary
 
         public static string Publish(string email)
         {
-            string Published = "true";
             string domain = "SarahSweets";
 
             return domain;
@@ -218,7 +210,7 @@ namespace BuildingStationLClassLibrary
 
         public static Boolean UnPublish(string email)
         {
-            bool Published = false;
+            bool Published = true;
 
             return Published;
         }
@@ -233,7 +225,7 @@ namespace BuildingStationLClassLibrary
 
     public class LogoColors
     {
-        public static Colors GetLogoColors(string logoPath)
+        public static Colors GetWebsiteColors(string logoPath)
         {
 
             Colors selectedColors = new Colors();
@@ -370,7 +362,7 @@ namespace BuildingStationLClassLibrary
             for (int i = 0; i < 3; i++)
             {
                 statstic = new Statstic();
-                statstic.Amount = i + 2;
+                statstic.Amount = i + 7;
                 statstic.ProductID = i+1;
                 statstic.ProductName = "Product " +(i+1);
                 statstic.CategoryID = CategoryID;
@@ -459,21 +451,19 @@ namespace BuildingStationLClassLibrary
     {
         public static String UpdateBankInfo(string IBAN)
         {
-            int success = 0;
-            if (IBAN.Length > 14 && IBAN.Length < 35)
+            IBAN = IBAN.ToUpper();
+            if (IBAN.Length > 14 && IBAN.Length < 35 && !Regex.IsMatch(IBAN, "^[a-zA-Z0-9 ]*$") && !IBAN.Contains(" "))
             {
-                    success = 1;
+                return IBAN;
             }
-            if (success != 0)
-               return IBAN;
             else
-               return "IBAN length must be between 15 and 34";
+               return "IBAN length must be between 15 and 34 and shall contain no spaces or special characters";
         }
     }
 
     public class TemplateData
     {
-        public static String UpdatStoreData(string DataType, string NewValue)
+        public static String UpdateStoreData(string DataType, string NewValue)
         {
             if (DataType.Equals("Store Name") || DataType.Equals("اسم المتجر"))
                 DataType = "StoreName";

@@ -40,9 +40,9 @@ body {
 .lightBlue {
     position: relative;
     width: inherit;
-    overflow:visible;
+    overflow: visible;
     float: left;
-    height:auto;
+    height: auto;
 }
     .lightBlue li {
         width: 200px;
@@ -84,9 +84,15 @@ body {
 
     }
 
-.lightBlue li a:hover {
-	color:#2c2c2c;
-}
+        .lightBlue li:hover {
+            background-image: url(images/blue.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-position-y: top;
+        }
+        .lightBlue li a:hover {
+            color: #2c2c2c;
+        }
 .tab-group{
     display:inline-block;
 }
