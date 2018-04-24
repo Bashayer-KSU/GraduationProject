@@ -65,7 +65,7 @@
 
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
-            
+
             loginService.login().then(function (response) {
                 $rootScope.login = response;
                 if (response === "false") {
@@ -81,17 +81,17 @@
             $window.location.href = '../CreationStageArabic.html';
         };
 
-       /* window.addEventListener("beforeunload", function (e) {
-            var confirmationMessage = "\o/";
-            alert("exit");
-            (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-            return confirmationMessage;                            //Webkit, Safari, Chrome
-        });*/
-        
+        /* window.addEventListener("beforeunload", function (e) {
+             var confirmationMessage = "\o/";
+             alert("exit");
+             (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+             return confirmationMessage;                            //Webkit, Safari, Chrome
+         });*/
+
         $(window).bind("beforeunload", function (event) {
             return "Some of your changes may not be saved.";
         });
-       
+
     })
     .controller("0Controller", function ($scope, $window, $rootScope) {
 
@@ -103,7 +103,8 @@
     })
     .controller("NameController", function ($scope, $http, $location) {
 
-        $http.get(/*'http://www.bsapplogic.somee.com/CreationStage.asmx/StoreInfo' */'CreationStage.asmx/StoreInfo').then(function (response) {          
+        //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/StoreInfo').then(function (response) {
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
             $scope.Store = response.data;
             if ($scope.Store.Name !== ' No StoreName ') {
                 $scope.storeName = $scope.Store.Name;
@@ -114,7 +115,7 @@
 
             var post = $http({
                 method: "POST",
-                //url: "http://www.bsapplogic.somee.com/CreationStage.asmx/AddStoreName",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/AddStoreName",
                 url: "CreationStage.asmx/AddStoreName",
                 dataType: 'json',
                 data: { name: $scope.storeName },
@@ -148,8 +149,9 @@
         }*/
     })
     .controller("TypeController", function ($scope, $http, $location) {
-       
-        $http.get('CreationStage.asmx/StoreInfo'/*'http://www.bsapplogic.somee.com/CreationStage.asmx/StoreInfo'*/).then(function (response) {
+
+        //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/StoreInfo').then(function (response) {
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
             if ($scope.Store.Type !== 'No StoreType ') {
@@ -160,7 +162,7 @@
             var post = $http({
                 method: "POST",
                 url: "CreationStage.asmx/AddStoreType",
-                //url: "http://www.bsapplogic.somee.com/CreationStage.asmx/AddStoreType",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/AddStoreType",
                 dataType: 'json',
                 data: { type: $scope.Type, language: 'English' },
                 headers: { "Content-Type": "application/json" }
@@ -226,10 +228,10 @@
         $scope.savedata = function () {
             var post = $http({
                 method: "POST",
-                //url: "http://www.bsapplogic.somee.com/CreationStage.asmx/ConnectInstagram",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/ConnectInstagram",
                 url: "CreationStage.asmx/ConnectInstagram",
                 dataType: 'json',
-                data: { link: 'https://www.instagram.com/'+ $scope.search + '/', logo: $scope.details.graphql.user.profile_pic_url, descripton: $scope.details.graphql.user.biography, name: $scope.details.graphql.user.full_name },
+                data: { link: 'https://www.instagram.com/' + $scope.search + '/', logo: $scope.details.graphql.user.profile_pic_url, descripton: $scope.details.graphql.user.biography, name: $scope.details.graphql.user.full_name },
                 headers: { "Content-Type": "application/json" }
             });
             post.then(function (response) { }, function (error) { $scope.R = error.data; });
@@ -239,7 +241,7 @@
             //var File_Path = $scope.imageSrc;
             //    alert($scope.imageSrc);
             $http({
-                //url: "http://www.bsapplogic.somee.com/manageWebsiteColors.asmx/GetWebsiteColors",
+                //url: "http://bslogic-001-site1.ctempurl.com/manageWebsiteColors.asmx/GetWebsiteColors",
                 url: "manageWebsiteColors.asmx/GetWebsiteColors",
                 dataType: 'json',
                 method: "POST",
@@ -259,7 +261,8 @@
     })
     .controller("InfoController", function ($scope, $http, $location) {
 
-        $http.get('CreationStage.asmx/StoreInfo'/*'http://www.bsapplogic.somee.com/CreationStage.asmx/StoreInfo'*/).then(function (response) {
+        //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/StoreInfo').then(function (response) {
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
             if ($scope.Store.Address !== 'No  Location ') {
@@ -284,17 +287,17 @@
         });
 
         $scope.sendData = function () {
-/*            var post = $http({
-                method: "POST",
-                url: "CreationStage.asmx/UpdateData",
-                dataType: 'json',
-                data: { address: $scope.Address, snapchat_link: $scope.snapchatLink, twitter_link: $scope.twitterLink, facebook_link: $scope.facebookLink, instagram_link: $scope.instagramLink },
-                headers: { "Content-Type": "application/json" }
-            });
-                post.then(function (response) { }, function (error) { });*/
+            /*            var post = $http({
+                            method: "POST",
+                            url: "CreationStage.asmx/UpdateData",
+                            dataType: 'json',
+                            data: { address: $scope.Address, snapchat_link: $scope.snapchatLink, twitter_link: $scope.twitterLink, facebook_link: $scope.facebookLink, instagram_link: $scope.instagramLink },
+                            headers: { "Content-Type": "application/json" }
+                        });
+                            post.then(function (response) { }, function (error) { });*/
 
             $http.post(
-                //"http://www.bsapplogic.somee.com/CreationStage.asmx/UpdateData",
+                //"http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UpdateData",
                 "CreationStage.asmx/UpdateData",
                 $.param({
                     address: $scope.Address,
@@ -331,7 +334,7 @@
             //var File_Path = $scope.imageSrc;
             //    alert($scope.imageSrc);
             $http({
-                //url: "http://www.bsapplogic.somee.com/manageWebsiteColors.asmx/GetWebsiteColors",
+                //url: "http://bslogic-001-site1.ctempurl.com/manageWebsiteColors.asmx/GetWebsiteColors",
                 url: "manageWebsiteColors.asmx/GetWebsiteColors",
                 dataType: 'json',
                 method: "POST",
@@ -357,7 +360,7 @@
         $scope.sendLogo = function () {
             var post = $http({
                 method: "POST",
-               // url: "http://www.bsapplogic.somee.com/CreationStage.asmx/UploadLogo",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UploadLogo",
                 url: "CreationStage.asmx/UploadLogo",
                 dataType: 'json',
                 data: { logo: $scope.imageSrc },
@@ -379,7 +382,8 @@
      })*/
     .controller("DisplayAccountController", function ($scope, $http) {
 
-        $http.get('CreationStage.asmx/StoreInfo'/*'http://www.bsapplogic.somee.com/CreationStage.asmx/StoreInfo'*/).then(function (response) {
+        //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/StoreInfo').then(function (response) {
+        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
 
@@ -407,7 +411,8 @@
         });
     })
     .controller("ColorsController", function ($scope, $http) {
-        $http.get('CreationStage.asmx/GetColors'/*'http://www.bsapplogic.somee.com/CreationStage.asmx/GetColors'*/).then(function (response) {
+        //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/GetColors').then(function (response) {
+        $http.get('CreationStage.asmx/GetColors').then(function (response) {
 
             $scope.Colors = response.data;
         }, function (error) {
@@ -418,7 +423,7 @@
 
             var post = $http({
                 method: "POST",
-                //url: "http://www.bsapplogic.somee.com/CreationStage.asmx/UpdateColors",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UpdateColors",
                 url: "CreationStage.asmx/UpdateColors",
                 dataType: 'json',
                 data: { color1: $scope.Colors.Color1, color2: $scope.Colors.Color2, color3: $scope.Colors.Color3, color4: $scope.Colors.Color4 },
@@ -474,21 +479,21 @@
                 var post = $http({
                     method: "POST",
                     url: "CreationStage.asmx/AddTemplate",
-                    //url: "http://www.bsapplogic.somee.com/CreationStage.asmx/AddTemplate",
+                    //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/AddTemplate",
                     dataType: 'json',
                     data: { id: TemplateID },
                     headers: { "Content-Type": "application/json" }
                 });
-
+                //$window.location.href = 'http://bslogic-001-site1.ctempurl.com/EDITandINFO-English';
                 $window.location.href = 'http://localhost:50277/EDITandINFO-English';
             }
         };
     });
-   /* .controller("10Controller", function ($scope, $rootScope, $window) {
-        $rootScope.Arabic = function () {
-            $window.location.href = '../CreationStageArabic.html';
-        };
-    });*/
+/* .controller("10Controller", function ($scope, $rootScope, $window) {
+     $rootScope.Arabic = function () {
+         $window.location.href = '../CreationStageArabic.html';
+     };
+ });*/
 
 //to upload image
 app.directive("ngFileSelect", function (fileReader, $timeout, $rootScope) {
@@ -581,7 +586,8 @@ app.factory("fileReader", function ($q, $log) {
 });
 app.factory('loginService', function ($http) {
     var login = function () {
-        return $http.post('RegisterLogin.asmx/CheckUser'/*'http://www.bsapplogic.somee.com/RegisterLogin.asmx/CheckUser'*/).then(function (msg) {
+        //return $http.post('http://bslogic-001-site1.ctempurl.com/RegisterLogin.asmx/CheckUser/RegisterLogin.asmx/CheckUser').then(function (msg) {
+        return $http.post('RegisterLogin.asmx/CheckUser').then(function (msg) {
             return msg.data;
         });
     };
