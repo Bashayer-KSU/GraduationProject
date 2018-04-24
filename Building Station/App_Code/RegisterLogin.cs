@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
@@ -35,7 +34,7 @@ public class RegisterLogin : System.Web.Services.WebService
                 con.Close();
                 value = "/index.html";
             }
-            else if (password.Length > 7 && password.Length < 21 && phone.Length > 7 && phone.Length < 16 && !Regex.IsMatch(phone, "[a-zA-Z]"))
+            else
             {
                 dr.Close();
                 cmd = new SqlCommand("insert into Store (ShopOwnerName, Email, Password, Phone) values " +
@@ -113,11 +112,6 @@ public class RegisterLogin : System.Web.Services.WebService
                 {
                     value = "/CreationSatgeArabic.html";
                 }
-            }
-            else
-            {
-                con.Close();
-                value = "/index.html";
             }
         }
         Context.Response.Write(js.Serialize(value));

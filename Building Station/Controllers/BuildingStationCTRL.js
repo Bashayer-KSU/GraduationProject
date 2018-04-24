@@ -172,12 +172,27 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
     })
     .controller("RegisterLoginCtrl", function ($scope, $http, $window, $location) {
 
-        $scope.SendData = function (e, lang) {
+        $scope.DisplayWarningMessage = function (lang, action) {
+            if (lang === "ar") {
+                if (action === "log")
+                    $scope.arLoginWarningMsg = true;
+                else
+                    $scope.arRegisterWarningMsg = true;
+            }
+            else if (lang === "eng") {
+                if (action === "log")
+                    $scope.engLoginWarningMsg = true;
+                else
+                    $scope.engRegisterWarningMsg = true;
+            }
+        };
+
+        $scope.SendData = function (action, lang) {
             // use $.param jQuery function to serialize data from JSON 
             var url;
             var data;
 
-            if (e === "reg") {
+            if (action === "reg") {
                 //url = "http://bslogic-001-site1.ctempurl.com/RegisterLogin.asmx/Register";
                 url = "/RegisterLogin.asmx/Register";
                 if (lang === "eng") {
@@ -199,7 +214,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     });
                 }
             }
-            else if (e === "log") {
+            else if (action === "log") {
                 //url = "http://bslogic-001-site1.ctempurl.com/RegisterLogin.asmx/Login";
                 url = "/RegisterLogin.asmx/Login";
                 if (lang === "eng") {
@@ -228,14 +243,25 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $http.post(url, data, config)
                 .then(function (response) {
                     $scope.result = response.data;
+                    $scope.resultAfterSubstring = $scope.result.substr(1, $scope.result.length - 2);
                     //  location.href = "http://localhost:50277/" + $scope.result.substr(76, $scope.result.length - 9 - 76);
                     //location.href = "http://buildingstation.somee.com/" + $scope.result.slice(1, -1);
-                    $location.path("/" + $scope.result.slice(1, -1));
+                    // $location.path("/" + $scope.result.slice(1, -1));
+                    if ($scope.result.includes("/index.html")) {
+                        $scope.DisplayWarningMessage(lang, action);
+                    }
+                    else
+                        location.href = $scope.resultAfterSubstring;
+
                     //location.href = "http://localhost:50277/" + $scope.result.slice(1, -1);
+                    console.log(response);
+                    console.log($scope.resultAfterSubstring);
                 }, function (error) {
                     $scope.error = error.data;
                 });
         };
+
+        
     })
     .controller("PublishedStoreCtrl", function ($scope, $http, $stateParams, ProductService, CategoryService, AddProductService) {
         var ID = 0;
