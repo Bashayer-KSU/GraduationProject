@@ -70,8 +70,111 @@
             color: #F6F8EA;
             font-family: 'NeoSansArabic';
         }
+
+
+        /*Menu*/
+
+        .navbar {
+            background-color: #D4D8BA;
+            -moz-box-shadow: inset 0 0 10px white;
+            -webkit-box-shadow: inset 0 0 10px white;
+            box-shadow: inset 0 0 10px white;
+        }
+
+            .navbar .nav > li > a {
+                float: none;
+                padding: 10px 15px 10px;
+                text-decoration: none;
+                text-shadow: none;
+            }
+
+            .navbar .nav li.nav-item a {
+                color: #545454;
+                font-weight: 500;
+                font-family:'NeoSansArabic';
+            }
+
+            .navbar .nav li.nav-item:hover {
+                background-image: url(images/blue.png);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-position-y: top;
+                transition: .3s ease-in-out;
+                color: #C6BA57;
+                font-weight: 600;
+            }
+
+            .navbar .nav li.nav-item a:focus {
+                background-image: url(images/blue.png);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-position-y: top;
+                color: #C6BA57;
+                font-weight: 600;
+                margin-top: -20px;
+                padding-top: 20px;
+            }
+
+        .navbar-header li {
+            width: 220px;
+        }
+
+        .navbar .brand {
+            display: block;
+            float: left;
+            padding: 10px 20px 10px;
+            margin-left: -20px;
+            font-size: 20px;
+            font-weight: 200;
+            color: #777;
+            text-shadow: 0 1px 0 #FFF;
+        }
+
+        .navbar-collapse .nav li {
+            width: 200px;
+        }
+
+            .navbar-collapse .nav li a {
+                height: 90px;
+                margin-top: -10px;
+            }
+
+
+
+
+        @media (min-width:992px) {
+            .navbar-header {
+                float: left
+            }
+        }
+
+        @media (min-width:992px) {
+            .container-fluid > .navbar-collapse, .container-fluid > .navbar-header, .container > .navbar-collapse, .container > .navbar-header {
+                margin-right: 0;
+                margin-left: 0
+            }
+        }
+
+        @media (min-width:992px) {
+            .container-fluid > .navbar-collapse, .container-fluid > .navbar-header, .container > .navbar-collapse, .container > .navbar-header {
+                margin-right: 0;
+                margin-left: 0
+            }
+        }
+
+        .navbar-static-top {
+            z-index: 1000;
+            border-width: 0 0 1px
+        }
+
+        .dropdown .dropdown-menu > li > a:hover {
+            color: #262626;
+            text-decoration: none;
+            background-color: transparent;
+        }
+
     </style>
-    <link rel="stylesheet" href="light.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="/light.css" type="text/css" media="screen" />
     <script type="text/javascript" src="js/jquery-1.4.min.js"></script>
     <script type="text/javascript" src="js/jquery.easing.min.js"></script>
     <script type="text/javascript" src="js/jquery.lavalamp.min.js"></script>
@@ -88,7 +191,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.9/angular-sanitize.min.js"></script>
 </head>
 <body ng-app="BuildingStationAPP" ng-controller="BS-Menu-ArabicCTRL">
-
     <!--All-->
     <div>
         <!--1-->
@@ -133,52 +235,67 @@
                     <!--3-->
                     <header>
 
-                        <div class="lightmenu">
+                        <!--Responsive-->
+                        <nav class="navbar navbar-default" style="
+            background-color: #D4D8BA;
+            -moz-box-shadow: inset 0 0 10px white;
+            -webkit-box-shadow: inset 0 0 10px white;
+            box-shadow: inset 0 0 10px white;
+            margin-top:10px;">
+                            <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                    <!-- <a class="navbar-brand" href="#">Brand</a>-->
+                                </div>
 
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav mr-auto lightBlue " id="one">
 
-                            <ul>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                                        <img ng-src="/images/settings.png" alt="" style="width:37px; height:37px; top:15px; margin-top:12px; margin-left:15px;" /><b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li style="background:none; font-family:'NeoSansArabic'"><a ng-click="Publish($event)" href="#">نشر الموقع</a></li>
-                                        <li class="divider"></li>
-                                        <li style="background:none; font-family:'NeoSansArabic'"><a ng-click="UnPublish($event)" href="#">إلغاء نشر الموقع</a></li>
-                                        <li class="divider"></li>
-                                        <li style="background:none; font-family:'NeoSansArabic'"><a ng-click="DeleteStore($event)" href="#">حذف الموقع</a></li>
+                                        <li class="nav-item dropdown" >
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                <img src="/images/settings.png" alt="" style="width:20%; height:50%; margin-top:-8px;" />
+                                                <span class="caret"></span>
+                                            </a>
+
+                                            <ul class="dropdown-menu">
+                                                <li style="background-image:none"><a ng-click="Publish($event)" href="#">نشر الموقع</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li style="background-image:none"><a ng-click="UnPublish($event)" href="#">إلغاء نشر الموقع</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li style="background-image:none"><a ng-click="DeleteStore($event)" href="#">حذف الموقع</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item sep">
+                                            <a class="nav-link" href="#" ng-click="DesktopView()">معاينة الموقع</a>
+                                        </li>
+                                        <li class="nav-item sep">
+                                            <a class="nav-link" href="EDITandINFO/ManageStore">إدارة المتجر</a>
+                                        </li>
+                                        <li class="nav-item sep">
+                                            <a class="nav-link" href="EDITandINFO/Products">المنتجات</a>
+                                        </li>
+                                        <li class="nav-item sep">
+                                            <a class="nav-link" href="EDITandINFO/Templates">القوالب</a>
+                                        </li>
+
+                                        <li class="nav-item sep" style="background-image:none">
+                                            <a class="nav-link" href="EDITandINFO/DevelopmentEnvironment">بيئة العمل<span class="sr-only">(current)</span></a>
+                                        </li>
                                     </ul>
-                                </li>
-                            </ul>
-                            <ul class="lightBlue" id="one">
 
-                                <li>
-                                    <a href="#" ng-click="DesktopView()" style="font-family:'NeoSansArabic'">
-                                        معاينة الموقع
-                                    </a>
-                                    <!--<ul class="dropdown-menu">
-            <li style="background:none; font-family:'NeoSansArabic'"><a ng-href="PreviewWebsite" ng-click="DesktopView()">معاينة على الحاسب &nbsp; <img ng-src="/images/imac.png" alt="" style="width:37px; height:37px;" /></a></li>
-            <li class="divider"></li>
-            <li style="background:none; font-family:'NeoSansArabic'"><a href="PreviewWebsite" ng-click="MobileView()">معاينة على الجوال &nbsp; <img ng-src="/images/iphone.png" alt="" style="width:37px; height:37px;" /></a></li>
-        </ul>-->
-                                </li>
+                                </div>
+                            </div>
 
-    <li><a href="EDITandINFO/ManageStore" style="font-family:'NeoSansArabic'">إدارة المتجر</a></li>
-    <li><a href="EDITandINFO/Products" style="font-family:'NeoSansArabic'">المنتجات</a></li>
-    <li><a href="EDITandINFO/Templates" style="font-family:'NeoSansArabic'">القالب</a></li>
-    <li class="current"><a href="EDITandINFO/DevelopmentEnvironment" style="font-family:'NeoSansArabic'">بيئة العمل</a></li>
-<!--
-                                <li><a ui-sref="BS-Menu-Arabic.ManageStore" style="font-family:'NeoSansArabic'">إدارة المتجر</a></li>
-                                <li><a ui-sref="BS-Menu-Arabic.Products" style="font-family:'NeoSansArabic'">المنتجات</a></li>
-                                <li><a ui-sref="localhost:50277/EDITandINFO/Templates" style="font-family:'NeoSansArabic'">القالب</a></li>
-                                <li class="current"><a ui-sref="BS-Menu-Arabic.DevelopmentEnvironment" style="font-family:'NeoSansArabic'">بيئة العمل</a></li>
-                           --> </ul>
-    
+                        </nav>
+                        <!---->
 
-
-                        </div>
                     </header>
-
                     <!--Content-->
                     <div class="row justify-content-center" style="width:100%;">
                         <ui-view></ui-view>

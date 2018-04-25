@@ -1,6 +1,4 @@
 ﻿
-
-
 var imported = document.createElement('script');
 imported.src = '/js/jquery.lavalamp.min.js';
 document.head.appendChild(imported);
