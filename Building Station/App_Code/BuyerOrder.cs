@@ -113,11 +113,14 @@ public class BuyerOrder : System.Web.Services.WebService
                 ord.PaymentMethod = reader["PaymentMethod"].ToString();
                 ord.BankAccount = reader["BankAccount"].ToString();
                 ord.OrderID = reader["OrderID"].ToString();
-                if (ord.PaymentMethod != "BankTransfer")
+                if (ord.PaymentMethod == "Cash")
                 {
                     ord.BankAccount = "";
                     ord.OrderID = "";
                 }
+                if (ord.PaymentMethod == "PayPal")
+                    ord.BankAccount = "";
+                
                 ord.Status = Convert.ToBoolean(reader["Status"]);
                 OrdersList.Add(ord);
             }
