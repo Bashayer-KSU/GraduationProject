@@ -131,19 +131,30 @@ public class RegisterLogin : System.Web.Services.WebService
 
             if (dr.HasRows == true)
             {
-                Session["user"] = email;
+                //Session["user"] = email;
                 dr.Read();
-                if (Convert.ToInt32(dr["TemplateID"]) == 0) //If user not start building template yet
+                int TemplateID = Convert.ToInt32(dr["TemplateID"]);
+                dr.Close();
+                //SqlCommand cmd2 = new SqlCommand("INSERT INTO Session (Email) values('"+email+"')", con);
+                //cmd2.ExecuteNonQuery();
+                SqlCommand cmd3 = new SqlCommand("SELECT * FROM Session WHERE Email = '" + email + "'", con);
+                SqlDataReader dr3 = cmd3.ExecuteReader();
+                dr3.Read();
+                string SessionID = dr3["ID"].ToString();
+                //string SessionID = "";
+                dr3.Close();
+                
+                if (TemplateID== 0) //If user not start building template yet
                 {
                     con.Close();
 
                     if (lang.Equals("eng"))
                     {
-                        value = "/CreationStage.html";
+                        value = "/CreationStage.html-"+ SessionID;
                     }
                     else
                     {
-                        value = "/CreationSatgeArabic.html";
+                        value = "/CreationSatgeArabic.html-"+ SessionID;
                     }
                 }
                 else //If user already has template 
@@ -151,13 +162,13 @@ public class RegisterLogin : System.Web.Services.WebService
                     if (lang.Equals("eng"))
                     {
                       //  value = "/Views/BasicE.html";
-                        value = "EDITandINFO-English";
+                        value = "EDITandINFO-English-"+ SessionID;
 
                     }
                     else
                     {
                        // value = "/Views/Basic.html";
-                        value = "EDITandINFO";
+                        value = "EDITandINFO-"+ SessionID;
                     }
                 }
             }
@@ -165,7 +176,7 @@ public class RegisterLogin : System.Web.Services.WebService
             //Invalid login
             else
             {
-                value = "/index.html";
+                value = "/index.html-"+-1;
             }
         }
         Context.Response.Write(js.Serialize(value));

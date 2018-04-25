@@ -64,7 +64,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     .run(function ($rootScope, $location, loginService, $window) {
 
         // register listener to watch route changes
-        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+        $rootScope.$on("$routeChangeStart", function (event, next, current, $window) {
 
             $rootScope.loggin = function () {
                 return loginService.login();
@@ -73,6 +73,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 $rootScope.login = response;
                 if (response === "false") {
                     //redirect to login page
+                    //$window.open = ("http://www.buildingstation1-001-site1.atempurl.com/index.html", "_self");
                     location.href = "/index.html";
                 }
             });
@@ -88,13 +89,15 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("0aController", function ($scope, $rootScope, $window) {
         $rootScope.English = function () {
+            //$window.location.href = 'http://www.buildingstation1-001-site1.atempurl.com/CreationStageArabic.html';
             $window.location.href = '../CreationStage.html';
         };
 
     })
     .controller("Name_Controller", function ($scope, $http, $location) {
 
-        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+        //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/StoreInfo').then(function (response) {
+        $http.get('/CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
             if ($scope.Store.Name !== ' No StoreName ') {
@@ -106,7 +109,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
 
             var post = $http({
                 method: "POST",
-                url: "CreationStage.asmx/AddStoreName",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/AddStoreName",
+                url: "/CreationStage.asmx/AddStoreName",
                 dataType: 'json',
                 data: { name: $scope.storeName },
                 headers: { "Content-Type": "application/json" }
@@ -131,7 +135,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })
     .controller("Type_Controller", function ($scope, $http, $location) {
 
-        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+        //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/StoreInfo').then(function (response) {
+        $http.get('/CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
             if ($scope.Store.Type !== 'No StoreType ') {
@@ -141,7 +146,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $scope.sendType = function () {
             var post = $http({
                 method: "POST",
-                url: "CreationStage.asmx/AddStoreType",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/AddStoreType",
+                url: "/CreationStage.asmx/AddStoreType",
                 dataType: 'json',
                 data: { type: $scope.Type, language: 'Arabic' },
                 headers: { "Content-Type": "application/json" }
@@ -207,7 +213,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $scope.savedata = function () {
             var post = $http({
                 method: "POST",
-                url: "CreationStage.asmx/ConnectInstagram",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/ConnectInstagram",
+                url: "/CreationStage.asmx/ConnectInstagram",
                 dataType: 'json',
                 data: { link: 'https://www.instagram.com/' + $scope.search + '/', logo: $scope.details.graphql.user.profile_pic_url, descripton: $scope.details.graphql.user.biography, name: $scope.details.graphql.user.full_name },
                 headers: { "Content-Type": "application/json" }
@@ -219,7 +226,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             //var File_Path = $scope.imageSrc;
             //    alert($scope.imageSrc);
             $http({
-                url: "manageWebsiteColors.asmx/GetWebsiteColors",
+                //url: "http://bslogic-001-site1.ctempurl.com/manageWebsiteColors.asmx/GetWebsiteColors",
+                url: "/manageWebsiteColors.asmx/GetWebsiteColors",
                 dataType: 'json',
                 method: "POST",
                 data: { path: $scope.details.graphql.user.profile_pic_url },
@@ -237,7 +245,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         };
     })
     .controller("InfoController", function ($scope, $http, $location) {
-        $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+        //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/StoreInfo').then(function (response) {
+        $http.get('/CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
             if ($scope.Store.Address !== 'No  Location ') {
@@ -263,7 +272,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
 
         $scope.sendData = function () {
             $http.post(
-                "CreationStage.asmx/UpdateData",
+                //"http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UpdateData",
+                "/CreationStage.asmx/UpdateData",
                 $.param({
                     address: $scope.Address,
                     snapchat_link: $scope.snapchatLink,
@@ -305,7 +315,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             //var File_Path = $scope.imageSrc;
             //    alert($scope.imageSrc);
             $http({
-                url: "manageWebsiteColors.asmx/GetWebsiteColors",
+                //url: "http://bslogic-001-site1.ctempurl.com/manageWebsiteColors.asmx/GetWebsiteColors",
+                url: "/manageWebsiteColors.asmx/GetWebsiteColors",
                 dataType: 'json',
                 method: "POST",
                 data: { path: $scope.imageSrc },
@@ -330,7 +341,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $scope.sendLogo = function () {
             var post = $http({
                 method: "POST",
-                url: "CreationStage.asmx/UploadLogo",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UploadLogo",
+                url: "/CreationStage.asmx/UploadLogo",
                 dataType: 'json',
                 data: { logo: $scope.imageSrc },
                 headers: { "Content-Type": "application/json" }
@@ -351,7 +363,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     })*/
     .controller("DisplayAccountController", function ($scope, $http) {
 
-            $http.get('CreationStage.asmx/StoreInfo').then(function (response) {
+        //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/StoreInfo').then(function (response) {
+        $http.get('/CreationStage.asmx/StoreInfo').then(function (response) {
 
             $scope.Store = response.data;
 
@@ -398,7 +411,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
               }, function (error) {
                   $scope.error = error.data;
               });*/
-        $http.get('CreationStage.asmx/GetColors').then(function (response) {
+        //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/GetColors').then(function (response) {
+        $http.get('/CreationStage.asmx/GetColors').then(function (response) {
 
             $scope.Colors = response.data;
         }, function (error) {
@@ -409,7 +423,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
 
             var post = $http({
                 method: "POST",
-                url: "CreationStage.asmx/UpdateColors",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UpdateColors",
+                url: "/CreationStage.asmx/UpdateColors",
                 dataType: 'json',
                 data: { color1: $scope.Colors.Color1, color2: $scope.Colors.Color2, color3: $scope.Colors.Color3, color4: $scope.Colors.Color4 },
                 headers: { "Content-Type": "application/json" }
@@ -463,7 +478,8 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             else {
                 var post = $http({
                     method: "POST",
-                    url: "CreationStage.asmx/AddTemplate",
+                    //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/AddTemplate",
+                    url: "/CreationStage.asmx/AddTemplate",
                     dataType: 'json',
                     data: { id: TemplateID },
                     headers: { "Content-Type": "application/json" }
@@ -571,6 +587,7 @@ app.factory("fileReader", function ($q, $log) {
 
 app.factory('loginService', function ($http) {
     var login = function () {
+        //return $http.post('http://bslogic-001-site1.ctempurl.com/RegisterLogin.asmx/CheckUser').then(function (msg) {
         return $http.post('/RegisterLogin.asmx/CheckUser').then(function (msg) {
             return msg.data;
         });
