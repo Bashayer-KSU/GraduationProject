@@ -120,11 +120,8 @@ namespace UnitTestBuildingStation
             string expected = "incorrect password";
             string email = "sarah@mail.com";
             string password = "12e39o405";
-
-
             //Act
             string actual = BuildingStationLClassLibrary.Published_Stores.DeleteStore(email, password);
-
             //Assert
             Assert.AreEqual(expected, actual);
         }
@@ -197,8 +194,6 @@ namespace UnitTestBuildingStation
             //Act
             Product actual = BuildingStationLClassLibrary.Products.EditProduct(1, "test Category", "image", "test product", "test Description", 50, 3, 20);
             //Assert
-            // Assert.AreEqual(Expeted, actual);
-
             Assert.AreEqual(Expeted.Amount, actual.Amount);
             Assert.AreEqual(Expeted.Category_ID, actual.Category_ID);
             Assert.AreEqual(Expeted.Description, actual.Description);
@@ -240,7 +235,6 @@ namespace UnitTestBuildingStation
             //Arrange
             bool Expeted = true;
             string CategoryName = "old Category";
-
             //Act
             bool actual = BuildingStationLClassLibrary.Products.DeleteCategory(CategoryName);
             //Assert
@@ -252,7 +246,6 @@ namespace UnitTestBuildingStation
         {
             //Arrange
             int CategoryID = 1;
-
             List<Statstic> Expeted = new List<Statstic>();
             Statstic statstic1 = new Statstic();
             statstic1.Amount = 7;
@@ -272,12 +265,9 @@ namespace UnitTestBuildingStation
             statstic3.ProductName = "Product 3";
             statstic3.CategoryID = CategoryID;
             Expeted.Add(statstic3);
-
             //Act
             List<Statstic> actual = BuildingStationLClassLibrary.Products.BestProductsInCategory(CategoryID);
             //Assert
-           // Assert.AreEqual(Expeted, actual);
-
             Assert.AreEqual(Expeted[0].CategoryID, actual[0].CategoryID);
             Assert.AreEqual(Expeted[0].ProductID, actual[0].ProductID);
             Assert.AreEqual(Expeted[0].ProductName, actual[0].ProductName);
@@ -390,9 +380,10 @@ namespace UnitTestBuildingStation
         [TestMethod]
         public void Test_UpdateBankInfo()
         {
+            // "IBAN length must be between 15 and 34 and shall contain no spaces or special characters"
             //Arrange
-            string Expeted = "IBAN length must be between 15 and 34 and shall contain no spaces or special characters";
-            string IBAN = "145$+6A SD";
+            string Expeted = "143456789879766SD";
+            string IBAN = "143456789879766SD";
             //Act
             string actual = BuildingStationLClassLibrary.PaymentMethods.UpdateBankInfo(IBAN);
             //Assert
