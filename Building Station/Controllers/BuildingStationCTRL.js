@@ -932,7 +932,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                         if (response.data.includes("IBAN length")) {//Nothing
                         }
                         else {
-                            $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
+                           // $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
                             $scope.editIBAN = false;
 
                         }
