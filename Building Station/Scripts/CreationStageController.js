@@ -70,14 +70,14 @@
                 $rootScope.login = response;
                 if (response === "false") {
                     //redirect to login page
-                    //$window.open = ("http://www.buildingstation.somee.com/index.html", "_self");
+                    //$window.open = ("http://www.buildingstation1-001-site1.atempurl.com/index.html", "_self");
                     location.href = "/index.html";
                 }
             });
         });
 
         $rootScope.Arabic = function () {
-            //$window.location.href = 'http://www.buildingstation.somee.com/CreationStageArabic.html';
+            //$window.location.href = 'http://www.buildingstation1-001-site1.atempurl.com/CreationStageArabic.html';
             $window.location.href = '../CreationStageArabic.html';
         };
 
@@ -96,7 +96,7 @@
     .controller("0Controller", function ($scope, $window, $rootScope) {
 
         $rootScope.Arabic = function () {
-            //$window.location.href = 'http://www.buildingstation.somee.com/CreationStageArabic.html';
+            //$window.location.href = 'http://www.buildingstation1-001-site1.atempurl.com/CreationStageArabic.html';
             $window.location.href = '../CreationSatgeArabic.html';
         };
 
