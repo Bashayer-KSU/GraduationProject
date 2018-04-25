@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
@@ -82,9 +83,10 @@ public class PaymentMethods : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void UpdateBankInfo(String IBAN)
     {
+        IBAN = IBAN.ToUpper();
         int success = 0;
-        if (IBAN.Length > 14 && IBAN.Length < 35)
-        {
+        if (IBAN.Length > 14 && IBAN.Length < 35 && !IBAN.Contains(" "))
+        {//!Regex.IsMatch(IBAN, "^[a-zA-Z0-9]*$")
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
@@ -96,7 +98,7 @@ public class PaymentMethods : System.Web.Services.WebService
         if (success != 0)
             Context.Response.Write(js.Serialize(IBAN));
         else
-            Context.Response.Write(js.Serialize("IBAN length must be between 15 and 34"));
+            Context.Response.Write(js.Serialize("IBAN length must be between 15 and 34 and shall contain no spaces or special characters"));
     }
 
     [WebMethod(EnableSession = true)]

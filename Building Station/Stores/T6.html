@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="BuildingStationAPP" ng-controller="PublishedStoreCtrl">
 <head lang="en">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -50,7 +50,7 @@
         }
     </style>
 </head>
-<body ng-app="BuildingStationAPP" ng-controller="PublishedStoreCtrl" data-spy="scroll" data-target=".navbar" data-offset="50" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">
+<body  data-spy="scroll" data-target=".navbar" data-offset="50" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">
     <div ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">
         <header>
             <!--
@@ -83,11 +83,11 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"  value="English" checked>
                                 <label class="form-check-label nav-link" for="inlineRadio1">English</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" ng-click="goArabic()" id="inlineRadio2" value="Arabic" >
                                 <label class="form-check-label nav-link" for="inlineRadio2">Arabic</label>
                             </div>
                         </li>
@@ -311,7 +311,9 @@
                             <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=false; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
                             <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="Buyer.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Choose Payment Method</button>
                             <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
-                            <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
+                          <!--  <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>-->
+                           
+                            <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md"  ng-click="CheckoutA(BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod, HolName, OrderID)" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
 
                         </div>
                     </div>

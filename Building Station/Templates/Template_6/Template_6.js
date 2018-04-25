@@ -1,22 +1,5 @@
 ﻿var myApp = angular.module("T6", []);
 
-/*myApp.run(function (initialSetup) {
-    initialSetup.getStoreInfo();
-
-});*/
-
-myApp.service('initialSetup', function ($http) {
-    var promise;
-    return {
-        InitialSetup: function () {
-            promise = $http.get();
-        },
-        getStoreInfo: function () {
-            return promise;
-        }
-    };
-});
-
 var T6 = myApp.controller("T6Ctrl", function ($scope, $http, $window, ProductService, CategoryService, AddProductService) {
 
     //$scope.SwitchLanguage = function () {

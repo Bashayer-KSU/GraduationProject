@@ -16,7 +16,7 @@ namespace UnitTestBuildingStation
             string name = "maha";
             string email = "maha@gmail.com";
             string password = "1210902Maha22";
-            string phone = "0502331135";
+            string phone = "0502331130";
             
             //Act
             bool actual = BuildingStationLClassLibrary.RegisterLogin.Register(name, email, password, phone);
@@ -48,7 +48,7 @@ namespace UnitTestBuildingStation
         {
             //Arrange
             bool expected = false;
-            string link = "https://www.snap.com/";
+            string link = "https://www.snap.com/asmaa";
 
             //Act
         bool actual = BuildingStationLClassLibrary.ShowHideElement.ValidLink(link);
@@ -103,7 +103,7 @@ namespace UnitTestBuildingStation
         public void Test_UnPublish()
         {
             //Arrange
-            bool expected = false;
+            bool expected = true;
             string email = "sarah@mail.com";
 
             //Act
@@ -120,17 +120,14 @@ namespace UnitTestBuildingStation
             string expected = "incorrect password";
             string email = "sarah@mail.com";
             string password = "12e39o405";
-
-
             //Act
             string actual = BuildingStationLClassLibrary.Published_Stores.DeleteStore(email, password);
-
             //Assert
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void Test_getLogoColors()
+        public void Test_GetWebsiteColors()
         {
             //Arrange
             Colors Expected = new Colors();
@@ -141,7 +138,7 @@ namespace UnitTestBuildingStation
             string Logo = @"C:\Users\star7\OneDrive\Desktop\ONLINE SHOPS PIC's\-2- Sweets/Test-logo.jpg";
 
             //Act
-            Colors actual = BuildingStationLClassLibrary.LogoColors.GetLogoColors(Logo);
+            Colors actual = BuildingStationLClassLibrary.LogoColors.GetWebsiteColors(Logo);
             // System.Diagnostics.Debug.WriteLine("the colors" + actual);
             //Console.Write("the colors hhhhheeeeeeeerrrrrreee"+ actual);
             //Assert
@@ -197,8 +194,6 @@ namespace UnitTestBuildingStation
             //Act
             Product actual = BuildingStationLClassLibrary.Products.EditProduct(1, "test Category", "image", "test product", "test Description", 50, 3, 20);
             //Assert
-            // Assert.AreEqual(Expeted, actual);
-
             Assert.AreEqual(Expeted.Amount, actual.Amount);
             Assert.AreEqual(Expeted.Category_ID, actual.Category_ID);
             Assert.AreEqual(Expeted.Description, actual.Description);
@@ -240,7 +235,6 @@ namespace UnitTestBuildingStation
             //Arrange
             bool Expeted = true;
             string CategoryName = "old Category";
-
             //Act
             bool actual = BuildingStationLClassLibrary.Products.DeleteCategory(CategoryName);
             //Assert
@@ -252,32 +246,28 @@ namespace UnitTestBuildingStation
         {
             //Arrange
             int CategoryID = 1;
-
             List<Statstic> Expeted = new List<Statstic>();
             Statstic statstic1 = new Statstic();
-            statstic1.Amount = 2;
+            statstic1.Amount = 7;
             statstic1.ProductID = 1;
             statstic1.ProductName = "Product 1";
             statstic1.CategoryID = CategoryID;
             Expeted.Add(statstic1);
             Statstic statstic2 = new Statstic();
-            statstic2.Amount = 3;
+            statstic2.Amount = 8;
             statstic2.ProductID = 2;
             statstic2.ProductName = "Product 2";
             statstic2.CategoryID = CategoryID;
             Expeted.Add(statstic2);
             Statstic statstic3 = new Statstic();
-            statstic3.Amount = 4;
+            statstic3.Amount = 9;
             statstic3.ProductID = 3;
             statstic3.ProductName = "Product 3";
             statstic3.CategoryID = CategoryID;
             Expeted.Add(statstic3);
-
             //Act
             List<Statstic> actual = BuildingStationLClassLibrary.Products.BestProductsInCategory(CategoryID);
             //Assert
-           // Assert.AreEqual(Expeted, actual);
-
             Assert.AreEqual(Expeted[0].CategoryID, actual[0].CategoryID);
             Assert.AreEqual(Expeted[0].ProductID, actual[0].ProductID);
             Assert.AreEqual(Expeted[0].ProductName, actual[0].ProductName);
@@ -300,7 +290,7 @@ namespace UnitTestBuildingStation
             //Arrange
             bool Expeted = true;
             string section = "Slider";
-            string action = "Hide";
+            string action = "Show";
 
             //Act
             bool actual = BuildingStationLClassLibrary.ShowHideElement.ShowHideSection(section, action);
@@ -375,14 +365,14 @@ namespace UnitTestBuildingStation
         }
 
         [TestMethod]
-        public void Test_UpdatStoreData()
+        public void Test_UpdateStoreData()
         {
             //Arrange
             string Expeted = "Sweets Dishes";
             string DataType = "Menu Title";
             string NewValue = "Sweets Dishes";
             //Act
-            string actual = BuildingStationLClassLibrary.TemplateData.UpdatStoreData(DataType, NewValue);
+            string actual = BuildingStationLClassLibrary.TemplateData.UpdateStoreData(DataType, NewValue);
             //Assert
             Assert.AreEqual(Expeted, actual);
         }
@@ -390,9 +380,10 @@ namespace UnitTestBuildingStation
         [TestMethod]
         public void Test_UpdateBankInfo()
         {
+            // "IBAN length must be between 15 and 34 and shall contain no spaces or special characters"
             //Arrange
-            string Expeted = "IBAN length must be between 15 and 34";
-            string IBAN = "123456ASD";
+            string Expeted = "143456789879766SD";
+            string IBAN = "143456789879766SD";
             //Act
             string actual = BuildingStationLClassLibrary.PaymentMethods.UpdateBankInfo(IBAN);
             //Assert

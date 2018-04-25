@@ -172,12 +172,27 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
     })
     .controller("RegisterLoginCtrl", function ($scope, $http, $window, $location) {
 
-        $scope.SendData = function (e, lang) {
+        $scope.DisplayWarningMessage = function (lang, action) {
+            if (lang === "ar") {
+                if (action === "log")
+                    $scope.arLoginWarningMsg = true;
+                else
+                    $scope.arRegisterWarningMsg = true;
+            }
+            else if (lang === "eng") {
+                if (action === "log")
+                    $scope.engLoginWarningMsg = true;
+                else
+                    $scope.engRegisterWarningMsg = true;
+            }
+        };
+
+        $scope.SendData = function (action, lang) {
             // use $.param jQuery function to serialize data from JSON 
             var url;
             var data;
 
-            if (e === "reg") {
+            if (action === "reg") {
                 //url = "http://bslogic-001-site1.ctempurl.com/RegisterLogin.asmx/Register";
                 url = "/RegisterLogin.asmx/Register";
                 if (lang === "eng") {
@@ -199,7 +214,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     });
                 }
             }
-            else if (e === "log") {
+            else if (action === "log") {
                 //url = "http://bslogic-001-site1.ctempurl.com/RegisterLogin.asmx/Login";
                 url = "/RegisterLogin.asmx/Login";
                 if (lang === "eng") {
@@ -228,14 +243,25 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $http.post(url, data, config)
                 .then(function (response) {
                     $scope.result = response.data;
+                    $scope.resultAfterSubstring = $scope.result.substr(1, $scope.result.length - 2);
                     //  location.href = "http://localhost:50277/" + $scope.result.substr(76, $scope.result.length - 9 - 76);
                     //location.href = "http://buildingstation.somee.com/" + $scope.result.slice(1, -1);
-                    $location.path("/" + $scope.result.slice(1, -1));
+                    // $location.path("/" + $scope.result.slice(1, -1));
+                    if ($scope.result.includes("/index.html")) {
+                        $scope.DisplayWarningMessage(lang, action);
+                    }
+                    else
+                        location.href = $scope.resultAfterSubstring;
+
                     //location.href = "http://localhost:50277/" + $scope.result.slice(1, -1);
+                    console.log(response);
+                    console.log($scope.resultAfterSubstring);
                 }, function (error) {
                     $scope.error = error.data;
                 });
         };
+
+        
     })
     .controller("PublishedStoreCtrl", function ($scope, $http, $stateParams, ProductService, CategoryService, AddProductService) {
         var ID = 0;
@@ -271,7 +297,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             //Store Info
             $http({
                 //url: "http://bslogic-001-site1.ctempurl.com/../Published_Stores.asmx/GetStore",
-                url: "../Published_Stores.asmx/GetStore",
+                url: "/Published_Stores.asmx/GetStore",
                 params: { StoreDomain: $stateParams.Domain },
                 method: "get"
             })
@@ -285,7 +311,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     document.getElementById("icon").href = $scope.Store.Logo;
                     //Payment Methods
                     if ($scope.Store.BankTransfer) {
-                        if ($scope.Store.BankAccount.includes("No"))
+                        if ($scope.Store.BankAccount.includes("No ShopOwnerBank"))
                             $scope.Store.BankTransfer = false;
                     }
 
@@ -293,31 +319,10 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                         $scope.PaymentMethod = "Cash";
                     else if ($scope.Store.BankTransfer)
                         $scope.PaymentMethod = "BankTransfer";
-                    else $scope.PaymentMethod = "PayPal";
+                    else if ($scope.Store.PayPal)
+                        $scope.PaymentMethod = "PayPal";
+                    else "";
 
-                    //Social Media Link
-                    /*  if ($scope.Store.SnapchatLink !== 'No Value') {
-                          $scope.Snapchat = true;
-                      }
-                      else { $scope.Snapchat = false; }
-      
-                      if ($scope.Store.TwitterLink !== 'No Value') {
-                          $scope.Twitter = true;
-                      }
-                      else {
-                          $scope.Twitter = false;
-                      }
-      
-                      if ($scope.Store.FacebookLink !== 'No Value') {
-                          $scope.Facebook = true;
-                      }
-                      else { $scope.Facebook = false; }
-      
-                      if ($scope.Store.InstagramLink !== 'No Value') {
-                          $scope.Instagram = true;
-                      }
-                      else { $scope.Instagram = false; }
-                      */
 
                     //Menu
                     $scope.MenuTitle = $scope.Store.MenuTitle;
@@ -342,7 +347,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
             $http({
                 //url: "http://bslogic-001-site1.ctempurl.com/../Published_Stores.asmx/GetElements",
-                url: "../Published_Stores.asmx/GetElements",
+                url: "/Published_Stores.asmx/GetElements",
                 params: { StoreDomain: $stateParams.Domain },
                 method: "get"
             })
@@ -378,6 +383,17 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                             if ($scope.AboutContent === null || $scope.AboutContent === "")
                                 $scope.section.about = true;
                         }
+                        else if ($scope.elementInfo[i].Name === "PayPal") {
+                            if ($scope.elementInfo[i].Type === "AccountEmail") {
+                                if ($scope.elementInfo[i].Value.includes("No Value"))
+                                    $scope.Store.PayPal = false;
+                            }
+                            else if ($scope.elementInfo[i].Type === "Currency")
+                            {
+                                if ($scope.elementInfo[i].Value.includes("No Value"))
+                                    $scope.Store.PayPal = false;
+                            }
+                        }
                     }
 
                 }, function (error) {
@@ -396,8 +412,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
              console.log($scope.OrderID);*/
 
             $http.post(
-                "http://bslogic-001-site1.ctempurl.com/BuyerOrder.asmx/CreateOrder",
-                //"/BuyerOrder.asmx/CreateOrder",
+                //"http://bslogic-001-site1.ctempurl.com/BuyerOrder.asmx/CreateOrder",
+                "/BuyerOrder.asmx/CreateOrder",
                 $.param({
                     StoreEmail: $scope.Store.Email,
                     BuyerName: $scope.BuyerName,
@@ -912,9 +928,15 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     params: { IBAN: IBAN }
                 })
                     .then(function (response) {
-                        $scope.bankInfo.IBAN = response.data;
-                        $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-                        $scope.editIBAN = false;
+
+                        if (response.data.includes("IBAN length")) {//Nothing
+                        }
+                        else {
+                           // $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
+                            $scope.editIBAN = false;
+
+                        }
+                            
                     }, function (error) {
                         $scope.error = error.data;
                     });

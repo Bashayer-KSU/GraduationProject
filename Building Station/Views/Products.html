@@ -225,7 +225,8 @@
                             <td class="arb" ng-show="!product.edit"><label>{{product.Discount}}%</label></td>
                             <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Discount" name="" placeholder="أدخل نسبة الخصم" required></td>
 
-                            <td class="arb" ng-show="!product.edit"><label>{{product.Amount}}</label></td>
+                            <td class="arb" ng-show="!product.edit"><label ng-show="product.Amount!=0">{{product.Amount}}</label>
+                                                                    <label ng-show="product.Amount==0">نفدت الكمية</label></td>
                             <td class="arb" ng-show="product.edit"><input type="number" ng-model="product.Amount" name="" placeholder="أدخل الكمية" required></td>
                             <td class="arb" ng-show="!product.edit">
                                 <label ng-show="product.Discount == 0">{{product.Price}}</label>
