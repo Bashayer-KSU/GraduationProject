@@ -85,8 +85,8 @@ public class PaymentMethods : System.Web.Services.WebService
     {
         IBAN = IBAN.ToUpper();
         int success = 0;
-        if ((IBAN.Length > 14 && IBAN.Length < 35) && (!Regex.IsMatch(IBAN, "^[a-zA-Z0-9]*$")) && !IBAN.Contains(" "))
-        {
+        if (IBAN.Length > 14 && IBAN.Length < 35 && !IBAN.Contains(" "))
+        {//!Regex.IsMatch(IBAN, "^[a-zA-Z0-9]*$")
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
