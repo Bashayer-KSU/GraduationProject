@@ -296,7 +296,9 @@ public class CreationStage : System.Web.Services.WebService
         }
         else if (language.Equals("English"))
         {
-            if ((type.Contains("handmade")) || (type.Contains("Handmade")) || (type.Contains("crochet")) || (type.Contains("Crochet")) || (type.Contains("knitwear")) || (type.Contains("yarn")) || (type.Contains("wool")))
+            type = type.ToLower();
+
+            if ((type.Contains("handmade")) || (type.Contains("crochet")) || (type.Contains("knitwear")) || (type.Contains("yarn")) || (type.Contains("wool")))
             {
                 using (SqlConnection con = new SqlConnection(cs))
                 {
@@ -332,7 +334,7 @@ public class CreationStage : System.Web.Services.WebService
                 Product_Description = "Cake with hazelnut & cream flavor (enough for 8 people)";
             }
 
-            else if ((type.Contains("Bakery")) || (type.Contains("Pastries")) || (type.Contains("Pastry")) || (type.Contains("Baking")))
+            else if ((type.Contains("bakery")) || (type.Contains("pastries")) || (type.Contains("pastry")) || (type.Contains("baking")))
             {
                 using (SqlConnection con = new SqlConnection(cs))
                 {
@@ -350,7 +352,7 @@ public class CreationStage : System.Web.Services.WebService
                 Product_Description = "Croissant with nuts, medium size";
             }
 
-            else if ((type.Contains("Watches")) || (type.Contains("Jewelery")) || (type.Contains("accessories")))
+            else if ((type.Contains("watches")) || (type.Contains("jewelery")) || (type.Contains("accessories")))
             {
                 using (SqlConnection con = new SqlConnection(cs))
                 {
@@ -386,7 +388,7 @@ public class CreationStage : System.Web.Services.WebService
                 Product_Description = "Pink Lolita Dress, size~ M";
             }
 
-            else if ((type.Contains("Mobile Covers")) || (type.Contains("Phone & laptop accessories")) || (type.Contains("Laptop Bags")) || (type.Contains("cases")) || (type.Contains("sleeve")))
+            else if ((type.Contains("mobile covers")) || (type.Contains("phone & laptop accessories")) || (type.Contains("laptop bags")) || (type.Contains("cases")) || (type.Contains("sleeve")))
             {
                 using (SqlConnection con = new SqlConnection(cs))
                 {
@@ -404,7 +406,7 @@ public class CreationStage : System.Web.Services.WebService
                 Product_Description = "13 inch multi-color laptop stand";
             }
 
-            else if ((type.Contains("cooking")) || (type.Contains("Home cook")) || (type.Contains("Grape leaves")) || (type.Contains("Mahashi")) || (type.Contains("eastern food")) || (type.Contains("food")))
+            else if ((type.Contains("cooking")) || (type.Contains("home cook")) || (type.Contains("grape leaves")) || (type.Contains("mahashi")) || (type.Contains("eastern food")) || (type.Contains("food")))
             {
                 using (SqlConnection con = new SqlConnection(cs))
                 {
@@ -422,7 +424,7 @@ public class CreationStage : System.Web.Services.WebService
                 Product_Description = "grape leaves, Small dish";
             }
 
-            else if ((type.Contains("beauty")) || (type.Contains("skin care")) || (type.Contains("makeup")) || (type.Contains("skin")) || (type.Contains("Beauty & skin care")) || (type.Contains("lotion")) || (type.Contains("cream")))
+            else if ((type.Contains("beauty")) || (type.Contains("skin care")) || (type.Contains("makeup")) || (type.Contains("skin")) || (type.Contains("beauty & skin care")) || (type.Contains("lotion")) || (type.Contains("cream")))
             {
                 using (SqlConnection con = new SqlConnection(cs))
                 {
@@ -436,7 +438,8 @@ public class CreationStage : System.Web.Services.WebService
                     }
                     con.Close();
                 }
-                Description_Text = "♀️ The right place to take care of your skin 💁🏻";                Product_Description = "grape leaves, Small dish";
+                Description_Text = "♀️ The right place to take care of your skin 💁🏻";
+                Product_Description = "grape leaves, Small dish";
                 Product_Description = "Skin Care Set, Moisturizing Cream for Skin & Face";
             }
             else

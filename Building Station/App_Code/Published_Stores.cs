@@ -199,7 +199,7 @@ public class Published_Stores : System.Web.Services.WebService
 
          //   return store;
         }
-        Context.Response.Write(js.Serialize(null));
+       // Context.Response.Write(js.Serialize(null));
 
       //  return null;
     }
@@ -549,6 +549,7 @@ public class Published_Stores : System.Web.Services.WebService
             Context.Response.Write(js.Serialize(false));
         //return false;
     }
+    
 
     /* [WebMethod] //Temp for Asmaa
    public void GetProducts(string StoreDomain)

@@ -1,27 +1,18 @@
 ﻿var myApp = angular.module("T6", []);
 
-/*myApp.run(function (initialSetup) {
-    initialSetup.getStoreInfo();
+var T6 = myApp.controller("T6Ctrl", function ($scope, $http, $window, ProductService, CategoryService, AddProductService) {
 
-});*/
+    //$scope.SwitchLanguage = function () {
+  //      $location.href = "/Templates/Template_6/Template_6.html";
+  //  };
+    $scope.SwitchLanguage = function (lang) {
+        if (lang === "Arabic")
+           $window.location.href = "/Templates/Template_3/Template_3.html";
+        else 
+            $window.location.href = "/Templates/Template_6/Template_6.html";
 
-myApp.service('initialSetup', function ($http) {
-    var promise;
-    return {
-        InitialSetup: function () {
-            promise = $http.get();
-        },
-        getStoreInfo: function () {
-            return promise;
-        }
     };
-});
 
-var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, CategoryService, AddProductService) {
-    /*   initialSetup.getStoreInfo().then(function (resp) {
-           $scope.data = resp.data;
-       });
-       */
     $scope.Store = [];
     $scope.Produts = [];
     $scope.Categories = [];
@@ -149,6 +140,8 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, ProductService, Cat
                 $scope.checkout = false;
                 $scope.payment = false;
                 $scope.ProductsArray.length = 0;
+
+
 
             }, function (error) {
                 $scope.error = error.data;

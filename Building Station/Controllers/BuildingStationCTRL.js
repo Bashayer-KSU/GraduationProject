@@ -1,5 +1,5 @@
 ﻿//'use strict';
-var BS_App = angular.module("BuildingStationAPP", ["ui.router", "ngMaterial"]);
+var BS_App = angular.module('BuildingStationAPP', ["ui.router", "ngMaterial"]);
 
 BS_App.service('initialSetup', function ($http) {
     var promise;
@@ -58,17 +58,17 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             templateUrl: "/Views/ProductsEnglish.html",
             controller: "ProductsControllerEnglish"
         })
-        .state("PreviewWebsiteEnglish", {
+        /*.state("PreviewWebsiteEnglish", {
             url: "/PreviewWebsiteEnglish",
-            templateUrl: "/Views/PreviewEnglish.html",
+            templateUrl: "/Views/Preview.html",
             controller: "PreviewWebsiteControllerEnglish"
-        })
+        })*/
         //Basic Arabic (Parent)
         .state("BS-Menu-Arabic", {
             url: "/EDITandINFO",
             templateUrl: "/Views/BasicArabic.html",
             controller: "BS-Menu-ArabicCTRL",
-          //  resolve: {},
+            //  resolve: {},
             abstract: true
         })
         .state("BS-Menu-Arabic.ManageStore", {
@@ -111,7 +111,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             templateUrl: "Stores/Store.html",
             controller: "PublishedStoreCtrl"
         })*/;
-       
+
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
@@ -130,21 +130,21 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             }
         )*/
         $rootScope.Logout = function () {
+            //$http.get('http://bslogic-001-site1.ctempurl.com/RegisterLogin.asmx/SignOut').then(function (response) {
             $http.get('/RegisterLogin.asmx/SignOut').then(function (response) {
-
                 $rootScope.result = response.data;
                 location.href = $rootScope.result.substr(1, $rootScope.result.length - 2);
             });
         };
         $rootScope.$on("$locationChangeSuccess", function () {
             loginService.login().then(function (response) {
-            //    console.log($state);
-               
+                //    console.log($state);
+
                 $rootScope.login = response;
                 var notLoged = response === "\"false\"";
-            //    alert("t or f ? " + response);
+                //    alert("t or f ? " + response);
                 //console.log("in $routeChangeStart " + $rootScope.login);
-             //alert(" not Loged ? " + notLoged);
+                //alert(" not Loged ? " + notLoged);
                 var url = $location.absUrl().split('?')[0]
                 var pulishedStore;
                 //alert(" ?? " + url);
@@ -152,34 +152,48 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     pulishedStore = true;
                 else
                     pulishedStore = false;
-               // alert(" " + response);
-             /*   var preview;
-                if (url.includes("Preview"))
-                    preview = true;
-                else
-                    preview = false;
-                              alert("preview: " + preview);*/
+                // alert(" " + response);
+                /*   var preview;
+                   if (url.includes("Preview"))
+                       preview = true;
+                   else
+                       preview = false;
+                                 alert("preview: " + preview);*/
 
-                if (notLoged === true && pulishedStore === false)
-                {
+                if (notLoged === true && pulishedStore === false) {
                     // location.href = "/index.html";
-                 //   event.preventDefault();
-                   // location.href = "http://localhost:50277/BuildingStation"; looooping for ever
-                     $location.path("/BuildingStation");
+                    //   event.preventDefault();
+                    // location.href = "http://localhost:50277/BuildingStation"; looooping for ever
+                    $location.path("/BuildingStation");
                     // $state.go("Login&Register ");
                 }
             });
         });
     })
-    .controller("RegisterLoginCtrl", function ($scope, $http, $window) {
+    .controller("RegisterLoginCtrl", function ($scope, $http, $window, $location) {
 
-        $scope.SendData = function (e, lang) {
+        $scope.DisplayWarningMessage = function (lang, action) {
+            if (lang === "ar") {
+                if (action === "log")
+                    $scope.arLoginWarningMsg = true;
+                else
+                    $scope.arRegisterWarningMsg = true;
+            }
+            else if (lang === "eng") {
+                if (action === "log")
+                    $scope.engLoginWarningMsg = true;
+                else
+                    $scope.engRegisterWarningMsg = true;
+            }
+        };
+
+        $scope.SendData = function (action, lang) {
             // use $.param jQuery function to serialize data from JSON 
             var url;
             var data;
 
-            if (e === "reg") {
-                //url = "http://www.bsapplogic.somee.com/RegisterLogin.asmx/Register";
+            if (action === "reg") {
+                //url = "http://bslogic-001-site1.ctempurl.com/RegisterLogin.asmx/Register";
                 url = "/RegisterLogin.asmx/Register";
                 if (lang === "eng") {
                     data = $.param({
@@ -200,8 +214,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     });
                 }
             }
-            else if (e === "log") {
-                //url = "http://www.bsapplogic.somee.com/RegisterLogin.asmx/Login";
+            else if (action === "log") {
+                //url = "http://bslogic-001-site1.ctempurl.com/RegisterLogin.asmx/Login";
                 url = "/RegisterLogin.asmx/Login";
                 if (lang === "eng") {
 
@@ -229,22 +243,32 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $http.post(url, data, config)
                 .then(function (response) {
                     $scope.result = response.data;
-                  //  alert(response.data)
-                    //$window.open = ("http://www.buildingstation.somee.com/" + $scope.result.substr(76, $scope.result.length - 9 - 76), "_self");
-                  //  location.href = "http://localhost:50277/" + $scope.result.substr(76, $scope.result.length - 9 - 76);
-                    location.href = "http://localhost:50277/" + $scope.result.slice(1, -1);
+                    $scope.resultAfterSubstring = $scope.result.substr(1, $scope.result.length - 2);
+                    //  location.href = "http://localhost:50277/" + $scope.result.substr(76, $scope.result.length - 9 - 76);
+                    //location.href = "http://buildingstation.somee.com/" + $scope.result.slice(1, -1);
+                    // $location.path("/" + $scope.result.slice(1, -1));
+                    if ($scope.result.includes("/index.html")) {
+                        $scope.DisplayWarningMessage(lang, action);
+                    }
+                    else
+                        location.href = $scope.resultAfterSubstring;
 
+                    //location.href = "http://localhost:50277/" + $scope.result.slice(1, -1);
+                    console.log(response);
+                    console.log($scope.resultAfterSubstring);
                 }, function (error) {
                     $scope.error = error.data;
                 });
         };
+
+        
     })
     .controller("PublishedStoreCtrl", function ($scope, $http, $stateParams, ProductService, CategoryService, AddProductService) {
         var ID = 0;
         $http({
-            //url:"http://www.bsapplogic.somee.com/Published_Stores.asmx/GetTemplate",
+            //url: "http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/GetTemplate",
             url: "/Published_Stores.asmx/GetTemplate",
-            params: { StoreDomain: $stateParams.Domain},
+            params: { StoreDomain: $stateParams.Domain },
             method: "get"
         })
             .then(function (response) {
@@ -272,56 +296,35 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         var init = function () {
             //Store Info
             $http({
-                //url: "http://www.bsapplogic.somee.com/../Published_Stores.asmx/GetStore",
-                url: "../Published_Stores.asmx/GetStore",
+                //url: "http://bslogic-001-site1.ctempurl.com/../Published_Stores.asmx/GetStore",
+                url: "/Published_Stores.asmx/GetStore",
                 params: { StoreDomain: $stateParams.Domain },
                 method: "get"
             })
-           .then(function (response) {
-                $scope.Store = response.data;
-           //     console.log($scope.Store);
+                .then(function (response) {
+                    $scope.Store = response.data;
+                    //     console.log($scope.Store);
 
 
-                //WEBSITE ICON and Title 
-                document.title = $scope.Store.Name;
-                document.getElementById("icon").href = $scope.Store.Logo;
-                //Payment Methods
-                if ($scope.Store.BankTransfer) {
-                    if ($scope.Store.BankAccount.includes("No"))
-                        $scope.Store.BankTransfer = false;
-                }
+                    //WEBSITE ICON and Title 
+                    document.title = $scope.Store.Name;
+                    document.getElementById("icon").href = $scope.Store.Logo;
+                    //Payment Methods
+                    if ($scope.Store.BankTransfer) {
+                        if ($scope.Store.BankAccount.includes("No ShopOwnerBank"))
+                            $scope.Store.BankTransfer = false;
+                    }
 
-                if ($scope.Store.Cash)
-                    $scope.PaymentMethod = "Cash";
-                else if ($scope.Store.BankTransfer)
-                    $scope.PaymentMethod = "BankTransfer";
-                else $scope.PaymentMethod = "PayPal";
+                    if ($scope.Store.Cash)
+                        $scope.PaymentMethod = "Cash";
+                    else if ($scope.Store.BankTransfer)
+                        $scope.PaymentMethod = "BankTransfer";
+                    else if ($scope.Store.PayPal)
+                        $scope.PaymentMethod = "PayPal";
+                    else "";
 
-                //Social Media Link
-              /*  if ($scope.Store.SnapchatLink !== 'No Value') {
-                    $scope.Snapchat = true;
-                }
-                else { $scope.Snapchat = false; }
 
-                if ($scope.Store.TwitterLink !== 'No Value') {
-                    $scope.Twitter = true;
-                }
-                else {
-                    $scope.Twitter = false;
-                }
-
-                if ($scope.Store.FacebookLink !== 'No Value') {
-                    $scope.Facebook = true;
-                }
-                else { $scope.Facebook = false; }
-
-                if ($scope.Store.InstagramLink !== 'No Value') {
-                    $scope.Instagram = true;
-                }
-                else { $scope.Instagram = false; }
-                */
-
-                //Menu
+                    //Menu
                     $scope.MenuTitle = $scope.Store.MenuTitle;
                 }, function (error) {
                     $scope.error = error;
@@ -343,14 +346,14 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             };
 
             $http({
-                //url: "http://www.bsapplogic.somee.com/../Published_Stores.asmx/GetElements",
-                url: "../Published_Stores.asmx/GetElements",
+                //url: "http://bslogic-001-site1.ctempurl.com/../Published_Stores.asmx/GetElements",
+                url: "/Published_Stores.asmx/GetElements",
                 params: { StoreDomain: $stateParams.Domain },
                 method: "get"
             })
-             .then(function (response) {
-                $scope.elementInfo = response.data;
-               // console.log($scope.elementInfo);
+                .then(function (response) {
+                    $scope.elementInfo = response.data;
+                    // console.log($scope.elementInfo);
                     for (var i = 0; i < $scope.elementInfo.length; i++) {
                         if ($scope.elementInfo[i].Name === "Snapchat") {
                             $scope.icon.snapchat = !$scope.elementInfo[i].Hidden;
@@ -380,6 +383,17 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                             if ($scope.AboutContent === null || $scope.AboutContent === "")
                                 $scope.section.about = true;
                         }
+                        else if ($scope.elementInfo[i].Name === "PayPal") {
+                            if ($scope.elementInfo[i].Type === "AccountEmail") {
+                                if ($scope.elementInfo[i].Value.includes("No Value"))
+                                    $scope.Store.PayPal = false;
+                            }
+                            else if ($scope.elementInfo[i].Type === "Currency")
+                            {
+                                if ($scope.elementInfo[i].Value.includes("No Value"))
+                                    $scope.Store.PayPal = false;
+                            }
+                        }
                     }
 
                 }, function (error) {
@@ -389,16 +403,16 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         ElementsData();
 
         $scope.Checkout = function () {
-           /* console.log($scope.BuyerName);
-            console.log($scope.BuyerPhone);
-            console.log($scope.BuyerEmail);
-            console.log($scope.BuyerLocation);
-            console.log($scope.PaymentMethod);
-            console.log($scope.HolName);
-            console.log($scope.OrderID);*/
+            /* console.log($scope.BuyerName);
+             console.log($scope.BuyerPhone);
+             console.log($scope.BuyerEmail);
+             console.log($scope.BuyerLocation);
+             console.log($scope.PaymentMethod);
+             console.log($scope.HolName);
+             console.log($scope.OrderID);*/
 
             $http.post(
-                //"http://www.bsapplogic.somee.com/BuyerOrder.asmx/CreateOrder",
+                //"http://bslogic-001-site1.ctempurl.com/BuyerOrder.asmx/CreateOrder",
                 "/BuyerOrder.asmx/CreateOrder",
                 $.param({
                     StoreEmail: $scope.Store.Email,
@@ -428,17 +442,17 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
 
         $scope.CheckoutA = function (Buyer_Name, Buyer_Phone, Buyer_Email, Buyer_Location, Payment_Method, Hol_Name, Order_ID) {
-           /* console.log($scope.BuyerName);
-            console.log($scope.BuyerPhone);
-            console.log($scope.BuyerEmail);
-            console.log($scope.BuyerLocation);
-            console.log($scope.PaymentMethod);
-            console.log($scope.HolName);
-            console.log($scope.OrderID);*/
+            /* console.log($scope.BuyerName);
+             console.log($scope.BuyerPhone);
+             console.log($scope.BuyerEmail);
+             console.log($scope.BuyerLocation);
+             console.log($scope.PaymentMethod);
+             console.log($scope.HolName);
+             console.log($scope.OrderID);*/
 
             $http.post(
                 "/BuyerOrder.asmx/CreateOrder",
-//                "http://www.bsapplogic.somee.com/BuyerOrder.asmx/CreateOrder",
+                //"http://bslogic-001-site1.ctempurl.com/BuyerOrder.asmx/CreateOrder",
                 $.param({
                     StoreEmail: $scope.Store.Email,
                     BuyerName: Buyer_Name,
@@ -464,7 +478,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     $scope.error = error.data;
                 });
         };
-            //////////////// PRODUCTS AND CATEGORIES /////////////
+        //////////////// PRODUCTS AND CATEGORIES /////////////
 
         //Initialization
         $scope.Exist = false;
@@ -554,14 +568,14 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         //////////////////////////////////
 
-       /* $http({
-            url: "../Published_Stores.asmx/GetProducts",
-            params: { StoreDomain: $stateParams.Domain },
-            method: "get"
-        })
-            .then(function (response) {
-                $scope.Product = response.data;
-            });*/
+        /* $http({
+             url: "../Published_Stores.asmx/GetProducts",
+             params: { StoreDomain: $stateParams.Domain },
+             method: "get"
+         })
+             .then(function (response) {
+                 $scope.Product = response.data;
+             });*/
 
         $scope.goArabic = function () {
             ID = ID - 3;
@@ -574,7 +588,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
     })
     .controller("BS-Menu-EnglishCTRL", function ($http, $scope, $location, $rootScope, $mdDialog, $window) {
-       
+
         $scope.Logout = function () {
             $rootScope.Logout();
         };
@@ -584,12 +598,13 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
 
         $rootScope.DesktopView = function () {
-            $location.path('/PreviewWebsiteEnglish');
-           // $window.open('/Views/Preview.html', '_blank');
+            $location.path('/PreviewWebsite');
+            //$window.open('/Views/PreviewEnglish.html', '_blank');
         };
 
         $rootScope.Publish = function (ev) {
-            $http.get('/Published_Stores.asmx/PublishRequest').then(function (response) {
+            $http.get('Published_Stores.asmx/PublishRequest').then(function (response) {
+            //$http.get('http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/PublishRequest').then(function (response) {
                 var StoreValues = response.data;
                 if (StoreValues.Published === true) {
                     var inform =
@@ -630,11 +645,13 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
                     $mdDialog.show(confirm).then(function () {
                         $http({
+                            //url: "http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/Publish",
                             url: "Published_Stores.asmx/Publish",
                             params: { storeDomainName: StoreValues.Domain },
                             method: "get"
                         }).then(function (response) {
-                            $window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
+                            $window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
+                            //$window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
                         });
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
@@ -645,6 +662,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
 
         $rootScope.UnPublish = function (ev) {
+            //$http.get('http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/UnPublishRequest').then(function (response) {
             $http.get('/Published_Stores.asmx/UnPublishRequest').then(function (response) {
                 var StoreValues = response.data;
                 if (StoreValues.Published === false) {
@@ -671,6 +689,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                         .cancel('Cancel');
 
                     $mdDialog.show(confirm).then(function () {
+                        //$http.get('http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/UnPublish').then(function (response) {
                         $http.get('/Published_Stores.asmx/UnPublish').then(function (response) {
                             var Store_values = response.data;
                             if (Store_values.Published === false) {
@@ -714,6 +733,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
                 $mdDialog.show(askForPassword).then(function (result) {
                     $http({
+                        //url: "http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/DeleteStore",
                         url: "Published_Stores.asmx/DeleteStore",
                         params: { pass: result },
                         method: "get"
@@ -755,7 +775,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.BestProductsFunction = function () {
             angular.forEach($scope.BestCategories, function (value, key) {
                 $http({
-                    url: "/Products.asmx/BestProductsInCategory",
+                    //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/BestProductsInCategory",
+                    url: "Products.asmx/BestProductsInCategory",
                     method: "get",
                     params: { CategoryID: value.drilldown }
                 })
@@ -775,6 +796,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
         $scope.BestCategoriesFunction = function () {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/BestCategories",
                 url: "/Products.asmx/BestCategories",
                 method: "get"
             })
@@ -824,6 +846,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             var Cash = $scope.checkboxPayment.cash;
 
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/AcceptPaymentMethods",
                 url: "PaymentMethods.asmx/AcceptPaymentMethods",
                 method: "get",
                 params: { paypal: Paypal, bankTransfer: BankTransfer, cash: Cash }
@@ -842,6 +865,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.checkedPayment = function () {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/GetPaymentMethods",
                 url: "PaymentMethods.asmx/GetPaymentMethods",
                 method: "get",
                 params: {}
@@ -854,7 +878,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     $scope.error = error.data;
                 });
         };
-        
+
         //PayPal
         $scope.editPayPal = false;
 
@@ -863,6 +887,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             var PayPalCurrencey = $scope.PayPalInfo.PayPalCurrencey;
             if (PayPalEmail.includes("@")) {
                 $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/UpdatePayPalInfo",
                     url: "/PaymentMethods.asmx/UpdatePayPalInfo",
                     method: "get",
                     params: { email: PayPalEmail, currency: PayPalCurrencey }
@@ -879,6 +904,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.GetPayPalInfo = function () {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/GetPayPalInfo",
                 url: "/PaymentMethods.asmx/GetPayPalInfo",
                 method: "get",
                 params: {}
@@ -894,16 +920,20 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.UpdateBankInfo = function () {
             var IBAN = $scope.bankInfo.IBAN;
+            console.log(IBAN);
+
             if (IBAN !== {} && IBAN !== null) {
                 $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/UpdateBankInfo",
                     url: "/PaymentMethods.asmx/UpdateBankInfo",
                     method: "get",
                     params: { IBAN: IBAN }
                 })
                     .then(function (response) {
+                        console.log(response);
                         $scope.bankInfo.IBAN = response.data;
                         $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-                       $scope.editIBAN = false;
+                        $scope.editIBAN = false;
                     }, function (error) {
                         $scope.error = error.data;
                     });
@@ -917,6 +947,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.GetBankInfo = function () {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/GetBankInfo",
                 url: "/PaymentMethods.asmx/GetBankInfo",
                 method: "get",
                 params: {}
@@ -935,6 +966,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.GetAllTransactions = function () {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/BuyerOrder.asmx/GetAllTransactions",
                 url: "/BuyerOrder.asmx/GetAllTransactions",
                 method: "get"
             })
@@ -947,6 +979,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $scope.transactions = false;
             $scope.OrderDetail = OrderDetail;
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/BuyerOrder.asmx/GetAllOrderProducts",
                 url: "/BuyerOrder.asmx/GetAllOrderProducts",
                 method: "get",
                 params: { Order_ID: OrderDetail.ID }
@@ -958,6 +991,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.UpdateStatus = function (order, id) {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/BuyerOrder.asmx/UpdateStatus",
                 url: "/BuyerOrder.asmx/UpdateStatus",
                 method: "get",
                 params: { ID: id }
@@ -994,6 +1028,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         var myservice = {};
         myservice.refresh = function () {
+            //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/GetColors').then(function (response) {
             $http.get('/CreationStage.asmx/GetColors').then(function (response) {
 
                 $scope.refreshed = response.data;
@@ -1006,6 +1041,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         var Links_service = {};
         Links_service.refresh = function () {
+            //$http.get('http://bslogic-001-site1.ctempurl.com/ShowHideElement.asmx/VisibleElement').then(function (response) {
             $http.get('/ShowHideElement.asmx/VisibleElement').then(function (response) {
 
                 $scope.refreshed = response.data;
@@ -1031,6 +1067,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             });
         };
 
+        //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/GetTemplateID').then(function (response) {
         $http.get('/CreationStage.asmx/GetTemplateID').then(function (response) {
 
             $scope.storeID = response.data;
@@ -1062,6 +1099,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.resulset = [];
         var StoreData = function () {
 
+            //$http.post('http://bslogic-001-site1.ctempurl.com/TemplateData.asmx/StoreData').then(function (response) {
             $http.post('/TemplateData.asmx/StoreData').then(function (response) {
                 $scope.resultset = response.data;
                 //Store Info
@@ -1133,7 +1171,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         ////////////Template Elements
 
         var ElementsData = function () {
-            $http.post('/ShowHideElement.asmx/GetElementsInfo').then(function (response) {
+            //$http.post('http://bslogic-001-site1.ctempurl.com/ShowHideElement.asmx/GetElementsInfo').then(function (response) {
+              $http.post('/ShowHideElement.asmx/GetElementsInfo').then(function (response) {
                 $scope.elementInfo = response.data;
 
                 $scope.disableSnapchat = true;
@@ -1215,6 +1254,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             }
             if (section !== "" && action !== "") {
                 $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/ShowHideElement.asmx/ShowHideSection",
                     url: "/ShowHideElement.asmx/ShowHideSection",
                     method: "get",
                     params: {
@@ -1253,6 +1293,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             }
             if (icon !== "" && action !== "") {
                 $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/ShowHideElement.asmx/ShowHideIcon",
                     url: "/ShowHideElement.asmx/ShowHideIcon",
                     method: "get",
                     params: {
@@ -1278,6 +1319,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     DataType = $scope.selectedTextType.name;
                     NewValue = $scope.ShopOwnerText;
                     $http({
+                        //url: "http://bslogic-001-site1.ctempurl.com/TemplateData.asmx/UpdatStoreData",
                         url: "/TemplateData.asmx/UpdatStoreData",
                         method: "get",
                         params: {
@@ -1312,6 +1354,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.UpdateColors = function () {
             var post = $http({
                 method: "POST",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UpdateColors",
                 url: "/CreationStage.asmx/UpdateColors",
                 dataType: 'json',
                 data: { color1: $scope.color1, color2: $scope.color2, color3: $scope.color3, color4: $scope.color4 },
@@ -1334,6 +1377,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $mdDialog.show(confirm)
                 .then(function () {
                     $http({
+                        //url: "http://bslogic-001-site1.ctempurl.com/manageWebsiteColors.asmx/GetWebsiteColors",
                         url: "/manageWebsiteColors.asmx/GetWebsiteColors",
                         dataType: 'json',
                         method: "POST",
@@ -1347,6 +1391,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
                     $http({
                         method: "POST",
+                        //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UploadLogo",
                         url: "/CreationStage.asmx/UploadLogo",
                         dataType: 'json',
                         data: { logo: $scope.imageSrc },
@@ -1361,6 +1406,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 function () {
                     $http({
                         method: "POST",
+                        //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UploadLogo",
                         url: "/CreationStage.asmx/UploadLogo",
                         dataType: 'json',
                         data: { logo: $scope.imageSrc },
@@ -1375,6 +1421,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $scope.loadingCover = true;
             var post = $http({
                 method: "POST",
+                //url: "http://bslogic-001-site1.ctempurl.com/TemplateData.asmx/UploadSlider",
                 url: "/TemplateData.asmx/UploadSlider",
                 dataType: 'json',
                 data: { slider: $scope.imageSrc_slider },
@@ -1393,6 +1440,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
             var post = $http({
                 method: "POST",
+                //url: "http://bslogic-001-site1.ctempurl.com/TemplateData.asmx/UploadAboutImage",
                 url: "/TemplateData.asmx/UploadAboutImage",
                 dataType: 'json',
                 data: { image: $scope.imageSrc_about },
@@ -1417,6 +1465,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 post.then(function (response) { }, function (error) { });
                 */
             $http.post(
+                //"http://bslogic-001-site1.ctempurl.com/TemplateData.asmx/UpdateLinks",
                 "/TemplateData.asmx/UpdateLinks",
                 $.param({
                     snapchat_link: $scope.mySnapchatLink,
@@ -1443,48 +1492,49 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 });
         };
     })
-    .controller("PreviewWebsiteControllerEnglish", function ($http, $scope) {
-        $scope.DesktopView = true;
-        $scope.MobileView = false;
-        $scope.Previews = ["Desktop view", "Mobile view"];
-        $scope.template = "";
-        $scope.selectedPreview = $scope.Previews[0];
-        $http.get('/CreationStage.asmx/GetTemplateID').then(function (response) {
-
-            $scope.storeID = response.data;
-            if ($scope.storeID.TemplateID === 1) {
-                $scope.template = "/Templates/Template_1.html";
-            }
-            else if ($scope.storeID.TemplateID === 2) {
-                $scope.template = "/Templates/Template_2/Template_2.html";
-            }
-            else if ($scope.storeID.TemplateID === 3) {
-                $scope.template = "/Templates/Template_3/Template_3.html";
-            }
-            else if ($scope.storeID.TemplateID === 4) {
-                $scope.template = "/Templates/Template_4/Template_4.html";
-            }
-            else if ($scope.storeID.TemplateID === 5) {
-                $scope.template = "/Templates/Template_5/Template_5.html";
-            }
-            else if ($scope.storeID.TemplateID === 6) {
-                $scope.template = "/Templates/Template_6/Template_6.html";
-            }
-        },
-            function (error) {
-                $scope.error = error.data;
-            });
-        $scope.selectedPreviewChanged = function () {
-            if ($scope.selectedPreview === 'Desktop view') {
-                $scope.DesktopView = true;
-                $scope.MobileView = false;
-            }
-            else {
-                $scope.DesktopView = false;
-                $scope.MobileView = true;
-            }
-        };
-    })
+    /* .controller("PreviewWebsiteControllerEnglish", function ($http, $scope) {
+         $scope.DesktopView = true;
+         $scope.MobileView = false;
+         $scope.Previews = ["Desktop view", "Mobile view"];
+         $scope.template = "";
+         $scope.selectedPreview = $scope.Previews[0];
+         $http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/GetTemplateID').then(function (response) {
+         //$http.get('/CreationStage.asmx/GetTemplateID').then(function (response) {
+ 
+             $scope.storeID = response.data;
+             if ($scope.storeID.TemplateID === 1) {
+                 $scope.template = "/Templates/Template_1.html";
+             }
+             else if ($scope.storeID.TemplateID === 2) {
+                 $scope.template = "/Templates/Template_2/Template_2.html";
+             }
+             else if ($scope.storeID.TemplateID === 3) {
+                 $scope.template = "/Templates/Template_3/Template_3.html";
+             }
+             else if ($scope.storeID.TemplateID === 4) {
+                 $scope.template = "/Templates/Template_4/Template_4.html";
+             }
+             else if ($scope.storeID.TemplateID === 5) {
+                 $scope.template = "/Templates/Template_5/Template_5.html";
+             }
+             else if ($scope.storeID.TemplateID === 6) {
+                 $scope.template = "/Templates/Template_6/Template_6.html";
+             }
+         },
+             function (error) {
+                 $scope.error = error.data;
+             });
+         $scope.selectedPreviewChanged = function () {
+             if ($scope.selectedPreview === 'Desktop view') {
+                 $scope.DesktopView = true;
+                 $scope.MobileView = false;
+             }
+             else {
+                 $scope.DesktopView = false;
+                 $scope.MobileView = true;
+             }
+         };
+     })*/
     .controller("TemplateControllerEnglish", function ($scope, $http, $location, $rootScope) {
         $scope.tabHeader = "Template";
 
@@ -1497,6 +1547,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.Template = function (Tid) {
             var post = $http({
                 method: "POST",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/AddTemplate",
                 url: "/CreationStage.asmx/AddTemplate",
                 dataType: 'json',
                 data: { id: Tid },
@@ -1521,6 +1572,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         //to retrieve all categories
         $scope.getCat = function (newCategury) {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/GetAllCategories",
                 url: "/Products.asmx/GetAllCategories",
                 method: "get"
             })
@@ -1544,6 +1596,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         // to add category 
         $scope.addNewCategory = function (newCategury) {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/AddNewCategory",
                 url: "/Products.asmx/AddNewCategory",
                 method: "get",
                 params: { cat: newCategury }
@@ -1572,6 +1625,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 .cancel('Cancel');
             $mdDialog.show(confirm).then(function () {
                 $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/DeleteCategory",
                     url: "/Products.asmx/DeleteCategory",
                     method: "GET",
                     params: { category: $scope.selectedCategory }
@@ -1592,6 +1646,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             }
             alert("change order");
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/ChangeOrder",
                 url: "/Products.asmx/ChangeOrder",
                 method: "get",
                 params: { categoriesOrders: categories }
@@ -1620,6 +1675,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.selectedCategoryChanged = function () {
             if ($scope.selectedCategory != null) {
                 $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/GetAllProducts",
                     url: "/Products.asmx/GetAllProducts",
                     method: "get",
                     params: { category: $scope.selectedCategory }
@@ -1634,6 +1690,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         // apply edit the product
         $scope.editProduct = function (index, product, ID, Image, Name, Description, Price, PAD, Amount, Discount) {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/EditProduct",
                 url: "/Products.asmx/EditProduct",
                 headers: { "Content-Type": "application/json;charset=utf-8" },
                 dataType: 'json',
@@ -1655,6 +1712,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         //to add new row
         $scope.addNewProduct2 = function (product) {
             $http.post(
+                //"http://bslogic-001-site1.ctempurl.com/Products.asmx/AddNewProduct",
                 "/Products.asmx/AddNewProduct",
                 $.param({
                     category: product.Category_ID,
@@ -1696,6 +1754,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 .cancel('Cancel');
             $mdDialog.show(confirm).then(function () {
                 $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/RemoveProduct",
                     url: "/Products.asmx/RemoveProduct",
                     method: "get",
                     params: { product_ID: productID }
@@ -1727,17 +1786,18 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
         $rootScope.English = function () {
             $location.path('/EDITandINFO-English');
-          //  $window.location.href = "Views/BasicE.html";
+            //  $window.location.href = "Views/BasicE.html";
         };
 
         $rootScope.DesktopView = function () {
             $location.path('/PreviewWebsite');
-           // $window.open('localhost:50277/EDITandINFO/PreviewWebsite', '_blank');
-            //$window.open('localhost:50277/Viewa/Preview.html', '_blank');
+            // $window.open('localhost:50277/EDITandINFO/PreviewWebsite', '_blank');
+            //$window.open('/Views/Preview.html', '_blank');
 
         };
 
         $rootScope.Publish = function (ev) {
+            //$http.get('http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/PublishRequest')
             $http.get('/Published_Stores.asmx/PublishRequest')
                 .then(function (response) {
                     var StoreValues = response.data;
@@ -1780,11 +1840,13 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
                         $mdDialog.show(confirm).then(function () {
                             $http({
-                                url: "Published_Stores.asmx/Publish",
+                                //url: "http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/Publish",
+                                url: "/Published_Stores.asmx/Publish",
                                 params: { storeDomainName: StoreValues.Domain },
                                 method: "get"
                             }).then(function (response) {
-                                $window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
+                                $window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
+                                //$window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
                             });
                             //  $rootScope.status = 'You decided to get rid of your debt.';
                         }, function () {
@@ -1795,6 +1857,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
 
         $rootScope.UnPublish = function (ev) {
+            //$http.get('http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/UnPublishRequest').then(function (response) {
             $http.get('/Published_Stores.asmx/UnPublishRequest').then(function (response) {
                 var StoreValues = response.data;
                 if (StoreValues.Published === false) {
@@ -1821,6 +1884,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                         .cancel('إلغاء');
 
                     $mdDialog.show(confirm).then(function () {
+                        //$http.get('http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/UnPublish').then(function (response) {
                         $http.get('/Published_Stores.asmx/UnPublish').then(function (response) {
                             var Store_values = response.data;
                             if (Store_values.Published === false) {
@@ -1892,7 +1956,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
                 $mdDialog.show(askForPassword).then(function (result) {
                     $http({
-                        url: "Published_Stores.asmx/DeleteStore",
+                        //url: "http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/DeleteStore",
+                        url: "/Published_Stores.asmx/DeleteStore",
                         params: { pass: result },
                         method: "get"
                     })
@@ -1909,7 +1974,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                             }
                             else {
                                 $location.path('/BuildingStation');
-                      //          location.path = "/index.html";
+                                //          location.path = "/index.html";
                             }
                         });
                 }, function () {
@@ -1926,13 +1991,13 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $rootScope.saveDelete = function () {
             $modalInstance.close(/*$scope.user.name*///);
-       // }; // end save
+    // }; // end save
 
-        /*$scope.hitEnter = function (evt) {
-             if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, '')))
-                 $scope.save();
-         }; // end hitEnter*/
-   // }) // end PasswordToDeleteCtrl */
+    /*$scope.hitEnter = function (evt) {
+         if (angular.equals(evt.keyCode, 13) && !(angular.equals($scope.name, null) || angular.equals($scope.name, '')))
+             $scope.save();
+     }; // end hitEnter*/
+    // }) // end PasswordToDeleteCtrl */
     .controller("ManageStoreController", function ($rootScope, $scope, $http) {
         $scope.Logout = function () {
             $rootScope.Logout();
@@ -1949,6 +2014,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.BestProductsFunction = function () {
             angular.forEach($scope.BestCategories, function (value, key) {
                 $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/BestProductsInCategory",
                     url: "/Products.asmx/BestProductsInCategory",
                     method: "get",
                     params: { CategoryID: value.drilldown }
@@ -1969,6 +2035,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
         $scope.BestCategoriesFunction = function () {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/BestCategories",
                 url: "/Products.asmx/BestCategories",
                 method: "get"
             })
@@ -2019,7 +2086,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             var Cash = $scope.checkboxPayment.cash;
 
             $http({
-                url: "PaymentMethods.asmx/AcceptPaymentMethods",
+                //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/AcceptPaymentMethods",
+                url: "/PaymentMethods.asmx/AcceptPaymentMethods",
                 method: "get",
                 params: { paypal: Paypal, bankTransfer: BankTransfer, cash: Cash }
             })
@@ -2037,7 +2105,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.checkedPayment = function () {
             $http({
-                url: "PaymentMethods.asmx/GetPaymentMethods",
+                //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/GetPaymentMethods",
+                url: "/PaymentMethods.asmx/GetPaymentMethods",
                 method: "get",
                 params: {}
             })
@@ -2058,6 +2127,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             var PayPalCurrencey = $scope.PayPalInfo.PayPalCurrencey;
             if (PayPalEmail.includes("@")) {
                 $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/UpdatePayPalInfo",
                     url: "/PaymentMethods.asmx/UpdatePayPalInfo",
                     method: "get",
                     params: { email: PayPalEmail, currency: PayPalCurrencey }
@@ -2074,6 +2144,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.GetPayPalInfo = function () {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/GetPayPalInfo",
                 url: "/PaymentMethods.asmx/GetPayPalInfo",
                 method: "get",
                 params: {}
@@ -2091,6 +2162,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             var IBAN = $scope.bankInfo.IBAN;
             if (IBAN !== {} && IBAN !== null) {
                 $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/UpdateBankInfo",
                     url: "/PaymentMethods.asmx/UpdateBankInfo",
                     method: "get",
                     params: { IBAN: IBAN }
@@ -2112,6 +2184,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.GetBankInfo = function () {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/GetBankInfo",
                 url: "/PaymentMethods.asmx/GetBankInfo",
                 method: "get",
                 params: {}
@@ -2130,6 +2203,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.GetAllTransactions = function () {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/BuyerOrder.asmx/GetAllTransactions",
                 url: "/BuyerOrder.asmx/GetAllTransactions",
                 method: "get"
             })
@@ -2142,6 +2216,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $scope.transactions = false;
             $scope.OrderDetail = OrderDetail;
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/BuyerOrder.asmx/GetAllOrderProducts",
                 url: "/BuyerOrder.asmx/GetAllOrderProducts",
                 method: "get",
                 params: { Order_ID: OrderDetail.ID }
@@ -2154,6 +2229,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.UpdateStatus = function (order, id) {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/BuyerOrder.asmx/UpdateStatus",
                 url: "/BuyerOrder.asmx/UpdateStatus",
                 method: "get",
                 params: { ID: id }
@@ -2190,6 +2266,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         var myservice = {};
         myservice.refresh = function () {
+            //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/GetColors').then(function (response) {
             $http.get('/CreationStage.asmx/GetColors').then(function (response) {
 
                 $scope.refreshed = response.data;
@@ -2202,6 +2279,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         var Links_service = {};
         Links_service.refresh = function () {
+            //$http.get('http://bslogic-001-site1.ctempurl.com/ShowHideElement.asmx/VisibleElement').then(function (response) {
             $http.get('/ShowHideElement.asmx/VisibleElement').then(function (response) {
 
                 $scope.refreshed = response.data;
@@ -2227,6 +2305,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             });
         };
 
+        //$http.post('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/GetTemplateID').then(function (response) {
         $http.post('/CreationStage.asmx/GetTemplateID').then(function (response) {
 
             $scope.storeID = response.data;
@@ -2256,6 +2335,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.resulset = [];
         var StoreData = function () {
 
+            //$http.post('http://bslogic-001-site1.ctempurl.com/TemplateData.asmx/StoreData').then(function (response) {
             $http.post('/TemplateData.asmx/StoreData').then(function (response) {
                 $scope.resultset = response.data;
                 //Store Info
@@ -2327,6 +2407,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         ////////////Template Elements
 
         var ElementsData = function () {
+            //$http.post('http://bslogic-001-site1.ctempurl.com/ShowHideElement.asmx/GetElementsInfo').then(function (response) {
             $http.post('/ShowHideElement.asmx/GetElementsInfo').then(function (response) {
                 $scope.elementInfo = response.data;
 
@@ -2409,7 +2490,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             }
             if (section !== "" && action !== "") {
                 $http({
-                    url: "ShowHideElement.asmx/ShowHideSection",
+                    //url: "http://bslogic-001-site1.ctempurl.com/ShowHideElement.asmx/ShowHideSection",
+                    url: "/ShowHideElement.asmx/ShowHideSection",
                     method: "get",
                     params: {
                         section: section,
@@ -2447,7 +2529,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             }
             if (icon !== "" && action !== "") {
                 $http({
-                    url: "ShowHideElement.asmx/ShowHideIcon",
+                    //url: "http://bslogic-001-site1.ctempurl.com/ShowHideElement.asmx/ShowHideIcon",
+                    url: "/ShowHideElement.asmx/ShowHideIcon",
                     method: "get",
                     params: {
                         icon: icon,
@@ -2472,7 +2555,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     DataType = $scope.selectedTextType.name;
                     NewValue = $scope.ShopOwnerText;
                     $http({
-                        url: "TemplateData.asmx/UpdatStoreData",
+                        //url: "http://bslogic-001-site1.ctempurl.com/TemplateData.asmx/UpdatStoreData",
+                        url: "/TemplateData.asmx/UpdatStoreData",
                         method: "get",
                         params: {
                             DataType: DataType,
@@ -2502,7 +2586,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.UpdateColors = function () {
             var post = $http({
                 method: "POST",
-                url: "CreationStage.asmx/UpdateColors",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UpdateColors",
+                url: "/CreationStage.asmx/UpdateColors",
                 dataType: 'json',
                 data: { color1: $scope.color1, color2: $scope.color2, color3: $scope.color3, color4: $scope.color4 },
                 headers: { "Content-Type": "application/json" }
@@ -2521,7 +2606,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
             $mdDialog.show(confirm).then(function () {
                 $http({
-                    url: "manageWebsiteColors.asmx/GetWebsiteColors",
+                    //url: "http://bslogic-001-site1.ctempurl.com/manageWebsiteColors.asmx/GetWebsiteColors",
+                    url: "/manageWebsiteColors.asmx/GetWebsiteColors",
                     dataType: 'json',
                     method: "POST",
                     data: { path: $scope.imageSrc },
@@ -2534,7 +2620,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
                 $http({
                     method: "POST",
-                    url: "CreationStage.asmx/UploadLogo",
+                    //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UploadLogo",
+                    url: "/CreationStage.asmx/UploadLogo",
                     dataType: 'json',
                     data: { logo: $scope.imageSrc },
                     headers: { "Content-Type": "application/json" }
@@ -2547,7 +2634,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             }, function () {
                 $http({
                     method: "POST",
-                    url: "CreationStage.asmx/UploadLogo",
+                    //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UploadLogo",
+                    url: "/CreationStage.asmx/UploadLogo",
                     dataType: 'json',
                     data: { logo: $scope.imageSrc },
                     headers: { "Content-Type": "application/json" }
@@ -2568,7 +2656,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $scope.loadingCover = true;
             var post = $http({
                 method: "POST",
-                url: "TemplateData.asmx/UploadSlider",
+                //url: "http://bslogic-001-site1.ctempurl.com/TemplateData.asmx/UploadSlider",
+                url: "/TemplateData.asmx/UploadSlider",
                 dataType: 'json',
                 data: { slider: $scope.imageSrc_slider },
                 headers: { "Content-Type": "application/json" }
@@ -2586,7 +2675,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
             var post = $http({
                 method: "POST",
-                url: "TemplateData.asmx/UploadAboutImage",
+                //url: "http://bslogic-001-site1.ctempurl.com/TemplateData.asmx/UploadAboutImage",
+                url: "/TemplateData.asmx/UploadAboutImage",
                 dataType: 'json',
                 data: { image: $scope.imageSrc_about },
                 headers: { "Content-Type": "application/json" }
@@ -2610,7 +2700,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 post.then(function (response) { }, function (error) { });
                 */
             $http.post(
-                "TemplateData.asmx/UpdateLinks",
+                //"http://bslogic-001-site1.ctempurl.com/TemplateData.asmx/UpdateLinks",
+                "/TemplateData.asmx/UpdateLinks",
                 $.param({
                     snapchat_link: $scope.mySnapchatLink,
                     twitter_link: $scope.myTwitterLink,
@@ -2642,6 +2733,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         /*$scope.Previews = ["معاينة على الحاسب", "معاينة على الجوال"];
         $scope.template = "";
         $scope.selectedPreview = $scope.Previews[0];*/
+        //$http.get('http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/GetTemplateID').then(function (response) {
         $http.get('/CreationStage.asmx/GetTemplateID').then(function (response) {
 
             $scope.storeID = response.data;
@@ -2697,6 +2789,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.Template = function (Tid) {
             var post = $http({
                 method: "POST",
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/AddTemplate",
                 url: "/CreationStage.asmx/AddTemplate",
                 dataType: 'json',
                 data: { id: Tid },
@@ -2721,6 +2814,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         //to retrieve all categories
         $scope.getCat = function (newCategury) {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/GetAllCategories",
                 url: "/Products.asmx/GetAllCategories",
                 method: "get"
             })
@@ -2743,6 +2837,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         // to add category 
         $scope.addNewCategory = function (newCategury) {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/AddNewCategory",
                 url: "/Products.asmx/AddNewCategory",
                 method: "get",
                 params: { cat: newCategury }
@@ -2771,6 +2866,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 .cancel('إلغاء');
             $mdDialog.show(confirm).then(function () {
                 $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/DeleteCategory",
                     url: "/Products.asmx/DeleteCategory",
                     method: "GET",
                     params: { category: $scope.selectedCategory }
@@ -2791,6 +2887,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             }
             alert("change order");
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/ChangeOrder",
                 url: "/Products.asmx/ChangeOrder",
                 method: "get",
                 params: { categoriesOrders: categories }
@@ -2819,6 +2916,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.selectedCategoryChanged = function () {
             if ($scope.selectedCategory != null) {
                 $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/GetAllProducts",
                     url: "/Products.asmx/GetAllProducts",
                     method: "get",
                     params: { category: $scope.selectedCategory }
@@ -2833,6 +2931,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         // apply edit the product
         $scope.editProduct = function (index, product, ID, Image, Name, Description, Price, PAD, Amount, Discount) {
             $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/EditProduct",
                 url: "/Products.asmx/EditProduct",
                 headers: { "Content-Type": "application/json;charset=utf-8" },
                 dataType: 'json',
@@ -2854,6 +2953,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         //to add new row
         $scope.addNewProduct2 = function (product) {
             $http.post(
+                //"http://bslogic-001-site1.ctempurl.com/Products.asmx/AddNewProduct",
                 "/Products.asmx/AddNewProduct",
                 $.param({
                     category: product.Category_ID,
@@ -2893,6 +2993,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 .cancel('إلغاء');
             $mdDialog.show(confirm).then(function () {
                 $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/RemoveProduct",
                     url: "/Products.asmx/RemoveProduct",
                     method: "get",
                     params: { product_ID: productID }
@@ -2921,14 +3022,14 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 BS_App.factory('CategoryService', function ($http, $stateParams) {
     var GetAllCategories = function () {
         return $http({
-            //url: "http://www.bsapplogic.somee.com/../Published_Stores.asmx/GetAllCategories",
+            //url: "http://bslogic-001-site1.ctempurl.com/../Published_Stores.asmx/GetAllCategories",
             url: "../Published_Stores.asmx/GetAllCategories",
             params: { StoreDomain: $stateParams.Domain },
             method: "get"
         })
-        .then(function (categories) {
-            return categories.data;
-        });
+            .then(function (categories) {
+                return categories.data;
+            });
     };
 
     return { GetAllCategories: GetAllCategories };
@@ -2937,7 +3038,7 @@ BS_App.factory('CategoryService', function ($http, $stateParams) {
 BS_App.factory('ProductService', function ($http, $stateParams) {
     var GetAllProducts = function (CategoryName) {
         return $http.post(
-            //"http://www.bsapplogic.somee.com//Published_Stores.asmx/GetAllProducts",
+            //"http://bslogic-001-site1.ctempurl.com//Published_Stores.asmx/GetAllProducts",
             "/Published_Stores.asmx/GetAllProducts",
             $.param({
                 Category: CategoryName,
@@ -2961,7 +3062,7 @@ BS_App.factory('ProductService', function ($http, $stateParams) {
 BS_App.factory('AddProductService', function ($http) {
     var AddProductToCart = function (OrderID, ProductID, Amount, PreviousAmount) {
         return $http.post(
-            //"http://www.bsapplogic.somee.com/Published_Stores.asmx/AddProductToOrder",
+            //"http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/AddProductToOrder",
             "/Published_Stores.asmx/AddProductToOrder",
             $.param({
                 OrderID: OrderID,
@@ -3115,12 +3216,13 @@ BS_App.filter('range', function () {
 
 BS_App.factory('loginService', function ($http) {
     var login = function () {
+        //return $http.post('http://bslogic-001-site1.ctempurl.com/RegisterLogin.asmx/CheckUser').then(function (msg) {
         return $http.post('/RegisterLogin.asmx/CheckUser').then(function (msg) {
-         /*   if (msg.data.includes("false"))
-                return "false";
-            else
-                return "true";*/
-           return msg.data;
+            /*   if (msg.data.includes("false"))
+                   return "false";
+               else
+                   return "true";*/
+            return msg.data;
         });
         /*$http({
         method: 'POST',
@@ -3137,6 +3239,7 @@ BS_App.factory('loginService', function ($http) {
 BS_App.factory('validLinkService', function ($http) {
     var valid = function (name) {
         return $http({
+            //url: "http://bslogic-001-site1.ctempurl.com/ShowHideElement.asmx/ValidLink",
             url: "/ShowHideElement.asmx/ValidLink",
             method: "get",
             params: {

@@ -76,6 +76,7 @@
                         <div class="space-bot text-center">
 
                             <div class="divider"></div>
+                            <p class="alert alert-danger" ng-show="engRegisterWarningMsg">your email is already exist.</p>
                         </div>
                         <form name="register_eng" ng-model="RE" novalidate>
                             <div class="input-field col s6">
@@ -143,6 +144,7 @@
                         <div class="space-bot text-center">
 
                             <div class="divider"></div>
+                            <p class="alert alert-danger" ng-show="arRegisterWarningMsg">البريد الالكتروني مسجل مسبقًا.</p>
                         </div>
                         <form name="register_ar" novalidate>
                             <div class="input-field col s6">
@@ -223,6 +225,7 @@
                         <div class="space-bot text-center">
                             <!--<h1>Login</h1>-->
                             <div class="divider"></div>
+                            <p class="alert alert-danger" ng-show="engLoginWarningMsg">your email or password is wrong.</p>
                         </div>
                         <form name="login_eng" novalidate>
                             <div class="input-field col s6" ng-show="false">
@@ -274,6 +277,7 @@
                         <div class="space-bot text-center">
                             <!--<h1>Login</h1>-->
                             <div class="divider"></div>
+                            <p class="alert alert-danger" ng-show="arLoginWarningMsg">البريد الالكتروني أو الرقم السري غير صحيح.</p>
                         </div>
                         <form name="login_ar" novalidate">
                             <div class="input-field col s6" ng-show="false">
