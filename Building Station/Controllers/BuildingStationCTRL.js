@@ -650,8 +650,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                             params: { storeDomainName: StoreValues.Domain },
                             method: "get"
                         }).then(function (response) {
-                            $window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
-                            //$window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
+                            //$window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
+                            $window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
                         });
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
@@ -1848,8 +1848,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                                 params: { storeDomainName: StoreValues.Domain },
                                 method: "get"
                             }).then(function (response) {
-                                $window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
-                                //$window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
+                                //$window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
+                                $window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
                             });
                             //  $rootScope.status = 'You decided to get rid of your debt.';
                         }, function () {

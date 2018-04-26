@@ -25,155 +25,164 @@ public class TemplateData : System.Web.Services.WebService
     public Store store = new Store();
    // public Product Product = new Product();
     List<Element> ElementsList = new List<Element>();
-    
+
     [WebMethod(EnableSession = true)]
     public void StoreData()
     {
-        using (SqlConnection con = new SqlConnection(cs))
-        {
-            // SnapchatLink, TwitterLink, FacebookLink, InstagramLink,
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, Location, PayPal, BankTransfer, Cash, ShopOwnerBank FROM Store Where Email = '" + Session["user"] + "'", con);
-            con.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+        try {
+            using (SqlConnection con = new SqlConnection(cs))
             {
-                store.Email = reader["Email"].ToString();
-                store.Name = reader["StoreName"].ToString();
-                store.Color1 = reader["Color1"].ToString();
-                store.Color2 = reader["Color2"].ToString();
-                store.Color3 = reader["Color3"].ToString();
-                store.Color4 = reader["Color4"].ToString();
-                store.Phone = reader["Phone"].ToString();
-                store.Logo = reader["logo"].ToString();
-                store.menuTitle= reader["MenuTitle"].ToString();
-                store.Description = reader["StoreDescription"].ToString();
-             //   store.SliderImage = reader["SliderImage"].ToString();
-                store.Address = reader["Location"].ToString();
-               // store.SnapchatLink = reader["SnapchatLink"].ToString();
-               // store.TwitterLink = reader["TwitterLink"].ToString();
-               // store.FacebookLink = reader["FacebookLink"].ToString();
-               // store.InstagramLink = reader["InstagramLink"].ToString();
-                store.PayPal = Convert.ToBoolean(reader["PayPal"]);
-                store.BankTransfer = Convert.ToBoolean(reader["BankTransfer"]);
-                store.Cash = Convert.ToBoolean(reader["Cash"]);
-                store.BankAccount = reader["ShopOwnerBank"].ToString();
-            }
-            reader.Close();
-            con.Close();
+                // SnapchatLink, TwitterLink, FacebookLink, InstagramLink,
+                SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, Location, PayPal, BankTransfer, Cash, ShopOwnerBank FROM Store Where Email = '" + Session["user"] + "'", con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    store.Email = reader["Email"].ToString();
+                    store.Name = reader["StoreName"].ToString();
+                    store.Color1 = reader["Color1"].ToString();
+                    store.Color2 = reader["Color2"].ToString();
+                    store.Color3 = reader["Color3"].ToString();
+                    store.Color4 = reader["Color4"].ToString();
+                    store.Phone = reader["Phone"].ToString();
+                    store.Logo = reader["logo"].ToString();
+                    store.menuTitle = reader["MenuTitle"].ToString();
+                    store.Description = reader["StoreDescription"].ToString();
+                    //   store.SliderImage = reader["SliderImage"].ToString();
+                    store.Address = reader["Location"].ToString();
+                    // store.SnapchatLink = reader["SnapchatLink"].ToString();
+                    // store.TwitterLink = reader["TwitterLink"].ToString();
+                    // store.FacebookLink = reader["FacebookLink"].ToString();
+                    // store.InstagramLink = reader["InstagramLink"].ToString();
+                    store.PayPal = Convert.ToBoolean(reader["PayPal"]);
+                    store.BankTransfer = Convert.ToBoolean(reader["BankTransfer"]);
+                    store.Cash = Convert.ToBoolean(reader["Cash"]);
+                    store.BankAccount = reader["ShopOwnerBank"].ToString();
+                }
+                reader.Close();
+                con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Snapchat'", con);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                store.SnapchatLink = reader["Value"].ToString();
-            }
-            reader.Close();
-            con.Close();
+                con.Open();
+                cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Snapchat'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    store.SnapchatLink = reader["Value"].ToString();
+                }
+                reader.Close();
+                con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Twitter'", con);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                store.TwitterLink = reader["Value"].ToString();
-            }
-            reader.Close();
-            con.Close();
+                con.Open();
+                cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Twitter'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    store.TwitterLink = reader["Value"].ToString();
+                }
+                reader.Close();
+                con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Facebook'", con);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                store.FacebookLink = reader["Value"].ToString();
-            }
-            reader.Close();
-            con.Close();
+                con.Open();
+                cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Facebook'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    store.FacebookLink = reader["Value"].ToString();
+                }
+                reader.Close();
+                con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Instagram'", con);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                store.InstagramLink = reader["Value"].ToString();
-            }
-            reader.Close();
-            con.Close();
+                con.Open();
+                cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Instagram'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    store.InstagramLink = reader["Value"].ToString();
+                }
+                reader.Close();
+                con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'About'", con);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                store.About = reader["Value"].ToString();
-            }
-            reader.Close();
-            con.Close();
+                con.Open();
+                cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'About'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    store.About = reader["Value"].ToString();
+                }
+                reader.Close();
+                con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("SELECT Image FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Slider'", con);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                store.SliderImage = reader["Image"].ToString();
-            }
-            reader.Close();
-            con.Close();
+                con.Open();
+                cmd = new SqlCommand("SELECT Image FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'Slider'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    store.SliderImage = reader["Image"].ToString();
+                }
+                reader.Close();
+                con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'PayPal' AND Type = 'Currency'", con);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                store.PayPalCurrencey = reader["Value"].ToString();
-            }
-            reader.Close();
-            con.Close();
+                con.Open();
+                cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'PayPal' AND Type = 'Currency'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    store.PayPalCurrencey = reader["Value"].ToString();
+                }
+                reader.Close();
+                con.Close();
 
-            con.Open();
-            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'PayPal' AND Type = 'AccountEmail'", con);
-            reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                store.PayPalEmail = reader["Value"].ToString();
+                con.Open();
+                cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'PayPal' AND Type = 'AccountEmail'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    store.PayPalEmail = reader["Value"].ToString();
+                }
+                reader.Close();
+                con.Close();
             }
-            reader.Close();
-            con.Close();
+            Context.Response.Write(js.Serialize(store));
+
+            //        return store;
         }
-        Context.Response.Write(js.Serialize(store));
-
-//        return store;
-    }
+        catch(Exception e) { }
+        }
 
     [WebMethod(EnableSession = true)]
     public void ProductData()
     { //List<Product>
-        List<Product> ProductsList = new List<Product>();
 
-        using (SqlConnection con = new SqlConnection(cs))
+        try
         {
-            SqlCommand cmd = new SqlCommand("SELECT ID, Name, Price, Description, Discount, Category_ID, Image FROM Product WHERE StoreEmail = '" + Session["user"] + "'", con);
-            con.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            List<Product> ProductsList = new List<Product>();
+
+            using (SqlConnection con = new SqlConnection(cs))
             {
-                Product product = new Product();
-                product.ID = Convert.ToInt32(reader["ID"]);
-                product.Name = reader["Name"].ToString();
-                product.Price = Convert.ToDouble(reader["Price"]);
-                product.Description = reader["Description"].ToString();
-                product.Discount = Convert.ToInt32(reader["Discount"]);
-                product.Category_ID = reader["Category_ID"].ToString();
-              //  product.StoreEmail = reader["StoreEmail"].ToString();
-                product.Image = reader["Image"].ToString();
+                SqlCommand cmd = new SqlCommand("SELECT ID, Name, Price, Description, Discount, Category_ID, Image FROM Product WHERE StoreEmail = '" + Session["user"] + "'", con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Product product = new Product();
+                    product.ID = Convert.ToInt32(reader["ID"]);
+                    product.Name = reader["Name"].ToString();
+                    product.Price = Convert.ToDouble(reader["Price"]);
+                    product.Description = reader["Description"].ToString();
+                    product.Discount = Convert.ToInt32(reader["Discount"]);
+                    product.Category_ID = reader["Category_ID"].ToString();
+                    //  product.StoreEmail = reader["StoreEmail"].ToString();
+                    product.Image = reader["Image"].ToString();
 
-                ProductsList.Add(product);
+                    ProductsList.Add(product);
+                }
             }
-        }
-        Context.Response.Write(js.Serialize(ProductsList));
+            Context.Response.Write(js.Serialize(ProductsList));
+            //  return ProductsList;
 
-      //  return ProductsList;
+        }
+        catch (Exception e) { }
+
     }
 
     [WebMethod(EnableSession = true)]

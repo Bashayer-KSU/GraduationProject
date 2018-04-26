@@ -26,59 +26,65 @@ public class manageWebsiteColors : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void GetWebsiteColors(string path)
     {
-
-        Colors selectedColors = new Colors();
-        // our account in cloudinary 
-        CloudinaryDotNet.Account account =
-                            new CloudinaryDotNet.Account("dkejtwcc6", "799652649934124", "N6eQmnp7-66vxt3IMIpC-z0ijDw");
-
-        CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
-        //\our account in cloudinary
-
-        // to upload logo
-        var uploadParams = new ImageUploadParams()
+        try
         {
-            File = new FileDescription(path),//file path
-            Colors = true
-        };
-        var uploadResult = cloudinary.Upload(uploadParams);
-        //\to upload logo
+            Colors selectedColors = new Colors();
+            // our account in cloudinary 
+            CloudinaryDotNet.Account account =
+                                new CloudinaryDotNet.Account("dkejtwcc6", "799652649934124", "N6eQmnp7-66vxt3IMIpC-z0ijDw");
 
-        //extract colors
-        var s = uploadResult.Colors;
-        if (s.Length >= 4)
-        {
-            selectedColors.color1 = s[0][0];
-            selectedColors.color2 = s[1][0];
-            selectedColors.color3 = s[2][0];
-            selectedColors.color4 = s[3][0];
-        } else if(s.Length == 3)
-        {
-            selectedColors.color1 = s[0][0];
-            selectedColors.color2 = s[1][0];
-            selectedColors.color3 = selectedColors.color4 = s[2][0];
-        } else if(s.Length == 2)
-        {
-            selectedColors.color1 = selectedColors.color3 = s[0][0];
-            selectedColors.color2 = selectedColors.color4 = s[1][0];
-        } else if(s.Length == 1)
-            selectedColors.color1 = selectedColors.color3 = selectedColors.color2 = selectedColors.color4 = s[0][0];
-        //\extract colors
+            CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
+            //\our account in cloudinary
 
-        //insert selected colors to database
-        using (SqlConnection con = new SqlConnection(cs))
-        {
-            con.Open();
-            SqlCommand cmdee = new SqlCommand("UPDATE Store SET Color1='" + selectedColors.color1 + "', Color2='" + selectedColors.color2 + "', Color3='" + selectedColors.color3 + "', Color4='" + selectedColors.color4 + "' WHERE Email='" + Session["user"] + "'", con);
-            cmdee.ExecuteNonQuery();
-            con.Close();
+            // to upload logo
+            var uploadParams = new ImageUploadParams()
+            {
+                File = new FileDescription(path),//file path
+                Colors = true
+            };
+            var uploadResult = cloudinary.Upload(uploadParams);
+            //\to upload logo
+
+            //extract colors
+            var s = uploadResult.Colors;
+            if (s.Length >= 4)
+            {
+                selectedColors.color1 = s[0][0];
+                selectedColors.color2 = s[1][0];
+                selectedColors.color3 = s[2][0];
+                selectedColors.color4 = s[3][0];
+            }
+            else if (s.Length == 3)
+            {
+                selectedColors.color1 = s[0][0];
+                selectedColors.color2 = s[1][0];
+                selectedColors.color3 = selectedColors.color4 = s[2][0];
+            }
+            else if (s.Length == 2)
+            {
+                selectedColors.color1 = selectedColors.color3 = s[0][0];
+                selectedColors.color2 = selectedColors.color4 = s[1][0];
+            }
+            else if (s.Length == 1)
+                selectedColors.color1 = selectedColors.color3 = selectedColors.color2 = selectedColors.color4 = s[0][0];
+            //\extract colors
+
+            //insert selected colors to database
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                con.Open();
+                SqlCommand cmdee = new SqlCommand("UPDATE Store SET Color1='" + selectedColors.color1 + "', Color2='" + selectedColors.color2 + "', Color3='" + selectedColors.color3 + "', Color4='" + selectedColors.color4 + "' WHERE Email='" + Session["user"] + "'", con);
+                cmdee.ExecuteNonQuery();
+                con.Close();
+            }
+            Context.Response.Write(js.Serialize(selectedColors));
+
+            // return selectedColors;
         }
-        Context.Response.Write(js.Serialize(selectedColors));
-
-       // return selectedColors;
+        catch (Exception e) { }
     }
 
-    [WebMethod]
+[WebMethod]
     public void chooseColors()
     {
         Colors c = new Colors();
@@ -99,5 +105,4 @@ public class manageWebsiteColors : System.Web.Services.WebService
         Context.Response.Write(js.Serialize(c));
 //        return c;
     }
-
 }
