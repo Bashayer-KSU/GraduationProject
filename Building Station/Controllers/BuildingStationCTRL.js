@@ -280,10 +280,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         /////////////////////////////////
 
         $scope.Store = [];
-        $scope.Produts = [];
-        $scope.Categories = [];
-
-
         $scope.checkout = false;
         $scope.payment = false;
         $scope.buyerName = "";
@@ -484,22 +480,24 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.Exist = false;
         $scope.TotalPrice = 0;
         $scope.ProductsArray = [];
+        $scope.categoriesList = [];
 
 
         //Displaying All Category
         $scope.GetAllCategories = function () {
             CategoryService.GetAllCategories().then(function (response) {
-                $scope.categories = response;
+                $scope.categoriesList = response;
             });
         };
         $scope.GetAllCategories();
 
         //When Buyer change Category Tab display related products
         $scope.setTabItem = function (item) {
-            $scope.currentTab = item;
+            $scope.currentTab = item.Name;
             ProductService.GetAllProducts(item.Name).then(function (response) {
                 $scope.products = response;
                 $scope.HeaderCategoryName = item.Name;
+
             });
         };
 
