@@ -52,7 +52,7 @@ public class RegisterLogin : System.Web.Services.WebService
 
                 con.Open();
                 cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail, Hidden) values " +
-                "('Snapchat', 'Link','" + Session["user"] + "','"+true+"')", con);
+                "('Snapchat', 'Link','" + Session["user"] + "','" + true + "')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 
@@ -108,7 +108,7 @@ public class RegisterLogin : System.Web.Services.WebService
                 {
                     value = "/CreationStage.html";
                 }
-                else if(lang.Equals("ar"))
+                else if (lang.Equals("ar"))
                 {
                     value = "/CreationSatgeArabic.html";
                 }
@@ -116,7 +116,7 @@ public class RegisterLogin : System.Web.Services.WebService
         }
         Context.Response.Write(js.Serialize(value));
 
-     //   return value;
+        //   return value;
     }
 
     [WebMethod(EnableSession = true)]
@@ -131,44 +131,33 @@ public class RegisterLogin : System.Web.Services.WebService
 
             if (dr.HasRows == true)
             {
-                //Session["user"] = email;
+                Session["user"] = email;
                 dr.Read();
-                int TemplateID = Convert.ToInt32(dr["TemplateID"]);
-                dr.Close();
-                //SqlCommand cmd2 = new SqlCommand("INSERT INTO Session (Email) values('"+email+"')", con);
-                //cmd2.ExecuteNonQuery();
-                SqlCommand cmd3 = new SqlCommand("SELECT * FROM Session WHERE Email = '" + email + "'", con);
-                SqlDataReader dr3 = cmd3.ExecuteReader();
-                dr3.Read();
-                string SessionID = dr3["ID"].ToString();
-                //string SessionID = "";
-                dr3.Close();
-                
-                if (TemplateID== 0) //If user not start building template yet
+                if (Convert.ToInt32(dr["TemplateID"]) == 0) //If user not start building template yet
                 {
                     con.Close();
 
                     if (lang.Equals("eng"))
                     {
-                        value = "/CreationStage.html-"+ SessionID;
+                        value = "/CreationStage.html";
                     }
                     else
                     {
-                        value = "/CreationSatgeArabic.html-"+ SessionID;
+                        value = "/CreationSatgeArabic.html";
                     }
                 }
                 else //If user already has template 
                 {
                     if (lang.Equals("eng"))
                     {
-                      //  value = "/Views/BasicE.html";
-                        value = "EDITandINFO-English-"+ SessionID;
+                        //  value = "/Views/BasicE.html";
+                        value = "EDITandINFO-English";
 
                     }
                     else
                     {
-                       // value = "/Views/Basic.html";
-                        value = "EDITandINFO-"+ SessionID;
+                        // value = "/Views/Basic.html";
+                        value = "EDITandINFO";
                     }
                 }
             }
@@ -176,7 +165,7 @@ public class RegisterLogin : System.Web.Services.WebService
             //Invalid login
             else
             {
-                value = "/index.html-"+-1;
+                value = "/index.html";
             }
         }
         Context.Response.Write(js.Serialize(value));
@@ -191,7 +180,7 @@ public class RegisterLogin : System.Web.Services.WebService
         {
             Context.Response.Write(js.Serialize("false"));
 
-     //       return "false";
+            //       return "false";
         }
         else
         {
@@ -209,6 +198,6 @@ public class RegisterLogin : System.Web.Services.WebService
         Session.Abandon();
         Context.Response.Write(js.Serialize("/BuildingStation"));
 
-      //  return "/index.html";
+        //  return "/index.html";
     }
 }

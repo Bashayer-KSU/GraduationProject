@@ -1,5 +1,5 @@
 ﻿//'use strict';
-var BS_App = angular.module('BuildingStationAPP', ["ui.router", "ngMaterial"]);
+var BS_App = angular.module("BuildingStationAPP", ["ui.router", "ngMaterial"]);
 
 BS_App.service('initialSetup', function ($http) {
     var promise;
@@ -2599,11 +2599,11 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.ChangeLogo = function (ev) {
             var confirm = $mdDialog.confirm()
-                .title('Do you want to Change your store Colors also?')
-                .textContent('The new colors will be taken from your new logo.')
+                .title('هل تريد تغيير ألوان متجرك أيضا ؟')
+                .textContent('الألوان الجديدة ستؤخذ من الشعار الجديدز')
                 .targetEvent(ev)
-                .ok('Yes')
-                .cancel('No');
+                .ok('نعم')
+                .cancel('لا');
 
             $mdDialog.show(confirm).then(function () {
                 $http({
