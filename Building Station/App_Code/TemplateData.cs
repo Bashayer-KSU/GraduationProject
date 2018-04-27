@@ -33,7 +33,7 @@ public class TemplateData : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 // SnapchatLink, TwitterLink, FacebookLink, InstagramLink,
-                SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, Location, PayPal, BankTransfer, Cash, ShopOwnerBank FROM Store Where Email = '" + Session["user"] + "'", con);
+                SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, Location, PayPal, BankTransfer, Cash FROM Store Where Email = '" + Session["user"] + "'", con);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -48,16 +48,10 @@ public class TemplateData : System.Web.Services.WebService
                     store.Logo = reader["logo"].ToString();
                     store.menuTitle = reader["MenuTitle"].ToString();
                     store.Description = reader["StoreDescription"].ToString();
-                    //   store.SliderImage = reader["SliderImage"].ToString();
                     store.Address = reader["Location"].ToString();
-                    // store.SnapchatLink = reader["SnapchatLink"].ToString();
-                    // store.TwitterLink = reader["TwitterLink"].ToString();
-                    // store.FacebookLink = reader["FacebookLink"].ToString();
-                    // store.InstagramLink = reader["InstagramLink"].ToString();
                     store.PayPal = Convert.ToBoolean(reader["PayPal"]);
                     store.BankTransfer = Convert.ToBoolean(reader["BankTransfer"]);
                     store.Cash = Convert.ToBoolean(reader["Cash"]);
-                    store.BankAccount = reader["ShopOwnerBank"].ToString();
                 }
                 reader.Close();
                 con.Close();
@@ -138,6 +132,36 @@ public class TemplateData : System.Web.Services.WebService
                 while (reader.Read())
                 {
                     store.PayPalEmail = reader["Value"].ToString();
+                }
+                reader.Close();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'BankTransfer' AND Type = 'BankName'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    store.BankName = reader["Value"].ToString();
+                }
+                reader.Close();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'BankTransfer' AND Type = 'AccountName'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    store.AccountName = reader["Value"].ToString();
+                }
+                reader.Close();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + Session["user"] + "' AND Name = 'BankTransfer' AND Type = 'IBAN'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    store.IBAN = reader["Value"].ToString();
                 }
                 reader.Close();
                 con.Close();

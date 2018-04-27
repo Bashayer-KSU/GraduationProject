@@ -189,7 +189,9 @@
                                                             <input id="banktransfer" name="PaymentMethod" ng-model="PaymentMethod" value="BankTransfer" type="radio" class="custom-control-input" required>
                                                             <label class="custom-control-label" for="banktransfer">
                                                                 تحويل بنكي<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer">
-                                                                <span> <small>الآيبان:  {{Store.BankAccount}}</small> </span>
+                                                                          <span>
+                                                                              <small>اسم البنك:  {{Store.BankName}}  , اسم الحساب:  {{Store.AccountName}} <br /> الأيبان: {{Store.IBAN}}</small>
+                                                                          </span>
                                                             </label>
 
                                                         </div>
@@ -203,7 +205,9 @@
                                                 <div ng-show="PaymentMethod === 'BankTransfer'" id="transfer">
                                                     <div class="row mb-3 ">
                                                         <h4 class="col-sm-12">تأكيد التحويل البنكي</h4>
-                                                        <h6 class="col-sm-12"><small>الآيبان:  {{Store.BankAccount}}</small></h6>
+                                                        <h6 class="col-sm-12">
+                                                            <small>اسم البنك:  {{Store.BankName}}  , اسم الحساب:  {{Store.AccountName}} <br /> الأيبان: {{Store.IBAN}}</small>
+                                                        </h6>
                                                         <div class="col-sm-12">
                                                             <label for="OrderID">
                                                                 <!--  <span style="color:red;">*</span>-->

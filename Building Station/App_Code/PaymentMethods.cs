@@ -75,28 +75,36 @@ public class PaymentMethods : System.Web.Services.WebService
                 //return payments;
             }
         }
-        else 
-        Context.Response.Write(js.Serialize(null));
-       // return null;
     }
 
     [WebMethod(EnableSession = true)]
-    public void UpdateBankInfo(String IBAN)
+    public void UpdateBankInfo(String BankName, String AccountName, String IBAN)
     {
         IBAN = IBAN.ToUpper();
-        int success = 0;
+        int success1 = 0,success2 = 0,success3 = 0;
         if (IBAN.Length > 14 && IBAN.Length < 35 && !IBAN.Contains(" "))
         {//!Regex.IsMatch(IBAN, "^[a-zA-Z0-9]*$")
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE Store SET ShopOwnerBank = '" + IBAN + "' Where Email = '" + Session["user"] + "'", con);
-                success = cmd.ExecuteNonQuery();
+                SqlCommand cmd = new SqlCommand("UPDATE Element SET Value = '" + BankName + "' Where StoreEmail = '" + Session["user"] + "' AND Type = 'BankName'", con);
+                success1 = cmd.ExecuteNonQuery();
                 con.Close();
+
+                con.Open();
+                 cmd = new SqlCommand("UPDATE Element SET Value = '" + AccountName + "' Where StoreEmail = '" + Session["user"] + "' AND Type = 'AccountName'", con);
+                success2 = cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("UPDATE Element SET Value = '" + IBAN + "' Where StoreEmail = '" + Session["user"] + "' AND Type = 'IBAN'", con);
+                success3 = cmd.ExecuteNonQuery();
+                con.Close();
+
             }
         }
-        if (success != 0)
-            Context.Response.Write(js.Serialize(IBAN));
+        if (success1 != 0 && success2 != 0 && success3 != 0)
+            Context.Response.Write(js.Serialize(true));
         else
             Context.Response.Write(js.Serialize("IBAN length must be between 15 and 34 and shall contain no spaces or special characters"));
     }
@@ -106,24 +114,40 @@ public class PaymentMethods : System.Web.Services.WebService
     {
         if (Session["user"] != null)
         {
-            string IBAN = "";
+            Payments payment = new Payments();
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT ShopOwnerBank FROM Store Where Email = '" + Session["user"] + "'", con);
+                SqlCommand cmd = new SqlCommand("SELECT Value FROM Element Where StoreEmail = '" + Session["user"] + "' AND Type = 'IBAN'", con);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     reader.Read();
-                    IBAN = Convert.ToString(reader["ShopOwnerBank"]);
+                    payment.IBAN = Convert.ToString(reader["Value"]);
                 }
                 con.Close();
-                Context.Response.Write(js.Serialize(IBAN));
+
+                con.Open();
+                cmd = new SqlCommand("SELECT Value FROM Element Where StoreEmail = '" + Session["user"] + "' AND Type = 'BankName'", con);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    reader.Read();
+                    payment.BankName = Convert.ToString(reader["Value"]);
+                }
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("SELECT Value FROM Element Where StoreEmail = '" + Session["user"] + "' AND Type = 'AccountName'", con);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    reader.Read();
+                    payment.AccountName = Convert.ToString(reader["Value"]);
+                }
+                con.Close();
+
+                Context.Response.Write(js.Serialize(payment));
                 //return IBAN;
             }
         }
-        else
-        Context.Response.Write(js.Serialize(""));
-        //return "";
     }
 
     [WebMethod(EnableSession = true)]

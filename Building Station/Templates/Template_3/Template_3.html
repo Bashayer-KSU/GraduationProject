@@ -214,7 +214,8 @@
                                                     <div ng-show="Store.BankTransfer" class="custom-control custom-radio">
                                                         <input id="banktransfer" name="PaymentMethod" ng-model="PaymentMethod" value="BankTransfer" type="radio" class="custom-control-input" required>
                                                         <label class="custom-control-label" for="banktransfer">
-                                                            تحويل بنكي<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer">                                                        <span> <small>IBAN:  {{Store.BankAccount}}</small> </span>
+                                                            تحويل بنكي<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer">
+                                                            <span> <small>اسم البنك:  {{Store.BankName}}  ,  اسم الحساب:  {{Store.AccountName}}  <br> الأيبان:  {{Store.IBAN}}</small> </span>
                                                         </label>
 
                                                     </div>
@@ -228,7 +229,9 @@
                                             <div ng-show="PaymentMethod === 'BankTransfer'" id="transfer">
                                                 <div class="row mb-3 ">
                                                     <h4 class="col-sm-12">تأكيد التحويل البنكي</h4>
-                                                    <h6 class="col-sm-12"><small>الآيبان:  {{Store.BankAccount}}</small></h6>
+                                                    <h6 class="col-sm-12">
+                                                                          <small>اسم البنك:  {{Store.BankName}}  , اسم الحساب:  {{Store.AccountName}} <br /> الأيبان: {{Store.IBAN}}</small>
+                                                    </h6>
                                                     <div class="col-sm-12">
                                                         <label for="OrderID">رقم التحويل البنكي</label>
                                                         <input type="text" class="form-control" id="OrderID" name="OrderID" ng-model="OrderID" placeholder="أدخل رقم التحويل البنكي" required>
@@ -286,7 +289,7 @@
                         <button ng-show="!checkout" ng-disabled="ProductsArray.length===0" type="button" class="btn btn-info btn-md" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">إتمام التسوق</button>
                         <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="Buyer.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">اختيار طريقة الدفع</button>
                         <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=false; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">الرجوع</button>
-                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">إتمام عملية الشراء</button>
+                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">إتمام عملية الشراء</button>
                         <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">الرجوع</button>
 
                     </div>

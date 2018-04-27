@@ -230,7 +230,7 @@ public class Published_Stores : System.Web.Services.WebService
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, StoreType, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, Location, PayPal, BankTransfer, Cash, ShopOwnerBank FROM Store WHERE WebsiteDomain='" + StoreDomain + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, StoreType, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, Location, PayPal, BankTransfer, Cash FROM Store WHERE WebsiteDomain='" + StoreDomain + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -251,7 +251,6 @@ public class Published_Stores : System.Web.Services.WebService
                 store.PayPal = Convert.ToBoolean(reader["PayPal"]);
                 store.BankTransfer = Convert.ToBoolean(reader["BankTransfer"]);
                 store.Cash = Convert.ToBoolean(reader["Cash"]);
-                store.BankAccount = reader["ShopOwnerBank"].ToString();
             }
             reader.Close();
             con.Close();
@@ -332,6 +331,36 @@ public class Published_Stores : System.Web.Services.WebService
             while (reader.Read())
             {
                 store.PayPalEmail = reader["Value"].ToString();
+            }
+            reader.Close();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + store.Email + "' AND Name = 'BankTransfer' AND Type = 'BankName'", con);
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.BankName = reader["Value"].ToString();
+            }
+            reader.Close();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + store.Email + "' AND Name = 'BankTransfer' AND Type = 'AccountName'", con);
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.AccountName = reader["Value"].ToString();
+            }
+            reader.Close();
+            con.Close();
+
+            con.Open();
+            cmd = new SqlCommand("SELECT Value FROM Element WHERE StoreEmail='" + store.Email + "' AND Name = 'BankTransfer' AND Type = 'IBAN'", con);
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                store.IBAN = reader["Value"].ToString();
             }
             reader.Close();
             con.Close();

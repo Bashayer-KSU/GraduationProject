@@ -99,6 +99,24 @@ public class RegisterLogin : System.Web.Services.WebService
                 con.Close();
 
                 con.Open();
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
+                "('BankTransfer', 'BankName','" + Session["user"] + "')", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
+                "('BankTransfer', 'AccountName','" + Session["user"] + "')", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
+                "('BankTransfer', 'IBAN','" + Session["user"] + "')", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
                 cmd = new SqlCommand("INSERT INTO Category (StoreEmail, Name, OrderInMenu) values('" +
                     Session["user"] + "', 'Category example', 1)", con);
                 cmd.ExecuteNonQuery();
