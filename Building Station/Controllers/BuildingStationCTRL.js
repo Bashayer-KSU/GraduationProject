@@ -163,9 +163,12 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 if (notLoged === true && pulishedStore === false) {
                     // location.href = "/index.html";
                     //   event.preventDefault();
-                    // location.href = "http://localhost:50277/BuildingStation"; looooping for ever
-                    $location.path("/BuildingStation");
+                    // location.href = "localhost:50277/BuildingStation"; looooping for ever
+                   // $location.path("/BuildingStation");
                     // $state.go("Login&Register ");
+                    //window.location.replace('localhost:50277/BuildingStation');
+                    $window.open = ("localhost:50277/index.html", "_self");
+
                 }
             });
         });
@@ -253,7 +256,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     else
                         location.href = $scope.resultAfterSubstring;
 
-                    //location.href = "http://localhost:50277/" + $scope.result.slice(1, -1);
+                    //location.href = "localhost:50277/" + $scope.result.slice(1, -1);
                 }, function (error) {
                     $scope.error = error.data;
                 });

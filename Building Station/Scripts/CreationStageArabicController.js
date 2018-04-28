@@ -69,12 +69,19 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             $rootScope.loggin = function () {
                 return loginService.login();
             };
+
             loginService.login().then(function (response) {
-                $rootScope.login = response;
-                if (response === "false") {
+                $rootScope.login = response.slice(1, -1);
+               
+               // alert($rootScope.login);
+                if ($rootScope.login  === "false") {
                     //redirect to login page
                     //$window.open = ("http://www.buildingstation1-001-site1.atempurl.com/index.html", "_self");
-                    location.href = "/index.html";
+                  //  location.href = "/index.html";
+                  //  $location.path("http://localhost:50277/BuildingStation");
+               //     $window.location.href = "http://localhost:50277/BuildingStation";
+                  //  $location.path("/BuildingStation");
+                    window.location.replace('localhost:50277/BuildingStation');
                 }
             });
         });
