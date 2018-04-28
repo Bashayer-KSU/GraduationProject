@@ -1,24 +1,25 @@
 ﻿<!-- Header -->
 <header style="padding-bottom:0%;">
-    <h2 style="line-height: 0.9; font-size:40px;"><strong>ما نوع المتجر الذي تريده؟</strong></h2>
+    <img src="/images/ar_2.png" style="width:100%" class="desaturate" />
+    <h1 style="font-size:1.5em; font-family:'NeoSansArabic'; ">ما نوع المتجر الذي تريده؟</h1>
 </header>
 <!-- Main content area -->
 <form name="myform">
     <main>
         <input id="Type" type="text" name="Type" ng-model="Type" ng-change="checkContent()" ng-keyup="complete(Type)" placeholder="  مثال: ملابس  " style="width:98%;" required />
         <span class="asterisk_input">  </span>
-        <p style="font-size:x-small; margin-top:0px; padding-top:0px; color: darkred;" ng-show="myform.myName.$invalid"> هذا الحقل مطلوب  </p>
+        <p style="font-size:0.7em; font-weight: bold; text-shadow: 2px 2px 8px white;  color: darkred;" ng-show="myform.myName.$invalid"> *هذا الحقل مطلوب  </p>
         <ul style="list-style: none;" ng-model="hidethis" ng-hide="hidethis || myform.Type.$invalid">
             <li class="list-group-item" ng-repeat="Typedata in filterType" ng-click="fillTextbox(Typedata)" style="width:100%;">{{Typedata}}</li>
-        </ul>    <br /> <br />
+        </ul>  
 
     </main>
 
     <div style="display:inline; overflow: auto;
-                white-space: nowrap; padding: 0px 0px;">
+                white-space: nowrap; padding: 0px 0px; margin-top:2%">
 
-        <button ng-disabled="myform.Type.$invalid" style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="3.1a" class="button button-large" ng-click="sendType()" data-toggle="tooltip" data-placement="right" title="التالي">&#8250;</button>
-        <a style="float: right; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="1a" class="button button-large" data-toggle="tooltip" data-placement="left" title="السابق">&#8249;</a>
+        <button ng-disabled="myform.Type.$invalid" style="float: left; font-size:5vw; padding: 0.5cm 0.5cm 0.5cm 0.5cm;" href="3.1a" class="button button-large" ng-click="sendType()" data-toggle="tooltip" data-placement="right" title="التالي">&#10095;</button>
+        <a style="float: right; font-size:5vw; padding: 0.5cm 0.6cm 0.5cm 0.4cm;" href="1a" class="button button-large" data-toggle="tooltip" data-placement="left" title="السابق">&#10094;</a>
     </div>
     </form>
     <!-- Footer -->

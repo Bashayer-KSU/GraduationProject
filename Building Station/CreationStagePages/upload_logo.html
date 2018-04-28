@@ -1,6 +1,7 @@
 ﻿  <!-- Header -->
 <header style="padding-bottom:0%;">
-    <h2 style="text-align: center; line-height: 0; font-size:35px;"><strong>Uplaod your store logo</strong></h2>
+    <img src="/images/en_5.png" style="width:100%" class="desaturate" />
+    <h1 style="font-size:1.5em;">Uplaod your store logo</h1>
 </header>
 
 <!-- Main content area -->
@@ -19,11 +20,13 @@
         <span ng-show="imageSrc && NotImage" style="font-size:x-small; color:darkred;">file type should be .jpeg, .png, .jpg, .gif</span>
     </main>
 
-    <div style="display:inline; overflow: auto;
-                    white-space: nowrap; padding: 0px 0px;">
-        <button ng-disabled="NotImage || !imageSrc || BigImage" style="float: right; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="7" class="button button-large" data-toggle="tooltip" data-placement="right" title="Next" ng-click="sendLogo()">&#8250;</button>
-        <a style="float: left; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="3.2" class="button button-large" data-toggle="tooltip" data-placement="left" title="Previous">&#8249;</a>
-    </div>
-    <br>
-    <!-- Footer -->
-    <footer></footer>
+<div style="display:inline; overflow: auto;
+                white-space: nowrap; padding: 0px 0px;">
+    <button ng-disabled="NotImage || !imageSrc || BigImage" style="float: right; font-size:5vw; padding: 0.5cm 0.5cm 0.5cm 0.5cm;" href="7" class="button button-large" data-toggle="tooltip" data-placement="right" title="Next" ng-click="sendLogo()">&#10095;</button>
+    <a style="float: left; font-size:5vw; padding: 0.5cm 0.6cm 0.5cm 0.4cm;" href="3.2" class="button button-large" data-toggle="tooltip" data-placement="left" title="Previous">&#10094;</a>
+</div>
+<br>
+<!-- Footer -->
+<footer>
+</footer>
+

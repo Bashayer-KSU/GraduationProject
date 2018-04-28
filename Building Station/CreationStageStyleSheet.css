@@ -57,8 +57,12 @@ html {
 
 
 body {
-    margin: 0;
-    background-image: url(/images/background.png);
+    min-height: 100%;
+    font-family: 'NeoSansArabic';
+    background-image: url(/images/background3.png);
+    background-attachment: fixed;
+    height: auto;
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -81,7 +85,10 @@ section {
  */
 h1 {
     font-size: 2em;
-    margin: 0.67em 0;
+    color:white; 
+    text-shadow: 2px 2px gray; 
+    font-family:'Century Gothic'; 
+    font-weight: bold;
 }
 
 /* Grouping content
@@ -524,12 +531,27 @@ body {
 
 .container {
     padding: 4rem;
-    background-image: url("/images/container2.png");
-    background-size:cover;
-    background-repeat:no-repeat;
-    opacity: 0.9;
+    background-image: url("/images/creationStageContainer.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    /*opacity: 0.9;
     border-bottom-right-radius: 0px;
-    border-top-right-radius: 0px;
+    border-top-right-radius: 0px;*/
+    padding: 20px;
+    padding-bottom: 40px;
+    border-radius: 30px;
+    /*
+    background-color: black;
+    opacity: 0.4;
+    box-shadow: 0 1px 6px rgba(0,0,0,.3);
+            text-shadow: 2px 2px gray;
+
+    */
+    color: white;
+    min-height: 100%;
+    background-attachment: fixed;
+    height: auto;
+    background-position: center;
 }
 
 /*.left .container {
@@ -538,14 +560,14 @@ body {
     border-top-left-radius: 45px;
 }*/
 
-a {
+/*a {
     color: #C6ba57;
     font-weight: bold;
-}
+} Leenah */
 
-   button:hover, button:focus, button:active, a:hover, a:focus, a:active {
+/* button:hover, button:focus, button:active, a:hover, a:focus, a:active {
         color: #555354;
-    }
+    } Leenah */
 
 fieldset {
     margin-bottom: 30px;
@@ -579,11 +601,11 @@ p {
     margin: 0 0 30px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+/*h1, h2, h3, h4, h5, h6 {
     color: #545454;
     font-weight: bold;
     margin: 0 0 30px;
-}
+} Leenah*/
 
 h3 {
     color: #555354;
@@ -607,13 +629,14 @@ header {
     border-bottom: 1px solid #e4e4e4;
 }
 
-    header h1 {
-        color: #545454;
+    /*header h1 {
         font-size: 3.75rem;
+        
+        color: #545454;
         letter-spacing: -0.2rem;
         margin-bottom: 0;
         line-height: 3.75rem;
-    }
+    } Leenah*/
 
     header h2 {
         font-size: 1.5rem;
@@ -674,16 +697,16 @@ Button
 a.button, button.button {
     color: #C6ba57;
     font-weight: bold;
-    background-color: rgba(198, 187, 87, 0);
-    padding: 5px 15px;
-    border-radius: 22.5px;
-    display: inline-block;
-    text-decoration: none;
+background-color:transparent;
+
+
+
 }
 
     a.button:hover, a.button:focus, a.button:active, button.button:hover, button.button:focus, button.button:active {
         color: #fff;
         background-color: #C6ba57;
+        text-decoration:none;
     }
 
     a.button.button-large, button.button.button-large {
@@ -721,7 +744,8 @@ Responsive
     }
 
     .container {
-        border-radius: 0 !important;
+        border-radius: 30px !important;
+        border-radius: 30px;
     }
 }
 
@@ -732,12 +756,13 @@ Responsive
 
     header h1 {
         font-size: 2.25rem;
-        letter-spacing: -0.1rem;
+        letter-spacing: -0.1rem;*/
         line-height: 2.25rem;
     }
 
     .container {
         padding: 2rem;
+        border-radius: 30px;
     }
 
     a.button.button-large, button.button.button-large{
@@ -758,7 +783,77 @@ Responsive
     display: inline-block;
 }
 
-ol, ul, li {
+/*ol, ul, li {
     list-style: none;
     display: inline-block;
+} Leenah */
+
+/*New*/
+a {
+    text-decoration: none;
+    color: #333333;
+    font-size:20px;
+}
+
+    a:hover {
+        text-decoration: underline;
+        color: #0C5E65;
+    }
+
+    a:focus {
+        text-decoration: underline;
+        color: #0C5E65;
+    }
+.logo {
+    /*padding: 4rem;
+    padding: 20px;
+    padding-bottom: 40px;
+    border-radius: 30px;
+    color: white;
+    text-shadow: 2px 2px gray;
+            background-repeat: no-repeat;
+    min-height: 100%;
+    background-attachment: fixed;
+    height: auto;
+    background-position: center;
+        */
+    background-size: 100% 100%;
+    background-image: url("/images/logoBack.png");
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top:10px;
+    padding-bottom:10px;
+    margin-bottom:-10px;
+}
+/*Steps color*/
+@keyframes toColor {
+    0% {
+        -webkit-filter: grayscale(100%);
+        filter: grayscale(100%);
+    }
+
+    25% {
+        -webkit-filter: grayscale(75%);
+        filter: grayscale(75%);
+    }
+
+    50% {
+        -webkit-filter: grayscale(50%);
+        filter: grayscale(50%);
+    }
+
+    75% {
+        -webkit-filter: grayscale(25%);
+        filter: grayscale(25%);
+    }
+
+    100% {
+        -webkit-filter: grayscale(0%);
+        filter: grayscale(0%);
+    }
+}
+
+
+img.desaturate {
+    animation: toColor 1.2s;
 }
