@@ -450,9 +450,9 @@ namespace BuildingStationLClassLibrary
     public class PaymentMethods
     {
         public static String UpdateBankInfo(string IBAN)
-        {
+        { //&& !Regex.IsMatch(IBAN, "^[a-zA-Z0-9 ]*$") 
             IBAN = IBAN.ToUpper();
-            if (IBAN.Length > 14 && IBAN.Length < 35 && !Regex.IsMatch(IBAN, "^[a-zA-Z0-9 ]*$") && !IBAN.Contains(" "))
+            if (IBAN.Length > 14 && IBAN.Length < 35 && !IBAN.Contains(" "))
             {
                 return IBAN;
             }

@@ -1,6 +1,6 @@
 ﻿var myApp = angular.module("T6", []);
 
-var T6 = myApp.controller("T6Ctrl", function ($scope, $http, $window, ProductService, CategoryService, AddProductService) {
+var T6 = myApp.controller("T6Ctrl", function ($scope, $http, $window, ProductService, CategoryService) {
 
     //$scope.SwitchLanguage = function () {
   //      $location.href = "/Templates/Template_6/Template_6.html";
@@ -15,7 +15,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, $window, ProductSer
 
     $scope.Store = [];
     $scope.Produts = [];
-    $scope.Categories = [];
+    $scope.categoriesList = [];
 
 
     $scope.checkout = false;
@@ -37,8 +37,12 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, $window, ProductSer
             document.getElementById("icon").href = $scope.Store.Logo;
             //Payment Methods
             if ($scope.Store.BankTransfer) {
-                if ($scope.Store.BankAccount.includes("No"))
+                if ($scope.Store.BankName.includes("No Value"))
                     $scope.Store.BankTransfer = false;
+            }
+            if ($scope.Store.PayPal) {
+                if ($scope.Store.PayPalEmail.includes("No Value"))
+                    $scope.Store.PayPal = false;
             }
 
             if ($scope.Store.Cash)
@@ -48,14 +52,6 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, $window, ProductSer
             else if ($scope.Store.PayPal)
                 $scope.PaymentMethod = "PayPal";
             else "";
-
-            //Social Media Link
-          //  $scope.Facebook = $scope.Store.FacebookLink.toLowerCase().includes("https://www.facebook.com/");
-            //$scope.Instagram = $scope.Store.InstagramLink.toLowerCase().includes("https://www.instagram.com/");
-            //$scope.Snapchat = $scope.Store.SnapchatLink.toLowerCase().includes("snapchat");
-          //  $scope.Twitter = $scope.Store.TwitterLink.toLowerCase().includes("https://twitter.com/");
-
-
             //Menu
             $scope.MenuTitle = $scope.Store.MenuTitle;
         }, function (error) {
@@ -116,39 +112,6 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, $window, ProductSer
     };
     ElementsData();
 
-    $scope.Checkout = function () {
-
-        $http.post(
-            "/BuyerOrder.asmx/CreateOrder",
-            $.param({
-                StoreEmail: $scope.Store.Email,
-                BuyerName: $scope.BuyerName,
-                BuyerPhone: $scope.BuyerPhone,
-                BuyerEmail: $scope.BuyerEmail,
-                BuyerLocation: $scope.BuyerLocation,
-                PaymentMethod: $scope.PaymentMethod,
-                BankAccount: $scope.HolName,
-                OrderID: $scope.OrderID,
-                TotalPrice: $scope.TotalPrice
-            }),
-            {
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' }
-            })
-            .then(function (response) {
-                $scope.result = response.data;
-                $scope.addProductToOrder($scope.result.ID);
-                $scope.checkout = false;
-                $scope.payment = false;
-                $scope.ProductsArray.length = 0;
-
-
-
-            }, function (error) {
-                $scope.error = error.data;
-            });
-    };
-
-
 
     //////////////// PRODUCTS AND CATEGORIES /////////////
 
@@ -161,7 +124,7 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, $window, ProductSer
     //Displaying All Category
     $scope.GetAllCategories = function () {
         CategoryService.GetAllCategories().then(function (response) {
-            $scope.categories = response;
+            $scope.categoriesList = response;
         });
     };
     $scope.GetAllCategories();
@@ -227,16 +190,6 @@ var T6 = myApp.controller("T6Ctrl", function ($scope, $http, $window, ProductSer
             }
         });
     };
-
-
-    // Add products to Buyer's Order
-    $scope.addProductToOrder = function (OrderID) {
-        angular.forEach($scope.ProductsArray, function (value, key) {
-            AddProductService.AddProductToCart(OrderID, value.ID, value.Amount, value.PreviousAmount).then(function (response) {
-                $scope.ProductAdded = response;
-            });
-        });
-    };
 });
 
 
@@ -271,25 +224,5 @@ myApp.factory('ProductService', function ($http) {
             });
     };
     return { GetAllProducts: GetAllProducts };
-
-});
-
-
-myApp.factory('AddProductService', function ($http) {
-    var AddProductToCart = function (OrderID,ProductID, Amount, PreviousAmount) {
-        return $http.post(
-            "/BuyerOrder.asmx/AddProductToOrder",
-            $.param({
-                OrderID: OrderID,
-                ProductID: ProductID,
-                Amount: Amount,
-                PreviousAmount: PreviousAmount
-            }),
-            { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' } })
-            .then(function (response) {
-                return response.data;
-            });
-    };
-    return { AddProductToCart: AddProductToCart };
 
 });

@@ -15,418 +15,432 @@
     <link id="icon" rel="icon" href="" />
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">
-    <header>
-        <nav dir="rtl" id="header" ng-style="{'background-color':Store.Color1}" class="navbar navbar-expand-md navbar-dark fixed-top">
-            <a class="navbar-brand" href="#"><img id="StoreLogo" ng-src="{{Store.Logo}}" alt="Store Logo"> {{Store.Name}}</a>
-            <div class="d-flex flex-row-reverse">
+    <div ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">
+        <header>
+            <nav dir="rtl" id="header" ng-style="{'background-color':Store.Color1}" class="navbar navbar-expand-md navbar-dark fixed-top">
+                <a class="navbar-brand" href="#"><img id="StoreLogo" ng-src="{{Store.Logo}}" alt="Store Logo"> {{Store.Name}}</a>
+                <div class="d-flex flex-row-reverse">
 
-                <button class="navbar-toggler p-2" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <ul id="ShoppingCart" class="navbar-nav mr-auto p-2">
-                    <li class="nav-item">
-                        <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS"><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item ">
-                        <a class="nav-link" href="#home">الرئيسية <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#products">المنتجات</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">عنّا</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">تواصل معنا</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <div class="form-check form-check-inline" ng-init="Language = 'Arabic'">
-                            <input class="form-check-input" type="radio"  name="inlineRadioOptions" id="inlineRadio1"  ng-click="goEnglish()"  value="English" >
-                            <label class="form-check-label nav-link" for="inlineRadio1">English</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Arabic" checked>
-                            <label class="form-check-label nav-link" for="inlineRadio2">العربية</label>
-                        </div>
-                    </li>
-                    <li id="ShoppingCart2" class="nav-item">
-                        <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS"><span class="hidden-xs">عربة التسوق </span><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <main role="main">
-        <!------------  carousel ------------>
-        <section ng-show="section.slider" id="home">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="carousel-image img-fluid" ng-src="{{Store.SliderImage}}" alt="First slide">
-                        <div class="container">
-                            <div class="carousel-caption">
-                                <h1 ng-style="{color:Store.Color4}">{{Store.Name}}</h1>
-                                <p ng-style="{color:Store.Color4}">{{Store.Description}}</p><br><br>
+                    <button class="navbar-toggler p-2" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <ul id="ShoppingCart" class="navbar-nav mr-auto p-2">
+                        <li class="nav-item">
+                            <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS"><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="#home">الرئيسية <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#products">المنتجات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">عنّا</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">تواصل معنا</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <div class="form-check form-check-inline" ng-init="Language = 'Arabic'">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" ng-click="goEnglish()" value="English">
+                                <label class="form-check-label nav-link" for="inlineRadio1">English</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Arabic" checked>
+                                <label class="form-check-label nav-link" for="inlineRadio2">العربية</label>
+                            </div>
+                        </li>
+                        <li id="ShoppingCart2" class="nav-item">
+                            <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS"><span class="hidden-xs">عربة التسوق </span><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <main role="main">
+            <!------------  carousel ------------>
+            <section ng-show="section.slider" id="home">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="carousel-image img-fluid" ng-src="{{Store.SliderImage}}" alt="First slide">
+                            <div class="container">
+                                <div class="carousel-caption">
+                                    <h1 ng-style="{color:Store.Color4}">{{Store.Name}}</h1>
+                                    <p ng-style="{color:Store.Color4}">{{Store.Description}}</p><br><br>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <!----- carousel ---->
-        <!-- Modal shopping cart -->
-        <div dir="rtl" class="modal col-12 col-md-12" id="shoppingCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 ng-show="!checkout" class="modal-title" id="exampleModalLabel">عربة التسوق</h5>
-                        <h5 ng-show="checkout" class="modal-title" id="exampleModalLabel">الدفع</h5>
+            </section>
+            <!----- carousel ---->
+            <!-- Modal shopping cart -->
+            <div dir="rtl" class="modal col-12 col-md-12" id="shoppingCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 ng-show="!checkout" class="modal-title" id="exampleModalLabel">عربة التسوق</h5>
+                            <h5 ng-show="checkout" class="modal-title" id="exampleModalLabel">الدفع</h5>
 
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12 text-center">
-                                    <div ng-show="!checkout&&!payment" class="card-body">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <div ng-show="!checkout&&!payment" class="card-body">
 
-                                        <!----------------------->
-                                        <div class="row">
-                                            <div class="col">
-                                                <ul ng-show="!(ProductsArray.length==0)" class="list-group mb-3">
-                                                    <li id="yourcart" class="list-group-item d-flex justify-content-between">
-                                                        <div class="row">
-                                                            <div class="col my-0">
-                                                                صورة المنتج
-                                                            </div>
-                                                            <div class="col">
-                                                                <h6 class=" my-0">اسم المنتج</h6>
-                                                            </div>
-                                                            <span class="col my-0">الكمية</span>
-                                                            <span class="col my-0">السعر</span>
-                                                        </div>
-                                                    </li>
-                                                    <li ng-repeat='x in ProductsArray' id="yourcart" class="list-group-item d-flex justify-content-between">
-                                                        <div class="row">
-                                                            <div class="col"><img ng-src="{{x.Image}}" alt="..." class="img-fluid" /></div>
-                                                            <div class="col">
-                                                                <h6 class="my-0">{{x.Name}}</h6>
-                                                                <small class="text-muted">{{x.Desc}}</small>
-                                                            </div>
-                                                            <span class="col">{{x.Amount}}</span>
-                                                            <span class="col" ng-show="x.Discount == 0">{{x.Price}} SR</span>
-                                                            <span class="col" ng-show="x.Discount != 0">
-                                                                <del style="color:#ff0000"> {{x.Price}} </del>
-                                                                {{x.PriceAfterDiscount}} رس
-                                                            </span>
-                                                            <span>
-                                                                <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </span>
-                                                        </div>
-                                                    </li>
-
-                                                    <li class="list-group-item d-flex justify-content-between">
-                                                        <span>مجموع المبلغ</span><span><strong>{{TotalPrice}} ر.س.</strong></span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div ng-show="ProductsArray.length==0" style="text-align:center;">
-                                            <span style="text-align:center;">عربة التسوق فارغة</span>
-                                        </div>
-                                    </div>
-                                    <!-- Checkout-->
-                                    <div ng-show="checkout" class="card-body">
-                                        <!----------------------->
-                                        <form name="Buyer" ng-show="!payment" class=" text-sm-right" novalidate>
+                                            <!----------------------->
                                             <div class="row">
-                                                <div class="col-sm-12 mb-3">
-                                                    <label for="BuyerName">اسم المشتري</label>
-                                                    <input type="text" class="form-control validate" name="BuyerName" ng-model="BuyerName" id="BuyerName" placeholder="أدخل اسمك" required>
-                                                    <p class="alert alert-danger" ng-show="!Buyer.BuyerName.$pristine && Buyer.BuyerName.$invalid">اسم المشتري مطلوب.</p>
-                                                </div>
-                                                <div class="col-sm-12 mb-3">
-                                                    <label for="BuyerPhone">رقم الجوال</label>
-                                                    <input type="text" class="form-control" ng-pattern="/^[0-9]{8,13}$/" id="BuyerPhone" name="BuyerPhone" ng-model="BuyerPhone" placeholder="أدخل رقم الجوال" required>
-                                                    <p class="alert alert-danger" ng-show="Buyer.BuyerPhone.$error.pattern">الرقم غير صحيح.</p>
-                                                    <p class="alert alert-danger" ng-show="!Buyer.BuyerPhone.$pristine && Buyer.BuyerPhone.$error.required">رقم الجوال مطللوب.</p>
-                                                </div>
-                                                <div class="col-sm-12 mb-3">
-                                                    <label for="email">البريد الالكتروني</label>
-                                                    <input type="email" class="form-control" id="email" name="BuyerEmail" ng-model="BuyerEmail" placeholder="you@example.com">
-                                                    <p class="alert alert-danger" ng-show="Buyer.BuyerEmail.$error.email">يجب إدخال بريد الكتروني صحيح.</p>
-                                                </div>
-                                                <div class="col-sm-12 mb-3">
-                                                    <label for="Location">العنوان</label>
-                                                    <input type="text" class="form-control" id="Location" name="BuyerLocation" ng-model="BuyerLocation" placeholder="1234 Main St" required>
-                                                    <p class="alert alert-danger" ng-show="!Buyer.BuyerLocation.$pristine && !Buyer.BuyerLocation.$valid">يجب إدخال عنوان التوصيل.</p>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <form name="BuyerPayment" ng-model="BuyerPayment" ng-show="payment" class="text-sm-right" novalidate>
-                                            <div id="payment">
-                                                <h4 class="mb-3">طريقة الدفع</h4>
-                                                <div id="PaymentMethod" name="PaymentMethod" class="d-block my-3">
-                                                    <div ng-show="Store.Cash" class="custom-control custom-radio">
-                                                        <input id="cash" name="PaymentMethod" ng-model="PaymentMethod" value="Cash" type="radio" class="custom-control-input" required>
-                                                        <label class="custom-control-label" for="cash">الدفع عند الاستلام<img style="max-width:5%;" src="/Templates/Template_6/Images/cash.png" alt="Cash"></label>
-                                                    </div>
-                                                    <div ng-show="Store.BankTransfer" class="custom-control custom-radio">
-                                                        <input id="banktransfer" name="PaymentMethod" ng-model="PaymentMethod" value="BankTransfer" type="radio" class="custom-control-input" required>
-                                                        <label class="custom-control-label" for="banktransfer">
-                                                            تحويل بنكي<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer">                                                        <span> <small>IBAN:  {{Store.BankAccount}}</small> </span>
-                                                        </label>
+                                                <div class="col">
+                                                    <ul ng-show="!(ProductsArray.length==0)" class="list-group mb-3">
+                                                        <li id="yourcart" class="list-group-item d-flex justify-content-between">
+                                                            <div class="row">
+                                                                <div class="col my-0">
+                                                                    صورة المنتج
+                                                                </div>
+                                                                <div class="col">
+                                                                    <h6 class=" my-0">اسم المنتج</h6>
+                                                                </div>
+                                                                <span class="col my-0">الكمية</span>
+                                                                <span class="col my-0">السعر</span>
+                                                            </div>
+                                                        </li>
+                                                        <li ng-repeat='x in ProductsArray' id="yourcart" class="list-group-item d-flex justify-content-between">
+                                                            <div class="row">
+                                                                <div class="col"><img ng-src="{{x.Image}}" alt="..." class="img-fluid" /></div>
+                                                                <div class="col">
+                                                                    <h6 class="my-0">{{x.Name}}</h6>
+                                                                    <small class="text-muted">{{x.Desc}}</small>
+                                                                </div>
+                                                                <span class="col">{{x.Amount}}</span>
+                                                                <span class="col" ng-show="x.Discount == 0">{{x.Price}} SR</span>
+                                                                <span class="col" ng-show="x.Discount != 0">
+                                                                    <del style="color:#ff0000"> {{x.Price}} </del>
+                                                                    {{x.PriceAfterDiscount}} رس
+                                                                </span>
+                                                                <span>
+                                                                    <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        </li>
 
-                                                    </div>
-                                                    <div ng-show="Store.PayPal" class="custom-control custom-radio">
-                                                        <input id="paypal" name="PaymentMethod" ng-model="PaymentMethod" value="PayPal" type="radio" class="custom-control-input" required>
-                                                        <label class="custom-control-label" for="paypal">باي بال  <img style="max-width:20%;" src="/Templates/Template_6/Images/paypal.png" alt="paypal"></label>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                            </div>
-                                            <div ng-show="PaymentMethod === 'BankTransfer'" id="transfer">
-                                                <div class="row mb-3 ">
-                                                    <h4 class="col-sm-12">تأكيد التحويل البنكي</h4>
-                                                    <h6 class="col-sm-12"><small>الآيبان:  {{Store.BankAccount}}</small></h6>
-                                                    <div class="col-sm-12">
-                                                        <label for="OrderID">رقم التحويل البنكي</label>
-                                                        <input type="text" class="form-control" id="OrderID" name="OrderID" ng-model="OrderID" placeholder="أدخل رقم التحويل البنكي" required>
-                                                        <p class="alert alert-danger" ng-show="!BuyerPayment.OrderID.$pristine && BuyerPayment.OrderID.$invalid">الخانة مطلوبة.</p>
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <label for="HolName">اسم صاحب الحساب</label>
-                                                        <input type="text" class="form-control" id="HolName" name="HolName" ng-model="HolName" placeholder="ادخل اسم صاحب الحساب" required>
-                                                        <p class="alert alert-danger" ng-show="!BuyerPayment.HolName.$pristine && BuyerPayment.HolName.$invalid">الخانة مطلوبة.</p>
-                                                    </div>
-                                                    <div class="col-sm-12">
-                                                        <label for="Price">مجموع المبلغ</label>
-                                                        <input type="text" class="form-control" id="Price" value="{{TotalPrice}}" ng-disabled="true" required>
-                                                    </div>
+                                                        <li class="list-group-item d-flex justify-content-between">
+                                                            <span>مجموع المبلغ</span><span><strong>{{TotalPrice}} ر.س.</strong></span>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
-                                        </form>
-                                        <div ng-show="PaymentMethod === 'PayPal' && payment" id="PayPalTransfer">
-                                            <form target="_blank" action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                                                <!-- Identify your business so that you can collect the payments. -->
-                                                <input type="hidden" name="business" value="{{Store.PayPalEmail}}"> <!-- Add your PayPal Seller/Business email address Required-->
-                                                <!-- Specify a Buy Now button. -->
-                                                <input type="hidden" name="cmd" value="_xclick">
-                                                <!-- Specify details about the item that buyers will purchase. -->
-                                                <input type="hidden" name="item_name" value=""> <!-- Add Description e.g your room type Required-->
-                                                <input type="hidden" name="amount" value=""> <!-- Dynamically add Total Amount Required-->
-                                                <input type="hidden" name="currency_code" value="{{Store.PayPalCurrencey}}"> <!-- Update to your currency -->
-                                                <!--  <input id="invoice" type="hidden" value="" name="invoice"> <!-- Add Unique invoice for each transaction -->
-                                                <!--  <input type="hidden" name="notify_url" value="www.yourwebsite.com/ipn.php"> <!-- Please add IPN URL You can use this service to automate back-office and administrative functions, including fulfilling orders, tracking customers, and providing status and other information related to transactions. -->
-                                                <!-- <input type='hidden' name='cancel_return' value='' /> <!-- Take customers to this URL when they cancel their checkout -->
-                                                <!-- <input type='hidden' name='return' value='' /> <!-- Take customers to this URL when they finish their checkout  -->
-                                                <!-- Display the payment button. -->
-                                                <input type="image" name="submit" border="0" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">
+                                            <div ng-show="ProductsArray.length==0" style="text-align:center;">
+                                                <span style="text-align:center;">عربة التسوق فارغة</span>
+                                            </div>
+                                        </div>
+                                        <!-- Checkout-->
+                                        <div ng-show="checkout" class="card-body">
+                                            <!----------------------->
+                                            <form name="Buyer" ng-show="!payment" class=" text-sm-right" novalidate>
+                                                <div class="row">
+                                                    <div class="col-sm-12 mb-3">
+                                                        <label for="BuyerName">اسم المشتري</label>
+                                                        <input type="text" class="form-control validate" name="BuyerName" ng-model="BuyerName" id="BuyerName" placeholder="أدخل اسمك" required>
+                                                        <p class="alert alert-danger" ng-show="!Buyer.BuyerName.$pristine && Buyer.BuyerName.$invalid">اسم المشتري مطلوب.</p>
+                                                    </div>
+                                                    <div class="col-sm-12 mb-3">
+                                                        <label for="BuyerPhone">رقم الجوال</label>
+                                                        <input type="text" class="form-control" ng-pattern="/^[0-9]{8,13}$/" id="BuyerPhone" name="BuyerPhone" ng-model="BuyerPhone" placeholder="أدخل رقم الجوال" required>
+                                                        <p class="alert alert-danger" ng-show="Buyer.BuyerPhone.$error.pattern">الرقم غير صحيح.</p>
+                                                        <p class="alert alert-danger" ng-show="!Buyer.BuyerPhone.$pristine && Buyer.BuyerPhone.$error.required">رقم الجوال مطللوب.</p>
+                                                    </div>
+                                                    <div class="col-sm-12 mb-3">
+                                                        <label for="email">البريد الالكتروني</label>
+                                                        <input type="email" class="form-control" id="email" name="BuyerEmail" ng-model="BuyerEmail" placeholder="you@example.com">
+                                                        <p class="alert alert-danger" ng-show="Buyer.BuyerEmail.$error.email">يجب إدخال بريد الكتروني صحيح.</p>
+                                                    </div>
+                                                    <div class="col-sm-12 mb-3">
+                                                        <label for="Location">العنوان</label>
+                                                        <input type="text" class="form-control" id="Location" name="BuyerLocation" ng-model="BuyerLocation" placeholder="1234 Main St" required>
+                                                        <p class="alert alert-danger" ng-show="!Buyer.BuyerLocation.$pristine && !Buyer.BuyerLocation.$valid">يجب إدخال عنوان التوصيل.</p>
+                                                    </div>
+                                                </div>
                                             </form>
-                                            <br />
-                                            <div class="row mb-3">
-                                                <h4 class="col-sm-12" ng-style="{'color': Store.Color3}">تأكيد الدفع</h4>
-                                                <div class="col-sm-12">
-                                                    <label for="OrderID" ng-style="{'color': Store.Color3}">رقم الفاتورة</label>
-                                                    <input type="text" class="form-control" id="OrderID" name="OrderID" ng-model="OrderID" placeholder="أدخل رقم الفاتورة" required>
-                                                    <p class="alert alert-danger" ng-show="!BuyerPayment.OrderID.$pristine && BuyerPayment.OrderID.$invalid">هذا الحقل مطلوب.</p>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <label ng-style="{'color': Store.Color3}" for="Price">مجموع المبلغ: {{TotalPrice}}</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                        <button ng-show="!checkout" ng-disabled="ProductsArray.length===0" type="button" class="btn btn-info btn-md" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">إتمام التسوق</button>
-                        <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="Buyer.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">اختيار طريقة الدفع</button>
-                        <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=false; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">الرجوع</button>
-                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">إتمام عملية الشراء</button>
-                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">الرجوع</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal product-->
-        <div dir="rtl" class="modal fade col-12 col-md-12" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-
-                        <h5 class="modal-title" id="exampleModalLabel">إضافة المنتج</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12 ">
-                                    <div class=" text-center">
-                                        <form name="AddProduct">
-                                            <img class="card-img-top" ng-src="{{addProduct.Image}}" alt="product image">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{addProduct.Name}}</h5>
-                                                <p class="card-text">{{addProduct.Description}}</p>
-                                                <p ng-show="addProduct.Discount == 0">{{addProduct.Price}} رس</p>
-                                                <p ng-show="addProduct.Discount != 0">
-                                                    <del style="color:#ff0000"> {{addProduct.Price}} </del>
-                                                    {{addProduct.PriceAfterDiscount}} رس
-                                                </p>
-                                                <div class="col-12  col-sm-12 col-md-12 col-lg-12">
-                                                    <input class="form-control" type="number" min="1" ng-model="quantity" max="{{addProduct.Amount}}" name="quantity" placeholder="أدخل الكمية" required>
-                                                    <!--
-                                                    <div class="input-group mb-3">
-                                                        <div class="input-group-prepend">
-                                                            <label class="input-group-text" for="inputGroupSelect01">Size</label>
+                                            <form name="BuyerPayment" ng-model="BuyerPayment" ng-show="payment" class="text-sm-right" novalidate>
+                                                <div id="payment">
+                                                    <h4 class="mb-3">طريقة الدفع</h4>
+                                                    <div id="PaymentMethod" name="PaymentMethod" class="d-block my-3">
+                                                        <div ng-show="Store.Cash" class="custom-control custom-radio">
+                                                            <input id="cash" name="PaymentMethod" ng-model="PaymentMethod" value="Cash" type="radio" class="custom-control-input" required>
+                                                            <label class="custom-control-label" for="cash">الدفع عند الاستلام<img style="max-width:5%;" src="/Templates/Template_6/Images/cash.png" alt="Cash"></label>
                                                         </div>
-                                                        <select class="custom-select" id="inputGroupSelect01">
-                                                            <option selected>Choose...</option>
-                                                            <option value="1">S</option>
-                                                            <option value="2">M</option>
-                                                            <option value="3">L</option>
-                                                        </select>
+                                                        <div ng-show="Store.BankTransfer" class="custom-control custom-radio">
+                                                            <input id="banktransfer" name="PaymentMethod" ng-model="PaymentMethod" value="BankTransfer" type="radio" class="custom-control-input" required>
+                                                            <label class="custom-control-label" for="banktransfer">
+                                                                تحويل بنكي<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer">
+                                                                          <span>
+                                                                              <small>اسم البنك:  {{Store.BankName}}  , اسم الحساب:  {{Store.AccountName}} <br /> الأيبان: {{Store.IBAN}}</small>
+                                                                          </span>
+                                                            </label>
+
+                                                        </div>
+                                                        <div ng-show="Store.PayPal" class="custom-control custom-radio">
+                                                            <input id="paypal" name="PaymentMethod" ng-model="PaymentMethod" value="PayPal" type="radio" class="custom-control-input" required>
+                                                            <label class="custom-control-label" for="paypal">باي بال  <img style="max-width:20%;" src="/Templates/Template_6/Images/paypal.png" alt="paypal"></label>
+                                                        </div>
                                                     </div>
-                                                    -->
+                                                    <br>
                                                 </div>
+                                                <div ng-show="PaymentMethod === 'BankTransfer'" id="transfer">
+                                                    <div class="row mb-3 ">
+                                                        <h4 class="col-sm-12">تأكيد التحويل البنكي</h4>
+                                                        <h6 class="col-sm-12">
+                                                            <small>اسم البنك:  {{Store.BankName}}  , اسم الحساب:  {{Store.AccountName}} <br /> الأيبان: {{Store.IBAN}}</small>
+                                                        </h6>
+                                                        <div class="col-sm-12">
+                                                            <label for="OrderID">
+                                                                <!--  <span style="color:red;">*</span>-->
+                                                                رقم التحويل البنكي
+                                                            </label>
+                                                            <input type="text" class="form-control" id="OrderID" name="OrderID" ng-model="OrderID" placeholder="أدخل رقم التحويل البنكي" required>
+                                                            <p class="alert alert-danger" ng-show="!BuyerPayment.OrderID.$pristine && BuyerPayment.OrderID.$invalid">الخانة مطلوبة.</p>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <label for="HolName">اسم صاحب الحساب</label>
+                                                            <input type="text" class="form-control" id="HolName" name="HolName" ng-model="HolName" placeholder="ادخل اسم صاحب الحساب" required>
+                                                            <p class="alert alert-danger" ng-show="!BuyerPayment.HolName.$pristine && BuyerPayment.HolName.$invalid">الخانة مطلوبة.</p>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <label for="Price">مجموع المبلغ</label>
+                                                            <input type="text" class="form-control" id="Price" value="{{TotalPrice}}" ng-disabled="true" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <div ng-show="PaymentMethod === 'PayPal' && payment" id="PayPalTransfer">
+                                                <form target="_blank" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                                                    <!-- Identify your business so that you can collect the payments. -->
+                                                    <input type="hidden" name="business" value="{{Store.PayPalEmail}}"> <!-- Add your PayPal Seller/Business email address Required-->
+                                                    <!-- Specify a Buy Now button. -->
+                                                    <input type="hidden" name="cmd" value="_xclick">
+                                                    <!-- Specify details about the item that buyers will purchase. -->
+                                                    <input type="hidden" name="item_name" value=""> <!-- Add Description e.g your room type Required-->
+                                                    <input type="hidden" name="amount" value=""> <!-- Dynamically add Total Amount Required-->
+                                                    <input type="hidden" name="currency_code" value="{{Store.PayPalCurrencey}}"> <!-- Update to your currency -->
+                                                    <!--  <input id="invoice" type="hidden" value="" name="invoice"> <!-- Add Unique invoice for each transaction -->
+                                                    <!--  <input type="hidden" name="notify_url" value="www.yourwebsite.com/ipn.php"> <!-- Please add IPN URL You can use this service to automate back-office and administrative functions, including fulfilling orders, tracking customers, and providing status and other information related to transactions. -->
+                                                    <!-- <input type='hidden' name='cancel_return' value='' /> <!-- Take customers to this URL when they cancel their checkout -->
+                                                    <!-- <input type='hidden' name='return' value='' /> <!-- Take customers to this URL when they finish their checkout  -->
+                                                    <!-- Display the payment button. -->
+                                                    <input type="image" name="submit" border="0" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">
+                                                </form>
+                                                <br />
+                                                <form name="PayPalForm">
+                                                    <div class="row mb-3">
+                                                        <h4 class="col-sm-12">تأكيد الدفع</h4>
+                                                        <div class="col-sm-12">
+                                                            <label for="OrderID">رقم الفاتورة</label>
+                                                            <input type="text" class="form-control" id="OrderID" name="OrderID" ng-model="OrderID" placeholder="أدخل رقم الفاتورة" required>
+                                                            <p class="alert alert-danger" ng-show="!PayPalForm.OrderID.$pristine && PayPalForm.OrderID.$invalid">هذا الحقل مطلوب.</p>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <label for="Price">مجموع المبلغ: {{TotalPrice}}</label>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </form>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-info btn-md" ng-click="addToCartlist(addProduct,quantity)" data-dismiss="modal" ng-disabled="AddProduct.quantity.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">
-                            إضافة إلى العربة
-                        </button>
+                        <div class="modal-footer justify-content-center">
+                            <button ng-show="!checkout" ng-disabled="ProductsArray.length===0" type="button" class="btn btn-info btn-md" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">إتمام التسوق</button>
+                            <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="Buyer.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">اختيار طريقة الدفع</button>
+                            <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=false; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">الرجوع</button>
+                            <!--<button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">إتمام عملية الشراء</button>-->
+                            <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="CheckoutA(BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod, HolName, OrderID)" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PayPalForm.$invalid&&PaymentMethod === 'PayPal')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">إتمام عملية الشراء</button>
+
+                            <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">الرجوع</button>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div ng-show="!section.slider"><br /><br /><br /></div>
-        <div id="content" class="container">
-            <!------------  Product ------------>
-            <section dir="rtl" id="products">
-                <div class="row featurette">
-                    <div class="col-12 col-md-12">
-                        <h2 class="featurette-heading text-center">منتجاتنا</h2>
-                    </div>
-                    <!-- Tabs -->
-                    <div class="col-12">
-                        <div class="tabs">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li ng-repeat="category in categories" ng-init="setTabItem(categories[0])" class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#{{currentTab}}" role="tab" ng-click="setTabItem(category)" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">{{category.Name}}</a>
-                                </li>
-                            </ul>
-                            <!-- Tab panes -->
-                            <div>
-                                <div id="{{currentTab}}" class="tab-content">
-                                    <!-- - -->
-                                    <div id="style-1" class="tab-pane fade show active scrollbar" role="tabpanel">
-                                        <div class="row force-overflow">
-                                            <div ng-repeat="product in products" class="col-6 col-sm-6 col-md-4 col-lg-3">
-                                                <div class="card text-center">
-                                                    <img class="card-img-top" ng-src="{{product.Image}}" alt="Card image cap">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">{{product.Name}}</h5>
-                                                        <p class="card-text">{{product.Description}}</p>
-                                                        <p ng-show="product.Discount == 0">{{product.Price}} SR</p>
-                                                        <p ng-show="product.Discount != 0">
-                                                            <del style="color:#ff0000"> {{product.Price}} </del>
-                                                            {{product.PriceAfterDiscount}} SR
-                                                        </p>
-                                                        <p style="color:#ff0000" ng-show="product.Amount == 0">نفدت الكمية</p>
-                                                        <button id="addToButton" type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}" style="width:100%;">إضافة المنتج</button>
-                                                        <button id="addButton" type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}" style="width:100%;">إضافة</button>
+            <!-- Modal product-->
+            <div dir="rtl" class="modal col-12 col-md-12" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
 
+                            <h5 class="modal-title" id="exampleModalLabel">إضافة المنتج</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 ">
+                                        <div class=" text-center">
+                                            <form name="AddProduct">
+                                                <img class="card-img-top" ng-src="{{addProduct.Image}}" alt="product image">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{addProduct.Name}}</h5>
+                                                    <p class="card-text">{{addProduct.Description}}</p>
+                                                    <p ng-show="addProduct.Discount == 0">{{addProduct.Price}} رس</p>
+                                                    <p ng-show="addProduct.Discount != 0">
+                                                        <del style="color:#ff0000"> {{addProduct.Price}} </del>
+                                                        {{addProduct.PriceAfterDiscount}} رس
+                                                    </p>
+                                                    <div class="col-12  col-sm-12 col-md-12 col-lg-12">
+                                                        <input class="form-control" type="number" min="1" ng-model="quantity" max="{{addProduct.Amount}}" name="quantity" placeholder="أدخل الكمية" required>
+                                                        <!--
+                                                        <div class="input-group mb-3">
+                                                            <div class="input-group-prepend">
+                                                                <label class="input-group-text" for="inputGroupSelect01">Size</label>
+                                                            </div>
+                                                            <select class="custom-select" id="inputGroupSelect01">
+                                                                <option selected>Choose...</option>
+                                                                <option value="1">S</option>
+                                                                <option value="2">M</option>
+                                                                <option value="3">L</option>
+                                                            </select>
+                                                        </div>
+                                                        -->
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn-info btn-md" ng-click="addToCartlist(addProduct,quantity)" data-dismiss="modal" ng-disabled="AddProduct.quantity.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">
+                                إضافة إلى العربة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="!section.slider"><br /><br /><br /></div>
+            <div id="content" class="container">
+                <!------------  Product ------------>
+                <section dir="rtl" id="products">
+                    <div class="row featurette">
+                        <div class="col-12 col-md-12">
+                            <h2 class="featurette-heading text-center">منتجاتنا</h2>
+                        </div>
+                        <!-- Tabs -->
+                        <div class="col-12">
+                            <div class="tabs">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li ng-repeat="category in categoriesList" ng-init="setTabItem(categoriesList[0])" class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#{{currentTab}}" role="tab" ng-click="setTabItem(category)" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">{{category.Name}}</a>
+                                    </li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div>
+                                    <div id="{{currentTab}}" class="tab-content">
+                                        <!-- - -->
+                                        <div id="style-1" class="tab-pane show active scrollbar" role="tabpanel">
+                                            <div class="row force-overflow">
+                                                <div ng-repeat="product in products" class="col-6 col-sm-6 col-md-4 col-lg-3">
+                                                    <div class="card text-center">
+                                                        <img class="card-img-top" ng-src="{{product.Image}}" alt="Card image cap">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">{{product.Name}}</h5>
+                                                            <p class="card-text">{{product.Description}}</p>
+                                                            <p ng-show="product.Discount == 0">{{product.Price}} رس</p>
+                                                            <p ng-show="product.Discount != 0">
+                                                                <del style="color:#ff0000"> {{product.Price}} </del>
+                                                                {{product.PriceAfterDiscount}} رس
+                                                            </p>
+                                                            <p style="color:#ff0000" ng-show="product.Amount == 0">نفدت الكمية</p>
+                                                            <button id="addToButton" type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}" style="width:100%;">إضافة المنتج</button>
+                                                            <button id="addButton" type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}" style="width:100%;">إضافة</button>
+
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div> <!-- tabs -->
-                    </div>
-                </div>
-            </section>
-            <!---- Products ---->
-            <hr class="featurette-divider">
-            <!------------  About ------------>
-            <section ng-show="section.about" id="about">
-                <br>
-                <div class="row featurette">
-                    <div class="col-md-7">
-                        <h2 class="featurette-heading text-right">عن متجرنا </h2>
-                        <p class="lead text-right" style=" word-wrap:break-word;">{{AboutContent}}</p>
-                    </div>
-                    <div class="col-md-5 order-md-1">
-                        <img class="featurette-image img-fluid mx-auto" ng-src="{{AboutImage}}" alt="About us">
-                    </div>
-                </div>
-                <br><br><br><br>
-            </section>
-            <!---- About ---->
-        </div><!---- Content ---->
-        <!-- FOOTER -->
-        <div class="ToTop" id="back-to-top">
-            <p class="float-right rounded "><a class="btn btn-info btn-md" role="button" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}" href="#"><i class="fa fa-angle-double-up" aria-hidden="true"></i></a></p>
-        </div>
-        <footer id="contact footer" class="footer" ng-style="{'background-color':Store.Color3,'color': Store.Color4}">
-            <div class="container">
-                <div class="row">
-
-                    <div dir="rtl" class="col-sm-6">
-                        <h5 class="text-md-center">تواصل معنا</h5>
-                        <div class="row">
-                            <h6 style="word-wrap:break-word;" class="col-sm-4"><i class="fa fa-send"></i>                {{Store.Email}}</h6>
-                            <h6 class="col-sm-4"><i class="fa fa-location-arrow"></i>                {{Store.Address}}</h6>
-                            <h6 class="col-sm-4"><i class="fa fa-phone"></i>                {{Store.Phone}}</h6>
+                            </div> <!-- tabs -->
                         </div>
                     </div>
-                    <div class="col-sm-4 text-right">
-                        <h5>{{Store.Name}}</h5>
-                        <div dir="rtl" class="row">
-                            <ul class="nav text-right">
-                                <li ng-show="Facebook" class="nav-item"><a ng-href="{{Store.FacebookLink}}" href="" target="_blank" class="nav-link pl-0" ng-style="{'color':Store.Color1}"><i class="fa fa-facebook fa-lg"></i></a></li>
-                                <li ng-show="Twitter" class="nav-item"><a ng-href="{{Store.TwitterLink}}" href="" target="_blank" class="nav-link" ng-style="{'color':Store.Color1}"><i class="fa fa-twitter fa-lg"></i></a></li>
-                                <li ng-show="Snapchat" class="nav-item"><a ng-href="{{Store.SnapchatLink}}" href="" target="_blank" class="nav-link" ng-style="{'color':Store.Color1}"><i class="fa fa-snapchat fa-lg"></i></a></li>
-                                <li ng-show="Instagram" class="nav-item"><a ng-href="{{Store.InstagramLink}}" href="" target="_blank" class="nav-link" ng-style="{'color':Store.Color1}"><i class="fa fa-instagram fa-lg"></i></a></li>
-                            </ul>
+                </section>
+                <!---- Products ---->
+                <hr class="featurette-divider">
+                <!------------  About ------------>
+                <section ng-show="section.about" id="about">
+                    <br>
+                    <div class="row featurette">
+                        <div class="col-md-7">
+                            <h2 class="featurette-heading text-right">عن متجرنا </h2>
+                            <p class="lead text-right" style=" word-wrap:break-word;">{{AboutContent}}</p>
                         </div>
-
-                        <br>
+                        <div class="col-md-5 order-md-1">
+                            <img class="featurette-image img-fluid mx-auto" ng-src="{{AboutImage}}" alt="About us">
+                        </div>
                     </div>
-                    <div class="col-sm-12">
-                        <p><img ng-src="/images/BuildingStationEn.png" style="width: 5vw; height: 5vw;" alt="BuildingStation Logo" />&copy; 2018  &middot; <a ng-style="{'color':Store.Color4}" href="/RegisterLogin.html" target="_blank">  Building Station صمّم بواسطه</a> </p>
-                    </div>
-                    <br />
-                </div>
+                    <br><br><br><br>
+                </section>
+                <!---- About ---->
+            </div><!---- Content ---->
+            <!-- FOOTER -->
+            <div class="ToTop" id="back-to-top">
+                <p class="float-right rounded "><a class="btn btn-info btn-md" role="button" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}" href="#"><i class="fa fa-angle-double-up" aria-hidden="true"></i></a></p>
             </div>
-        </footer>
-    </main>
+            <footer id="contact footer" class="footer" ng-style="{'background-color':Store.Color3,'color': Store.Color4}">
+                <div class="container">
+                    <div class="row">
+
+                        <div dir="rtl" class="col-sm-6">
+                            <h5 class="text-md-center">تواصل معنا</h5>
+                            <div class="row">
+                                <h6 style="word-wrap:break-word;" class="col-sm-4"><i class="fa fa-send"></i>                {{Store.Email}}</h6>
+                                <h6 class="col-sm-4"><i class="fa fa-location-arrow"></i>                {{Store.Address}}</h6>
+                                <h6 class="col-sm-4"><i class="fa fa-phone"></i>                {{Store.Phone}}</h6>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 text-right">
+                            <h5>{{Store.Name}}</h5>
+                            <div dir="rtl" class="row">
+                                <ul class="nav text-right">
+                                    <li ng-show="Facebook" class="nav-item"><a ng-href="{{Store.FacebookLink}}" href="" target="_blank" class="nav-link pl-0" ng-style="{'color':Store.Color1}"><i class="fa fa-facebook fa-lg"></i></a></li>
+                                    <li ng-show="Twitter" class="nav-item"><a ng-href="{{Store.TwitterLink}}" href="" target="_blank" class="nav-link" ng-style="{'color':Store.Color1}"><i class="fa fa-twitter fa-lg"></i></a></li>
+                                    <li ng-show="Snapchat" class="nav-item"><a ng-href="{{Store.SnapchatLink}}" href="" target="_blank" class="nav-link" ng-style="{'color':Store.Color1}"><i class="fa fa-snapchat fa-lg"></i></a></li>
+                                    <li ng-show="Instagram" class="nav-item"><a ng-href="{{Store.InstagramLink}}" href="" target="_blank" class="nav-link" ng-style="{'color':Store.Color1}"><i class="fa fa-instagram fa-lg"></i></a></li>
+                                </ul>
+                            </div>
+
+                            <br>
+                        </div>
+                        <div class="col-sm-12">
+                            <p><img ng-src="/images/BuildingStationEn.png" style="width: 5vw; height: 5vw;" alt="BuildingStation Logo" />&copy; 2018  &middot; <a ng-style="{'color':Store.Color4}" href="/RegisterLogin.html" target="_blank">  Building Station صمّم بواسطه</a> </p>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {

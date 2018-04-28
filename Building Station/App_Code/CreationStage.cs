@@ -327,6 +327,14 @@ public class CreationStage : System.Web.Services.WebService
                     {
                         Slider_Image = reader["type2_slider"].ToString();
                         Product_Image = reader["type2_product"].ToString();
+                        // Slider_Image = @"C:\Users\star7\OneDrive\Desktop\ONLINE SHOPS PIC's\-2- Sweets/cake.jpg";
+                        //reader["type2_slider"].ToString();
+                        // Product_Image = Path.Combine(Environment.CurrentDirectory, @"images\", "p_cake.jpeg");
+                        //File.Path = Url.Content(string.Format("~/App_Data/Images/{0}", fileName));
+                        //Product_Image = Url.Content(string.Format("~/Images/{0}", "p_cake.jpeg"));
+                        //@"~\Building Station\images/p_cake.jpeg";
+                        //@"C:\Users\star7\OneDrive\Desktop\ONLINE SHOPS PIC's\-2- Sweets/p_cake.jpeg";
+                        //reader["type2_product"].ToString();
                     }
                     con.Close();
                 }
@@ -529,7 +537,7 @@ public class CreationStage : System.Web.Services.WebService
 
             //About Element
             con.Open();
-            cmd = new SqlCommand("UPDATE Element SET Value = N'"+ Description_Text +"', Hidden = 'false' WHERE NAME = 'About' AND Type = 'About' AND StoreEmail = '" + Session["user"] + "'", con);
+            cmd = new SqlCommand("UPDATE Element SET Value = N'"+ Description_Text +"', Hidden = 'false', image = '"+ Slider_Image +"' WHERE NAME = 'About' AND Type = 'About' AND StoreEmail = '" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
             con.Close();
 

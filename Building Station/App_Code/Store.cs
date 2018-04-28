@@ -32,11 +32,14 @@ public class Store
     public bool PayPal { get; set; }
     public bool Cash { get; set; }
     public bool BankTransfer { get; set; }
-    public string BankAccount { get; set; }
+   // public string BankAccount { get; set; }
     public string menuTitle { get; set; }
     public string About { get; set; }
     public string PayPalEmail { get; set; }
     public string PayPalCurrencey { get; set; }
+    public string BankName { get; set; }
+    public string AccountName { get; set; }
+    public string IBAN { get; set; }
 
     public Store()
     {

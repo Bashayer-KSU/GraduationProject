@@ -1,5 +1,5 @@
 ﻿//'use strict';
-var BS_App = angular.module('BuildingStationAPP', ["ui.router", "ngMaterial"]);
+var BS_App = angular.module("BuildingStationAPP", ["ui.router", "ngMaterial"]);
 
 BS_App.service('initialSetup', function ($http) {
     var promise;
@@ -254,8 +254,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                         location.href = $scope.resultAfterSubstring;
 
                     //location.href = "http://localhost:50277/" + $scope.result.slice(1, -1);
-                    console.log(response);
-                    console.log($scope.resultAfterSubstring);
                 }, function (error) {
                     $scope.error = error.data;
                 });
@@ -280,10 +278,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         /////////////////////////////////
 
         $scope.Store = [];
-        $scope.Produts = [];
-        $scope.Categories = [];
-
-
         $scope.checkout = false;
         $scope.payment = false;
         $scope.buyerName = "";
@@ -310,11 +304,17 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     document.title = $scope.Store.Name;
                     document.getElementById("icon").href = $scope.Store.Logo;
                     //Payment Methods
+                    //If no information to display to buyer, there will be no need to add this payment method
                     if ($scope.Store.BankTransfer) {
-                        if ($scope.Store.BankAccount.includes("No ShopOwnerBank"))
+                        if ($scope.Store.BankName.includes("No Value"))
                             $scope.Store.BankTransfer = false;
                     }
+                    if ($scope.Store.PayPal) {
+                        if ($scope.Store.PayPalEmail.includes("No Value"))
+                            $scope.Store.PayPal = false;
+                    }
 
+                    //Add defult checked payment method value
                     if ($scope.Store.Cash)
                         $scope.PaymentMethod = "Cash";
                     else if ($scope.Store.BankTransfer)
@@ -383,6 +383,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                             if ($scope.AboutContent === null || $scope.AboutContent === "")
                                 $scope.section.about = true;
                         }
+                            //No need for this code, i did this check before
+                            /*
                         else if ($scope.elementInfo[i].Name === "PayPal") {
                             if ($scope.elementInfo[i].Type === "AccountEmail") {
                                 if ($scope.elementInfo[i].Value.includes("No Value"))
@@ -394,7 +396,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                                     $scope.Store.PayPal = false;
                             }
                         }
-                    }
+                    }*/
+                }
 
                 }, function (error) {
                     $scope.error = error;
@@ -484,22 +487,24 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $scope.Exist = false;
         $scope.TotalPrice = 0;
         $scope.ProductsArray = [];
+        $scope.categoriesList = [];
 
 
         //Displaying All Category
         $scope.GetAllCategories = function () {
             CategoryService.GetAllCategories().then(function (response) {
-                $scope.categories = response;
+                $scope.categoriesList = response;
             });
         };
         $scope.GetAllCategories();
 
         //When Buyer change Category Tab display related products
         $scope.setTabItem = function (item) {
-            $scope.currentTab = item;
+            $scope.currentTab = item.Name;
             ProductService.GetAllProducts(item.Name).then(function (response) {
                 $scope.products = response;
                 $scope.HeaderCategoryName = item.Name;
+
             });
         };
 
@@ -650,8 +655,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                             params: { storeDomainName: StoreValues.Domain },
                             method: "get"
                         }).then(function (response) {
-                            $window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
-                            //$window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
+                            //$window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
+                            $window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
                         });
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
@@ -919,20 +924,28 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
 
         $scope.UpdateBankInfo = function () {
+            var BankName = $scope.bankInfo.BankName;
+            var AccountName = $scope.bankInfo.AccountName;
             var IBAN = $scope.bankInfo.IBAN;
+
             if (IBAN !== {} && IBAN !== null) {
                 $http({
                     //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/UpdateBankInfo",
                     url: "/PaymentMethods.asmx/UpdateBankInfo",
                     method: "get",
-                    params: { IBAN: IBAN }
+                    params:
+                    {
+                        BankName: BankName,
+                        AccountName: AccountName,
+                        IBAN: IBAN
+                    }
                 })
                     .then(function (response) {
 
                         if (response.data.includes("IBAN length")) {//Nothing
                         }
                         else {
-                            $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
+                           // $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
                             $scope.editIBAN = false;
 
                         }
@@ -956,9 +969,11 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 params: {}
             })
                 .then(function (response) {
-                    if (!response.data.includes("No ShopOwnerBank")) {
-                        $scope.bankInfo.IBAN = response.data;
-                        $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
+                    $scope.result = response.data;
+                    if (!$scope.result.BankName.includes("No Value")) {
+                        $scope.bankInfo.BankName = $scope.result.BankName;
+                        $scope.bankInfo.AccountName = $scope.result.AccountName;
+                        $scope.bankInfo.IBAN = $scope.result.IBAN;
                     }
 
                 }, function (error) {
@@ -1074,7 +1089,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $http.get('/CreationStage.asmx/GetTemplateID').then(function (response) {
 
             $scope.storeID = response.data;
-            //alert(response);
+            alert(response);
 
             if ($scope.storeID.TemplateID === 1) {
                 $scope.MYtemplate = "/Templates/Template_1.html";
@@ -1848,8 +1863,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                                 params: { storeDomainName: StoreValues.Domain },
                                 method: "get"
                             }).then(function (response) {
-                                $window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
-                                //$window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
+                                //$window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
+                                $window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
                             });
                             //  $rootScope.status = 'You decided to get rid of your debt.';
                         }, function () {
@@ -2162,18 +2177,32 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
 
         $scope.UpdateBankInfo = function () {
+            var BankName = $scope.bankInfo.BankName;
+            var AccountName = $scope.bankInfo.AccountName;
             var IBAN = $scope.bankInfo.IBAN;
+
             if (IBAN !== {} && IBAN !== null) {
                 $http({
                     //url: "http://bslogic-001-site1.ctempurl.com/PaymentMethods.asmx/UpdateBankInfo",
                     url: "/PaymentMethods.asmx/UpdateBankInfo",
                     method: "get",
-                    params: { IBAN: IBAN }
+                    params:
+                    {
+                        BankName: BankName,
+                        AccountName: AccountName,
+                        IBAN: IBAN
+                    }
                 })
                     .then(function (response) {
-                        $scope.bankInfo.IBAN = response.data;
-                        $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
-                        $scope.editIBAN = false;
+
+                        if (response.data.includes("IBAN length")) {//Nothing
+                        }
+                        else {
+                            // $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
+                            $scope.editIBAN = false;
+
+                        }
+
                     }, function (error) {
                         $scope.error = error.data;
                     });
@@ -2193,9 +2222,11 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 params: {}
             })
                 .then(function (response) {
-                    if (!response.data.includes("No ShopOwnerBank")) {
-                        $scope.bankInfo.IBAN = response.data;
-                        $scope.bankInfo.IBAN = $scope.bankInfo.IBAN.substr(1, $scope.bankInfo.IBAN.length - 2);
+                    $scope.result = response.data;
+                    if (!$scope.result.BankName.includes("No Value")) {
+                        $scope.bankInfo.BankName = $scope.result.BankName;
+                        $scope.bankInfo.AccountName = $scope.result.AccountName;
+                        $scope.bankInfo.IBAN = $scope.result.IBAN;
                     }
 
                 }, function (error) {
@@ -2601,11 +2632,11 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         $scope.ChangeLogo = function (ev) {
             var confirm = $mdDialog.confirm()
-                .title('Do you want to Change your store Colors also?')
-                .textContent('The new colors will be taken from your new logo.')
+                .title('هل تريد تغيير ألوان متجرك أيضا ؟')
+                .textContent('الألوان الجديدة ستؤخذ من الشعار الجديدز')
                 .targetEvent(ev)
-                .ok('Yes')
-                .cancel('No');
+                .ok('نعم')
+                .cancel('لا');
 
             $mdDialog.show(confirm).then(function () {
                 $http({

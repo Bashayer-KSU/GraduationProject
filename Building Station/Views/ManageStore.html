@@ -331,20 +331,40 @@
                     <div class="row" style="text-align:center;">
                         <div class="col-md-6 col-md-offset-6 center-block bankTransfer" align="center" style="float:none; text-align:center;" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()">
                             <form name="IBAN" class="check-element animate-show-hide" ng-show="checkboxPayment.bankTransfer" ng-model="bankInfo" ng-init="GetBankInfo()" style="display:inline; width:40%">
-                                <br />
                                 <label for="IBAN">لتسهيل عملية التحويل البنكي ، نرجو ادخال رقم الايبان الخاص بك</label>
-                                <div class="input-group">
-                                    <span ng-show="!editIBAN" class="input-group-btn">
-                                        <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="editIBAN = true" class="btn"> تعديل</button>
-                                    </span>
-                                    <span ng-show="editIBAN" class="input-group-btn">
-                                        <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdateBankInfo()" class="btn">تحديث</button>
-                                    </span>
-                                    <input type="text" class="form-control validate" name="bankInfoIBAN" ng-model="bankInfo.IBAN" id="IBAN" ng-disabled="!editIBAN" placeholder="أدخل الايبان" required style="text-align:right;">
+                                <div class=" input-group">
+                                    <br />
+                                    <label for="BankName">اسم البنك</label>
+                                    <input type="text" class="form-control validate" name="BankName" id="BankName" ng-model="bankInfo.BankName" ng-disabled="!editIBAN" placeholder="أدخل اسم البنك" required>
+                                    <br />
+                                    <p class=" alert alert-danger" ng-show="!IBAN.BankName.$valid">
+                                        يجب إدخال اسم البنك
+                                    </p>
+                                    <br />
+                                    <label for="AccountName">اسم صاحب الحساب البنكي</label>
+                                    <input type="text" class="form-control validate" name="AccountName" id="AccountName" ng-model="bankInfo.AccountName" ng-disabled="!editIBAN" placeholder="أدخل اسم حسابك البنكي" required>
+                                    <br />
+                                    <p class=" alert alert-danger" ng-show="!IBAN.AccountName.$valid">
+                                        يجب إدخال اسم حسابك البنكي
+                                    </p>
+                                    <br />
+                                    <label for="IBAN">الأيبان</label>
+                                    <input type="text" class="form-control validate" name="bankInfoIBAN" id="IBAN" ng-model="bankInfo.IBAN" ng-disabled="!editIBAN" placeholder="أدخل الآيبان" required>
+                                    <br />
+
+                                    <p class=" alert alert-danger" ng-show="!IBAN.bankInfoIBAN.$valid">
+                                        يجب عليك إدخال الأيبان
+                                    </p>
+                                    <div class="form-group">
+                                        <br />
+                                        <div ng-show="editIBAN" class="input-group-btn">
+                                            <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="UpdateBankInfo()"  ng-disabled="!IBAN.$valid" class="btn">تحديث</button>
+                                        </div>
+                                        <div ng-show="!editIBAN" class="input-group-btn">
+                                            <button type="button" ng-style={'background-color':'#C6BA57','color':'White'} ng-click="editIBAN = true" class="btn">تعديل</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <p class=" alert alert-danger" ng-show="!IBAN.bankInfoIBAN.$valid">
-                                    يجب عليك إدخال الايبان
-                                </p>
                             </form>
                             <br />
                         </div>

@@ -212,7 +212,8 @@
                                                     <div ng-show="Store.BankTransfer" class="custom-control custom-radio">
                                                         <input id="banktransfer" name="PaymentMethod" ng-model="PaymentMethod" value="BankTransfer" type="radio" class="custom-control-input" required>
                                                         <label class="custom-control-label" for="banktransfer">
-                                                            Bank Transfer<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer">                                                        <span> <small>IBAN:  {{Store.BankAccount}}</small> </span>
+                                                            Bank Transfer<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer">
+                                                            <span> <small>Bank:  {{Store.BankName}}  ,Account Name:  {{Store.AccountName}}  <br> IBAN:  {{Store.IBAN}}</small> </span>
                                                         </label>
 
                                                     </div>
@@ -226,7 +227,7 @@
                                             <div ng-show="PaymentMethod === 'BankTransfer'" id="transfer">
                                                 <div class="row mb-3">
                                                     <h4 class="col-sm-12">Confirm Bank Transfer</h4>
-                                                    <h6 class="col-sm-12"><small>IBAN:  {{Store.BankAccount}}</small></h6>
+                                                    <h6 class="col-sm-12"><small>Bank:  {{Store.BankName}}  ,Account Name:  {{Store.AccountName}}  <br> IBAN:  {{Store.IBAN}}</small></h6>
                                                     <div class="col-sm-12">
                                                         <label for="OrderID">Transaction ID</label>
                                                         <input type="text" class="form-control" id="OrderID" name="OrderID" ng-model="OrderID" placeholder="Enter The Transaction ID" required>
@@ -287,7 +288,7 @@
                         <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=false; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
                         <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="Buyer.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Choose Payment Method</button>
                         <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
-                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
+                        <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
 
                     </div>
                 </div>
@@ -363,7 +364,7 @@
                             <div class="tabs">
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li ng-repeat="category in categories" ng-init="setTabItem(categories[0])" class="nav-item">
+                                    <li ng-repeat="category in categoriesList" ng-init="setTabItem(categoriesList[0])" class="nav-item">
                                         <a class="nav-link" data-toggle="tab" href="#{{currentTab}}" role="tab" ng-click="setTabItem(category)" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">{{category.Name}}</a>
                                     </li>
                                 </ul>

@@ -1,56 +1,19 @@
 ﻿<!DOCTYPE html>
-<html ng-app="BuildingStationAPP" ng-controller="PublishedStoreCtrl">
+<html lang="en" ng-app="BuildingStationAPP" ng-controller="PublishedStoreCtrl">
 <head lang="en">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <link id="icon" rel="icon" href="" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="/Templates/Template_6/Template_6.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-  <!--fixed Modal  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-
     <script src="/Controllers/BuildingStationCTRL.js"></script>
-    <style>
-        .scrollbar {
-            margin-left: 30px;
-            float: left;
-            height: 500px;
-            width: 100%;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            margin-bottom: 25px;
-        }
 
-        .force-overflow {
-            min-height: 450px;
-        }
-
-        #style-1::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-            border-radius: 10px;
-            background-color: #F5F5F5;
-        }
-
-        #style-1::-webkit-scrollbar {
-            width: 12px;
-            background-color: #F5F5F5;
-        }
-
-        #style-1::-webkit-scrollbar-thumb {
-            border-radius: 10px;
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-            background-color: #555;
-        }
-        .modal-backdrop {
-            opacity: 1 !important;
-            background-color: rgba(0,0,0,0.5) !important;
-        }
-    </style>
+    <link id="icon" rel="icon" href="" />
 </head>
-<body  data-spy="scroll" data-target=".navbar" data-offset="50" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">
+<body data-spy="scroll" data-target=".navbar" data-offset="50" >
     <div ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">
         <header>
             <!--
@@ -62,9 +25,17 @@
             -->
             <nav id="header" ng-style="{'background-color':Store.Color1}" class="navbar navbar-expand-md navbar-dark fixed-top">
                 <a class="navbar-brand" href="#"><img id="StoreLogo" ng-src="{{Store.Logo}}" alt="Store Logo">{{Store.Name}}</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <div class="d-flex flex-row-reverse">
+
+                    <button class="navbar-toggler p-2" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <ul id="ShoppingCart" class="navbar-nav mr-auto p-2">
+                        <li class="nav-item">
+                            <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS"><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
+                        </li>
+                    </ul>
+                </div>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item ">
@@ -83,16 +54,15 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"  value="English" checked>
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="English" checked>
                                 <label class="form-check-label nav-link" for="inlineRadio1">English</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" ng-click="goArabic()" id="inlineRadio2" value="Arabic" >
-                                <label class="form-check-label nav-link" for="inlineRadio2">Arabic</label>
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"  ng-click="goArabic()" value="Arabic">
+                                <label class="form-check-label nav-link" for="inlineRadio2">العربية</label>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <!--data-toggle="collapse" data-target="#checkoutS"-->
+                        <li id="ShoppingCart2" class="nav-item">
                             <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS"><span class="hidden-xs">Shopping Cart </span><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
                         </li>
                     </ul>
@@ -143,7 +113,7 @@
             </section>
             <!----- carousel ---->
             <!-- Modal shopping cart -->
-            <div class="modal col-xs-6 col-md-12" id="shoppingCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal col-12 col-md-12" id="shoppingCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -157,47 +127,53 @@
                         <div class="modal-body">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-xs-12 text-center">
+                                    <div class="col-12 text-center">
                                         <div ng-show="!checkout&&!payment" class="card-body">
 
                                             <!----------------------->
-                                            <ul ng-show="!(ProductsArray.length==0)" class="list-group mb-3">
-                                                <li id="yourcart" class="list-group-item d-flex justify-content-between">
-                                                    <div class="col-5 my-0">Product Image</div>
-                                                    <div class="col-3">
-                                                        <h6 class="my-0">Product</h6>
-                                                    </div>
-                                                    <span class="my-0">Amount</span>
-                                                    <span class="my-0">Price</span>
-                                                    <div class="my-0"></div>
-                                                </li>
-                                                <li ng-repeat='x in ProductsArray' id="yourcart" class="list-group-item d-flex justify-content-between">
-                                                    <div class="col-5"><img ng-src="{{x.Image}}" alt="..." class="img-fluid" /></div>
-                                                    <div class="col-3">
-                                                        <h6 class="my-0">{{x.Name}}</h6>
-                                                        <small class="text-muted">{{x.Desc}}</small>
-                                                    </div>
-                                                    <span>{{x.Amount}}</span>
-                                                    <span ng-show="x.Discount == 0">{{x.Price}} SR</span>
-                                                    <span ng-show="x.Discount != 0">
-                                                        <del style="color:#ff0000"> {{x.Price}} </del>
-                                                        {{x.PriceAfterDiscount}} SR
-                                                    </span>
-                                                    <span>
-                                                        <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </span>
-                                                </li>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <ul ng-show="!(ProductsArray.length==0)" class="list-group mb-3">
+                                                        <li id="yourcart" class="list-group-item d-flex justify-content-between">
+                                                            <div class="row">
+                                                                <div class="col my-0">Product Image</div>
+                                                                <div class="col">
+                                                                    <h6 class=" my-0">Product</h6>
+                                                                </div>
+                                                                <span class="col my-0">Amount</span>
+                                                                <span class="col my-0">Price</span>
+                                                            </div>
+                                                        </li>
+                                                        <li ng-repeat='x in ProductsArray' id="yourcart" class="list-group-item d-flex justify-content-between">
+                                                            <div class="row">
+                                                                <div class="col"><img ng-src="{{x.Image}}" alt="..." class="img-fluid" /></div>
+                                                                <div class="col">
+                                                                    <h6 class="my-0">{{x.Name}}</h6>
+                                                                    <small class="text-muted">{{x.Desc}}</small>
+                                                                </div>
+                                                                <span class="col">{{x.Amount}}</span>
+                                                                <span class="col" ng-show="x.Discount == 0">{{x.Price}} SR</span>
+                                                                <span class="col" ng-show="x.Discount != 0">
+                                                                    <del style="color:#ff0000"> {{x.Price}} </del>
+                                                                    {{x.PriceAfterDiscount}} SR
+                                                                </span>
+                                                                <span>
+                                                                    <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        </li>
 
-                                                <li class="list-group-item d-flex justify-content-between">
-                                                    <span>Total</span><span><strong>{{TotalPrice}} SR</strong></span>
-                                                </li>
-                                            </ul>
+                                                        <li class="list-group-item d-flex justify-content-between">
+                                                            <span>Total</span><span><strong>{{TotalPrice}} SR</strong></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                             <div ng-show="ProductsArray.length==0" style="text-align:center;">
                                                 <span style="text-align:center;">Shopping Cart Empty</span>
                                             </div>
-
                                         </div>
                                         <!-- Checkout-->
                                         <div ng-show="checkout" class="card-body">
@@ -229,7 +205,7 @@
                                             </form>
                                             <form name="BuyerPayment" ng-model="BuyerPayment" ng-show="payment" class="text-sm-left" novalidate>
                                                 <div id="payment">
-                                                    <h4 class="mb-3">Payment</h4>
+                                                    <h4 class="mb-3">Payment Method</h4>
                                                     <div id="PaymentMethod" name="PaymentMethod" class="d-block my-3">
                                                         <div ng-show="Store.Cash" class="custom-control custom-radio">
                                                             <input id="cash" name="PaymentMethod" ng-model="PaymentMethod" value="Cash" type="radio" class="custom-control-input" required>
@@ -238,7 +214,8 @@
                                                         <div ng-show="Store.BankTransfer" class="custom-control custom-radio">
                                                             <input id="banktransfer" name="PaymentMethod" ng-model="PaymentMethod" value="BankTransfer" type="radio" class="custom-control-input" required>
                                                             <label class="custom-control-label" for="banktransfer">
-                                                                Bank Transfer<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer">                                                        <span> <small>IBAN:  {{Store.BankAccount}}</small> </span>
+                                                                Bank Transfer<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer"><span>
+                                                                <br /><small>Bank:  {{Store.BankName}}  ,Account Name:  {{Store.AccountName}}  <br> IBAN:  {{Store.IBAN}}</small> </span>
                                                             </label>
 
                                                         </div>
@@ -252,11 +229,13 @@
                                                 <div ng-show="PaymentMethod === 'BankTransfer'" id="transfer">
                                                     <div class="row mb-3">
                                                         <h4 class="col-sm-12">Confirm Bank Transfer</h4>
-                                                        <h6 class="col-sm-12"><small>IBAN:  {{Store.BankAccount}}</small></h6>
+                                                        <h6 class="col-sm-12">
+                                                            <small>Bank:  {{Store.BankName}}  ,Account Name:  {{Store.AccountName}} <br /> IBAN:  {{Store.IBAN}}</small> <
+                                                        </h6>
                                                         <div class="col-sm-12">
-                                                            <label for="OrderID">Order ID</label>
-                                                            <input type="text" class="form-control" id="OrderID" name="OrderID" ng-model="OrderID" placeholder="Enter The Order ID" required>
-                                                            <p class="alert alert-danger" ng-show="!BuyerPayment.OrderID.$pristine && BuyerPayment.OrderID.$invalid">Please enter the order ID.</p>
+                                                            <label for="OrderID">Transaction ID</label>
+                                                            <input type="text" class="form-control" id="OrderID" name="OrderID" ng-model="OrderID" placeholder="Enter The Transaction ID" required>
+                                                            <p class="alert alert-danger" ng-show="!BuyerPayment.OrderID.$pristine && BuyerPayment.OrderID.$invalid">Please enter the Transaction ID.</p>
                                                         </div>
                                                         <div class="col-sm-12">
                                                             <label for="HolName">Account Holder Name</label>
@@ -278,7 +257,7 @@
                                                     <input type="hidden" name="cmd" value="_xclick">
                                                     <!-- Specify details about the item that buyers will purchase. -->
                                                     <input type="hidden" name="item_name" value=""> <!-- Add Description e.g your room type Required-->
-                                                    <input type="hidden" name="amount" value="{{TotalPrice}}"> <!-- Dynamically add Total Amount Required-->
+                                                    <input type="hidden" name="amount" value=""> <!-- Dynamically add Total Amount Required-->
                                                     <input type="hidden" name="currency_code" value="{{Store.PayPalCurrencey}}"> <!-- Update to your currency -->
                                                     <!--  <input id="invoice" type="hidden" value="" name="invoice"> <!-- Add Unique invoice for each transaction -->
                                                     <!--  <input type="hidden" name="notify_url" value="www.yourwebsite.com/ipn.php"> <!-- Please add IPN URL You can use this service to automate back-office and administrative functions, including fulfilling orders, tracking customers, and providing status and other information related to transactions. -->
@@ -288,17 +267,21 @@
                                                     <input type="image" name="submit" border="0" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">
                                                 </form>
                                                 <br />
-                                                <div class="row mb-3">
-                                                    <h4 class="col-sm-12" ng-style="{'color': Store.Color3}">Confirm Payment </h4>
-                                                    <div class="col-sm-12">
-                                                        <label for="OrderID" ng-style="{'color': Store.Color3}">Invoice ID</label>
-                                                        <input type="text" class="form-control" id="OrderID" name="OrderID" ng-model="OrderID" placeholder="Enter Invoice ID" required>
-                                                        <p class="alert alert-danger" ng-show="!BuyerPayment.OrderID.$pristine && BuyerPayment.OrderID.$invalid">This field is required</p>
+                                                <form name="PayPalForm">
+                                                    <div class="row mb-3">
+                                                        <h4 class="col-sm-12">Payment Confirmation</h4>
+                                                        <div class="col-sm-12">
+                                                            <label for="OrderID">
+                                                                bill number
+                                                            </label>
+                                                            <input type="text" class="form-control" id="OrderID" name="OrderID" ng-model="OrderID" placeholder="Enter Bill Number" required>
+                                                            <p class="alert alert-danger" ng-show="!PayPalForm.OrderID.$pristine && PayPalForm.OrderID.$invalid">Please enter the bill number.</p>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <label for="Price">Total Price: {{TotalPrice}}</label>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-12">
-                                                        <label ng-style="{'color': Store.Color3}" for="Price"> Total: {{TotalPrice}}</label>
-                                                    </div>
-                                                </div>
+                                                </form>
                                             </div>
                                         </div>
 
@@ -311,16 +294,15 @@
                             <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=false; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
                             <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="Buyer.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Choose Payment Method</button>
                             <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
-                          <!--  <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>-->
-                           
-                            <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md"  ng-click="CheckoutA(BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod, HolName, OrderID)" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
+                            <!-- <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>-->
+                            <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="CheckoutA(BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod, HolName, OrderID)" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PayPalForm.$invalid&&PaymentMethod === 'PayPal')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>
 
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Modal product-->
-            <div class="modal col-xs-6 col-md-12" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal col-12 col-md-12" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -333,7 +315,7 @@
                         <div class="modal-body">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-xs-12 ">
+                                    <div class="col-12 ">
                                         <div class=" text-center">
                                             <form name="AddProduct">
                                                 <img class="card-img-top" ng-src="{{addProduct.Image}}" alt="product image">
@@ -345,7 +327,7 @@
                                                         <del style="color:#ff0000"> {{addProduct.Price}} </del>
                                                         {{addProduct.PriceAfterDiscount}} SR
                                                     </p>
-                                                    <div class="col-xs-12  col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="col-12  col-sm-12 col-md-12 col-lg-12">
                                                         <input class="form-control" type="number" min="1" ng-model="quantity" max="{{addProduct.Amount}}" name="quantity" placeholder="enter quantity" required>
                                                         <!--
                                                         <div class="input-group mb-3">
@@ -381,44 +363,48 @@
                 <!------------  Product ------------>
                 <section id="products">
                     <div class="row featurette">
-                        <div class="col-md-12">
+                        <div class="col-12 col-md-12">
                             <h2 class="featurette-heading text-center">Our Products</h2>
                         </div>
                         <!-- Tabs -->
-                        <div class="tabs">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li ng-repeat="category in categories" ng-init="setTabItem(categories[0])" class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#{{currentTab}}" role="tab" ng-click="setTabItem(category)" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">{{category.Name}}</a>
-                                </li>
-                            </ul>
-                            <!-- Tab panes -->
-                            <div>
-                                <div id="{{currentTab}}" class="tab-content">
-                                    <!-- - -->
-                                    <div id="style-1" class="tab-pane fade show active scrollbar" role="tabpanel">
-                                        <div class="row force-overflow">
-                                            <div ng-repeat="product in products" class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
-                                                <div class="card text-center">
-                                                    <img class="card-img-top" ng-src="{{product.Image}}" alt="Card image cap">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">{{product.Name}}</h5>
-                                                        <p class="card-text">{{product.Description}}</p>
-                                                        <p ng-show="product.Discount == 0">{{product.Price}} SR</p>
-                                                        <p ng-show="product.Discount != 0">
-                                                            <del style="color:#ff0000"> {{product.Price}} </del>
-                                                            {{product.PriceAfterDiscount}} SR
-                                                        </p>
-                                                        <p style="color:#ff0000" ng-show="product.Amount == 0">Out of stock</p>
-                                                        <button type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Add To Cart</button>
+                        <div class="col-12">
+                            <div class="tabs">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li ng-repeat="category in categoriesList" ng-init="setTabItem(categoriesList[0])" class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#{{currentTab}}" role="tab" ng-click="setTabItem(category)" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">{{category.Name}}</a>
+                                    </li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div>
+                                    <div id="{{currentTab}}" class="tab-content">
+                                        <!-- - -->
+                                        <div id="style-1" class="tab-pane show active scrollbar" role="tabpanel">
+                                            <div class="row force-overflow">
+                                                <div ng-repeat="product in products" class="col-6 col-sm-6 col-md-4 col-lg-3">
+                                                    <div class="card text-center">
+                                                        <img class="card-img-top" ng-src="{{product.Image}}" alt="Card image cap">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">{{product.Name}}</h5>
+                                                            <p class="card-text">{{product.Description}}</p>
+                                                            <p ng-show="product.Discount == 0">{{product.Price}} SR</p>
+                                                            <p ng-show="product.Discount != 0">
+                                                                <del style="color:#ff0000"> {{product.Price}} </del>
+                                                                {{product.PriceAfterDiscount}} SR
+                                                            </p>
+                                                            <p style="color:#ff0000" ng-show="product.Amount == 0">Out of stock</p>
+                                                            <button id="addToButton" type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}" style="width:100%;">Add To Cart</button>
+                                                            <button id="addButton" type="button" ng-disabled="product.Amount == 0" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal" ng-click="AddProductToCart(product)" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}" style="width:100%;">Add</button>
+
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div> <!-- tabs -->
+                            </div> <!-- tabs -->
+                        </div>
                     </div>
                 </section>
                 <!---- Products ---->
@@ -460,50 +446,50 @@
                         </div>
                         <div class="col-sm-6">
                             <h5 class="text-md-left">Contact Us</h5>
-                            <hr><div class="row">
-                                <h6 class="col-sm-4"><i class="fa fa-send"></i>                {{Store.Email}}</h6>
+                            <div class="row">
+                                <h6 style="word-wrap:break-word;" class="col-sm-4"><i class="fa fa-send"></i>                {{Store.Email}}</h6>
                                 <h6 class="col-sm-4"><i class="fa fa-location-arrow"></i>                {{Store.Address}}</h6>
                                 <h6 class="col-sm-4"><i class="fa fa-phone"></i>                {{Store.Phone}}</h6>
                             </div>
                         </div>
+                        <div class="col-sm-12">
+                            <p><img ng-src="/images/BuildingStationEn.png" style="width: 5vw; height: 5vw;" alt="BuildingStation Logo" />&copy; 2018  &middot; <a ng-style="{'color':Store.Color4}" href="/RegisterLogin.html" target="_blank"> Desined By Building Station</a> </p>
+                        </div>
+                        <br />
                     </div>
-                    <div class="row">
-                        <p><img ng-src="/images/BuildingStationEn.png" style="width: 5vw; height: 5vw;" alt="BuildingStation Logo" />&copy; 2018  &middot; <a ng-style="{'color':Store.Color4}" href="/RegisterLogin.html"> Desined By Building Station</a> </p>
-                    </div>
-                    <br /><br />
                 </div>
             </footer>
         </main>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script>
-            $(document).ready(function () {
-                if ($('#back-to-top').length) {
-                    var scrollTrigger = 100, // px
-                        backToTop = function () {
-                            var scrollTop = $(window).scrollTop();
-                            if (scrollTop > scrollTrigger) {
-                                $('#back-to-top').addClass('show');
-                            } else {
-                                $('#back-to-top').removeClass('show');
-                            }
-                        };
-                    backToTop();
-                    $(window).on('scroll', function () {
-                        backToTop();
-                    });
-                    $('#back-to-top').on('click', function (e) {
-                        e.preventDefault();
-                        $('html,body').animate({
-                            scrollTop: 0
-                        }, 700);
-                    });
-                }
-
-            });
-        </script>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            if ($('#back-to-top').length) {
+                var scrollTrigger = 100, // px
+                    backToTop = function () {
+                        var scrollTop = $(window).scrollTop();
+                        if (scrollTop > scrollTrigger) {
+                            $('#back-to-top').addClass('show');
+                        } else {
+                            $('#back-to-top').removeClass('show');
+                        }
+                    };
+                backToTop();
+                $(window).on('scroll', function () {
+                    backToTop();
+                });
+                $('#back-to-top').on('click', function (e) {
+                    e.preventDefault();
+                    $('html,body').animate({
+                        scrollTop: 0
+                    }, 700);
+                });
+            }
+
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -13,12 +13,12 @@
     <!-- to display logo -->
     <img style="width:150px; height:auto;" ng-src="{{imageSrc}}" />
 
-    <div ng-if="imageSrc"
-         ng-init="getColors()">
-    </div>
-    <span ng-show="imageSrc && BigImage" style="font-size:x-small; color:darkred;">image size must be 1MB or lise</span>
-    <span ng-show="imageSrc && NotImage" style="font-size:x-small; color:darkred;">file type should be .jpeg, .png, .jpg, .gif</span>
-</main>
+    <!--<div ng-if="imageSrc && !NotImage && !BigImage"
+             ng-init="getColors()">
+        </div>-->
+        <span ng-show="imageSrc && BigImage" style="font-size:x-small; color:darkred;">image size must be 1MB or lise</span>
+        <span ng-show="imageSrc && NotImage" style="font-size:x-small; color:darkred;">file type should be .jpeg, .png, .jpg, .gif</span>
+    </main>
 
 <div style="display:inline; overflow: auto;
                 white-space: nowrap; padding: 0px 0px;">
@@ -29,3 +29,4 @@
 <!-- Footer -->
 <footer>
 </footer>
+

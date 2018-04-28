@@ -70,14 +70,14 @@
                 $rootScope.login = response;
                 if (response === "false") {
                     //redirect to login page
-                    //$window.open = ("http://www.buildingstation.somee.com/index.html", "_self");
+                    //$window.open = ("http://www.buildingstation1-001-site1.atempurl.com/index.html", "_self");
                     location.href = "/index.html";
                 }
             });
         });
 
         $rootScope.Arabic = function () {
-            //$window.location.href = 'http://www.buildingstation.somee.com/CreationStageArabic.html';
+            //$window.location.href = 'http://www.buildingstation1-001-site1.atempurl.com/CreationStageArabic.html';
             $window.location.href = '../CreationStageArabic.html';
         };
 
@@ -96,7 +96,7 @@
     .controller("0Controller", function ($scope, $window, $rootScope) {
 
         $rootScope.Arabic = function () {
-            //$window.location.href = 'http://www.buildingstation.somee.com/CreationStageArabic.html';
+            //$window.location.href = 'http://www.buildingstation1-001-site1.atempurl.com/CreationStageArabic.html';
             $window.location.href = '../CreationSatgeArabic.html';
         };
 
@@ -207,7 +207,7 @@
 
         function fetchUserFromInstagram() {
 
-            $http.get("https://www.instagram.com/" + $scope.search + "/?__a=1")
+            $http.get("https://apinsta.herokuapp.com/u/%3C" + $scope.search + "%3E")
 
                 .then(function (response) {
                     $scope.details = response.data;
@@ -224,22 +224,28 @@
 
             this.setSelectionRange(0, this.value.length);
         };
-
+       
         $scope.savedata = function () {
-            var post = $http({
-                method: "POST",
+            $http.post(
                 //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/ConnectInstagram",
-                url: "CreationStage.asmx/ConnectInstagram",
-                dataType: 'json',
-                data: { link: 'https://www.instagram.com/' + $scope.search + '/', logo: $scope.details.graphql.user.profile_pic_url, descripton: $scope.details.graphql.user.biography, name: $scope.details.graphql.user.full_name },
-                headers: { "Content-Type": "application/json" }
-            });
-            post.then(function (response) { }, function (error) { $scope.R = error.data; });
+                "/CreationStage.asmx / ConnectInstagram",
+                $.param({
+                    link: 'https://www.instagram.com/' + $scope.details.graphql.user.username + '/',
+                    logo: $scope.details.graphql.user.profile_pic_url,
+                    descripton: $scope.details.graphql.user.biography,
+                    name: $scope.details.graphql.user.full_name
+                }),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                    }
+                }
+
+            )
+            .then(function (response) { }, function (error) { $scope.R = error.data; });
         };
 
         $scope.getColors = function () {
-            //var File_Path = $scope.imageSrc;
-            //    alert($scope.imageSrc);
             $http({
                 //url: "http://bslogic-001-site1.ctempurl.com/manageWebsiteColors.asmx/GetWebsiteColors",
                 url: "manageWebsiteColors.asmx/GetWebsiteColors",
@@ -330,9 +336,9 @@
         $scope.$on("fileProgress", function (e, progress) {
             $scope.progress = progress.loaded / progress.total;
         });
-        $scope.getColors = function () {
-            //var File_Path = $scope.imageSrc;
-            //    alert($scope.imageSrc);
+      //  $scope.getColors = function () {};
+
+        $scope.sendLogo = function () {
             $http({
                 //url: "http://bslogic-001-site1.ctempurl.com/manageWebsiteColors.asmx/GetWebsiteColors",
                 url: "manageWebsiteColors.asmx/GetWebsiteColors",
@@ -342,22 +348,10 @@
                 headers: { "Content-Type": "application/json; charset=utf-8" }
             })
                 .then(function (response) {
-                    //       alert("success");
                     $scope.Colors = response.data;
                 }, function (error) {
-                    //      alert("failed");
                     $scope.R = error.data;
-                    /*  $http({
-                          url: "manageWebsiteColors.asmx/chooseColors",
-                          method: "get"
-                      })
-                          .then(function (response) {
-                              $scope.Colors = response.data;
-                          });*/
                 });
-        };
-
-        $scope.sendLogo = function () {
             var post = $http({
                 method: "POST",
                 //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UploadLogo",

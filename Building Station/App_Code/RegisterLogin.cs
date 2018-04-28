@@ -52,7 +52,7 @@ public class RegisterLogin : System.Web.Services.WebService
 
                 con.Open();
                 cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail, Hidden) values " +
-                "('Snapchat', 'Link','" + Session["user"] + "','"+true+"')", con);
+                "('Snapchat', 'Link','" + Session["user"] + "','" + true + "')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 
@@ -99,6 +99,24 @@ public class RegisterLogin : System.Web.Services.WebService
                 con.Close();
 
                 con.Open();
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
+                "('BankTransfer', 'BankName','" + Session["user"] + "')", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
+                "('BankTransfer', 'AccountName','" + Session["user"] + "')", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("insert into Element (Name, Type, StoreEmail) values " +
+                "('BankTransfer', 'IBAN','" + Session["user"] + "')", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                con.Open();
                 cmd = new SqlCommand("INSERT INTO Category (StoreEmail, Name, OrderInMenu) values('" +
                     Session["user"] + "', 'Category example', 1)", con);
                 cmd.ExecuteNonQuery();
@@ -108,7 +126,7 @@ public class RegisterLogin : System.Web.Services.WebService
                 {
                     value = "/CreationStage.html";
                 }
-                else if(lang.Equals("ar"))
+                else if (lang.Equals("ar"))
                 {
                     value = "/CreationSatgeArabic.html";
                 }
@@ -116,7 +134,7 @@ public class RegisterLogin : System.Web.Services.WebService
         }
         Context.Response.Write(js.Serialize(value));
 
-     //   return value;
+        //   return value;
     }
 
     [WebMethod(EnableSession = true)]
@@ -150,13 +168,13 @@ public class RegisterLogin : System.Web.Services.WebService
                 {
                     if (lang.Equals("eng"))
                     {
-                      //  value = "/Views/BasicE.html";
+                        //  value = "/Views/BasicE.html";
                         value = "EDITandINFO-English";
 
                     }
                     else
                     {
-                       // value = "/Views/Basic.html";
+                        // value = "/Views/Basic.html";
                         value = "EDITandINFO";
                     }
                 }
@@ -180,7 +198,7 @@ public class RegisterLogin : System.Web.Services.WebService
         {
             Context.Response.Write(js.Serialize("false"));
 
-     //       return "false";
+            //       return "false";
         }
         else
         {
@@ -198,6 +216,6 @@ public class RegisterLogin : System.Web.Services.WebService
         Session.Abandon();
         Context.Response.Write(js.Serialize("/BuildingStation"));
 
-      //  return "/index.html";
+        //  return "/index.html";
     }
 }
