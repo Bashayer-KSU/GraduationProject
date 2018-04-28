@@ -1,15 +1,16 @@
 ﻿ <!-- Header -->
 <header style="padding-bottom:0%;">
-    <h2 style="text-align: center; line-height: 0; font-size:35px;"><strong>Fill your store information</strong></h2>
+    <img src="/images/en_4.png" style="width:100%" class="desaturate" />
+    <h1 style="font-size:1.5em;">Fill your store information</h1>
 </header>
 <!-- Main content area -->
 <form name="myform">
-    <main>
+    <main style="font-family:'Century Gothic'";>
         Where is your business located ? <br />
         <input type="text" name="myAddress" ng-model="Address" style="width:95%;" placeholder="Example: riyadh, saudi arabia " required />
         <span class="asterisk_input"></span>
-        <p style="font-size:x-small; margin-top:0px; padding-top:0px; color: darkred;" ng-show="myform.myAddress.$invalid">  this field is required  </p>
-        <br /> <br />
+        <p style="font-size:0.7em; font-weight: bold; text-shadow: 2px 2px 8px white; color: darkred;" ng-show="myform.myAddress.$invalid">* This field is required  </p>
+        <br style="line-height:7px;"/> <hr /> <br style="line-height:7px;" />
         <!--   <div style="width:100%; display:inline; overflow: auto;white-space: nowrap; padding: 0px 0px;">-->
         Enter a social media link for your store <br />
         <div style="text-align:left">
@@ -28,12 +29,11 @@
             <img src="../images/insta.png" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; width: 35px; height:auto;  text-align: center;" />
             <input type="text" ng-model="instagramLink" style="margin-bottom:1vw; width:85%;" />
         </div>
-        <p style="font-size:x-small; color:firebrick;"> Note: your links must be valid </p>
+        <p style="font-size:0.7em; font-weight: bold; text-shadow: 2px 2px 8px white; color: darkred;"> Note: your links must be valid </p>
     </main>
-    <br/>
-    <div style="display:inline; overflow: auto; white-space: nowrap; padding: 0px 0px;">
-        <a style="float: left; font-size:100px;  padding: 0cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" href="2" class="button button-large" data-toggle="tooltip" data-placement="right" title="Previous">&#8249;</a>
-        <button ng-disabled="myform.myAddress.$invalid" ng-click="sendData()" style="float: right; font-size:100px; padding: 0.1cm 0.5cm 0.5cm 0.5cm; border-radius: 50%;" class="button button-large" data-toggle="tooltip" data-placement="right" title="Next">&#8250;</button>
+    <div style="display:inline; overflow: auto; white-space: nowrap; padding: 0px 0px; margin-top:2%">
+        <a style="float: left; font-size:5vw; padding: 0.5cm 0.6cm 0.5cm 0.4cm;" href="2" class="button button-large" data-toggle="tooltip" data-placement="right" title="Previous">&#10094;</a>
+        <button ng-disabled="myform.myAddress.$invalid" ng-click="sendData()" style="float: right; font-size:5vw; padding: 0.5cm 0.5cm 0.5cm 0.5cm;" class="button button-large" data-toggle="tooltip" data-placement="right" title="Next">&#10095;</button>
     </div>
 </form>
 <!-- Footer -->

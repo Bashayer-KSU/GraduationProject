@@ -1,21 +1,19 @@
 ﻿<!-- Header -->
 <header style="padding-bottom:0%;">
-    <h2 style="line-height: 0.9; font-size:40px;"><strong>What's your store name ?</strong></h2>
+    <img src="/images/en_11.png" style="width:100%" class="desaturate"/>
+    <h1 style="font-size:1.5em;">What's your store name ?</h1>
 </header>
 <!-- Main content area -->
 <form name="myform">
     <main>
         <input name="myName" type="text" ng-model="storeName" placeholder=" Example: The warm crochet" style="width:95%;" required />
         <span class="asterisk_input"></span>
-        <p style="font-size:x-small; margin-top:0px; padding-top:0px; color: darkred;" ng-show="myform.myName.$invalid"> this field is required  </p>
+        <p style="font-size:0.7em; font-weight: bold; text-shadow: 2px 2px 8px white;  color: darkred;" ng-show="myform.myName.$invalid">* This field is required  </p>
 
-        <br>
-        <br>
     </main>
-
-    <div style="display:inline; overflow: auto; white-space: nowrap; padding: 0px 0px;">
-        <button ng-disabled="myform.myName.$invalid" style="float: right; font-size:100px;  padding: 0.1cm 0.5cm 0.5cm 0.4cm; border-radius: 50%;" href="2" class="button button-large" ng-click="sendName()" data-toggle="tooltip" data-placement="right" title="Next">&#8250;</button>
-        <a style="float: left; font-size:100px; padding: 0cm 0.5cm 0.5cm 0.45cm; border-radius: 50%;" href="0" class="button button-large" data-toggle="tooltip" data-placement="left" title="Previous">&#8249;</a>
+    <div style="display:inline; overflow: auto; white-space: nowrap; padding: 0px 0px; margin-top:2%">
+        <button ng-disabled="myform.myName.$invalid" style="float: right; font-size:5vw; padding: 0.5cm 0.5cm 0.5cm 0.5cm;" href="2" class="button button-large" ng-click="sendName()" data-toggle="tooltip" data-placement="right" title="Next">&#10095;</button>
+        <a style="float: left; font-size:5vw; padding: 0.5cm 0.6cm 0.5cm 0.4cm;" href="0" class="button button-large" data-toggle="tooltip" data-placement="left" title="Previous">&#10094;</a>
     </div>
 </form>
 <!-- Footer -->

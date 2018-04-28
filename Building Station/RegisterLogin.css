@@ -91,12 +91,22 @@ body {
 }
 
 .active a {
+    text-decoration: underline;
     color: #0C5E65;
 }
 
 a {
     color: #333333;
+    text-decoration: none;
 }
+
+
+/*New*/
+a:hover {
+        text-decoration: underline;
+        color: #0C5E65;
+    }
+
 
 label {
     position: absolute;
