@@ -210,7 +210,7 @@ public class Published_Stores : System.Web.Services.WebService
         int TID = 0;
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT TemplateID FROM Store WHERE WebsiteDomain='" + StoreDomain + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT TemplateID FROM Store WHERE WebsiteDomain= N'" + StoreDomain + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -230,7 +230,7 @@ public class Published_Stores : System.Web.Services.WebService
     {
         using (SqlConnection con = new SqlConnection(cs))
         {
-            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, StoreType, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, Location, PayPal, BankTransfer, Cash FROM Store WHERE WebsiteDomain='" + StoreDomain + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email, StoreName, StoreType, Color1, Color2, Color3, Color4, Phone, logo, MenuTitle, StoreDescription, Location, PayPal, BankTransfer, Cash FROM Store WHERE WebsiteDomain= N'" + StoreDomain + "'", con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -375,7 +375,7 @@ public class Published_Stores : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = '" + StoreDomain + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = N'" + StoreDomain + "'", con);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -421,7 +421,7 @@ public class Published_Stores : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = '" + StoreDomain + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = N'" + StoreDomain + "'", con);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -457,7 +457,7 @@ public class Published_Stores : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = '" + StoreDomain + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = N'" + StoreDomain + "'", con);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -511,7 +511,7 @@ public class Published_Stores : System.Web.Services.WebService
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = '" + StoreDomain + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = N'" + StoreDomain + "'", con);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -586,7 +586,7 @@ public class Published_Stores : System.Web.Services.WebService
        using (SqlConnection con = new SqlConnection(cs))
        {
            con.Open();
-           SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = '" + StoreDomain + "'", con);
+           SqlCommand cmd = new SqlCommand("SELECT Email FROM Store WHERE WebsiteDomain = N'" + StoreDomain + "'", con);
            SqlDataReader reader = cmd.ExecuteReader();
            while (reader.Read())
            {

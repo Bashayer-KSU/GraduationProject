@@ -189,10 +189,12 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         //https://www.instagram.com/asmaa.ru/?__a=1
         //https://www.instagram.com/therock/?__a=1
         //  $scope.search = "asmaa.ru";
+        //https://apinsta.herokuapp.com/u/%3Cmisul.handicrafts%3E
 
         function fetchUserFromInstagram() {
 
-            $http.get("https://www.instagram.com/" + $scope.search + "/?__a=1")
+          //  $http.get("https://www.instagram.com/" + $scope.search + "/?__a=1")
+            $http.get("https://apinsta.herokuapp.com/u/%3C" + $scope.search + "%3E")
 
                 .then(function (response) {
                     $scope.details = response.data;
@@ -216,7 +218,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/ConnectInstagram",
                 url: "/CreationStage.asmx/ConnectInstagram",
                 dataType: 'json',
-                data: { link: 'https://www.instagram.com/' + $scope.search + '/', logo: $scope.details.graphql.user.profile_pic_url, descripton: $scope.details.graphql.user.biography, name: $scope.details.graphql.user.full_name },
+                data: { link: 'https://www.instagram.com/' + $scope.details.graphql.user.username + '/', logo: $scope.details.graphql.user.profile_pic_url, descripton: $scope.details.graphql.user.biography, name: $scope.details.graphql.user.full_name },
                 headers: { "Content-Type": "application/json" }
             });
             post.then(function (response) { }, function (error) { $scope.R = error.data; });
@@ -311,9 +313,9 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         $scope.$on("fileProgress", function (e, progress) {
             $scope.progress = progress.loaded / progress.total;
         });
-        $scope.getColors = function () {
-            //var File_Path = $scope.imageSrc;
-            //    alert($scope.imageSrc);
+      //  $scope.getColors = function () {};
+
+        $scope.sendLogo = function () {
             $http({
                 //url: "http://bslogic-001-site1.ctempurl.com/manageWebsiteColors.asmx/GetWebsiteColors",
                 url: "/manageWebsiteColors.asmx/GetWebsiteColors",
@@ -323,22 +325,10 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 headers: { "Content-Type": "application/json; charset=utf-8" }
             })
                 .then(function (response) {
-                    //       alert("success");
                     $scope.Colors = response.data;
                 }, function (error) {
-                    //      alert("failed");
                     $scope.R = error.data;
-                    /*  $http({
-                          url: "manageWebsiteColors.asmx/chooseColors",
-                          method: "get"
-                      })
-                          .then(function (response) {
-                              $scope.Colors = response.data;
-                          });*/
                 });
-        };
-
-        $scope.sendLogo = function () {
             var post = $http({
                 method: "POST",
                 //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/UploadLogo",

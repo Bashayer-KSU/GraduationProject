@@ -263,6 +263,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
     })
     .controller("PublishedStoreCtrl", function ($scope, $http, $stateParams, ProductService, CategoryService, AddProductService) {
         var ID = 0;
+        alert("domain" + $stateParams.Domain);
         $http({
             //url: "http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/GetTemplate",
             url: "/Published_Stores.asmx/GetTemplate",
@@ -1089,7 +1090,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $http.get('/CreationStage.asmx/GetTemplateID').then(function (response) {
 
             $scope.storeID = response.data;
-            //alert(response);
+            alert(response);
 
             if ($scope.storeID.TemplateID === 1) {
                 $scope.MYtemplate = "/Templates/Template_1.html";
