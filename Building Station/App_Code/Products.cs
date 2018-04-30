@@ -92,33 +92,37 @@ public class Products : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public void ChangeOrder(string categoriesOrders)
     { //List<Categories>
-        List<Categories> categories = new List<Categories>();
-        string[] Orders = categoriesOrders.Split(',');
-        SqlConnection con = new SqlConnection(cs);
-        con.Open();
-        ///////////////////
-        SqlCommand cmd = new SqlCommand("select * from Category where StoreEmail = '" + Session["user"] + "' ORDER BY OrderInMenu ASC", con);
-        using (SqlDataReader reader = cmd.ExecuteReader())
+        try
         {
-            while (reader.Read())
+            List<Categories> categories = new List<Categories>();
+            string[] Orders = categoriesOrders.Split(',');
+            SqlConnection con = new SqlConnection(cs);
+            con.Open();
+            ///////////////////
+            SqlCommand cmd = new SqlCommand("select * from Category where StoreEmail = '" + Session["user"] + "' ORDER BY OrderInMenu ASC", con);
+            using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                Categories cat = new Categories();
-                cat.ID = Convert.ToInt32(reader["ID"]);
-                cat.Name = reader["Name"].ToString();
-                cat.OrderInMenu = Convert.ToInt32(reader["OrderInMenu"]);
-                categories.Add(cat);
+                while (reader.Read())
+                {
+                    Categories cat = new Categories();
+                    cat.ID = Convert.ToInt32(reader["ID"]);
+                    cat.Name = reader["Name"].ToString();
+                    cat.OrderInMenu = Convert.ToInt32(reader["OrderInMenu"]);
+                    categories.Add(cat);
+                }
             }
-        }
-        ///////////////////
+            ///////////////////
 
-        for (int i = 0; i < categories.Count; i++)
-        {
-            SqlCommand cmd2 = new SqlCommand("UPDATE Category SET OrderInMenu = " + Orders[i] + " WHERE StoreEmail = '" + Session["user"] + "' AND Name= N'" + categories[i].Name + "'", con);
-            int x = cmd2.ExecuteNonQuery();
-            categories[i].OrderInMenu = Convert.ToInt32(Orders[i]);
+            for (int i = 0; i < categories.Count; i++)
+            {
+                SqlCommand cmd2 = new SqlCommand("UPDATE Category SET OrderInMenu = " + Orders[i] + " WHERE StoreEmail = '" + Session["user"] + "' AND Name= N'" + categories[i].Name + "'", con);
+                int x = cmd2.ExecuteNonQuery();
+                categories[i].OrderInMenu = Convert.ToInt32(Orders[i]);
+            }
+            Context.Response.Write(js.Serialize(categories));
+            //  return categories;
         }
-        Context.Response.Write(js.Serialize(categories));
-      //  return categories;
+        catch(Exception e) { }
     }
 
     [WebMethod(EnableSession = true)]

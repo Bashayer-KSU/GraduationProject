@@ -1092,7 +1092,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $http.get('/CreationStage.asmx/GetTemplateID').then(function (response) {
 
             $scope.storeID = response.data;
-            alert(response);
 
             if ($scope.storeID.TemplateID === 1) {
                 $scope.MYtemplate = "/Templates/Template_1.html";
