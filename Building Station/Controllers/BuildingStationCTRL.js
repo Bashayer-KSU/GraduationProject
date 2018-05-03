@@ -236,7 +236,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 .then(function (response) {
                     $scope.result = response.data;
                     $scope.resultAfterSubstring = $scope.result.substr(1, $scope.result.length - 2);
-                    //  location.href = "http://localhost:50277/" + $scope.result.substr(76, $scope.result.length - 9 - 76);
+                    //  location.href = "localhost:50277/" + $scope.result.substr(76, $scope.result.length - 9 - 76);
                     //location.href = "http://buildingstation.somee.com/" + $scope.result.slice(1, -1);
                     // $location.path("/" + $scope.result.slice(1, -1));
                     if ($scope.result.includes("/index.html")) {
@@ -628,7 +628,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                         $mdDialog.alert()
                             // .clickOutsideToClose(true)
                             // .parent(angular.element(document.querySelector('#popupContainer')))
-                            .title('You already published your store, this is your link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
+                            .title('You already published your store, this is your link (localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
                             .textContent('Please Copy the link and save it.')
                             // .ariaLabel('Alert Dialog Demo')
                             .targetEvent(ev)
@@ -653,8 +653,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 }
                 else {// Appending dialog to document.body to cover sidenav in docs app
                     var confirm = $mdDialog.confirm()
-                        .title('This is your store link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + '), would you like to publish?')
-                        .textContent('Please Copy the link and save it.')
+                        .title('This is your store link (localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
+                        .textContent('would you like to publish? just click publish.')
                         //  .ariaLabel('Lucky day')
                         .targetEvent(ev)
                         .ok('Publish')
@@ -668,7 +668,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                             method: "get"
                         }).then(function (response) {
                             //$window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
-                            $window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
+                            $window.open('localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
                         });
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
@@ -1836,7 +1836,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                             $mdDialog.alert()
                                 // .clickOutsideToClose(true)
                                 // .parent(angular.element(document.querySelector('#popupContainer')))
-                                .title('لقد قمت بالفعل بنشر متجرك ، وهذا هو الرابط الخاص بك (http://localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
+                                .title('لقد قمت بالفعل بنشر متجرك ، وهذا هو الرابط الخاص بك (localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
                                 .textContent('يرجى نسخ الرابط وحفظه')
                                 // .ariaLabel('Alert Dialog Demo')
                                 .targetEvent(ev)
@@ -1861,7 +1861,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     }
                     else {// Appending dialog to document.body to cover sidenav in docs app
                         var confirm = $mdDialog.confirm()
-                            .title('هذا رابط متجرك (http://localhost:50277/BuildingStation/' + StoreValues.Domain + '), هل ترغب في النشر؟')
+                            .title('هذا رابط متجرك (localhost:50277/BuildingStation/' + StoreValues.Domain + '), هل ترغب في النشر؟')
                             .textContent('يرجى نسخ الرابط وحفظه')
                             //  .ariaLabel('Lucky day')
                             .targetEvent(ev)
@@ -1876,7 +1876,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                                 method: "get"
                             }).then(function (response) {
                                 //$window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
-                                $window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
+                                $window.open('localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
                             });
                             //  $rootScope.status = 'You decided to get rid of your debt.';
                         }, function () {

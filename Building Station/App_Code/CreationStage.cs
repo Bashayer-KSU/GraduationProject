@@ -552,8 +552,9 @@ public class CreationStage : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void ConnectInstagram(string link, string logo, string description, string name)
+    public void ConnectInstagram(string username, string logo, string description, string name)
     {
+        string link = "https://www.instagram.com/" + username;
         using (SqlConnection con = new SqlConnection(cs))
         {
             con.Open();
@@ -576,10 +577,6 @@ public class CreationStage : System.Web.Services.WebService
             store.Address = description;
             con.Close();
         }
-
-        Context.Response.Write(js.Serialize(store));
-
-        //return store;
     }
 
     [WebMethod(EnableSession = true)]

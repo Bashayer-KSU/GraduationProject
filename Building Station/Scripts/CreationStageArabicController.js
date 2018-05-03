@@ -64,22 +64,17 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
     .run(function ($rootScope, $location, loginService, $window) {
 
         // register listener to watch route changes
-        $rootScope.$on("$routeChangeStart", function (event, next, current, $window) {
-
-            $rootScope.loggin = function () {
-                return loginService.login();
-            };
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
 
             loginService.login().then(function (response) {
                 $rootScope.login = response.slice(1, -1);
-               
-               // alert($rootScope.login);
-                if ($rootScope.login  === "false") {
+                if ($rootScope.login === "false") {
                     //redirect to login page
                     //$window.open = ("http://www.buildingstation1-001-site1.atempurl.com/index.html", "_self");
-                  //  location.href = "/index.html";
-                  //  $location.path("/BuildingStation");
+                    // location.href = "/index.html";
                     $window.location.href = '../index.html';
+                    //    $location.path("/BuildingStation");
+                    // $window.open = ("localhost:50277/index.html", "_self");
                 }
             });
         });
@@ -223,10 +218,9 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                 //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/ConnectInstagram",
                 url: "/CreationStage.asmx/ConnectInstagram",
                 dataType: 'json',
-                data: { link: 'https://www.instagram.com/' + $scope.details.graphql.user.username + '/', logo: $scope.details.graphql.user.profile_pic_url, descripton: $scope.details.graphql.user.biography, name: $scope.details.graphql.user.full_name },
+                data: { username: $scope.search , logo: $scope.details.graphql.user.profile_pic_url, descripton: $scope.details.graphql.user.biography, name: $scope.details.graphql.user.full_name },
                 headers: { "Content-Type": "application/json" }
             });
-            post.then(function (response) { }, function (error) { $scope.R = error.data; });
         };
 
         $scope.getColors = function () {
@@ -480,7 +474,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                     headers: { "Content-Type": "application/json" }
                 });
 
-                $window.location.href = 'http://localhost:50277/EDITandINFO';
+                $window.location.href = 'localhost:50277/EDITandINFO';
             }
         };
     });

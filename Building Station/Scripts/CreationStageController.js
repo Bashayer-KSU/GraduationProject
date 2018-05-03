@@ -231,9 +231,9 @@
         $scope.savedata = function () {
             $http.post(
                 //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/ConnectInstagram",
-                "/CreationStage.asmx / ConnectInstagram",
+                "/CreationStage.asmx/ConnectInstagram",
                 $.param({
-                    link: 'https://www.instagram.com/' + $scope.details.graphql.user.username + '/',
+                    username: $scope.details.graphql.user.username,
                     logo: $scope.details.graphql.user.profile_pic_url,
                     descripton: $scope.details.graphql.user.biography,
                     name: $scope.details.graphql.user.full_name
@@ -243,9 +243,7 @@
                         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
                     }
                 }
-
-            )
-            .then(function (response) { }, function (error) { $scope.R = error.data; });
+            );
         };
 
         $scope.getColors = function () {
@@ -482,7 +480,7 @@
                     headers: { "Content-Type": "application/json" }
                 });
                 //$window.location.href = 'http://bslogic-001-site1.ctempurl.com/EDITandINFO-English';
-                $window.location.href = 'http://localhost:50277/EDITandINFO-English';
+                $window.location.href = 'localhost:50277/EDITandINFO-English';
             }
         };
     });
