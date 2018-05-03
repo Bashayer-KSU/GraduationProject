@@ -1,18 +1,6 @@
 ﻿//'use strict';
 var BS_App = angular.module("BuildingStationAPP", ["ui.router", "ngMaterial"]);
 
-BS_App.service('initialSetup', function ($http) {
-    var promise;
-    return {
-        InitialSetup: function () {
-            promise = $http.get();
-        },
-        getStoreInfo: function () {
-            return promise;
-        }
-    };
-});
-
 var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
     $urlMatcherFactoryProvider.caseInsensitive(true);
     $urlRouterProvider.when('/EDITandINFO', '/EDITandINFO/DevelopmentEnvironment');
@@ -117,7 +105,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         requireBase: false
     });
 })
-    .run(function ($rootScope, $location, loginService, $http, $state, $stateParams /*, $dialogs, $templateCache*/) {
+    .run(function ($rootScope, $location, loginService, $http, $state, $stateParams, $window /*, $dialogs, $templateCache*/) {
         // register listener to watch route changes 
         //$locationChangeSuccess
         //$stateChangeStart
@@ -264,7 +252,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         
     })
-    .controller("PublishedStoreCtrl", function ($scope, $http, $stateParams, ProductService, CategoryService, AddProductService) {
+    .controller("PublishedStoreCtrl", function ($scope, $http, $stateParams, ProductService, CategoryService, AddProductService, CheckProductSevice) {
         var ID = 0;
         $http({
             //url: "http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/GetTemplate",
@@ -550,6 +538,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $scope.TotalPrice -= product.PriceAfterDiscount * product.Amount;
             product.Amount = product.Amount + $scope.ProductsArray[index].Amount;
             $scope.ProductsArray.splice(index, 1);
+            $scope.OutOfStuckProducts = [];
 
         };
 
@@ -573,7 +562,27 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 });
             });
         };
+        $scope.OutOfStuckProducts = [];
+        $scope.CheckProduct = function () {
+            angular.forEach($scope.ProductsArray, function (value, key) {
+                CheckProductSevice.CheckProduct(value.ID, value.Amount).then(function (response) {
+                    if (parseInt(response) < 0) {
+                        value.Amount = value.Amount + parseInt(response);
+                        $scope.OutOfStuckProducts.push({ ID: value.ID, Name: value.Name, Desc: value.Desc, Price: value.Price, Image: value.Image, Discount: value.Discount, PriceAfterDiscount: value.PriceAfterDiscount, Amount: value.Amount, PreviousAmount: value.PreviousAmount });
 
+                        if (value.Amount === 0)
+                            $scope.removeFromCart(value);
+                        else 
+                            $scope.TotalPrice -= value.PriceAfterDiscount * -1* (parseInt(response));
+                    }
+                });
+            });
+            $http.get('Published_Stores.asmx/PublishRequest').then(function (response) {
+
+            }, function (error) {
+
+            });
+        }
         //////////////////////////////////
 
         /* $http({
@@ -3112,6 +3121,24 @@ BS_App.factory('AddProductService', function ($http) {
             });
     };
     return { AddProductToCart: AddProductToCart };
+
+}); 
+
+BS_App.factory('CheckProductSevice', function ($http) {
+    var CheckProduct = function (ProductID, Amount) {
+        return $http.post(
+            //"http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/AddProductToOrder",
+            "/BuyerOrder.asmx/IsProductOutOfStock",
+            $.param({
+                ProductID: ProductID,
+                Amount: Amount
+            }),
+            { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' } })
+            .then(function (response) {
+                return response.data;
+            });
+    };
+    return { CheckProduct: CheckProduct };
 
 });
 

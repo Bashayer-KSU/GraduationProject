@@ -431,5 +431,25 @@ public class Products : System.Web.Services.WebService
         }
         return id;
     }
+    [WebMethod(EnableSession = true)]
+    public Product GetProduct(int id)
+    {
+        Product product = new Product();
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("select * from Product where ID ='" + id + "'", con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                product.ID = Convert.ToInt32(reader["ID"]);
+                product.Name = reader["Name"].ToString();
+                product.Category_ID = reader["Category_ID"].ToString();
+                product.Image = reader["Image"].ToString();
+                product.Amount = Convert.ToInt32(reader["Amount"]);
 
+            }
+        }
+        return product;
+    }
 }
