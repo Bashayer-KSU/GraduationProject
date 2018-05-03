@@ -87,12 +87,12 @@ public class PaymentMethods : System.Web.Services.WebService
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE Element SET Value = '" + BankName + "' Where StoreEmail = '" + Session["user"] + "' AND Type = 'BankName'", con);
+                SqlCommand cmd = new SqlCommand("UPDATE Element SET Value = N'" + BankName + "' Where StoreEmail = '" + Session["user"] + "' AND Type = 'BankName'", con);
                 success1 = cmd.ExecuteNonQuery();
                 con.Close();
 
                 con.Open();
-                 cmd = new SqlCommand("UPDATE Element SET Value = '" + AccountName + "' Where StoreEmail = '" + Session["user"] + "' AND Type = 'AccountName'", con);
+                 cmd = new SqlCommand("UPDATE Element SET Value = N'" + AccountName + "' Where StoreEmail = '" + Session["user"] + "' AND Type = 'AccountName'", con);
                 success2 = cmd.ExecuteNonQuery();
                 con.Close();
 
