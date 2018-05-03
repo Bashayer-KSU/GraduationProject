@@ -366,7 +366,7 @@
                             <div class="tabs">
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li ng-repeat="category in categories" ng-init="setTabItem(categories[0])" class="nav-item">
+                                    <li ng-repeat="category in categoriesList" ng-init="setTabItem(categoriesList[0])" class="nav-item">
                                         <a class="nav-link" data-toggle="tab" href="#{{currentTab}}" role="tab" ng-click="setTabItem(category)" ng-style="{'background-color':Store.Color2, 'color':Store.Color4}">{{category.Name}}</a>
                                     </li>
                                 </ul>

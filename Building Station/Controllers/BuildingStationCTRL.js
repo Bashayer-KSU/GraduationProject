@@ -136,10 +136,12 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 location.href = $rootScope.result.substr(1, $rootScope.result.length - 2);
             });
         };
+        
         $rootScope.$on("$locationChangeSuccess", function () {
+       // $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) { 
+
             loginService.login().then(function (response) {
                 //    console.log($state);
-
                 $rootScope.login = response;
                 var notLoged = response === "\"false\"";
                 //    alert("t or f ? " + response);
@@ -161,14 +163,13 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                                  alert("preview: " + preview);*/
 
                 if (notLoged === true && pulishedStore === false) {
-                    // location.href = "/index.html";
+                   // location.href = "/index.html";
                     //   event.preventDefault();
                     // location.href = "localhost:50277/BuildingStation"; looooping for ever
-                   // $location.path("/BuildingStation");
+                    $location.path("/BuildingStation");
                     // $state.go("Login&Register ");
-                    //window.location.replace('localhost:50277/BuildingStation');
-                    $window.open = ("localhost:50277/index.html", "_self");
-
+                   // window.location.replace('localhost:50277/BuildingStation');
+                   // $window.open = ("localhost:50277/index.html", "_self");
                 }
             });
         });
@@ -596,7 +597,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
     })
     .controller("BS-Menu-EnglishCTRL", function ($http, $scope, $location, $rootScope, $mdDialog, $window) {
-
         $scope.Logout = function () {
             $rootScope.Logout();
         };
@@ -1026,6 +1026,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
     })
     .controller("DevelopmentEnvironmentControllerEnglish", function ($rootScope, $scope, $http, $filter, validLinkService, $mdDialog) {
+
         $scope.Logout = function () {
             $rootScope.Logout();
         };
@@ -1800,7 +1801,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
         //\to remove row
     })
-    .controller("BS-Menu-ArabicCTRL", function ($http, $scope, $rootScope, $location, loginService, $mdDialog, $window /*, $dialogs, $templateCache*/) {
+    .controller("BS-Menu-ArabicCTRL", function ($http, $scope, $rootScope, $location, $mdDialog, $window /*, $dialogs, $templateCache*/) {
         $scope.Logout = function () {
             $rootScope.Logout();
         };

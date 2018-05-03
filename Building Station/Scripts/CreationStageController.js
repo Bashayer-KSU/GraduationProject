@@ -69,12 +69,12 @@
             loginService.login().then(function (response) {
                 $rootScope.login = response.slice(1, -1);
                 if ($rootScope.login === "false") {
-                    alert("true");
                     //redirect to login page
                     //$window.open = ("http://www.buildingstation1-001-site1.atempurl.com/index.html", "_self");
                    // location.href = "/index.html";
-                  //  $location.path("/BuildingStation");
-                    $window.open = ("localhost:50277/index.html", "_self");
+                    $window.location.href = '../index.html';
+                //    $location.path("/BuildingStation");
+                   // $window.open = ("localhost:50277/index.html", "_self");
                 }
             });
         });

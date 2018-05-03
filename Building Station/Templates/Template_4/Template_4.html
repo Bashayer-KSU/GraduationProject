@@ -73,7 +73,7 @@
                             <!-- Nav -->
                             <nav id="menu">
                                 <ul>
-                                    <li ng-repeat="category in categories" ng-init="setTabItem(categories[0])">
+                                    <li ng-repeat="category in categoriesList" ng-init="setTabItem(categoriesList[0])">
                                         <a ng-style="{'color': Store.Color3}" href="#{{currentTab}}" role="tab" ng-click="setTabItem(category)"> {{category.Name}} </a>
                                     </li>
                                 </ul>

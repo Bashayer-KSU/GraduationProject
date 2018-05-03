@@ -169,13 +169,13 @@ public class RegisterLogin : System.Web.Services.WebService
                     if (lang.Equals("eng"))
                     {
                         //  value = "/Views/BasicE.html";
-                        value = "EDITandINFO-English";
+                        value = "/EDITandINFO-English";
 
                     }
                     else
                     {
                         // value = "/Views/Basic.html";
-                        value = "EDITandINFO";
+                        value = "/EDITandINFO";
                     }
                 }
             }
