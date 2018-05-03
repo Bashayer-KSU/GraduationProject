@@ -215,7 +215,8 @@
                                                             <input id="banktransfer" name="PaymentMethod" ng-model="PaymentMethod" value="BankTransfer" type="radio" class="custom-control-input" required>
                                                             <label class="custom-control-label" for="banktransfer">
                                                                 Bank Transfer<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer"><span>
-                                                                <br /><small>Bank:  {{Store.BankName}}  ,Account Name:  {{Store.AccountName}}  <br> IBAN:  {{Store.IBAN}}</small> </span>
+                                                                    <br /><small>Bank:  {{Store.BankName}}  ,Account Name:  {{Store.AccountName}}  <br> IBAN:  {{Store.IBAN}}</small>
+                                                                </span>
                                                             </label>
 
                                                         </div>
@@ -225,12 +226,53 @@
                                                         </div>
                                                     </div>
                                                     <br>
+                                                    <!--teeeeeeeeeeeeeeeeeeeeeeeeeeest-->
+                                                    <div ng-show="!(OutOfStuckProducts.length===0)" >
+                                                        <div class="row">
+                                                            These products has been changed
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <ul class="list-group mb-3">
+                                                                    <li id="yourcart" class="list-group-item d-flex justify-content-between">
+                                                                        <div class="row">
+                                                                            <div class="col my-0">Product Image</div>
+                                                                            <div class="col">
+                                                                                <h6 class=" my-0">Product</h6>
+                                                                            </div>
+                                                                            <span class="col my-0">Amount</span>
+                                                                            <span class="col my-0">Price</span>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li ng-repeat='y in OutOfStuckProducts' id="yourcart" class="list-group-item d-flex justify-content-between">
+                                                                        <div class="row">
+                                                                            <div class="col"><img ng-src="{{y.Image}}" alt="..." class="img-fluid" /></div>
+                                                                            <div class="col">
+                                                                                <h6 class="my-0">{{y.Name}}</h6>
+                                                                                <small class="text-muted">{{y.Desc}}</small>
+                                                                            </div>
+                                                                            <span class="col" ng-show="y.Amount !== 0">{{y.Amount}}</span>
+                                                                            <span class="col" ng-show="y.Amount === 0">Out of stock</span>
+
+                                                                            <span class="col" ng-show="y.Discount == 0">{{y.Price}} SR</span>
+                                                                            <span class="col" ng-show="y.Discount != 0">
+                                                                                <del style="color:#ff0000"> {{y.Price}} </del>
+                                                                                {{y.PriceAfterDiscount}} SR
+                                                                            </span>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--teeeeeeeeeeeeeeeeeeeeeeeeeeest-->
                                                 </div>
                                                 <div ng-show="PaymentMethod === 'BankTransfer'" id="transfer">
                                                     <div class="row mb-3">
                                                         <h4 class="col-sm-12">Confirm Bank Transfer</h4>
                                                         <h6 class="col-sm-12">
-                                                            <small>Bank:  {{Store.BankName}}  ,Account Name:  {{Store.AccountName}} <br /> IBAN:  {{Store.IBAN}}</small> <
+                                                            <small>Bank:  {{Store.BankName}}  ,Account Name:  {{Store.AccountName}} <br /> IBAN:  {{Store.IBAN}}</small> 
                                                         </h6>
                                                         <div class="col-sm-12">
                                                             <label for="OrderID">Transaction ID</label>
@@ -292,7 +334,7 @@
                         <div class="modal-footer justify-content-center">
                             <button ng-show="!checkout" ng-disabled="ProductsArray.length===0" type="button" class="btn btn-info btn-md" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Proceed to Checkout</button>
                             <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=false; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
-                            <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true;" ng-disabled="Buyer.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Choose Payment Method</button>
+                            <button ng-show="checkout&&!payment" type="button" class="btn btn-info btn-md" ng-click="payment=true; checkout = true; CheckProduct()" ng-disabled="Buyer.$invalid" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Choose Payment Method</button>
                             <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-sm" ng-click="checkout=true; payment=false;" ng-style="{'background-color':Store.Color3, 'border':Store.Color3}">Previous</button>
                             <!-- <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="Checkout()" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>-->
                             <button ng-show="checkout&&payment" type="button" class="btn btn-info btn-md" ng-click="CheckoutA(BuyerName, BuyerPhone, BuyerEmail, BuyerLocation, PaymentMethod, HolName, OrderID)" data-dismiss="modal" ng-disabled="(BuyerPayment.$invalid&&PaymentMethod === 'BankTransfer')||(PayPalForm.$invalid&&PaymentMethod === 'PayPal')||(PaymentMethod==='')" ng-style="{'background-color':Store.Color1, 'border':Store.Color1}">Checkout</button>

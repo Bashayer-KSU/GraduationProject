@@ -239,4 +239,16 @@ public class BuyerOrder : System.Web.Services.WebService
 
         //return OrderProductsList;
     }
+    
+
+         [WebMethod(EnableSession = true)]
+    public void IsProductOutOfStock( string ProductID, string Amount)
+    {
+        int buyerAmount = Convert.ToInt32(Amount);
+        Products products = new Products();
+        Product product = products.GetProduct(Convert.ToInt32(ProductID));
+        
+            Context.Response.Write(js.Serialize(product.Amount - buyerAmount));
+        
+    }
 }
