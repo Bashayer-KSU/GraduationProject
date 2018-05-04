@@ -241,7 +241,7 @@ public class BuyerOrder : System.Web.Services.WebService
     }
     
 
-         [WebMethod(EnableSession = true)]
+         [WebMethod]
     public void IsProductOutOfStock( string ProductID, string Amount)
     {
         int buyerAmount = Convert.ToInt32(Amount);

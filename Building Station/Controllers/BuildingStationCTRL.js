@@ -573,17 +573,12 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
                         if (value.Amount === 0)
                             $scope.removeFromCart(value);
-                        else 
-                            $scope.TotalPrice -= value.PriceAfterDiscount * -1* (parseInt(response));
+                        else
+                            $scope.TotalPrice -= value.PriceAfterDiscount * -1 * (parseInt(response));
                     }
                 });
             });
-            $http.get('Published_Stores.asmx/PublishRequest').then(function (response) {
-
-            }, function (error) {
-
-            });
-        }
+        };
         //////////////////////////////////
 
         /* $http({

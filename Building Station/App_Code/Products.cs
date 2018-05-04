@@ -431,7 +431,7 @@ public class Products : System.Web.Services.WebService
         }
         return id;
     }
-    [WebMethod(EnableSession = true)]
+    [WebMethod]
     public Product GetProduct(int id)
     {
         Product product = new Product();
