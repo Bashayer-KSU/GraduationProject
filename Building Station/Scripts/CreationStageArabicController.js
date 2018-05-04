@@ -63,6 +63,25 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         });    })
     .run(function ($rootScope, $location, loginService, $window) {
 
+        var ua = navigator.userAgent;
+
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)) {
+                 // alert("mobile");
+            $window.location.href = '../NotDesktop.html';
+            //  $('a.mobile-other').show();
+        }
+
+        else if (/Chrome/i.test(ua)) {
+           // alert("Chrome");
+            //  $('a.chrome').show();
+        }
+        else {
+           //   alert("desktop");
+            //   $('a.desktop-other').show();
+            //window.location.replace('localhost:50277/NotDesktop.html');
+            //  $(location).attr('href', 'localhost:50277/NotDesktop.html')
+        }
+
         // register listener to watch route changes
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
 

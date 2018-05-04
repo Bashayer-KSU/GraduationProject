@@ -123,27 +123,6 @@
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
-        $(document).ready(function () {
-            var ua = navigator.userAgent;
-
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)) {
-       //         alert("mobile");
-                $(location).attr('href', 'localhost:50277/NotDesktop.html')
-                //  $('a.mobile-other').show();
-            }
-
-            else if (/Chrome/i.test(ua)) {
-       //         alert("Chrome");
-                //  $('a.chrome').show();
-                // $(location).attr('href', 'localhost:50277/NotDesktop.html')
-            }
-            else {
-        //        alert("desktop");
-                //   $('a.desktop-other').show();
-                //window.location.replace('localhost:50277/NotDesktop.html');
-                //  $(location).attr('href', 'localhost:50277/NotDesktop.html')
-            }
-        });
     </script>
 </body>
 </html>
