@@ -447,6 +447,9 @@ public class Products : System.Web.Services.WebService
                 product.Category_ID = reader["Category_ID"].ToString();
                 product.Image = reader["Image"].ToString();
                 product.Amount = Convert.ToInt32(reader["Amount"]);
+                product.Price = Convert.ToDouble(reader["Price"].ToString());
+                product.Discount = Convert.ToInt32(reader["Price"].ToString());
+
 
             }
         }

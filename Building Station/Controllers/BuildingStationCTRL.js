@@ -513,7 +513,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             if (!(product === undefined || product === '' || amount === undefined || amount === '')) {
                 $scope.isExist(product, amount); //If product exist don't add new product to list, only update the amount
                 if (!$scope.Exist) {
-                    $scope.ProductsArray.push({ ID: product.ID, Name: product.Name, Desc: product.Description, Price: product.Price, Image: product.Image, Discount: product.Discount, PriceAfterDiscount: product.PriceAfterDiscount, Amount: amount, PreviousAmount: product.Amount });
+                    $scope.ProductsArray.push({ ID: product.ID, Name: product.Name, Desc: product.Description, Price: product.Price, Image: product.Image, Discount: product.Discount, PriceAfterDiscount: product.PriceAfterDiscount, Amount: amount});
                     product.Amount = product.Amount - amount;
                 }
                 $scope.TotalPrice += product.PriceAfterDiscount * amount;
@@ -539,7 +539,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             $scope.TotalPrice -= product.PriceAfterDiscount * product.Amount;
             product.Amount = product.Amount + $scope.ProductsArray[index].Amount;
             $scope.ProductsArray.splice(index, 1);
-            $scope.OutOfStuckProducts = [];
 
         };
 
@@ -558,27 +557,31 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         // Add products to Buyer's Order
         $scope.addProductToOrder = function (OrderID) {
             angular.forEach($scope.ProductsArray, function (value, key) {
-                AddProductService.AddProductToCart(OrderID, value.ID, value.Amount, value.PreviousAmount).then(function (response) {
+                AddProductService.AddProductToCart(OrderID, value.ID, value.Amount).then(function (response) {
                     $scope.ProductAdded = response;
+                    console.log(response);
                 });
             });
         };
+        /*
         $scope.OutOfStuckProducts = [];
         $scope.CheckProduct = function () {
             angular.forEach($scope.ProductsArray, function (value, key) {
                 CheckProductSevice.CheckProduct(value.ID, value.Amount).then(function (response) {
                     if (parseInt(response) < 0) {
                         value.Amount = value.Amount + parseInt(response);
-                        $scope.OutOfStuckProducts.push({ ID: value.ID, Name: value.Name, Desc: value.Desc, Price: value.Price, Image: value.Image, Discount: value.Discount, PriceAfterDiscount: value.PriceAfterDiscount, Amount: value.Amount, PreviousAmount: value.PreviousAmount });
+                        $scope.OutOfStuckProducts.push({ ID: value.ID, Name: value.Name, Desc: value.Desc, Price: value.Price, Image: value.Image, Discount: value.Discount, PriceAfterDiscount: value.PriceAfterDiscount, Amount: value.Amount });
 
-                        if (value.Amount === 0)
+                        if (value.Amount === 0) {
                             $scope.removeFromCart(value);
+                        }
                         else
                             $scope.TotalPrice -= value.PriceAfterDiscount * -1 * (parseInt(response));
                     }
                 });
             });
         };
+        */
         //////////////////////////////////
 
         /* $http({
@@ -3101,15 +3104,14 @@ BS_App.factory('ProductService', function ($http, $stateParams) {
 
 
 BS_App.factory('AddProductService', function ($http) {
-    var AddProductToCart = function (OrderID, ProductID, Amount, PreviousAmount) {
+    var AddProductToCart = function (OrderID, ProductID, Amount) {
         return $http.post(
             //"http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/AddProductToOrder",
             "/Published_Stores.asmx/AddProductToOrder",
             $.param({
                 OrderID: OrderID,
                 ProductID: ProductID,
-                Amount: Amount,
-                PreviousAmount: PreviousAmount
+                Amount: Amount
             }),
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' } })
             .then(function (response) {

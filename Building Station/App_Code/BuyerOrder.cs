@@ -27,15 +27,6 @@ public class BuyerOrder : System.Web.Services.WebService
     Order order = new Order();
 
     [WebMethod(EnableSession = true)]
-    public string getStoreEmail()
-    {
-        if (Session["user"] != null)
-         return Session["user"].ToString();
-        else
-         return "test4@4";
-    }
-
-    [WebMethod(EnableSession = true)]
     public void CreateOrder(string StoreEmail, string BuyerName, string BuyerPhone, string BuyerEmail, string BuyerLocation, string PaymentMethod, string BankAccount, string OrderID, string TotalPrice)
     {
         SqlDataReader reader;
@@ -95,7 +86,7 @@ public class BuyerOrder : System.Web.Services.WebService
     public void GetAllTransactions()
     { // List<Order>
         Order ord = new Order();
-        string StoreEmail = getStoreEmail();
+        string StoreEmail = Session["user"].ToString();
         using (SqlConnection con = new SqlConnection(cs))
         {
             SqlCommand cmd = new SqlCommand("select * from \"Order\" Where StoreEmail ='" + Session["user"] + "' AND Status = 'FALSE'", con);
@@ -148,7 +139,7 @@ public class BuyerOrder : System.Web.Services.WebService
             //return false;
         }
     }
-
+    /*
     [WebMethod(EnableSession = true)]
     public void AddProductToOrder(string OrderID, string ProductID, string Amount, string PreviousAmount)
     {
@@ -207,7 +198,7 @@ public class BuyerOrder : System.Web.Services.WebService
             Context.Response.Write(js.Serialize("out of stock product"));
    //     return "out of stock product";
     }
-
+    */
 
     [WebMethod(EnableSession = true)]
     public void GetAllOrderProducts(string Order_ID)
@@ -216,7 +207,7 @@ public class BuyerOrder : System.Web.Services.WebService
         List<OrderProduct> OrderProductsList = new List<OrderProduct>();
         OrderProduct orderProduct = new OrderProduct();
 
-        string StoreEmail = getStoreEmail();
+        string StoreEmail = Session["user"].ToString();
         using (SqlConnection con = new SqlConnection(cs))
         {
             SqlCommand cmd = new SqlCommand("SELECT Order_ID, Product_ID, ProductOrder.Amount,  Product.Image, Product.Name,  Product.Description  FROM ProductOrder INNER JOIN Product ON ProductOrder.Product_ID = Product.ID WHERE ProductOrder.Order_ID = " + orderID+" ", con);
@@ -250,5 +241,33 @@ public class BuyerOrder : System.Web.Services.WebService
         
             Context.Response.Write(js.Serialize(product.Amount - buyerAmount));
         
+    }
+
+    [WebMethod]
+    public Order GetOrder(int id)
+    {
+        Order order = new Order();
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("select * from \"Order\" where ID ='" + id + "'", con);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                order.ID = id;
+                order.BuyerName = reader["BuyerName"].ToString();
+                order.BuyerPhone = reader["BuyerPhone"].ToString();
+                order.BuyerEmail = reader["BuyerEmail"].ToString();
+                order.BuyerLocation = reader["BuyerLocation"].ToString();
+                order.PaymentMethod = reader["PaymentMethod"].ToString();
+                order.BankAccount = reader["BankAccount"].ToString();
+                order.TotalPrice = Convert.ToDouble(reader["TotalPrice"]);
+                order.StoreEmail = reader["StoreEmail"].ToString();
+                order.OrderID = reader["OrderID"].ToString();
+            }
+            con.Close();
+
+        }
+        return order;
     }
 }

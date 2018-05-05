@@ -533,50 +533,77 @@ public class Published_Stores : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void AddProductToOrder(string OrderID, string ProductID, string Amount, string PreviousAmount)
+    public void AddProductToOrder(string OrderID, string ProductID, string Amount)
     {
       //  string StoreEmail = getStoreEmail();
         int row = 0;
         bool result1 = false;
         bool result2 = false;
+        SqlCommand cmd;
+        Products products = new Products();
+        Product product = products.GetProduct(Convert.ToInt32(ProductID));
 
-        using (SqlConnection con = new SqlConnection(cs))
+        BuyerOrder buyer = new BuyerOrder();
+        Order order = buyer.GetOrder(Convert.ToInt32(OrderID)); 
+        int PreviousAmount = product.Amount;
+        if (PreviousAmount - Convert.ToInt32(Amount) < 0)
         {
-            con.Open();
-            SqlCommand cmd;
-            cmd = new SqlCommand("insert into ProductOrder (Order_ID, Product_ID, Amount) values " +
-           "(" + Convert.ToInt32(OrderID) + "," + Convert.ToInt32(ProductID) + "," + Convert.ToInt32(Amount) + ")", con);
+            //It mean product out of stock
+            double updatedTotalPrice = order.TotalPrice - (product.Price * Convert.ToInt32(Amount));
 
-            row = cmd.ExecuteNonQuery();
-            con.Close();
-        }
-        if (row > 0)
-            result1 = true;
-        else result1 = false;
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                if (updatedTotalPrice != 0)
+                {
+                    con.Open();
+                    cmd = new SqlCommand("UPDATE  \"Order\" SET TotalPrice = '" + updatedTotalPrice + "' WHERE ID =" + order.ID, con);
+                    row = cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+                else
+                {
+                    con.Open();
+                    cmd = new SqlCommand("DELETE FROM \"Order\" WHERE ID = '" + order.ID + "'", con);
+                    row = cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
 
-        row = 0;
-        using (SqlConnection con = new SqlConnection(cs))
-        {
-            con.Open();
-            SqlCommand cmd;
-            cmd = new SqlCommand("UPDATE Product SET Amount = '" + (Convert.ToInt32(PreviousAmount) - Convert.ToInt32(Amount)) + "' WHERE ID =" + ProductID, con);
-
-            row = cmd.ExecuteNonQuery();
-            con.Close();
-        }
-        if (row > 0)
-            result2 = true;
-        else result2 = false;
-
-        if (result1 && result2)
-        {
-            Context.Response.Write(js.Serialize(true));
-
-            //return true;
+            Context.Response.Write(js.Serialize(updatedTotalPrice));
         }
         else
-            Context.Response.Write(js.Serialize(false));
-        //return false;
+        {
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                con.Open();
+                cmd = new SqlCommand("insert into ProductOrder (Order_ID, Product_ID, Amount) values " +
+               "(" + Convert.ToInt32(OrderID) + "," + Convert.ToInt32(ProductID) + "," + Convert.ToInt32(Amount) + ")", con);
+
+                row = cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            if (row > 0)
+                result1 = true;
+            else result1 = false;
+
+            row = 0;
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                con.Open();
+                cmd = new SqlCommand("UPDATE Product SET Amount = '" + (Convert.ToInt32(PreviousAmount) - Convert.ToInt32(Amount)) + "' WHERE ID =" + ProductID, con);
+                row = cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            if (row > 0)
+                result2 = true;
+            else result2 = false;
+
+            if (result1 && result2)
+            {
+                Context.Response.Write(js.Serialize(true));
+            }
+            else Context.Response.Write(js.Serialize(false));
+        }
     }
     
 
