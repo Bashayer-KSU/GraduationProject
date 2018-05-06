@@ -29,7 +29,7 @@
 
     <div style="display:inline; overflow: auto; white-space: nowrap; padding: 0px 0px; margin-top:2%">
         <a style="float: left; font-size:5vw; padding: 0.5cm 0.6cm 0.5cm 0.4cm;" href="2" class="button button-large" data-toggle="tooltip" data-placement="right" title="Previous">&#10094;</a>
-        <button ng-disabled="!search" ng-click="savedata(); getColors()" style="float: right; font-size:5vw; padding: 0.5cm 0.5cm 0.5cm 0.5cm;" href="7" class="button button-large" data-toggle="tooltip" data-placement="left" title="Next">&#10095;</button>
+        <button ng-disabled="!search" ng-click="savedata(search, details.graphql.user.biography, details.graphql.user.full_name); getColors()" style="float: right; font-size:5vw; padding: 0.5cm 0.5cm 0.5cm 0.5cm;" href="7" class="button button-large" data-toggle="tooltip" data-placement="left" title="Next">&#10095;</button>
     </div>
     </form>
     <!-- Footer -->

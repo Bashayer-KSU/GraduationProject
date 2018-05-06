@@ -165,6 +165,41 @@ public class Published_Stores : System.Web.Services.WebService
 
             if (pass.Equals(store.Password))
             {
+                List<int> productsID = new List<int>();
+                List<int> OrdersID = new List<int>();
+
+                con.Open();
+                cmd = new SqlCommand("SELECT ID FROM Product WHERE StoreEmail = '" + Session["user"] + "'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    int productID = Convert.ToInt32(reader["ID"]);
+
+                    productsID.Add(productID);
+                }
+
+                con.Close();
+                con.Open();
+                cmd = new SqlCommand("SELECT ID FROM [Order] WHERE StoreEmail = '" + Session["user"] + "'", con);
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    int orderID = Convert.ToInt32(reader["ID"]);
+
+                    OrdersID.Add(orderID);
+                }
+                con.Close();
+
+                foreach (int o in OrdersID)
+                {
+                    foreach (int p in productsID)
+                    {
+                        con.Open();
+                        cmd = new SqlCommand("DELETE FROM ProductOrder WHERE Order_ID = "+o+" AND Product_ID = "+p+"", con);
+                        cmd.ExecuteReader();
+                        con.Close();
+                    }
+                }
 
                 con.Open();
                 cmd = new SqlCommand("DELETE FROM Element WHERE StoreEmail = '" + Session["user"] + "'", con);
@@ -196,12 +231,8 @@ public class Published_Stores : System.Web.Services.WebService
                 store.Password = "incorrect";
             }
             Context.Response.Write(js.Serialize(store));
-
-         //   return store;
         }
        // Context.Response.Write(js.Serialize(null));
-
-      //  return null;
     }
 
     [WebMethod]

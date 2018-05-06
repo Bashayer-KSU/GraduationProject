@@ -613,8 +613,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
 
         $rootScope.DesktopView = function () {
-            $location.path('/PreviewWebsite');
-            //$window.open('/Views/PreviewEnglish.html', '_blank');
+          // $location.path('/PreviewWebsite');
+            $window.open('/PreviewWebsite', '_blank');
         };
 
         $rootScope.Publish = function (ev) {
@@ -1818,9 +1818,9 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
 
         $rootScope.DesktopView = function () {
-            $location.path('/PreviewWebsite');
+           // $location.path('/PreviewWebsite');
             // $window.open('localhost:50277/EDITandINFO/PreviewWebsite', '_blank');
-            //$window.open('/Views/Preview.html', '_blank');
+            $window.open('/PreviewWebsite', '_blank');
 
         };
 

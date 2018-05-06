@@ -247,15 +247,15 @@
             this.setSelectionRange(0, this.value.length);
         };
        
-        $scope.savedata = function () {
+        $scope.savedata = function (user, bio, name) {
             $http.post(
                 //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/ConnectInstagram",
                 "/CreationStage.asmx/ConnectInstagram",
                 $.param({
-                    username: $scope.details.graphql.user.username,
+                    username: "user name",
                     logo: $scope.details.graphql.user.profile_pic_url,
-                    descripton: $scope.details.graphql.user.biography,
-                    name: $scope.details.graphql.user.full_name
+                    descripton: "bio , description",
+                    name: name
                 }),
                 {
                     headers: {
