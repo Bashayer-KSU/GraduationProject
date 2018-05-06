@@ -557,9 +557,9 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         // Add products to Buyer's Order
         $scope.addProductToOrder = function (OrderID) {
             angular.forEach($scope.ProductsArray, function (value, key) {
+               // console.log("OrderID " + OrderID + " value.ID " + value.ID + " value.Amount " + value.Amount);
                 AddProductService.AddProductToCart(OrderID, value.ID, value.Amount).then(function (response) {
                     $scope.ProductAdded = response;
-                    console.log(response);
                 });
             });
         };
@@ -3115,6 +3115,7 @@ BS_App.factory('AddProductService', function ($http) {
             }),
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' } })
             .then(function (response) {
+                //console.log("service output " + response);
                 return response.data;
             });
     };

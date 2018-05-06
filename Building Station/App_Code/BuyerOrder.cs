@@ -75,9 +75,6 @@ public class BuyerOrder : System.Web.Services.WebService
           //  return order;
 
         }
-        else
-            Context.Response.Write(js.Serialize(null));
-        //return null;
 
             //return "Failed to make order";
     }
