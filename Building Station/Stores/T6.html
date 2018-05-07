@@ -32,7 +32,7 @@
                     </button>
                     <ul id="ShoppingCart" class="navbar-nav mr-auto p-2">
                         <li class="nav-item">
-                            <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS"><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
+                            <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal"><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
                         </li>
                     </ul>
                 </div>
@@ -63,7 +63,7 @@
                             </div>
                         </li>
                         <li id="ShoppingCart2" class="nav-item">
-                            <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal" href="#checkoutS"><span class="hidden-xs">Shopping Cart </span><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
+                            <a style="border:none" class="nav-link" data-toggle="modal" data-target="#shoppingCartModal"><span class="hidden-xs">Shopping Cart </span><i style="font-size:20px" class="fa fa-shopping-cart "><span class="badge badge-pill">{{ItemsInShoppingCart()}}</span></i></a>
                         </li>
                     </ul>
                 </div>
@@ -125,56 +125,51 @@
                             </button>
                         </div>
                         <div class="modal-body">
+                            <div ng-show="!checkout&&!payment" class="card-body">
+                                <div ng-show="!(ProductsArray.length==0)">
+                                    <table class="table table-sm table-responsive table-hover text-center">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Image</th>
+                                                <th scope="col">Product</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Amount</th>
+                                                <th scope="col">Remove</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="x in ProductsArray">
+                                                <th scope="row">
+                                                    <img class="card-img-top" ng-src="{{x.Image}}" alt="Card image cap">
+                                                </th>
+                                                <td>{{x.Name}}</td>
+                                                <td>{{x.Desc}}</td>
+                                                <td ng-show="x.Discount == 0">{{x.Price}} SR</td>
+                                                <td ng-show="x.Discount != 0">
+                                                    <del style="color:#ff0000"> {{x.Price}} </del>
+                                                    {{x.PriceAfterDiscount}} SR
+                                                </td>
+
+                                                <td ng-show="x.Amount != 0">{{x.Amount}}</td>
+                                                <td ng-show="x.Amount == 0">Out of stock</td>
+                                                <td>
+                                                    <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="text-center">Total  <strong>{{TotalPrice}} SR</strong> </p>
+                                </div>
+                                <div ng-show="ProductsArray.length==0" style="text-align:center;">
+                                    <span style="text-align:center;">Shopping Cart Empty</span>
+                                </div>
+                            </div>
                             <div class="container">
                                 <div class="row">
                                     <div class="col-12 text-center">
-                                        <div ng-show="!checkout&&!payment" class="card-body">
-
-                                            <!----------------------->
-                                            <div class="row">
-                                                <div class="col">
-                                                    <ul ng-show="!(ProductsArray.length==0)" class="list-group mb-3">
-                                                        <li id="yourcart" class="list-group-item d-flex justify-content-between">
-                                                            <div class="row">
-                                                                <div class="col my-0">Product Image</div>
-                                                                <div class="col">
-                                                                    <h6 class=" my-0">Product</h6>
-                                                                </div>
-                                                                <span class="col my-0">Amount</span>
-                                                                <span class="col my-0">Price</span>
-                                                            </div>
-                                                        </li>
-                                                        <li ng-repeat='x in ProductsArray' id="yourcart" class="list-group-item d-flex justify-content-between">
-                                                            <div class="row">
-                                                                <div class="col"><img ng-src="{{x.Image}}" alt="..." class="img-fluid" /></div>
-                                                                <div class="col">
-                                                                    <h6 class="my-0">{{x.Name}}</h6>
-                                                                    <small class="text-muted">{{x.Desc}}</small>
-                                                                </div>
-                                                                <span class="col">{{x.Amount}}</span>
-                                                                <span class="col" ng-show="x.Discount == 0">{{x.Price}} SR</span>
-                                                                <span class="col" ng-show="x.Discount != 0">
-                                                                    <del style="color:#ff0000"> {{x.Price}} </del>
-                                                                    {{x.PriceAfterDiscount}} SR
-                                                                </span>
-                                                                <span>
-                                                                    <button type="button" class="close" ng-click="removeFromCart(x)" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </span>
-                                                            </div>
-                                                        </li>
-
-                                                        <li class="list-group-item d-flex justify-content-between">
-                                                            <span>Total</span><span><strong>{{TotalPrice}} SR</strong></span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div ng-show="ProductsArray.length==0" style="text-align:center;">
-                                                <span style="text-align:center;">Shopping Cart Empty</span>
-                                            </div>
-                                        </div>
                                         <!-- Checkout-->
                                         <div ng-show="checkout" class="card-body">
                                             <!----------------------->
@@ -215,7 +210,8 @@
                                                             <input id="banktransfer" name="PaymentMethod" ng-model="PaymentMethod" value="BankTransfer" type="radio" class="custom-control-input" required>
                                                             <label class="custom-control-label" for="banktransfer">
                                                                 Bank Transfer<img style="max-width:10%;" src="/Templates/Template_6/Images/transfer.png" alt="bank transfer"><span>
-                                                                <br /><small>Bank:  {{Store.BankName}}  ,Account Name:  {{Store.AccountName}}  <br> IBAN:  {{Store.IBAN}}</small> </span>
+                                                                    <br /><small>Bank:  {{Store.BankName}}  ,Account Name:  {{Store.AccountName}}  <br> IBAN:  {{Store.IBAN}}</small>
+                                                                </span>
                                                             </label>
 
                                                         </div>
@@ -230,7 +226,7 @@
                                                     <div class="row mb-3">
                                                         <h4 class="col-sm-12">Confirm Bank Transfer</h4>
                                                         <h6 class="col-sm-12">
-                                                            <small>Bank:  {{Store.BankName}}  ,Account Name:  {{Store.AccountName}} <br /> IBAN:  {{Store.IBAN}}</small> <
+                                                            <small>Bank:  {{Store.BankName}}  ,Account Name:  {{Store.AccountName}} <br /> IBAN:  {{Store.IBAN}}</small>
                                                         </h6>
                                                         <div class="col-sm-12">
                                                             <label for="OrderID">Transaction ID</label>

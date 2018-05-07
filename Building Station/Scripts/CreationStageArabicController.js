@@ -63,25 +63,37 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         });    })
     .run(function ($rootScope, $location, loginService, $window) {
 
-        // register listener to watch route changes
-        $rootScope.$on("$routeChangeStart", function (event, next, current, $window) {
+        var ua = navigator.userAgent;
 
-            $rootScope.loggin = function () {
-                return loginService.login();
-            };
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)) {
+                 // alert("mobile");
+            $window.location.href = '../NotDesktop.html';
+            //  $('a.mobile-other').show();
+        }
+
+        else if (/Chrome/i.test(ua)) {
+           // alert("Chrome");
+            //  $('a.chrome').show();
+        }
+        else {
+           //   alert("desktop");
+            //   $('a.desktop-other').show();
+            //window.location.replace('localhost:50277/NotDesktop.html');
+            //  $(location).attr('href', 'localhost:50277/NotDesktop.html')
+        }
+
+        // register listener to watch route changes
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
 
             loginService.login().then(function (response) {
                 $rootScope.login = response.slice(1, -1);
-               
-               // alert($rootScope.login);
-                if ($rootScope.login  === "false") {
+                if ($rootScope.login === "false") {
                     //redirect to login page
                     //$window.open = ("http://www.buildingstation1-001-site1.atempurl.com/index.html", "_self");
-                  //  location.href = "/index.html";
-                  //  $location.path("http://localhost:50277/BuildingStation");
-               //     $window.location.href = "http://localhost:50277/BuildingStation";
-                  //  $location.path("/BuildingStation");
-                    window.location.replace('localhost:50277/BuildingStation');
+                    // location.href = "/index.html";
+                    $window.location.href = '../index.html';
+                    //    $location.path("/BuildingStation");
+                    // $window.open = ("localhost:50277/index.html", "_self");
                 }
             });
         });
@@ -220,15 +232,19 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
         };
 
         $scope.savedata = function () {
-            var post = $http({
-                method: "POST",
+            $http({
                 //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/ConnectInstagram",
                 url: "/CreationStage.asmx/ConnectInstagram",
                 dataType: 'json',
-                data: { link: 'https://www.instagram.com/' + $scope.details.graphql.user.username + '/', logo: $scope.details.graphql.user.profile_pic_url, descripton: $scope.details.graphql.user.biography, name: $scope.details.graphql.user.full_name },
-                headers: { "Content-Type": "application/json" }
-            });
-            post.then(function (response) { }, function (error) { $scope.R = error.data; });
+                method: "POST",
+                data: {
+                    username: $scope.search,
+                    logo: $scope.details.graphql.user.profile_pic_url,
+                    name: $scope.details.graphql.user.full_name,
+                    description: $scope.details.graphql.user.biography
+                },
+                headers: { "Content-Type": "application/json; charset=utf-8" }
+            })
         };
 
         $scope.getColors = function () {
@@ -482,7 +498,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                     headers: { "Content-Type": "application/json" }
                 });
 
-                $window.location.href = 'http://localhost:50277/EDITandINFO';
+                $window.location.href = 'localhost:50277/EDITandINFO';
             }
         };
     });

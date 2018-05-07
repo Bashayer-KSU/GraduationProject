@@ -1,18 +1,6 @@
 ﻿//'use strict';
 var BS_App = angular.module("BuildingStationAPP", ["ui.router", "ngMaterial"]);
 
-BS_App.service('initialSetup', function ($http) {
-    var promise;
-    return {
-        InitialSetup: function () {
-            promise = $http.get();
-        },
-        getStoreInfo: function () {
-            return promise;
-        }
-    };
-});
-
 var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
     $urlMatcherFactoryProvider.caseInsensitive(true);
     $urlRouterProvider.when('/EDITandINFO', '/EDITandINFO/DevelopmentEnvironment');
@@ -136,10 +124,12 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 location.href = $rootScope.result.substr(1, $rootScope.result.length - 2);
             });
         };
+        
         $rootScope.$on("$locationChangeSuccess", function () {
+       // $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) { 
+
             loginService.login().then(function (response) {
                 //    console.log($state);
-
                 $rootScope.login = response;
                 var notLoged = response === "\"false\"";
                 //    alert("t or f ? " + response);
@@ -161,14 +151,13 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                                  alert("preview: " + preview);*/
 
                 if (notLoged === true && pulishedStore === false) {
-                    // location.href = "/index.html";
+                   // location.href = "/index.html";
                     //   event.preventDefault();
                     // location.href = "localhost:50277/BuildingStation"; looooping for ever
-                   // $location.path("/BuildingStation");
+                    $location.path("/BuildingStation");
                     // $state.go("Login&Register ");
-                    //window.location.replace('localhost:50277/BuildingStation');
-                    $window.open = ("localhost:50277/index.html", "_self");
-
+                   // window.location.replace('localhost:50277/BuildingStation');
+                   // $window.open = ("localhost:50277/index.html", "_self");
                 }
             });
         });
@@ -247,7 +236,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 .then(function (response) {
                     $scope.result = response.data;
                     $scope.resultAfterSubstring = $scope.result.substr(1, $scope.result.length - 2);
-                    //  location.href = "http://localhost:50277/" + $scope.result.substr(76, $scope.result.length - 9 - 76);
+                    //  location.href = "localhost:50277/" + $scope.result.substr(76, $scope.result.length - 9 - 76);
                     //location.href = "http://buildingstation.somee.com/" + $scope.result.slice(1, -1);
                     // $location.path("/" + $scope.result.slice(1, -1));
                     if ($scope.result.includes("/index.html")) {
@@ -264,7 +253,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
 
         
     })
-    .controller("PublishedStoreCtrl", function ($scope, $http, $stateParams, ProductService, CategoryService, AddProductService) {
+    .controller("PublishedStoreCtrl", function ($scope, $http, $stateParams, ProductService, CategoryService, AddProductService, CheckProductSevice) {
         var ID = 0;
         $http({
             //url: "http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/GetTemplate",
@@ -524,7 +513,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             if (!(product === undefined || product === '' || amount === undefined || amount === '')) {
                 $scope.isExist(product, amount); //If product exist don't add new product to list, only update the amount
                 if (!$scope.Exist) {
-                    $scope.ProductsArray.push({ ID: product.ID, Name: product.Name, Desc: product.Description, Price: product.Price, Image: product.Image, Discount: product.Discount, PriceAfterDiscount: product.PriceAfterDiscount, Amount: amount, PreviousAmount: product.Amount });
+                    $scope.ProductsArray.push({ ID: product.ID, Name: product.Name, Desc: product.Description, Price: product.Price, Image: product.Image, Discount: product.Discount, PriceAfterDiscount: product.PriceAfterDiscount, Amount: amount});
                     product.Amount = product.Amount - amount;
                 }
                 $scope.TotalPrice += product.PriceAfterDiscount * amount;
@@ -568,12 +557,31 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         // Add products to Buyer's Order
         $scope.addProductToOrder = function (OrderID) {
             angular.forEach($scope.ProductsArray, function (value, key) {
-                AddProductService.AddProductToCart(OrderID, value.ID, value.Amount, value.PreviousAmount).then(function (response) {
+               // console.log("OrderID " + OrderID + " value.ID " + value.ID + " value.Amount " + value.Amount);
+                AddProductService.AddProductToCart(OrderID, value.ID, value.Amount).then(function (response) {
                     $scope.ProductAdded = response;
                 });
             });
         };
+        /*
+        $scope.OutOfStuckProducts = [];
+        $scope.CheckProduct = function () {
+            angular.forEach($scope.ProductsArray, function (value, key) {
+                CheckProductSevice.CheckProduct(value.ID, value.Amount).then(function (response) {
+                    if (parseInt(response) < 0) {
+                        value.Amount = value.Amount + parseInt(response);
+                        $scope.OutOfStuckProducts.push({ ID: value.ID, Name: value.Name, Desc: value.Desc, Price: value.Price, Image: value.Image, Discount: value.Discount, PriceAfterDiscount: value.PriceAfterDiscount, Amount: value.Amount });
 
+                        if (value.Amount === 0) {
+                            $scope.removeFromCart(value);
+                        }
+                        else
+                            $scope.TotalPrice -= value.PriceAfterDiscount * -1 * (parseInt(response));
+                    }
+                });
+            });
+        };
+        */
         //////////////////////////////////
 
         /* $http({
@@ -596,7 +604,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
     })
     .controller("BS-Menu-EnglishCTRL", function ($http, $scope, $location, $rootScope, $mdDialog, $window) {
-
         $scope.Logout = function () {
             $rootScope.Logout();
         };
@@ -606,8 +613,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
 
         $rootScope.DesktopView = function () {
-            $location.path('/PreviewWebsite');
-            //$window.open('/Views/PreviewEnglish.html', '_blank');
+          // $location.path('/PreviewWebsite');
+            $window.open('/PreviewWebsite', '_blank');
         };
 
         $rootScope.Publish = function (ev) {
@@ -619,7 +626,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                         $mdDialog.alert()
                             // .clickOutsideToClose(true)
                             // .parent(angular.element(document.querySelector('#popupContainer')))
-                            .title('You already published your store, this is your link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
+                            .title('You already published your store, this is your link (localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
                             .textContent('Please Copy the link and save it.')
                             // .ariaLabel('Alert Dialog Demo')
                             .targetEvent(ev)
@@ -644,8 +651,8 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                 }
                 else {// Appending dialog to document.body to cover sidenav in docs app
                     var confirm = $mdDialog.confirm()
-                        .title('This is your store link (http://localhost:50277/BuildingStation/' + StoreValues.Domain + '), would you like to publish?')
-                        .textContent('Please Copy the link and save it.')
+                        .title('This is your store link (localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
+                        .textContent('would you like to publish? just click publish.')
                         //  .ariaLabel('Lucky day')
                         .targetEvent(ev)
                         .ok('Publish')
@@ -659,7 +666,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                             method: "get"
                         }).then(function (response) {
                             //$window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
-                            $window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
+                            $window.open('localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
                         });
                         //  $rootScope.status = 'You decided to get rid of your debt.';
                     }, function () {
@@ -1026,6 +1033,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
     })
     .controller("DevelopmentEnvironmentControllerEnglish", function ($rootScope, $scope, $http, $filter, validLinkService, $mdDialog) {
+
         $scope.Logout = function () {
             $rootScope.Logout();
         };
@@ -1092,7 +1100,6 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         $http.get('/CreationStage.asmx/GetTemplateID').then(function (response) {
 
             $scope.storeID = response.data;
-            alert(response);
 
             if ($scope.storeID.TemplateID === 1) {
                 $scope.MYtemplate = "/Templates/Template_1.html";
@@ -1814,7 +1821,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
         //\to remove row
     })
-    .controller("BS-Menu-ArabicCTRL", function ($http, $scope, $rootScope, $location, loginService, $mdDialog, $window /*, $dialogs, $templateCache*/) {
+    .controller("BS-Menu-ArabicCTRL", function ($http, $scope, $rootScope, $location, $mdDialog, $window /*, $dialogs, $templateCache*/) {
         $scope.Logout = function () {
             $rootScope.Logout();
         };
@@ -1824,9 +1831,9 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
 
         $rootScope.DesktopView = function () {
-            $location.path('/PreviewWebsite');
+           // $location.path('/PreviewWebsite');
             // $window.open('localhost:50277/EDITandINFO/PreviewWebsite', '_blank');
-            //$window.open('/Views/Preview.html', '_blank');
+            $window.open('/PreviewWebsite', '_blank');
 
         };
 
@@ -1840,7 +1847,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                             $mdDialog.alert()
                                 // .clickOutsideToClose(true)
                                 // .parent(angular.element(document.querySelector('#popupContainer')))
-                                .title('لقد قمت بالفعل بنشر متجرك ، وهذا هو الرابط الخاص بك (http://localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
+                                .title('لقد قمت بالفعل بنشر متجرك ، وهذا هو الرابط الخاص بك (localhost:50277/BuildingStation/' + StoreValues.Domain + ')')
                                 .textContent('يرجى نسخ الرابط وحفظه')
                                 // .ariaLabel('Alert Dialog Demo')
                                 .targetEvent(ev)
@@ -1865,7 +1872,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     }
                     else {// Appending dialog to document.body to cover sidenav in docs app
                         var confirm = $mdDialog.confirm()
-                            .title('هذا رابط متجرك (http://localhost:50277/BuildingStation/' + StoreValues.Domain + '), هل ترغب في النشر؟')
+                            .title('هذا رابط متجرك (localhost:50277/BuildingStation/' + StoreValues.Domain + '), هل ترغب في النشر؟')
                             .textContent('يرجى نسخ الرابط وحفظه')
                             //  .ariaLabel('Lucky day')
                             .targetEvent(ev)
@@ -1880,7 +1887,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                                 method: "get"
                             }).then(function (response) {
                                 //$window.open('http://www.buildingstation.somee.com/' + StoreValues.Domain + '', '_blank');
-                                $window.open('http://localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
+                                $window.open('localhost:50277/BuildingStation/' + StoreValues.Domain + '', '_blank');
                             });
                             //  $rootScope.status = 'You decided to get rid of your debt.';
                         }, function () {
@@ -3124,22 +3131,40 @@ BS_App.factory('ProductService', function ($http, $stateParams) {
 
 
 BS_App.factory('AddProductService', function ($http) {
-    var AddProductToCart = function (OrderID, ProductID, Amount, PreviousAmount) {
+    var AddProductToCart = function (OrderID, ProductID, Amount) {
         return $http.post(
             //"http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/AddProductToOrder",
             "/Published_Stores.asmx/AddProductToOrder",
             $.param({
                 OrderID: OrderID,
                 ProductID: ProductID,
-                Amount: Amount,
-                PreviousAmount: PreviousAmount
+                Amount: Amount
+            }),
+            { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' } })
+            .then(function (response) {
+                //console.log("service output " + response);
+                return response.data;
+            });
+    };
+    return { AddProductToCart: AddProductToCart };
+
+}); 
+
+BS_App.factory('CheckProductSevice', function ($http) {
+    var CheckProduct = function (ProductID, Amount) {
+        return $http.post(
+            //"http://bslogic-001-site1.ctempurl.com/Published_Stores.asmx/AddProductToOrder",
+            "/BuyerOrder.asmx/IsProductOutOfStock",
+            $.param({
+                ProductID: ProductID,
+                Amount: Amount
             }),
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;' } })
             .then(function (response) {
                 return response.data;
             });
     };
-    return { AddProductToCart: AddProductToCart };
+    return { CheckProduct: CheckProduct };
 
 });
 
