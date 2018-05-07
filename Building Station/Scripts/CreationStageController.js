@@ -246,8 +246,8 @@
 
             this.setSelectionRange(0, this.value.length);
         };
-       
-        $scope.savedata = function (user, bio, name) {
+
+     /*   $scope.savedata = function (user, bio, name) {
             $http.post(
                 //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/ConnectInstagram",
                 "/CreationStage.asmx/ConnectInstagram",
@@ -255,14 +255,29 @@
                     username: "user name",
                     logo: $scope.details.graphql.user.profile_pic_url,
                     descripton: "bio , description",
-                    name: name
+                    name: "namee "
                 }),
                 {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
                     }
-                }
-            );
+                });
+        };*/
+
+        $scope.savedata = function () {
+            $http({
+                //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/ConnectInstagram",
+                url: "/CreationStage.asmx/ConnectInstagram",
+                dataType: 'json',
+                method: "POST",
+                data: {
+                    username: $scope.search,
+                    logo: $scope.details.graphql.user.profile_pic_url,
+                    name: $scope.details.graphql.user.full_name,
+                    description: $scope.details.graphql.user.biography
+                },
+                headers: { "Content-Type": "application/json; charset=utf-8" }
+            })
         };
 
         $scope.getColors = function () {

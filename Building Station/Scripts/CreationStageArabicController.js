@@ -231,15 +231,20 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
             this.setSelectionRange(0, this.value.length);
         };
 
-        $scope.savedata = function (user, bio, name) {
-            var post = $http({
-                method: "POST",
+        $scope.savedata = function () {
+            $http({
                 //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/ConnectInstagram",
                 url: "/CreationStage.asmx/ConnectInstagram",
                 dataType: 'json',
-                data: { username: user, logo: $scope.details.graphql.user.profile_pic_url, descripton: bio, name: name },
-                headers: { "Content-Type": "application/json" }
-            });
+                method: "POST",
+                data: {
+                    username: $scope.search,
+                    logo: $scope.details.graphql.user.profile_pic_url,
+                    name: $scope.details.graphql.user.full_name,
+                    description: $scope.details.graphql.user.biography
+                },
+                headers: { "Content-Type": "application/json; charset=utf-8" }
+            })
         };
 
         $scope.getColors = function () {

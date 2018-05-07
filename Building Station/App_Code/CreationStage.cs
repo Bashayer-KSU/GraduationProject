@@ -552,7 +552,7 @@ public class CreationStage : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void ConnectInstagram(string username, string logo, string description, string name)
+    public void ConnectInstagram(string username, string logo, string name, string description)
     {
         string link = "https://www.instagram.com/" + username;
         using (SqlConnection con = new SqlConnection(cs))
@@ -570,11 +570,6 @@ public class CreationStage : System.Web.Services.WebService
             con.Open();
             cmd = new SqlCommand("UPDATE Element SET Value = N'" + description + "', Hidden = 'false' WHERE Type = 'About' AND Name = 'About' AND StoreEmail = '" + Session["user"] + "'", con);
             cmd.ExecuteNonQuery();
-
-            store.Name = name;
-            store.InstagramLink = link;
-            store.Logo = logo;
-            store.Address = description;
             con.Close();
         }
     }
