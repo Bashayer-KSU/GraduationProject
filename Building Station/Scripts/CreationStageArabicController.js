@@ -244,7 +244,7 @@ var app = angular.module("CraetionStageArabicDemo", ["ngRoute"])
                     description: $scope.details.graphql.user.biography
                 },
                 headers: { "Content-Type": "application/json; charset=utf-8" }
-            })
+            });
         };
 
         $scope.getColors = function () {
