@@ -1667,25 +1667,38 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
         //\DeleteCategory
         // change category Order
-        $scope.ChangeOrder = function (cats) {
+        $scope.ChangeOrder = function (cats, ev) {
             var categories = "";
+            var emptyField = false;
             for (var i = 0; i < cats.length; i++) {
-                categories += cats[i].OrderInMenu + ",";
+                if (cats[i].OrderInMenu !== null)
+                    categories += cats[i].OrderInMenu + ",";
+                else {
+                    emptyField = true;
+                    break;
+                }
             }
-            alert("change order");
-            $http({
-                //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/ChangeOrder",
-                url: "/Products.asmx/ChangeOrder",
-                method: "get",
-                params: { categoriesOrders: categories }
-            })
-                .then(function (response) {
-                    $scope.categories = response.data;
-                    $scope.displayCategoryTable = false;
-                }, function (error) {
-                    alert(error.data);
-                    $scope.resultoforder = error.data;
-                });
+            if (!emptyField){
+                $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/ChangeOrder",
+                    url: "/Products.asmx/ChangeOrder",
+                    method: "get",
+                    params: { categoriesOrders: categories }
+                })
+                    .then(function (response) {
+                        $scope.categories = response.data;
+                        $scope.displayCategoryTable = false;
+                    }, function (error) {
+                        $scope.resultoforder = error.data;
+                    });
+            } else {
+                var inform =
+                    $mdDialog.alert()
+                        .title('You should fill all fields')
+                        .targetEvent(ev)
+                        .ok('Close');
+                $mdDialog.show(inform).then(function () { }, function (error) { });
+            }
         };
         //\change category Order
 
@@ -2924,25 +2937,39 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
         };
         //\DeleteCategory
         // change category Order
-        $scope.ChangeOrder = function (cats) {
+        $scope.ChangeOrder = function (cats, ev) {
             var categories = "";
+            var emptyField = false;
             for (var i = 0; i < cats.length; i++) {
-                categories += cats[i].OrderInMenu + ",";
+                if (cats[i].OrderInMenu != null)
+                    categories += cats[i].OrderInMenu + ",";
+                else {
+                    emptyField = true;
+                    break;
+                }
             }
-            alert("change order");
-            $http({
-                //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/ChangeOrder",
-                url: "/Products.asmx/ChangeOrder",
-                method: "get",
-                params: { categoriesOrders: categories }
-            })
-                .then(function (response) {
-                    $scope.categories = response.data;
-                    $scope.displayCategoryTable = false;
-                }, function (error) {
-                    alert(error.data);
-                    $scope.resultoforder = error.data;
-                });
+            if (!emptyField)
+            {
+                $http({
+                    //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/ChangeOrder",
+                    url: "/Products.asmx/ChangeOrder",
+                    method: "get",
+                    params: { categoriesOrders: categories }
+                })
+                    .then(function (response) {
+                        $scope.categories = response.data;
+                        $scope.displayCategoryTable = false;
+                    }, function (error) {
+                        //$scope.resultoforder = error.data;
+                    });
+            } else {
+                var inform =
+                    $mdDialog.alert()
+                        .title('يجب إدخال جميع الحقول')
+                        .targetEvent(ev)
+                        .ok('إغلاق');
+                $mdDialog.show(inform).then(function () { }, function (error) { });
+            }
         };
         //\change category Order
 
