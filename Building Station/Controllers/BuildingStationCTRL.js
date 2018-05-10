@@ -468,7 +468,7 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
                     $scope.checkout = false;
                     $scope.payment = false;
                     $scope.ProductsArray.length = 0;
-
+                    $scope.TotalPrice = 0;
                 }, function (error) {
                     $scope.error = error.data;
                 });
