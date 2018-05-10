@@ -277,7 +277,7 @@
                     description: $scope.details.graphql.user.biography
                 },
                 headers: { "Content-Type": "application/json; charset=utf-8" }
-            })
+            });
         };
 
         $scope.getColors = function () {
@@ -470,7 +470,6 @@
         $scope.c2 = "none";
         $scope.c3 = "none";
 
-
         $scope.firstTemplate = function () {
             $scope.Border1 = "solid";
             $scope.Border2 = "none";
@@ -480,7 +479,6 @@
             $scope.c3 = "none";
             TemplateID = 4;
         };
-
         $scope.secondTemplate = function () {
             $scope.Border2 = "solid";
             $scope.Border1 = "none";
@@ -505,17 +503,17 @@
                 alert("You have to select a layout");
             }
             else {
-                var post = $http({
+               $http({
                     method: "POST",
                     url: "CreationStage.asmx/AddTemplate",
                     //url: "http://bslogic-001-site1.ctempurl.com/CreationStage.asmx/AddTemplate",
-                    dataType: 'json',
                     data: { id: TemplateID },
                     headers: { "Content-Type": "application/json" }
                 });
                 //$window.location.href = 'http://bslogic-001-site1.ctempurl.com/EDITandINFO-English';
-                $window.location.href = 'localhost:50277/EDITandINFO-English';
-            }
+              // $window.location.href = 'localhost:50277/EDITandINFO-English';
+                $window.location.href = 'http://localhost:50277/EDITandINFO-English';
+            } 
         };
     });
 /* .controller("10Controller", function ($scope, $rootScope, $window) {

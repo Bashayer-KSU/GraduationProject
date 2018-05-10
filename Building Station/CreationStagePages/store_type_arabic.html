@@ -9,7 +9,7 @@
         <input id="Type" type="text" name="Type" ng-model="Type" ng-change="checkContent()" ng-keyup="complete(Type)" placeholder="  مثال: ملابس  " style="width:98%;" required />
         <span class="asterisk_input">  </span>
         <p style="font-size:0.7em; font-weight: bold; text-shadow: 2px 2px 8px white;  color: darkred;" ng-show="myform.myName.$invalid"> *هذا الحقل مطلوب  </p>
-        <ul style="list-style: none;" ng-model="hidethis" ng-hide="hidethis || myform.Type.$invalid">
+        <ul style="list-style: none; color:gray;" ng-model="hidethis" ng-hide="hidethis || myform.Type.$invalid">
             <li class="list-group-item" ng-repeat="Typedata in filterType" ng-click="fillTextbox(Typedata)" style="width:100%;">{{Typedata}}</li>
         </ul>  
 

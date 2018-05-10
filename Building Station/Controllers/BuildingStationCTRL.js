@@ -1671,14 +1671,14 @@ var BuildingStationAPP = BS_App.config(function ($stateProvider, $locationProvid
             var categories = "";
             var emptyField = false;
             for (var i = 0; i < cats.length; i++) {
-                if (cats[i].OrderInMenu != null)
+                if (cats[i].OrderInMenu !== null)
                     categories += cats[i].OrderInMenu + ",";
                 else {
-                    $scope.emptyField = true;
+                    emptyField = true;
                     break;
                 }
             }
-            if (!emptyField) {
+            if (!emptyField){
                 $http({
                     //url: "http://bslogic-001-site1.ctempurl.com/Products.asmx/ChangeOrder",
                     url: "/Products.asmx/ChangeOrder",
